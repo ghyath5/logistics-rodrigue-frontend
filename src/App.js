@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "./App.css";
 import { useState } from "react";
-import Main from "./components/Main";
+import Main from "./screens/Main";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 
