@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
 import useDeviceType from "../hooks/useDeviceType";
-import SideBarList from "../components/SideBarList"
+import SideBarList from "../components/SideBarList";
 
 const SideBar = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
@@ -12,7 +11,7 @@ const SideBar = ({ isOpen, setOpen }) => {
   }, [deviceType]);
 
   const toggleDrawer = () => {
-    setOpen(!isOpen);
+    deviceType !== "laptop" && setOpen(!isOpen);
   };
 
   return (

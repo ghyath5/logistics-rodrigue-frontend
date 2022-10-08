@@ -2,11 +2,12 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import useDeviceType from "../hooks/useDeviceType";
+import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
 
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
@@ -27,9 +28,9 @@ const Header = ({ isOpen, setOpen }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div">
-              News
-            </Typography>
+            <Link to="/">
+              <img src={logo} alt="logo" />
+            </Link>
           </div>
           <Button color="inherit">Login</Button>
         </Toolbar>
