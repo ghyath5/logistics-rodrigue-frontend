@@ -1,14 +1,24 @@
 :root {
+  --bg-color: #fafafa;
   --sidebar-width: 250px;
+  --dark-green: green;
+  --white: #fff;
+  --light-gray: #dadada;
+  --gray: #495767;
+  --border-radius: 4px;
 }
 
 .App {
-  text-align: center;
   min-height: 100vh;
+  background-color: var(--bg-color);
 }
 
 .headerContainer {
   height: 10vh;
+}
+
+.headerContainer header {
+  background-color: var(--dark-green);
 }
 
 .sidebarContainer .MuiDrawer-paperAnchorLeft {
@@ -17,7 +27,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 90vh;
+  min-height: 90vh;
 }
 
 .mainContainer {
@@ -32,4 +42,71 @@
   .mainContainer {
     margin-left: 0;
   }
+}
+
+.headerTitle {
+  color: var(--gray);
+}
+
+.mainContainer .btnOutlined {
+  border: 2px solid var(--dark-green);
+  color: var(--dark-green);
+  font-weight: 600;
+}
+
+.mainContainer .btnOutlined:is(:hover, :focus) {
+  border: 2px solid var(--dark-green);
+  color: var(--dark-green);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mainContainer .btnContained {
+  color: var(--white);
+  background: var(--dark-green);
+  font-weight: 600;
+}
+
+.mainContainer .btnContained:is(:hover, :focus) {
+  color: var(--white);
+  background: var(--dark-green);
+  opacity: 0.8;
+}
+
+.statsCard {
+  border-radius: var(--border-radius);
+  border: 2px solid var(--light-gray);
+  background-color: var(--white);
+}
+
+.statsCard h5 {
+  color: var(--gray);
+  opacity: 0.8;
+  font-weight: 400 !important;
+}
+
+.statsCard h3 {
+  color: var(--gray);
+}
+
+.searchInputContainer {
+  border: 2px solid var(--dark-green);
+  border-radius: var(--border-radius);
+}
+
+.searchInputContainer input {
+  background-color: var(--bg-color);
+}
+
+.searchInputContainer input:focus {
+  outline: 0;
+  border: 0;
+}
+
+.searchInputContainer img {
+  cursor: pointer;
+  max-width: 18px;
+}
+
+.tablePagination p {
+  margin-bottom: 0;
 }
