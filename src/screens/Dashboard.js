@@ -1,21 +1,28 @@
 import React from "react";
 import ScheduleCrad from "../components/ScheduleCrad";
+import BtnContained from "../components/BtnContained";
 import Seam from "../assets/seam.svg";
 import BoxFill from "../assets/Box-fil.svg";
 import TruckFill from "../assets/truck-fill.svg";
 import ScheduleCrad1 from "../components/ScheduleCrad1";
-import Ev from "../assets/ev.svg";
+ import Bus from "../assets/bus.svg"
+import Routs from "../assets/routs.svg"
+import Person from "../assets/personIcon.svg"
+import Dollar from "../assets/dollarIcon.svg"
+import KiloMetre from "../assets/kilometre.svg"
+// import BoxDelevries from "../assets/box-deliveris.svg"
 
-import BtnContained from "../components/BtnContained";
 const Dashboard = () => {
   return (
     <>
-      <div className="container">
-        <h6 className="">Welcome back</h6>
-        <h3>Sonia Stewart</h3>
+      <div className="dashboardBg">
+        <div className="mx-5 dashboardTitleContainer">
+        <h6 className="dashboardTitle">Welcome back</h6>
+        <h3 className="dashboardTitle">Sonia Stewart</h3>
         <BtnContained title="MANAGE MY INVENTORY" />
+        </div>
       </div>
-      <div className="container">
+      <div className="container mt-5">
         <h3 className="headerTitle my-2">Schedule Overview</h3>
       </div>
       <div className="d-flex flex-wrap">
@@ -42,11 +49,16 @@ const Dashboard = () => {
         <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
       </div>
       <div className="container-tomorrow">
-        <div className="dashboard-inner">
-          <ScheduleCrad1 title3="Deliveries for " icon3={Ev} />
+        <div className="dashboard-inner my-4">
+          <ScheduleCrad1 title3="Deliveries for " icon3={Routs} />
         </div>
-        <div className="  d-flex flex-wrap">
-          <ScheduleCrad1 title3="Deliveries for " icon3={Ev} value3={12} />
+        <hr className="mx-5 line"></hr>
+        <div className="  d-flex  flex-wrap my-4 list-deliveries">
+          <ScheduleCrad1 title3="Vehicle Used " icon3={Bus} value3={50} />
+          <ScheduleCrad1 title3="Deliveries for " icon3={Dollar} value3={12} />
+          <ScheduleCrad1 title3="Drivers Assigned  " icon3={Person} value3={6}  />
+          <ScheduleCrad1 title3="Estimated Distance " icon3={KiloMetre} value3={330.5} km="Km"/>
+          <ScheduleCrad1 title3="Deliveries for " icon3={KiloMetre} value3={12} />
         </div>
       </div>
     </>
