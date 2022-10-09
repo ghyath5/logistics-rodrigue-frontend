@@ -6,15 +6,15 @@ import TruckFill from "../assets/truck-fill.svg";
 import ScheduleCrad1 from "../components/ScheduleCrad1";
 import Ev from "../assets/ev.svg";
 
-import BtnContained from "../components/BtnContained"
+import BtnContained from "../components/BtnContained";
 const Dashboard = () => {
   return (
     <>
-    <div className="container">
-      <h6 className="">Welcome back</h6>
-      <h3>Sonia Stewart</h3>
-      <BtnContained title="MANAGE MY INVENTORY"/>
-    </div>
+      <div className="container">
+        <h6 className="">Welcome back</h6>
+        <h3>Sonia Stewart</h3>
+        <BtnContained title="MANAGE MY INVENTORY" />
+      </div>
       <div className="container">
         <h3 className="headerTitle my-2">Schedule Overview</h3>
       </div>
@@ -46,8 +46,7 @@ const Dashboard = () => {
           <ScheduleCrad1 title3="Deliveries for " icon3={Ev} />
         </div>
         <div className="  d-flex flex-wrap">
-          <ScheduleCrad1 title3="Deliveries for " icon3={Ev} value3={12}/>
-         
+          <ScheduleCrad1 title3="Deliveries for " icon3={Ev} value3={12} />
         </div>
       </div>
     </>

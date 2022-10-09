@@ -28,7 +28,7 @@ const SideBar = ({ isOpen, setOpen }) => {
         hideBackdrop={deviceType !== "laptop" ? false : true}
         variant={deviceType !== "laptop" ? "temporary" : "persistent"}
       >
-        <div className="profile-container my-3">
+        <div className="profile-container mb-3 mt-4">
           <h2 className="profile p-3">SS</h2>
           <h5 className="my-1">Sonia Stewart </h5>
         </div>

@@ -7,29 +7,45 @@ import PRODUCTS from "../data/products";
 import StickyHeadTable from "../components/StickyHeadTable";
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "code", label: "Code", minWidth: 100 },
+  { id: "name", label: "Name", minWidth: 150 },
   {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "category",
+    label: "Category",
+    minWidth: 150,
   },
   {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "price",
+    label: "Price",
+    minWidth: 50,
   },
   {
-    id: "density",
-    label: "Density",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    id: "units",
+    label: "Units per box",
+    minWidth: 50,
   },
+  {
+    id: "priority",
+    label: "Priority",
+    minWidth: 50,
+  },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+  },
+  {
+    id: "remove",
+    label: "Remove Product",
+    minWidth: 100,
+  },
+  // {
+  //   id: "size",
+  //   label: "Size\u00a0(km\u00b2)",
+  //   minWidth: 170,
+  //   align: "right",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
 ];
 
 const Products = () => {
@@ -39,27 +55,67 @@ const Products = () => {
   const [productsHidden, setProductsHidden] = useState(0);
   const [rows, setRows] = useState([]);
 
-  function createData(name, code, population, size) {
+  function createData(
+    id,
+    code,
+    name,
+    category,
+    price,
+    units,
+    priority,
+    status,
+    remove
+  ) {
     // const density = population / size;
     // return { name, code, population, size, density };
-    return { name, code, population, size };
+    return {
+      id,
+      code,
+      name,
+      category,
+      price,
+      units,
+      priority,
+      status,
+      remove,
+    };
   }
 
   useEffect(() => {
-    setProductsTotal(allProducts.length);
-    allProducts.forEach((p) => {
+    setProductsTotal(PRODUCTS.length);
+    PRODUCTS.forEach((p) => {
       p.active === true && setTotalActive((prev) => prev + 1);
       p.orderListStatus === "hidden" && setProductsHidden((prev) => prev + 1);
 
       setRows((prev) => [
         ...prev,
-        createData(p.name, p.category, p.price, p.orderListStatus),
+        createData(
+          p.id,
+          p.code,
+          p.name,
+          p.category,
+          p.price,
+          p.unitsPerBox,
+          p.priorityNbr,
+          p.orderListStatus,
+          "Delete"
+        ),
       ]);
+    });
+  }, []);
+
+  useEffect(() => {
+    setTotalActive(0);
+    setProductsHidden(0);
+    setProductsTotal(allProducts.length);
+    allProducts.forEach((p) => {
+      p.active === true && setTotalActive((prev) => prev + 1);
+      p.orderListStatus === "hidden" && setProductsHidden((prev) => prev + 1);
     });
   }, [allProducts]);
 
   return (
-    <div className="container">
+    <div>
       <div className="pageHeader d-sm-flex justify-content-between align-items-center my-4">
         <h3 className="headerTitle">Manage Products</h3>
         <div className="d-flex gap-2">
@@ -80,7 +136,12 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <StickyHeadTable columns={columns} rows={rows} />
+        <StickyHeadTable
+          setAllItems={setAllProducts}
+          setRows={setRows}
+          columns={columns}
+          rows={rows}
+        />
       </div>
     </div>
   );

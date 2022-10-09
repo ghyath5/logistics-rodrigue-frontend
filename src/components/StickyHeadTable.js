@@ -8,17 +8,27 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-export default function StickyHeadTable({ columns, rows }) {
+export default function StickyHeadTable({
+  setRows,
+  setAllItems,
+  columns,
+  rows,
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleRemoveProduct = (id) => {
+    setAllItems((prev) => prev.filter((p) => p.id !== id));
+    setRows((prev) => prev.filter((p) => p.id !== id));
   };
 
   return (
@@ -41,16 +51,24 @@ export default function StickyHeadTable({ columns, rows }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, j) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
+                  <TableRow hover role="checkbox" tabIndex={-1} key={j}>
+                    {columns.map((column, i) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                        <TableCell key={i} align={column.align}>
+                          <span
+                            className={
+                              column.id === "remove" ? "tableDeleteBtn" : ""
+                            }
+                            onClick={() =>
+                              column.id === "remove" &&
+                              handleRemoveProduct(row["id"])
+                            }
+                          >
+                            {column.id === "price" ? `$ ${value}` : value}
+                          </span>
                         </TableCell>
                       );
                     })}

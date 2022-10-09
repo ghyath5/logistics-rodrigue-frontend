@@ -12,55 +12,62 @@ code {
     monospace;
 }
 
-.container-tomorrow{
+.container-tomorrow {
   border: 1px solid #93D16A;
-  margin: auto 10px ;
+  margin: auto 10px;
 }
+
 .dashboard-inner {
   text-align: -webkit-center;
 
 }
-.list1{
+
+.list1 {
   max-width: 637px;
 }
+
 .MuiBox-root {
   text-align-last: center;
 }
-.list-btn{
-  border-bottom: 1px solid var(--dark-green) !important;
-  color: var(--dark-green) !important ;
+
+.list-btn {
+  border-bottom: 1px solid var(--light-gray) !important;
+  color: var(--dark-green) !important;
   /* border-top: 1px solid green !important; */
 }
+
 li:first-child {
-  border-top: 0.1px solid var(--dark-green) ;
+  border-top: 0.1px solid var(--light-gray);
 }
-.profile-container{
+
+.profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 
 }
-.css-tlelie-MuiListItemText-root{
+
+.css-tlelie-MuiListItemText-root {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
 
-.profile{
+.profile {
   border-radius: 50%;
   border: 1px solid var(--dark-green);
-   box-shadow: 0px 14px 23px 0px rgb(81 112 57 / 54%); 
+  box-shadow: 0px 14px 23px 0px rgb(81 112 57 / 54%);
   -webkit-box-shadow: 0px 14px 23px 0px rgb(81 112 78 / 14%);
-  -moz-box-shadow: 0px 14px 23px 0px rgba(81,112,57,0.54);
+  -moz-box-shadow: 0px 14px 23px 0px rgba(81, 112, 57, 0.54);
   color: var(--dark-green) !important;
 
 }
-.css-10hburv-MuiTypography-root{
-font-weight: bold !important;
+
+.css-10hburv-MuiTypography-root {
+  font-weight: bold !important;
 }
 
-.css-1rwt2y5-MuiButtonBase-root-MuiButton-root{
+.css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
   color: var(--dark-green) !important;
-    font-weight: bold !important;
-    border-color: var(--dark-green) !important;
+  font-weight: bold !important;
+  border-color: var(--dark-green) !important;
 }
- 

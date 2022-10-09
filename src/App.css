@@ -1,11 +1,16 @@
 :root {
   --bg-color: #fafafa;
-  --sidebar-width: 250px;
   --dark-green: green;
   --white: #fff;
   --light-gray: #dadada;
   --gray: #495767;
+  --delete-red: rgb(192, 22, 22);
+  --sidebar-width: 250px;
   --border-radius: 4px;
+}
+
+.textGray {
+  color: var(--gray);
 }
 
 .App {
@@ -109,4 +114,10 @@
 
 .tablePagination p {
   margin-bottom: 0;
+}
+
+.tableDeleteBtn {
+  color: var(--delete-red);
+  font-weight: 600;
+  cursor: pointer;
 }
