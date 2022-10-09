@@ -4,7 +4,7 @@ import BtnOutlined from "../components/BtnOutlined";
 import seacrIcon from "../assets/search.svg";
 import StatsCard from "../components/StatsCard";
 import PRODUCTS from "../data/products";
-import StickyHeadTable from "../components/StickyHeadTable";
+import ProductsTable from "../components/ProductsTable";
 
 const columns = [
   { id: "code", label: "Code", minWidth: 100 },
@@ -36,7 +36,12 @@ const columns = [
   },
   {
     id: "remove",
-    label: "Remove Product",
+    label: "Remove ",
+    minWidth: 100,
+  },
+  {
+    id: "edit",
+    label: "Edit ",
     minWidth: 100,
   },
   // {
@@ -64,7 +69,8 @@ const Products = () => {
     units,
     priority,
     status,
-    remove
+    remove,
+    edit
   ) {
     // const density = population / size;
     // return { name, code, population, size, density };
@@ -78,6 +84,7 @@ const Products = () => {
       priority,
       status,
       remove,
+      edit,
     };
   }
 
@@ -98,7 +105,8 @@ const Products = () => {
           p.unitsPerBox,
           p.priorityNbr,
           p.orderListStatus,
-          "Delete"
+          "Delete",
+          "Edit"
         ),
       ]);
     });
@@ -136,7 +144,7 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <StickyHeadTable
+        <ProductsTable
           setAllItems={setAllProducts}
           setRows={setRows}
           columns={columns}

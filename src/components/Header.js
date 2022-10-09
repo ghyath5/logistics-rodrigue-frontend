@@ -32,7 +32,7 @@ const Header = ({ isOpen, setOpen }) => {
               <img src={logo} alt="logo" />
             </Link>
           </div>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>

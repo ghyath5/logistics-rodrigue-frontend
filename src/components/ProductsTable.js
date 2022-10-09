@@ -8,12 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-export default function StickyHeadTable({
-  setRows,
-  setAllItems,
-  columns,
-  rows,
-}) {
+export default function ProductsTable({ setRows, setAllItems, columns, rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -59,9 +54,22 @@ export default function StickyHeadTable({
                       return (
                         <TableCell key={i} align={column.align}>
                           <span
-                            className={
-                              column.id === "remove" ? "tableDeleteBtn" : ""
+                            className={`${
+                              column.id === "remove"
+                                ? "tableDeleteBtn"
+                                : column.id === "edit"
+                                ? "tableEditBtn"
+                                : ""
+                            } 
+                            ${column.id !== "code" ? "text-capitalize" : ""}
+                            ${
+                              column.id === "status" && value === "visible"
+                                ? "statusCellVisible"
+                                : value === "hidden"
+                                ? "statusCellHidden"
+                                : ""
                             }
+                            `}
                             onClick={() =>
                               column.id === "remove" &&
                               handleRemoveProduct(row["id"])

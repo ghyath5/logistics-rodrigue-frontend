@@ -6,7 +6,6 @@ import Main from "./screens/Main";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import { BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer";
 
 function App() {
   const [isOpen, setOpen] = useState(true);
@@ -18,7 +17,6 @@ function App() {
           <SideBar isOpen={isOpen} setOpen={setOpen} />
           <Main />
         </div>
-        <Footer />
       </BrowserRouter>
     </div>
   );

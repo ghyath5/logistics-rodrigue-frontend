@@ -1,10 +1,12 @@
 :root {
   --bg-color: #fafafa;
-  --dark-green: green;
+  --dark-green: #63894A;
+  --light-green: #33c770;
   --white: #fff;
   --light-gray: #dadada;
   --gray: #495767;
-  --delete-red: rgb(192, 22, 22);
+  --delete-red: #c01616;
+  --light-red: #fadfdf;
   --sidebar-width: 250px;
   --border-radius: 4px;
 }
@@ -120,4 +122,28 @@
   color: var(--delete-red);
   font-weight: 600;
   cursor: pointer;
+}
+
+.tableEditBtn {
+  color: var(--dark-green);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.statusCellVisible {
+  color: var(--light-green);
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgb(201, 241, 210);
+  padding: 5% 10%;
+  border-radius: 50px;
+}
+
+.statusCellHidden {
+  color: rgb(253, 181, 27);
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgb(255, 239, 210);
+  padding: 5% 10%;
+  border-radius: 50px;
 }
