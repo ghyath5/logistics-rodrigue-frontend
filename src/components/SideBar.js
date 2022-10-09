@@ -28,6 +28,10 @@ const SideBar = ({ isOpen, setOpen }) => {
         hideBackdrop={deviceType !== "laptop" ? false : true}
         variant={deviceType !== "laptop" ? "temporary" : "persistent"}
       >
+        <div className="profile-container my-3">
+          <h2 className="profile p-3">SS</h2>
+          <h5 className="my-1">Sonia Stewart </h5>
+        </div>
         <SideBarList toggleDrawer={toggleDrawer} />
       </SwipeableDrawer>
     </>

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 
 const BtnContained = ({ title }) => {
   return (
-    <Button className="capitalize btnContained" variant="contained">
+    <Button className="capitalize btnContained " variant="contained">
       {title}
     </Button>
   );

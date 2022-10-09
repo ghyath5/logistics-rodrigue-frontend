@@ -3,17 +3,19 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import BtnOutlined from "./BtnOutlined";
 
 const SideBarList = ({ toggleDrawer }) => {
   const myList = [
-    { text: "Inbox", icon: <InboxIcon /> },
-    { text: "Starred", icon: <MailIcon /> },
-    { text: "Send email", icon: <InboxIcon /> },
-    { text: "Drafts", icon: <MailIcon /> },
+    { text: "Dashboard" },
+    { text: "Orders"  },
+    { text: "Customers" },
+    { text: "Products" },
+    { text: "Promotions" },
+    { text: "Staff Members" },
+    { text: "Vehciles" },
+    { text: "Finalise Deliveries" },
   ];
   return (
     <Box
@@ -25,13 +27,16 @@ const SideBarList = ({ toggleDrawer }) => {
         {myList.map((item, index) => (
           <ListItem key={item.text} disablePadding>
             {/* onClick={() => toggleDrawer()} */}
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+            <ListItemButton className="list-btn ">
+               <ListItemText primary={item.text} className="fw-bolde"/>
             </ListItemButton>
           </ListItem>
         ))}
       </List>
+      <div className="my-2">
+
+      <BtnOutlined title="Log out" />
+      </div>
     </Box>
   );
 };
