@@ -14,9 +14,9 @@ const ScheduleCrad1 = ({last,icon3,title3,value3,km}) => {
     // } `}
   >
     <div className=" text-center  ">
-      <img src={icon3} className="mb-3" ></img>
+      <img src={icon3} className="mb-3" alt='icon' />
        <h4 className="m-0 deliveriesValue">{value3}</h4>
-      <h5 className='fs-6 my-2 deliveriesTitle'>{title3}</h5>
+      <h5 className='fs-7 my-2 deliveriesTitle'>{title3}</h5>
     </div>
   </div>   )
 }

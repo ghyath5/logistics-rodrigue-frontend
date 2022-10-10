@@ -18,7 +18,7 @@ code {
 }
 
 .dashboardBg {
-  background-image: url("../src/assets/trucksBg.jpg");
+  background-image: url("../src/assets/trucksBg.jpg") ;
   margin: 0 !important;
   height: 300px;
   background-repeat: no-repeat;
@@ -26,8 +26,19 @@ code {
   background-position: center;
   
 }
+.dashboardBgCover{
+  background-color: rgba(0,0,0,.5);
+  height: 100%;
+
+
+}
 .dashboardTitleContainer{
+  position: relative;
+  position: absolute;
+    top: 0;
   padding-top:120px ;
+  
+
 }
 .dashboardTitle{
 color: var(--white);

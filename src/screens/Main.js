@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 const Main = () => {
   return (
     <>
-      <div className="position-relative px-2 py-2 px-sm-4 py-sm-2 mainContainer">
+      <div className="position-relative  mainContainer">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
