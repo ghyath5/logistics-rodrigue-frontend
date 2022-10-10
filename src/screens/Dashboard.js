@@ -15,11 +15,10 @@ import KiloMetre from "../assets/kilometre.svg";
 const Dashboard = () => {
   return (
     <div>
-        <div className="dashboardBg">
-      <div className="dashboardBgCover"></div>
+      <div className="dashboardBg">
+        <div className="dashboardBgCover"></div>
+      </div>
 
-        </div>
-     
       <div className="mx-5 dashboardTitleContainer">
         <h6 className="dashboardTitle">Welcome back</h6>
         <h3 className="dashboardTitle">Sonia Stewart</h3>
