@@ -13,6 +13,7 @@ const StatsCard = ({ last, title, value }) => {
       } `}
     >
       <div className="statsCard text-center py-5">
+        
         <h5 className="m-0">{title}</h5>
         <h3>{value}</h3>
       </div>

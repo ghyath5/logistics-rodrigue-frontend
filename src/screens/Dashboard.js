@@ -53,11 +53,11 @@ const Dashboard = () => {
           <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
         </div>
         <div className="container-tomorrow">
-          <div className="dashboard-inner my-4">
+          <div className="dashboard-inner my-4 py-2">
             <ScheduleCrad1 title3="Deliveries for " icon3={Routs} />
           </div>
           <hr className="mx-5 line"></hr>
-          <div className="  d-flex  flex-wrap my-4 list-deliveries">
+          <div className="  d-flex  flex-wrap my-4 list-deliveries py-2">
             <ScheduleCrad1 title3="Vehicle Used " icon3={Bus} value3={50} />
             <ScheduleCrad1
               title3="Deliveries for "

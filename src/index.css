@@ -12,36 +12,53 @@ code {
     monospace;
 }
 
+@media screen and (max-width: 500px) {
+  .finaliseTitl{
+    display: flex;
+    flex-direction: column;
+  }
+  .searchInputContainer{
+    width: fit-content;
+  }
+  .deliveriesTitle{
+    border-bottom: 1px solid var(--dark-green);
+    padding-bottom: 15px;
+    margin-top: 20px;
+  }
+}
+.finaliseTitl{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+
 .container-tomorrow {
   border: 1px solid #93d16a;
   margin: auto 10px;
 }
 
 .dashboardBg {
-  background-image: url("../src/assets/trucksBg.jpg") ;
+  background-image: url("../src/assets/trucksBg.jpg");
   margin: 0 !important;
   height: 300px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  
 }
-.dashboardBgCover{
-  background-color: rgba(0,0,0,.5);
+.dashboardBgCover {
+  background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
-
-
 }
-.dashboardTitleContainer{
+.dashboardTitleContainer {
   position: relative;
   position: absolute;
-    top: 0;
-  padding-top:120px ;
-  
-
+  top: 0;
+  padding-top: 120px;
 }
-.dashboardTitle{
-color: var(--white);
+.dashboardTitle {
+  color: var(--white);
 }
 .dashboard-inner {
   text-align: -webkit-center;
@@ -94,23 +111,27 @@ li:first-child {
   font-weight: bold !important;
   border-color: var(--dark-green) !important;
 }
-.list-deliveries{
+.list-deliveries {
   justify-content: space-around;
-
 }
 
- .scheduleCard{
+.scheduleCard {
   width: 190px;
-
- }
- .line{
+}
+.line {
   color: var(--dark-green);
   font-weight: bolder;
- }
- .deliveriesValue {
+}
+.deliveriesValue {
   color: var(--dark-green);
- }
- .deliveriesTitle{
+}
+.deliveriesTitle {
   color: var(--dark-green);
+}
 
- }
+.finaliseTitle{
+  color: var(--gray);
+}
+.finaliseTitle1{
+  color: var(--dark-green) !important;
+}
