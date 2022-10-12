@@ -117,9 +117,11 @@ const FinaliseTable = ({ columns, rows }) => {
                                 column.id === "viewRoutes" ? "viewRoute" : ""
                               }`}
                             >
-                              {column.id === "estimatedRevenue"
-                                ? `$ ${value}`
-                                : value}
+                               {column.id === "estimatedRevenue" ? `$ ${value}` :
+                               column.id === "numberOfDeliveries"? `${value} Deliveries`:
+                               column.id === "driversScheduled"? `${value} Drivers`:
+                               column.id === "vehiclesUsed"? `${value} Vehicles`:
+                               column.id === "estimatedDistance"? `${value} Km`: value}
                               {/* {column.id === "numberOfDeliveries" ? `${value} Drivers` : value} */}
                             </span>
                           </TableCell>

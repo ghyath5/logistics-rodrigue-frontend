@@ -100,7 +100,7 @@ const Finalise = () => {
           <img src={seacrIcon} alt="searchIcon" />
         </div>
       </div>
-      <div>
+      <div className="finaliseTableContainer">
         <FinaliseTable columns={columns} rows={rows} />
       </div>
     </div>
