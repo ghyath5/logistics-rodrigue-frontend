@@ -1,10 +1,10 @@
 import React from "react";
-import ScheduleCrad from "../components/ScheduleCrad";
+import ScheduleCrad from "../components/ScheduleCard";
 import BtnContained from "../components/BtnContained";
 import Seam from "../assets/seam.svg";
 import BoxFill from "../assets/Box-fil.svg";
 import TruckFill from "../assets/truck-fill.svg";
-import ScheduleCrad1 from "../components/ScheduleCrad1";
+import ScheduleCrad1 from "../components/ScheduleCard1";
 import Bus from "../assets/bus.svg";
 import Routs from "../assets/routs.svg";
 import Person from "../assets/personIcon.svg";
@@ -53,8 +53,8 @@ const Dashboard = () => {
           <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
         </div>
         <div className="container-tomorrow">
-          <div className="dashboard-inner my-4 py-2">
-            <ScheduleCrad1 title3="Deliveries for " icon3={Routs} />
+          <div className="dashboard-inner my-4">
+            <ScheduleCrad1 title3="Deliveries for "  classes={'no-border'} icon3={Routs} />
           </div>
           <hr className="mx-5 line"></hr>
           <div className="  d-flex  flex-wrap my-4 list-deliveries py-2">

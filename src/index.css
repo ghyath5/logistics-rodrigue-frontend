@@ -25,12 +25,15 @@ code {
     padding-bottom: 15px;
     margin-top: 20px;
   }
+  .no-border .deliveriesTitle{
+    border: none!important;
+  }
+  
 }
 .finaliseTitl{
   display: flex;
   justify-content: space-between;
-  align-items: center;
-
+ 
 }
 
 
@@ -51,15 +54,18 @@ code {
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
 }
-.dashboardTitleContainer {
+
+.dashboardTitleContainer  {
   position: relative;
   position: absolute;
   top: 0;
   padding-top: 120px;
 }
-.dashboardTitle {
-  color: var(--white);
+
+.dashboardTitle  {
+    color: var(--white);
 }
+
 .dashboard-inner {
   text-align: -webkit-center;
 }
@@ -81,6 +87,7 @@ code {
 li:first-child {
   border-top: 0.1px solid var(--light-gray);
 }
+
 
 .profile-container {
   display: flex;

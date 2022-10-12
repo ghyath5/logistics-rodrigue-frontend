@@ -123,7 +123,7 @@ const Products = () => {
   }, [allProducts]);
 
   return (
-    <div>
+    <div className="px-2 py-2 px-sm-4 py-sm-2">
       <div className="pageHeader d-sm-flex justify-content-between align-items-center my-4">
         <h3 className="headerTitle">Manage Products</h3>
         <div className="d-flex gap-2">

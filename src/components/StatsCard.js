@@ -1,7 +1,7 @@
 import React from "react";
 import useDeviceType from "../hooks/useDeviceType";
 
-const StatsCard = ({ last, title, value }) => {
+const StatsCard = ({icon, last, title, value }) => {
   const { deviceType } = useDeviceType();
 
   return (
@@ -13,7 +13,7 @@ const StatsCard = ({ last, title, value }) => {
       } `}
     >
       <div className="statsCard text-center py-5">
-        
+        {icon && <img src={icon} alt="icon" className="mb-3"/>}
         <h5 className="m-0">{title}</h5>
         <h3>{value}</h3>
       </div>

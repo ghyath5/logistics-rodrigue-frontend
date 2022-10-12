@@ -14,7 +14,7 @@ const Header = ({ isOpen, setOpen }) => {
 
   return (
     <Box className="headerContainer h-100">
-      <AppBar position="relative">
+      <AppBar position="fixed">
         <Toolbar className="d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center">
             <IconButton
