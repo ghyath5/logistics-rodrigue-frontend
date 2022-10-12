@@ -105,25 +105,23 @@ const FinaliseTable = ({ columns, rows }) => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row, j) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
+                    <TableRow hover role="checkbox" tabIndex={-1} key={j}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <span
-                              Classname={`${
-                                column.id === "viewRoute"
-                                  ? "Myclass"
-                                  : ""
+                              className={`${
+                                column.id === "viewRoutes" ? "viewRoute" : ""
                               }`}
-                            > {value}</span>
+                            >
+                              {column.id === "estimatedRevenue"
+                                ? `$ ${value}`
+                                : value}
+                              {/* {column.id === "numberOfDeliveries" ? `${value} Drivers` : value} */}
+                            </span>
                           </TableCell>
                         );
                       })}

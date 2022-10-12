@@ -28,6 +28,9 @@ code {
   .no-border .deliveriesTitle{
     border: none!important;
   }
+  .headerSearch{
+  margin-right: auto;
+ }
   
 }
 .finaliseTitl{
@@ -81,8 +84,7 @@ code {
 .list-btn {
   border-bottom: 1px solid var(--light-gray) !important;
   color: var(--dark-green) !important;
-  /* border-top: 1px solid green !important; */
-}
+ }
 
 li:first-child {
   border-top: 0.1px solid var(--light-gray);
@@ -142,3 +144,11 @@ li:first-child {
 .finaliseTitle1{
   color: var(--dark-green) !important;
 }
+.viewRoute{
+  color: var(--dark-green);
+  cursor: pointer;
+ }
+ .MuiToolbar-root p{
+  margin-bottom: 0;
+ }
+ 

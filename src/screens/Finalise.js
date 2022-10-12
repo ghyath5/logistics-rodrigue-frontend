@@ -93,9 +93,9 @@ const Finalise = () => {
         />
         <FinaliseCard title="Esitmated Distance " value="Km" title1={222.5} />
       </div>
-      <div className="container my-5   finaliseTitl">
-        <h3 className="headerTitle my-2">Previous Delivery Routes</h3>
-        <div className="searchInputContainer d-flex px-2 py-1">
+      <div className="container   finaliseTitl d-flex justify-content-between align-items-center my-4">
+        <h3 className="headerTitle headerSearch my-2">Previous Delivery Routes</h3>
+        <div className="searchInputContainer headerSearch d-flex px-2 py-1">
           <input placeholder="search" className="border-0" />
           <img src={seacrIcon} alt="searchIcon" />
         </div>
