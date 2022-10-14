@@ -34,8 +34,8 @@ code {
   .finaliseTableContainer {
     margin: auto 10px;
   }
-  .input-delviry-address{
-     flex-wrap: wrap;
+  .input-delviry-address {
+    flex-wrap: wrap;
     gap: 0px !important;
   }
 }
@@ -155,25 +155,71 @@ li:first-child {
   margin-bottom: 0;
 }
 
-.customerDetailsContainer{
+.customerDetailsContainer {
   border: 1px solid var(--light-gray);
   border-radius: 5px;
- }
-.titleCustomerDetail{
-
-color: var(--gray);
 }
-.MuiFormControl-root{
+.titleCustomerDetail {
+  color: var(--gray);
+}
+.MuiFormControl-root {
   width: -webkit-fill-available;
-
 }
 
- .input-outline{
+.input-outline {
   width: -webkit-fill-available;
-
- }
- .input-delviry-address{
+}
+.input-delviry-address {
   gap: 20px;
- }
- 
- 
+}
+
+.input-customer {
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  padding: 4px 10px;
+  border-color: var(--light-gray);
+  color: var(--gray);
+  outline: none;
+  border: 1px solid var(--light-gray);
+}
+.lable-customer {
+  font-size: small;
+  color: var(--light-gray);
+  font-weight: bold;
+}
+textarea {
+  border: 1px solid var(--light-gray);
+  border-color: var(--light-gray);
+  border-radius: 5px;
+  color: var(--gray);
+  outline: none;
+  background-color: var(--light-gray);
+  padding-left: 10px;
+}
+.input-dropDown {
+  border: 1px solid var(--light-gray);
+  background-color: var(--light-gray);
+  outline: none;
+  border-radius: 5px;
+}
+.input-ff {
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  padding: 4px 10px;
+  border-color: var(--light-gray);
+  color: var(--gray);
+  outline: none;
+  border: 1px solid var(--light-gray);
+}
+.MuiFormControl-root {
+  margin: 0 !important;
+  background-color: var(--light-gray);
+}
+
+.MuiInputBase-root .MuiSelect-select {
+  padding: 5px;
+  border: 1px solid var(--light-gray) !important;
+}
+.MuiInputBase-root .MuiSelect-select :focus{
+  outline: none !important;
+}

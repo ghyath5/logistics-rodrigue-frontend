@@ -1,39 +1,17 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import DropDown from "./DropDown";
 import InputOutlined from "./InputOutlined";
 
-const currencies = [
-  {
-    value: "USD",
-    label: "$",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
+import ReactPhonNumber from "./ReactPhonNumber";
 
 const AddNewCustomer = () => {
-  const [currency, setCurrency] = React.useState("EUR");
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
   return (
-    <>
+    <section>
       <div className="">
         <h4 className="headerTitle my-3">Add New Customer</h4>
       </div>
       <div className="customerDetailsContainer  ">
-        <div className=" text-center mt-3">
+        <div className=" text-center mt-5 mb-4">
           <h5 className="titleCustomerDetail">Customer Details</h5>
         </div>
         <hr className="lineCustomer mx-5"></hr>
@@ -41,20 +19,27 @@ const AddNewCustomer = () => {
           <h5 className="titleCustomerDetail mx-5">Business Details</h5>
         </div>
         <div className="mx-5">
-          <InputOutlined lable="Business Name" defaultValue="Business Name" />
-          <InputOutlined lable="ABN" defaultValue="ABN" />
+          <InputOutlined
+            lable="Business Name"
+            defaultValue="Business Name"
+            type="text"
+          />
+          <InputOutlined lable="ABN" defaultValue="ABN" type="text" />
           <InputOutlined
             lable="Delivery Address"
             defaultValue="Being Typing to search for a location"
+            type="text"
           />
           <div className="d-flex flex-row justify-content-between  input-delviry-address  ">
             <InputOutlined
               lable="Delivery Address Line1"
               defaultValue="Delivery Address Line1"
+              type="text"
             />
             <InputOutlined
               lable="Delivery Address Line2"
               defaultValue="Delivery Address Line1"
+              type="text"
             />
           </div>
           <div className="row justify-content-between    ">
@@ -63,24 +48,9 @@ const AddNewCustomer = () => {
             </div>
             <div className=" col-md-6  justify-content-between input-delviry-address  ">
               <div className="row">
-                <div className="col-md-6 mt-4">
-                  <TextField
-                    id="outlined-select-currency-native"
-                    select
-                    size="small"
-                    label="Native select"
-                    value={currency}
-                    onChange={handleChange}
-                    SelectProps={{
-                      native: true,
-                    }}
-                  >
-                    {currencies.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
+                <div className="col-md-6 align-self-end">
+                  {/* <InputOutlined/> */}
+                  <DropDown lable="state" defaultValue="state" />
                 </div>
                 <div className="col-md-6">
                   <InputOutlined lable="Postcode" defaultValue="Postcode" />
@@ -88,13 +58,17 @@ const AddNewCustomer = () => {
               </div>
             </div>
           </div>
-          <div className="mt-4">
-            <TextField
+          <div className="mt-4 d-flex   flex-column">
+            <lable className="lable-customer mb-2">
+              Custimer Notes (Max of 250 Characters)*
+            </lable>
+
+            <textarea
               id="outlined-multiline-static"
               label="Custimer Notes (Max of 250 Characters)"
               multiline
               rows={4}
-              defaultValue="Default Value"
+              placeholder="Default Value"
             />
           </div>
         </div>
@@ -107,11 +81,17 @@ const AddNewCustomer = () => {
             <InputOutlined lable="Last Name" defaultValue="Last Name" />
           </div>
           <div>
-            <InputOutlined lable="Email Address" defaultValue="Email Address" />
+            <InputOutlined
+              lable="Email Address"
+              defaultValue="Email Address"
+              email="email"
+              value="value"
+            />
           </div>
         </div>
+        <ReactPhonNumber />
       </div>
-    </>
+    </section>
   );
 };
 
