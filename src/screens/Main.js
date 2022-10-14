@@ -5,6 +5,7 @@ import Login from "./Login";
 import Products from "./Products";
 import Footer from "../components/Footer";
 import Finalise from "./Finalise";
+import Customers from "./Customers";
 
 const Main = () => {
   return (
@@ -14,6 +15,7 @@ const Main = () => {
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
           <Route exact path="finalise" element={<Finalise />} />
+          <Route exact path="customers" element={<Customers />} />
           <Route path="login" element={<Login />} />
         </Routes>
       </div>
