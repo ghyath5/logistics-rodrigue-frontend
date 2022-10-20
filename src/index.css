@@ -38,6 +38,14 @@ code {
     flex-wrap: wrap;
     gap: 0px !important;
   }
+  .mainBtn .btnContained{
+    margin-bottom: 10px;
+    margin-left: 0 !important;
+    margin-right: 10px;
+    }
+}
+.mainBtn .btnContained{
+margin-left: 10px;
 }
 .finaliseTitl {
   display: flex;
@@ -222,4 +230,17 @@ textarea {
 }
 .MuiInputBase-root .MuiSelect-select :focus{
   outline: none !important;
+}
+
+.orderConainer{
+  background-color: #93D16A;
+  border-radius: 5px;
+  border:1px solid var(--dark-green);
+  padding: 25px 20px ;
+}
+.order-title{
+  color: var(--gray);
+}
+.primary-line{
+  border-left: 1px solid var(--gray);
 }

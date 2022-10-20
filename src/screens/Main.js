@@ -6,6 +6,7 @@ import Products from "./Products";
 import Footer from "../components/Footer";
 import Finalise from "./Finalise";
 import Customers from "./Customers";
+import Orders from "./Orders";
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
           <Route exact path="products" element={<Products />} />
           <Route exact path="finalise" element={<Finalise />} />
           <Route exact path="customers" element={<Customers />} />
+          <Route exact path="orders" element={<Orders/>}/>
           <Route path="login" element={<Login />} />
         </Routes>
       </div>

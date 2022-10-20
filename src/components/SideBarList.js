@@ -12,7 +12,7 @@ const SideBarList = ({ toggleDrawer }) => {
 
   const myList = [
     { text: "Dashboard", goTo: "/" },
-    { text: "Orders" },
+    { text: "Orders" ,goTo:"/orders"},
     { text: "Customers",goTo: "/customers" },
     { text: "Products", goTo: "/products" },
     { text: "Promotions" },
