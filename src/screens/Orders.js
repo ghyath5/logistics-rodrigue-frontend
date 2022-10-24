@@ -17,8 +17,7 @@ const Orders = () => {
         </div>
         </div>
         <div className="d-flex justify-content-between mt-2 flex-wrap">
-            <input type="date" className="gap-3 mb-3"/>
-        <div className="searchInputContainer headerSearch d-flex px-2 py-1">
+         <div className="searchInputContainer headerSearch d-flex px-2 py-1">
           <input placeholder="search" className="border-0" />
           <img src={seacrIcon} alt="searchIcon" />
         </div>
