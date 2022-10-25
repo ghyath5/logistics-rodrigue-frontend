@@ -11,6 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+@media screen and (max-width: 700px) {
+}
 
 @media screen and (max-width: 500px) {
   .finaliseTitl {
@@ -38,6 +40,39 @@ code {
     flex-wrap: wrap;
     gap: 0px !important;
   }
+  .mainBtn .btnContained {
+    margin-bottom: 10px;
+    margin-left: 0 !important;
+    margin-right: 10px;
+  }
+  .order-title-border {
+    border-right: none !important;
+    border-bottom: 1px solid var(--dark-green);
+    margin-bottom: 10px;
+    padding: 10px 0;
+    height: 90px !important;
+  }
+  .orderConainer {
+    display: flex !important;
+    justify-content: start !important;
+  }
+  .Address-orders {
+    border-right: none !important;
+    margin-bottom: 20px;
+    border-bottom: none !important;
+    text-align-last: left;
+  }
+  .left-orders{
+    text-align-last: left;
+  }
+  .hhhh{
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+.mainBtn .btnContained {
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .finaliseTitl {
   display: flex;
@@ -220,6 +255,30 @@ textarea {
   padding: 5px;
   border: 1px solid var(--light-gray) !important;
 }
-.MuiInputBase-root .MuiSelect-select :focus{
+.MuiInputBase-root .MuiSelect-select :focus {
   outline: none !important;
+}
+
+.orderConainer {
+  background-color: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--dark-green);
+  padding: 25px 20px;
+}
+.order-title {
+  color: var(--dark-green);
+}
+.primary-line {
+  border-left: 1px solid var(--gray);
+}
+.order-primary {
+  color: var(--light-gray);
+}
+.order-primary-number {
+  color: var(--gray);
+}
+
+.order-title-border {
+  border-right: 1px solid var(--dark-green);
+  height: 72px;
 }
