@@ -6,14 +6,14 @@ export default function useDeviceType() {
   useEffect(() => {
     window.screen.width < 450
       ? setDeviceType("mobile")
-      : window.screen.width < 770
+      : window.screen.width < 900
       ? setDeviceType("tablet")
       : setDeviceType("laptop");
 
     window.addEventListener("resize", () => {
       window.screen.width < 450
         ? setDeviceType("mobile")
-        : window.screen.width < 770
+        : window.screen.width < 900
         ? setDeviceType("tablet")
         : setDeviceType("laptop");
     });
