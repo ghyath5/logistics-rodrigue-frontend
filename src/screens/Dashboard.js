@@ -1,89 +1,91 @@
 import React from "react";
-import ScheduleCrad from "../components/ScheduleCard";
-import BtnContained from "../components/BtnContained";
-import Seam from "../assets/seam.svg";
-import BoxFill from "../assets/Box-fil.svg";
-import TruckFill from "../assets/truck-fill.svg";
-import ScheduleCrad1 from "../components/ScheduleCard1";
-import Bus from "../assets/bus.svg";
+import BtnContained from "../components/layout/BtnContained";
+import TomorrowsCard from "../components/dashboard/TomorrowsCard";
 import Routs from "../assets/routs.svg";
+import StatsCard from "../components/products/StatsCard";
+import Bus from "../assets/bus.svg";
 import Person from "../assets/personIcon.svg";
 import Dollar from "../assets/dollarIcon.svg";
 import KiloMetre from "../assets/kilometre.svg";
-// import BoxDelevries from "../assets/box-deliveris.svg"
+import Layout from "../components/partials/Layout";
 
 const Dashboard = () => {
   return (
-    <div>
-        <div className="dashboardBg">
-      <div className="dashboardBgCover"></div>
-
+    <>
+      <div className="dashboardBg position-relative">
+        <div className="dashboardBgCover"></div>
+        <div className="dashboardTitleContainer text-white">
+          <h6>Welcome back</h6>
+          <h3>Sonia Stewart</h3>
+          <BtnContained title="MANAGE MY INVENTORY" />
         </div>
-     
-      <div className="mx-5 dashboardTitleContainer">
-        <h6 className="dashboardTitle">Welcome back</h6>
-        <h3 className="dashboardTitle">Sonia Stewart</h3>
-        <BtnContained title="MANAGE MY INVENTORY" />
       </div>
-      <div className="px-2 py-2 px-sm-4 py-sm-2">
-        <div className="container mt-5">
-          <h3 className="headerTitle my-2">Schedule Overview</h3>
-        </div>
-        <div className="d-flex flex-wrap">
-          <ScheduleCrad
-            title1="Orders"
-            value1={1}
-            title2="Need confirming for tomorrow"
-            icon={Seam}
+      <Layout dashboard>
+        <h3 className="headerTitle mb-2 mt-0">Schedule Overview</h3>
+        <div className="row m-0">
+          <StatsCard
+            title="Orders"
+            value={1}
+            desc="Need confirming for tomorrow"
           />
-          <ScheduleCrad
-            title1="Delivries"
-            value1={5}
-            title2="Scheduled for tomorrow"
-            icon={BoxFill}
+          <StatsCard
+            title="Delivries"
+            value={5}
+            desc="Scheduled for tomorrow"
           />
-          <ScheduleCrad
-            title1="Drivers"
-            value1={4}
-            title2="Scheduled for tomorrow"
-            icon={TruckFill}
+          <StatsCard
+            title="Drivers"
+            value={4}
+            desc="Scheduled for tomorrow"
+            last={true}
           />
         </div>
-        <div className="container">
-          <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
-        </div>
-        <div className="container-tomorrow">
+        <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
+        <div className="dashboard-tomorrow pt-2">
           <div className="dashboard-inner my-4">
-            <ScheduleCrad1 title3="Deliveries for "  classes={'no-border'} icon3={Routs} />
+            <TomorrowsCard
+              title="Deliveries for "
+              classes={"no-border"}
+              icon={Routs}
+              value="-"
+            />
           </div>
           <hr className="mx-5 line"></hr>
-          <div className="  d-flex  flex-wrap my-4 list-deliveries py-2">
-            <ScheduleCrad1 title3="Vehicle Used " icon3={Bus} value3={50} />
-            <ScheduleCrad1
-              title3="Deliveries for "
-              icon3={Dollar}
-              value3={12}
+          <div className="row my-4 justify-content-between py-2">
+            <TomorrowsCard
+              title="Vehicles"
+              classes={"no-border"}
+              icon={Bus}
+              value="12"
             />
-            <ScheduleCrad1
-              title3="Drivers Assigned  "
-              icon3={Person}
-              value3={6}
+            <TomorrowsCard
+              title="Sale"
+              classes={"no-border"}
+              icon={Dollar}
+              value="50"
             />
-            <ScheduleCrad1
-              title3="Estimated Distance "
-              icon3={KiloMetre}
-              value3={330.5}
-              km="Km"
+            <TomorrowsCard
+              title="Drivers"
+              classes={"no-border"}
+              icon={Person}
+              value="7"
             />
-            <ScheduleCrad1
-              title3="Deliveries for "
-              icon3={KiloMetre}
-              value3={12}
+            <TomorrowsCard
+              title="Distance"
+              classes={"no-border"}
+              icon={KiloMetre}
+              value="420"
+            />
+            <TomorrowsCard
+              title="Deliveries"
+              classes={"no-border"}
+              icon={KiloMetre}
+              value="43"
             />
           </div>
         </div>
-      </div>
-    </div>
+      </Layout>
+    </>
   );
 };
 

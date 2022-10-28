@@ -4,16 +4,16 @@ export default function useDeviceType() {
   const [deviceType, setDeviceType] = useState("laptop");
 
   useEffect(() => {
-    window.screen.width < 450
+    window.innerWidth < 450
       ? setDeviceType("mobile")
-      : window.screen.width < 900
+      : window.innerWidth < 900
       ? setDeviceType("tablet")
       : setDeviceType("laptop");
 
     window.addEventListener("resize", () => {
-      window.screen.width < 450
+      window.innerWidth < 450
         ? setDeviceType("mobile")
-        : window.screen.width < 900
+        : window.innerWidth < 900
         ? setDeviceType("tablet")
         : setDeviceType("laptop");
     });

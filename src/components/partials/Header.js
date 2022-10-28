@@ -5,15 +5,15 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import useDeviceType from "../hooks/useDeviceType";
-import logo from "../assets/logo.svg";
+import useDeviceType from "../../hooks/useDeviceType";
+import logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
 
   return (
-    <Box className="headerContainer h-100">
+    <Box className="headerContainer">
       <AppBar position="fixed">
         <Toolbar className="d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center">

@@ -1,8 +1,6 @@
 import React from "react";
 import DropDown from "./DropDown";
-import InputOutlined from "./InputOutlined";
-
-import ReactPhonNumber from "./ReactPhonNumber";
+import InputOutlined from "./layout/InputOutlined";
 
 const AddNewCustomer = () => {
   return (
@@ -10,15 +8,15 @@ const AddNewCustomer = () => {
       <div className="">
         <h4 className="headerTitle my-3">Add New Customer</h4>
       </div>
-      <div className="customerDetailsContainer  ">
+      <div className="formsContainer">
         <div className=" text-center mt-5 mb-4">
-          <h5 className="titleCustomerDetail">Customer Details</h5>
+          <h5 className="formsTitles mx-3 mx-sm-4">Customer Details</h5>
         </div>
-        <hr className="lineCustomer mx-5"></hr>
+        <hr className="line mx-5"></hr>
         <div>
-          <h5 className="titleCustomerDetail mx-5">Business Details</h5>
+          <h5 className="formsTitles mx-3 mx-sm-4">Business Details</h5>
         </div>
-        <div className="mx-5">
+        <div className=" mx-3 mx-sm-4">
           <InputOutlined
             lable="Business Name"
             defaultValue="Business Name"
@@ -30,7 +28,7 @@ const AddNewCustomer = () => {
             defaultValue="Being Typing to search for a location"
             type="text"
           />
-          <div className="d-flex flex-row justify-content-between  input-delviry-address  ">
+          <div className="d-flex flex-row gap-2">
             <InputOutlined
               lable="Delivery Address Line1"
               defaultValue="Delivery Address Line1"
@@ -42,14 +40,13 @@ const AddNewCustomer = () => {
               type="text"
             />
           </div>
-          <div className="row justify-content-between    ">
+          <div className="row justify-content-between">
             <div className="col-md-6">
               <InputOutlined lable="Suburb" defaultValue="Suburb" />
             </div>
-            <div className=" col-md-6  justify-content-between input-delviry-address  ">
+            <div className=" col-md-6 justify-content-between">
               <div className="row">
                 <div className="col-md-6 align-self-end">
-                  {/* <InputOutlined/> */}
                   <DropDown lable="state" defaultValue="state" />
                 </div>
                 <div className="col-md-6">
@@ -58,9 +55,9 @@ const AddNewCustomer = () => {
               </div>
             </div>
           </div>
-          <div className="mt-4 d-flex   flex-column">
-            <lable className="lable-customer mb-2">
-              Custimer Notes (Max of 250 Characters)*
+          <div className="mt-4 d-flex flex-column">
+            <lable className="formsLable mb-2">
+              Customer Notes (Max of 250 Characters)*
             </lable>
 
             <textarea
@@ -72,11 +69,11 @@ const AddNewCustomer = () => {
             />
           </div>
         </div>
-        <div className="mt-5 ">
-          <h5 className="titleCustomerDetail mx-5">Account Representative</h5>
+        <div className="mt-5">
+          <h5 className="formsTitles mx-3 mx-sm-4">Account Representative</h5>
         </div>
-        <div className="mx-5">
-          <div className="d-flex flex-row justify-content-between  input-delviry-address  ">
+        <div className="mx-3 mx-sm-4">
+          <div className="d-flex flex-row gap-2">
             <InputOutlined lable="First Name" defaultValue="First Name" />
             <InputOutlined lable="Last Name" defaultValue="Last Name" />
           </div>
@@ -89,7 +86,6 @@ const AddNewCustomer = () => {
             />
           </div>
         </div>
-        <ReactPhonNumber />
       </div>
     </section>
   );

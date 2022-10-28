@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import BtnContained from "../components/BtnContained";
-import BtnOutlined from "../components/BtnOutlined";
+import BtnContained from "../components/layout/BtnContained";
+import BtnOutlined from "../components/layout/BtnOutlined";
 import seacrIcon from "../assets/search.svg";
-import StatsCard from "../components/StatsCard";
+import StatsCard from "../components/products/StatsCard";
 import PRODUCTS from "../data/products";
-import ProductsTable from "../components/ProductsTable";
+import ProductsTable from "../components/products/ProductsTable";
+import Layout from "../components/partials/Layout";
 
 const columns = [
   { id: "code", label: "Code", minWidth: 100 },
@@ -123,8 +124,8 @@ const Products = () => {
   }, [allProducts]);
 
   return (
-    <div className="px-2 py-2 px-sm-4 py-sm-2">
-      <div className="pageHeader d-sm-flex justify-content-between align-items-center my-4">
+    <Layout>
+      <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="headerTitle">Manage Products</h3>
         <div className="d-flex gap-2">
           <BtnContained title="Add Products" />
@@ -151,7 +152,7 @@ const Products = () => {
           rows={rows}
         />
       </div>
-    </div>
+    </Layout>
   );
 };
 

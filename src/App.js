@@ -3,8 +3,8 @@ import "./index.css";
 import "./App.css";
 import { useState } from "react";
 import Main from "./screens/Main";
-import Header from "./components/Header";
-import SideBar from "./components/SideBar";
+import Header from "./components/partials/Header";
+import SideBar from "./components/partials/SideBar";
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
