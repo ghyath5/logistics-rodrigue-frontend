@@ -223,6 +223,7 @@ textarea {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
   background-color: var(--white);
+  min-height: 180px;
 }
 
 .statsCard h3 {

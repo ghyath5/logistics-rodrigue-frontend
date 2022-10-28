@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
-import FinaliseTable from "../components/FinaliseTable";
-import StatsCard from "../components/products/StatsCard";
+import StatsCard from "../components/layout/StatsCard";
 import SearchInput from "../components/layout/SearchInput";
 import finalise from "../data/finalise";
+import Table from "../components/layout/Table";
 
 const columns = [
   { id: "date", label: "Date", minWidth: 100 },
@@ -33,6 +33,7 @@ const columns = [
     id: "viewRoutes",
     label: "View Routes ",
     minWidth: 100,
+    class: "viewRoute",
   },
 ];
 
@@ -97,7 +98,7 @@ const Finalise = () => {
         <SearchInput />
       </div>
       <div className="finaliseTableContainer">
-        <FinaliseTable columns={columns} rows={rows} />
+        <Table columns={columns} rows={rows} />
       </div>
     </Layout>
   );

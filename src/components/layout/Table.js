@@ -1,6 +1,6 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
+import Tablee from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-export default function ProductsTable({ setRows, setAllItems, columns, rows }) {
+export default function Table({ columns, rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -21,15 +21,10 @@ export default function ProductsTable({ setRows, setAllItems, columns, rows }) {
     setPage(0);
   };
 
-  const handleRemoveProduct = (id) => {
-    setAllItems((prev) => prev.filter((p) => p.id !== id));
-    setRows((prev) => prev.filter((p) => p.id !== id));
-  };
-
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Tablee stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -54,27 +49,20 @@ export default function ProductsTable({ setRows, setAllItems, columns, rows }) {
                       return (
                         <TableCell key={i} align={column.align}>
                           <span
-                            className={`${
-                              column.id === "remove"
-                                ? "tableDeleteBtn"
-                                : column.id === "edit"
-                                ? "tableEditBtn"
-                                : ""
-                            } 
-                            ${column.id !== "code" ? "text-capitalize" : ""}
-                            ${
-                              column.id === "status" && value === "visible"
-                                ? "statusCellVisible"
-                                : value === "hidden"
-                                ? "statusCellHidden"
-                                : ""
-                            }
+                            className={`
+                              ${column.class ? column.class : ""} 
+                              ${column.id !== "code" ? "text-capitalize" : ""}
+                              ${
+                                column.id === "status" && value === "visible"
+                                  ? column.class?.split("/")[0]
+                                  : column.class?.split("/")[1]
+                              }
                             `}
                             onClick={() =>
-                              column.id === "remove" &&
-                              handleRemoveProduct(row["id"])
+                              column.action && column.action(row["id"])
                             }
                           >
+                            {/* handleRemoveProduct(row["id"]) */}
                             {column.id === "price" ? `$ ${value}` : value}
                           </span>
                         </TableCell>
@@ -84,7 +72,7 @@ export default function ProductsTable({ setRows, setAllItems, columns, rows }) {
                 );
               })}
           </TableBody>
-        </Table>
+        </Tablee>
       </TableContainer>
       <TablePagination
         className="tablePagination"

@@ -2,57 +2,10 @@ import React, { useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
 import seacrIcon from "../assets/search.svg";
-import StatsCard from "../components/products/StatsCard";
+import StatsCard from "../components/layout/StatsCard";
 import PRODUCTS from "../data/products";
-import ProductsTable from "../components/products/ProductsTable";
+import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
-
-const columns = [
-  { id: "code", label: "Code", minWidth: 100 },
-  { id: "name", label: "Name", minWidth: 150 },
-  {
-    id: "category",
-    label: "Category",
-    minWidth: 150,
-  },
-  {
-    id: "price",
-    label: "Price",
-    minWidth: 50,
-  },
-  {
-    id: "units",
-    label: "Units per box",
-    minWidth: 50,
-  },
-  {
-    id: "priority",
-    label: "Priority",
-    minWidth: 50,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 100,
-  },
-  {
-    id: "remove",
-    label: "Remove ",
-    minWidth: 100,
-  },
-  {
-    id: "edit",
-    label: "Edit ",
-    minWidth: 100,
-  },
-  // {
-  //   id: "size",
-  //   label: "Size\u00a0(km\u00b2)",
-  //   minWidth: 170,
-  //   align: "right",
-  //   format: (value) => value.toLocaleString("en-US"),
-  // },
-];
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState(PRODUCTS);
@@ -60,6 +13,55 @@ const Products = () => {
   const [productsActive, setTotalActive] = useState(0);
   const [productsHidden, setProductsHidden] = useState(0);
   const [rows, setRows] = useState([]);
+
+  const columns = [
+    { id: "code", label: "Code", minWidth: 100 },
+    { id: "name", label: "Name", minWidth: 150 },
+    {
+      id: "category",
+      label: "Category",
+      minWidth: 150,
+    },
+    {
+      id: "price",
+      label: "Price",
+      minWidth: 50,
+    },
+    {
+      id: "units",
+      label: "Units per box",
+      minWidth: 50,
+    },
+    {
+      id: "priority",
+      label: "Priority",
+      minWidth: 50,
+    },
+    {
+      id: "status",
+      label: "Status",
+      minWidth: 100,
+      class: "statusCellVisible/statusCellHidden",
+    },
+    {
+      id: "remove",
+      label: "Remove ",
+      minWidth: 100,
+      class: "tableDeleteBtn",
+      action: (value) => handleRemoveProduct(value),
+    },
+    {
+      id: "edit",
+      label: "Edit ",
+      minWidth: 100,
+      class: "tableEditBtn",
+    },
+  ];
+
+  const handleRemoveProduct = (id) => {
+    setAllProducts((prev) => prev.filter((p) => p.id !== id));
+    setRows((prev) => prev.filter((p) => p.id !== id));
+  };
 
   function createData(
     id,
@@ -145,12 +147,7 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <ProductsTable
-          setAllItems={setAllProducts}
-          setRows={setRows}
-          columns={columns}
-          rows={rows}
-        />
+        <Table columns={columns} rows={rows} />
       </div>
     </Layout>
   );

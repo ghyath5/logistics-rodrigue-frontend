@@ -2,7 +2,7 @@ import React from "react";
 import BtnContained from "../components/layout/BtnContained";
 import TomorrowsCard from "../components/dashboard/TomorrowsCard";
 import Routs from "../assets/routs.svg";
-import StatsCard from "../components/products/StatsCard";
+import StatsCard from "../components/layout/StatsCard";
 import Bus from "../assets/bus.svg";
 import Person from "../assets/personIcon.svg";
 import Dollar from "../assets/dollarIcon.svg";
