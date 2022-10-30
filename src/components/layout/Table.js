@@ -47,7 +47,15 @@ export default function Table({ columns, rows }) {
                     {columns.map((column, i) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={i} align={column.align}>
+                        <TableCell
+                          key={i}
+                          align={column.align}
+                          className={
+                            column.id === "Statu" || column.id === "NameModel"
+                              ? "stuts"
+                              : ""
+                          }
+                        >
                           <span
                             className={`
                               ${column.class ? column.class : ""} 
@@ -57,13 +65,34 @@ export default function Table({ columns, rows }) {
                                   ? column.class?.split("/")[0]
                                   : column.class?.split("/")[1]
                               }
+                              ${
+                                column.id === "Statu" &&
+                                value === "Registration Due"
+                                  ? column.class?.split("/")[0]
+                                  : value === "On Road"
+                                  ? column.class?.split("/")[1]
+                                  : value === "Out of service"
+                                  ? column.class?.split("/")[2]
+                                  : column.class?.split("/")[3]
+                              }
                             `}
                             onClick={() =>
                               column.action && column.action(row["id"])
                             }
                           >
                             {/* handleRemoveProduct(row["id"]) */}
-                            {column.id === "price" ? `$ ${value}` : value}
+                            {column.id === "price" ? (
+                              `$ ${value}`
+                            ) : column.id === "NameModel" ? (
+                              <div className="d-flex flex-column">
+                                <span className="">{value.split("/")[0]}</span>
+                                <span className="dateNamemodel">
+                                  {value.split("/")[1]}
+                                </span>
+                              </div>
+                            ) : (
+                              value
+                            )}
                           </span>
                         </TableCell>
                       );

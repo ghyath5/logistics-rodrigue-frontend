@@ -7,6 +7,9 @@ import Footer from "../components/partials/Footer";
 import Finalise from "./Finalise";
 import Customers from "./Customers";
 import Orders from "./Orders";
+import { Vehicles } from "./Vehicles";
+import Promotions from "./Promotions";
+import { StaffMembers } from "./StaffMembers";
 
 const Main = () => {
   return (
@@ -18,6 +21,9 @@ const Main = () => {
           <Route exact path="finalise" element={<Finalise />} />
           <Route exact path="customers" element={<Customers />} />
           <Route exact path="orders" element={<Orders />} />
+          <Route exact path="vehicles" element={<Vehicles/>} />
+          <Route exact path="promotions" element={<Promotions/>} />
+          <Route exact path="stuffmember" element={<StaffMembers/>} />
           <Route path="login" element={<Login />} />
         </Routes>
       </div>

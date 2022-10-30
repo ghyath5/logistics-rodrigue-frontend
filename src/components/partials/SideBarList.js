@@ -15,9 +15,9 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Orders", goTo: "/orders" },
     { text: "Customers", goTo: "/customers" },
     { text: "Products", goTo: "/products" },
-    { text: "Promotions" },
-    { text: "Staff Members" },
-    { text: "Vehciles" },
+    { text: "Promotions",goTo:"/promotions" },
+    { text: "Staff Members",goTo:"/stuffmember" },
+    { text: "Vehciles",goTo:"/vehicles" },
     { text: "Finalise Deliveries", goTo: "/finalise" },
   ];
 

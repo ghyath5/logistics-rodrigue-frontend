@@ -1,7 +1,7 @@
 import React from "react";
 import useDeviceType from "../../hooks/useDeviceType";
 
-const StatsCard = ({ icon, last, title, value }) => {
+const StatsCard = ({ icon, last, title, value,classes }) => {
   const { deviceType } = useDeviceType();
 
   return (
@@ -9,6 +9,8 @@ const StatsCard = ({ icon, last, title, value }) => {
       className={`${
         last && deviceType === "tablet"
           ? "col-12 p-0"
+          : classes
+          ? classes
           : "p-0 col-12 col-sm-6 col-md-4"
       } `}
     >
