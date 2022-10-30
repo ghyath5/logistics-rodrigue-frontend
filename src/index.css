@@ -93,7 +93,10 @@ code {
 .stuts {
   text-align: center !important;
 }
-.w{
+.w {
   width: 100% !important;
 }
- 
+.ArrowBackIcon {
+  color: var(--dark-green);
+  cursor: pointer;
+}

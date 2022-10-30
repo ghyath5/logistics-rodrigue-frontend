@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
@@ -7,7 +8,7 @@ import STAFF from "../data/staffmember";
 
 export const StaffMembers = () => {
   const [allStaff, setAllStaff] = useState(STAFF);
-
+const nav = useNavigate();
   const [rows, setRows] = useState([]);
   const columns = [
     {
@@ -110,7 +111,7 @@ export const StaffMembers = () => {
           <SearchInput />
         </div>
         <div>
-          <BtnContained title="add new staff member" />
+          <BtnContained title="add new staff member" handelClick={()=>nav("/AddNewStaffMember")} />
         </div>
       </div>
       <div className="mt-4">

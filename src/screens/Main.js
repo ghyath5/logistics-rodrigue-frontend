@@ -11,6 +11,8 @@ import { Vehicles } from "./Vehicles";
 import Promotions from "./Promotions";
 import { StaffMembers } from "./StaffMembers";
 import AddNewCustomer from "../components/AddNewCustomer";
+import AddNewVehicle from "./AddNewVehicle";
+import AddNewStaffMember from "./AddNewStaffMember";
 
 const Main = () => {
   return (
@@ -26,6 +28,8 @@ const Main = () => {
           <Route exact path="promotions" element={<Promotions/>} />
           <Route exact path="stuffmember" element={<StaffMembers/>} />
           <Route exact path="addnewcustomer" element={<AddNewCustomer/>} />
+          <Route exact path="addnewvehicle" element={<AddNewVehicle/>} />
+          <Route exact path="AddNewStaffMember" element={<AddNewStaffMember/>} />
           <Route path="login" element={<Login />} />
         </Routes>
       </div>
