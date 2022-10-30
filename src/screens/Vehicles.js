@@ -106,8 +106,12 @@ export const Vehicles = ({ classes }) => {
         </div>
       </div>
       <div className="d-flex flex-wrap  ">
-        <StatsCard title="heloo" value={4} />
-        {/* <StatsCardVehclie title="Total No of Vehicles" value={4} /> */}
+        {/* <StatsCard title="heloo" value={4} /> */}
+        <StatsCardVehclie title="Total No of Vehicles" value={4} />
+        <StatsCardVehclie title="Total No of Vehicles" value={4} />
+        <StatsCardVehclie title="Total No of Vehicles" value={4} />
+        <StatsCardVehclie title="Total No of Vehicles" value={4} />
+        <StatsCardVehclie title="Total No of Vehicles" value={4} />
       </div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>

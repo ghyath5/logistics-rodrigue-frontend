@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const BtnContained = ({ title }) => {
+const BtnContained = ({ title,handelClick }) => {
   return (
-    <Button className="capitalize btnContained " variant="contained">
+    <Button className="capitalize btnContained " variant="contained" onClick={handelClick}>
       {title}
     </Button>
   );

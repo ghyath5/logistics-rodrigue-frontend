@@ -3,7 +3,7 @@ import seacrIcon from "../../assets/search.svg";
 
 const SearchInput = ({ value, setValue }) => {
   return (
-    <div className="d-flex justify-content-between mt-2 flex-wrap">
+    <div className="d-flex justify-content-between   flex-wrap">
       <div className="searchInputContainer d-flex px-2 py-1">
         <input
           placeholder="search"

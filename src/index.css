@@ -25,7 +25,7 @@ code {
   outline: none !important;
 }
 
-.statsCardVehicle h4 {
+.statsCardVehicle h5 {
   color: var(--gray);
   opacity: 0.8;
   font-weight: 400 !important;
@@ -93,3 +93,7 @@ code {
 .stuts {
   text-align: center !important;
 }
+.w{
+  width: 100% !important;
+}
+ 
