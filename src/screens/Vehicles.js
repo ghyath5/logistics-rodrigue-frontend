@@ -101,7 +101,7 @@ export const Vehicles = ({ classes }) => {
 
   return (
     <Layout>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex justify-content-between align-items-center my-4">
         <div>
           <h3 className="headerTitle my-2">Vehicles</h3>
         </div>

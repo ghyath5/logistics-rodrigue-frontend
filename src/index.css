@@ -39,7 +39,9 @@ code {
   border: 2px solid var(--light-gray);
   background-color: var(--white);
   min-height: 180px;
+  margin-left: 1rem;
 }
+
 .promotion-container {
   border: 1px solid var(--light-gray);
   border-radius: 3px;
@@ -99,4 +101,12 @@ code {
 .ArrowBackIcon {
   color: var(--dark-green);
   cursor: pointer;
+}
+@media screen and (max-width: 450px) {
+  .statsCardVehicleCon{
+    width: 100%;
+  }
+  .statsCardVehicle{
+    margin: 0 !important;
+  }
 }
