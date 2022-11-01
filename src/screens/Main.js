@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Login from "./Login";
 import Products from "./Products";
 import Footer from "../components/partials/Footer";
 import Finalise from "./Finalise";
@@ -24,13 +23,16 @@ const Main = () => {
           <Route exact path="finalise" element={<Finalise />} />
           <Route exact path="customers" element={<Customers />} />
           <Route exact path="orders" element={<Orders />} />
-          <Route exact path="vehicles" element={<Vehicles/>} />
-          <Route exact path="promotions" element={<Promotions/>} />
-          <Route exact path="stuffmember" element={<StaffMembers/>} />
-          <Route exact path="addnewcustomer" element={<AddNewCustomer/>} />
-          <Route exact path="addnewvehicle" element={<AddNewVehicle/>} />
-          <Route exact path="AddNewStaffMember" element={<AddNewStaffMember/>} />
-          <Route path="login" element={<Login />} />
+          <Route exact path="vehicles" element={<Vehicles />} />
+          <Route exact path="promotions" element={<Promotions />} />
+          <Route exact path="stuffmember" element={<StaffMembers />} />
+          <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
+          <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
+          <Route
+            exact
+            path="AddNewStaffMember"
+            element={<AddNewStaffMember />}
+          />
         </Routes>
       </div>
       <Footer />
