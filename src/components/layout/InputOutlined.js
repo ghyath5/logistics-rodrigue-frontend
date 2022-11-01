@@ -1,5 +1,5 @@
 import * as React from "react";
-const InputOutlined = ({ lable, defaultValue, id, type, value }) => {
+const InputOutlined = ({ lable, defaultValue, id, type, value ,setValue}) => {
   return (
     <div className="mt-4 input-outline d-flex flex-column">
       <lable for={id} className="formsLable mb-2">
@@ -11,6 +11,7 @@ const InputOutlined = ({ lable, defaultValue, id, type, value }) => {
         className="formsInput"
         type={type}
         value={value}
+        onChange={setValue}
       />
     </div>
   );

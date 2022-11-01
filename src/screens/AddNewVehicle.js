@@ -22,7 +22,7 @@ const AddNewVehicle = () => {
           <h4 className="headerTitle my-4 mx-2">Vehicle Details</h4>
         </div>
         <hr className="line mx-5"></hr>
-        <div className="mx-5">
+        <div className="mx-4">
           <div className="row">
             <div className="col-sm-12 col-md-6 ">
               <InputOutlined lable="Make" defaultValue="Make" type="text" />
