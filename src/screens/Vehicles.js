@@ -8,7 +8,6 @@ import Vehciles from "../data/vehicle";
 import StatsCard from "../components/layout/StatsCard";
 import { useNavigate } from "react-router-dom";
 
-
 export const Vehicles = ({ classes }) => {
   const [allVehciles, setAllVehclies] = useState(Vehciles);
   const [rows, setRows] = useState([]);
@@ -106,7 +105,10 @@ export const Vehicles = ({ classes }) => {
           <h3 className="headerTitle my-2">Vehicles</h3>
         </div>
         <div>
-          <BtnContained title="Add Vehicles" handelClick={() => nav("/addnewvehicle")} />
+          <BtnContained
+            title="Add Vehicles"
+            handelClick={() => nav("/addnewvehicle")}
+          />
         </div>
       </div>
       <div className="d-flex flex-wrap  ">

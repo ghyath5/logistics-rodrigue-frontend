@@ -4,11 +4,11 @@ import BtnContained from "../components/layout/BtnContained";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
-import STAFF from "../data/staffmember";
+import STAFF from "../data/StaffMembers";
 
 export const StaffMembers = () => {
   const [allStaff, setAllStaff] = useState(STAFF);
-const nav = useNavigate();
+  const nav = useNavigate();
   const [rows, setRows] = useState([]);
   const columns = [
     {
@@ -111,7 +111,10 @@ const nav = useNavigate();
           <SearchInput />
         </div>
         <div>
-          <BtnContained title="add new staff member" handelClick={()=>nav("/AddNewStaffMember")} />
+          <BtnContained
+            title="add new staff member"
+            handelClick={() => nav("/AddNewStaffMember")}
+          />
         </div>
       </div>
       <div className="mt-4">

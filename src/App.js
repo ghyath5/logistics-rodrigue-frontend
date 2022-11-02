@@ -10,7 +10,7 @@ import AuthRoutes from "./screens/AuthRoutes";
 
 function App() {
   const [isOpen, setOpen] = useState(true);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState("sss");
   return (
     <div className="App">
       <BrowserRouter>
