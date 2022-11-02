@@ -8,6 +8,7 @@ import BtnContained from "../components/layout/BtnContained";
 const AddNewStaffMember = () => {
   const nav = useNavigate();
   const [firstName, setFirstName] = useState("")
+  const [lasttName, setLastName] = useState("")
   console.log(firstName)
   const handleSubmit = (e)=>{
     e.prevent.default();
@@ -36,7 +37,7 @@ const AddNewStaffMember = () => {
                 defaultValue="First Name"
                 type="text"
                 value={firstName}
-                // setValue={()=>setFirstName()}
+                setValue={(e)=>setFirstName(e.target.value)}
                 name="firstNmae"
                 id="firstName"
               />
@@ -46,6 +47,10 @@ const AddNewStaffMember = () => {
                 lable="Last Name"
                 defaultValue="Last Name"
                 type="text"
+                value={lasttName}
+                setValue={(e)=>setLastName(e.target.value)}
+                name="lasttName"
+                id="firslasttNametName"
               />
             </div>
           </div>

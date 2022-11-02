@@ -102,6 +102,30 @@ code {
   color: var(--dark-green);
   cursor: pointer;
 }
+
+.delete-promotion-btn .btnContained{
+  background-color: var(--delete-red)!important;
+}
+
+.customer-promotion{
+border: 1px solid var(--light-gray);
+border-radius: 3px;
+}
+.title-promotion{
+  font-size: small;
+  font-weight: 600;
+  color: var(--gray);
+}
+.title-promotion-with{
+  color: var(--gray);
+  font-size: medium;
+  font-weight: 600;
+}
+.container-promotion{
+  border-right: 1px solid var(--dark-green);
+}
+
+
 @media screen and (max-width: 450px) {
   .statsCardVehicleCon{
     width: 100%;

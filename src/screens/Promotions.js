@@ -3,8 +3,10 @@ import BtnContained from "../components/layout/BtnContained";
 import Layout from "../components/partials/Layout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const Promotions = () => {
+  const nav = useNavigate();
   return (
     <Layout>
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -12,7 +14,10 @@ const Promotions = () => {
           <h3 className="headerTitle my-2">Promotions</h3>
         </div>
         <div>
-          <BtnContained title="Add Promotion" />
+          <BtnContained
+            title="Add Promotion"
+            handelClick={() => nav("/addpromotion")}
+          />
         </div>
       </div>
       <div className="promotion-container ps-4 pe-2 py-3">
