@@ -59,7 +59,7 @@ export const AddPromotion = () => {
       <div className="customer-promotion pb-2">
         <div className="text-end pe-2 mt-2">
 
-        <HighlightOffIcon color="error" fontSize="small"/>
+        <HighlightOffIcon color="error" fontSize="small" className="circel-delete-icon"/>
         </div>
 
       <div className=" row   mx-1 my-1 ">
