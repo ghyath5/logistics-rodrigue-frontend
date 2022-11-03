@@ -63,28 +63,28 @@ export const AddPromotion = () => {
         </div>
 
       <div className=" row   mx-1 my-1 ">
-        <div className="col-md-3 container-promotion">
-          <h5 style={{color:"#63894A"}} className="text-left">Woolworths Gregory Hills SM-1331</h5>
+        <div className="col-md-3 container-promotion text-left">
+          <h5 style={{color:"#63894A"}} className="text-left title-promotion-">Woolworths Gregory Hills SM-1331</h5>
           <div className="d-flex ">
             <span className="title-promotion text-left fs-6 me-1">Phone: </span>
             <span className="title-promotion-with text-left ">1234546</span>
           </div>
         </div>
-        <div className="col-md-3 text-center container-promotion">
+        <div className="col-md-3   container-promotion">
           <p className="title-promotion">Address</p>
           <p className="title-promotion-with">
             33 village Circuit Gregory Hills New South Wales 2778
           </p>
         </div>
-        <div className="col-md-2 text-center container-promotion">
+        <div className="col-md-2   container-promotion">
           <p className="title-promotion">Assigned On </p>
           <p className="title-promotion-with">24 October 2022</p>
         </div>
-        <div className="col-md-2  text-center container-promotion">
+        <div className="col-md-2   container-promotion">
           <p className="title-promotion">Assigned By </p>
           <p className="title-promotion-with">Sonia Stewart </p>
         </div>
-        <div className="col-md-2  text-center">
+        <div className="col-md-2   ">
           <p className="title-promotion">Amount Owing </p>
         </div>
       </div>

@@ -123,9 +123,13 @@ border-radius: 3px;
 }
 .container-promotion{
   border-right: 1px solid var(--dark-green);
+  text-align: center;
 }
 .circel-delete-icon{
   cursor: pointer;
+}
+.title-promotion-{
+  text-align: left;
 }
 
 
@@ -136,4 +140,19 @@ border-radius: 3px;
   .statsCardVehicle{
     margin: 0 !important;
   }
+}
+
+@media screen and (max-width: 900px) {
+  .container-promotion{
+    border-right: none;
+    text-align: left;
+   }
+   .title-promotion{
+    margin-bottom: 0!important;
+    margin-top: 5px;
+   }
+   .title-promotion-with{
+    margin-top: 5px;
+
+   }
 }
