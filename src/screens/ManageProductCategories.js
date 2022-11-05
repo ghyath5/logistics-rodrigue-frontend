@@ -3,11 +3,11 @@ import Layout from "../components/partials/Layout";
 import BtnContained from "../components/layout/BtnContained";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import PRODUCTS from "../data/products";
-import Table from "../components/layout/Table";
+ import Table from "../components/layout/Table";
 import Categories from "../data/categories";
+import Model from "../components/layout/Model";
 
-const ManageProductCategories = () => {
+const ManageProductCategories = ({handleOpen}) => {
   const [allCategories, setAllCategories] = useState(Categories);
   const [categoriesTotal, setCategoriesTotal] = useState(0);
   const [categoriesActive, setTotalActive] = useState(0);
@@ -118,7 +118,7 @@ const ManageProductCategories = () => {
         </div>
         <div className="d-flex gap-3 flex-wrap">
           <div className="">
-            <BtnContained title="Add" />
+            <Model  />
           </div>
         </div>
       </div>
