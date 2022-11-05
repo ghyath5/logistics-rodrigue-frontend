@@ -1,9 +1,9 @@
 import * as React from "react";
-const InputOutlined = ({ lable, defaultValue, id, type, value ,setValue}) => {
+const InputOutlined = ({ lable, defaultValue, id, type, value, setValue }) => {
   return (
-    <div className="mt-4 input-outline d-flex flex-column">
+    <div className="  input-outline d-flex flex-column">
       <label for={id} className="formsLable mb-2">
-        {lable}*
+        {lable}
       </label>
       <input
         placeholder={defaultValue}

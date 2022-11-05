@@ -114,7 +114,7 @@ const Customers = () => {
           <div>
             <BtnContained
               title="ADD NEW CUSTOMER"
-              handelClick={() => nav("/addnewcustomer")}
+              onClick={() => nav("/addnewcustomer")}
             />
           </div>
           <div>

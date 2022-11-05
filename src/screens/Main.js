@@ -13,6 +13,8 @@ import AddNewCustomer from "../components/AddNewCustomer";
 import AddNewVehicle from "./AddNewVehicle";
 import AddNewStaffMember from "./AddNewStaffMember";
 import { AddPromotion } from "./AddPromotion";
+import AddProducts from "./AddProducts";
+import ManageProductCategories from "./ManageProductCategories";
 
 const Main = () => {
   return (
@@ -30,6 +32,12 @@ const Main = () => {
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
           <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
           <Route exact path="addpromotion" element={<AddPromotion />} />
+          <Route exact path="addproducts" element={<AddProducts />} />
+          <Route
+            exact
+            path="managecategories"
+            element={<ManageProductCategories />}
+          />
 
           <Route
             exact

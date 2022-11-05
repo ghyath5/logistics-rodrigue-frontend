@@ -113,7 +113,7 @@ export const StaffMembers = () => {
         <div>
           <BtnContained
             title="add new staff member"
-            handelClick={() => nav("/AddNewStaffMember")}
+            onClick={() => nav("/AddNewStaffMember")}
           />
         </div>
       </div>

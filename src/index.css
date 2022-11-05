@@ -140,6 +140,10 @@ border-radius: 3px;
   .statsCardVehicle{
     margin: 0 !important;
   }
+  .product-hide-show{
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 @media screen and (max-width: 900px) {
