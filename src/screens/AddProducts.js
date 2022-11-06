@@ -20,8 +20,7 @@ const AddProducts = () => {
       </div>
       <div>
         <CardProduct />
-        <CardProduct />
-      </div>
+       </div>
       <div className="d-flex justify-content-between flex-wrap my-4 gap-2">
         <div className="  ">
           <BtnOutlined title="Add New" />

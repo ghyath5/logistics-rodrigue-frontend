@@ -5,8 +5,8 @@ import BtnOutlined from "./BtnOutlined";
  
 const CardProduct = () => {
   return (
-    <div className="customer-promotion pb-2 mb-4">
-      <div className="text-end pe-2 pt-1  ">
+    <div className="customer-promotion p-2 mb-4 position-relative">
+      <div className="  pe-2 pt-1 position-absolute  top-0 end-0 ">
         <HighlightOffIcon
           color="error"
           fontSize="small"
@@ -45,10 +45,10 @@ const CardProduct = () => {
         <div className="col-md-2 col-sm-6 row gap-2">
           <span className="formsLable align-self-center mb-2">Hide from order</span>
           <div className="gap-2 product-hide-show">
-            <div className="mb-2">
+            <div className="mb-2 show  ">
               <BtnOutlined title="Show" />
             </div>
-            <div>
+            <div className="hide">
               <BtnOutlined title="Hide" />
             </div>
           </div>

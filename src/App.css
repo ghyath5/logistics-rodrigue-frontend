@@ -5,7 +5,8 @@
   /* --dark-green: #63894A;
   --light-green: #33c770; */
   --white: #fff;
-  --light-gray: #dadada;
+  --light-gray: #eeebeb;
+  --light-gray-1: #d6d3d3;
   --gray: #495767;
   --delete-red: #c01616;
   --light-red: #fadfdf;
@@ -85,7 +86,7 @@
 }
 
 .formsLable {
-  color: var(--light-gray);
+  color: var(--light-gray-1);
   font-weight: bold;
 }
 

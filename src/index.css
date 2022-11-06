@@ -131,6 +131,18 @@ border-radius: 3px;
 .title-promotion-{
   text-align: left;
 }
+.product-hide-show .btnOutlined{
+  width: -webkit-fill-available;
+
+}
+.show .btnOutlined{
+  color: var(--dark-green) !important;
+}
+.hide .btnOutlined{
+  color: var(--delete-red) !important;
+  border: 2px solid var(--delete-red) !important;
+
+}
 
 
 @media screen and (max-width: 450px) {

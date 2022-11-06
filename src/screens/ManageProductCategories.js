@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
-import BtnContained from "../components/layout/BtnContained";
-import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
  import Table from "../components/layout/Table";
 import Categories from "../data/categories";
 import Model from "../components/layout/Model";
+import CategoryCard from "../components/layout/CategoryCard";
 
 const ManageProductCategories = ({handleOpen}) => {
   const [allCategories, setAllCategories] = useState(Categories);
@@ -117,12 +117,17 @@ const ManageProductCategories = ({handleOpen}) => {
           <h4 className="headerTitle my-3 mx-2">Manage Product Categories</h4>
         </div>
         <div className="d-flex gap-3 flex-wrap">
-          <div className="">
+          <div className="gap-2">
             <Model  />
           </div>
         </div>
       </div>
-      <div>
+      <div className="d-flex  flex-wrap mt-2">
+        <CategoryCard/>
+        <CategoryCard/>
+        <CategoryCard/>
+      </div>
+      <div className="mt-4">
         <Table columns={columns} rows={rows} />
       </div>
     </Layout>
