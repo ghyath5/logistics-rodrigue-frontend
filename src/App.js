@@ -10,7 +10,7 @@ import AuthRoutes from "./screens/AuthRoutes";
 
 function App() {
   const [isOpen, setOpen] = useState(true);
-  const [token, setToken] = useState("sss");
+  const [token, setToken] = useState(null);
   return (
     <div className="App">
       <BrowserRouter>
@@ -23,7 +23,7 @@ function App() {
             </div>
           </>
         ) : (
-          <AuthRoutes />
+          <AuthRoutes setToken={setToken} />
         )}
       </BrowserRouter>
     </div>

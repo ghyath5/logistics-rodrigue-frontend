@@ -105,6 +105,23 @@ textarea {
   padding: 10px;
 }
 
+/*Auth section*/
+.registrationContainer {
+  background-image: url('assets/trucksBg.jpg');
+  background-position: center;
+  min-height: 100vh;
+}
+
+.registrationForm {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+}
+
+.bigLogo {
+  width: 480px;
+}
+
 /*Dashboard section*/
 
 .dashboardBg {
@@ -317,10 +334,26 @@ textarea {
     border: 0 !important;
     padding: 10px 0;
   }
+
+  .bigLogo {
+    width: 300px;
+  }
+
+  .registrationContainer {
+    align-content: start;
+  }
+
+  .registrationContainer>div:first-child {
+    margin: 40px 0;
+  }
 }
 
 @media screen and (max-width: 900px) {
   .mainContainer {
     margin-left: 0;
+  }
+
+  .bigLogo {
+    width: clamp(290px, 85%, 380px);
   }
 }

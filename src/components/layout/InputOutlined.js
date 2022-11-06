@@ -1,9 +1,17 @@
 import * as React from "react";
-const InputOutlined = ({ lable, defaultValue, id, type, value ,setValue}) => {
+const InputOutlined = ({
+  lable,
+  defaultValue,
+  id,
+  type,
+  value,
+  setValue,
+  autoComplete,
+}) => {
   return (
     <div className="mt-4 input-outline d-flex flex-column">
       <lable for={id} className="formsLable mb-2">
-        {lable}*
+        {lable}
       </lable>
       <input
         placeholder={defaultValue}
@@ -11,7 +19,8 @@ const InputOutlined = ({ lable, defaultValue, id, type, value ,setValue}) => {
         className="formsInput"
         type={type}
         value={value}
-        onChange={setValue}
+        onChange={(e) => setValue(e.target.value)}
+        autoComplete={autoComplete}
       />
     </div>
   );
