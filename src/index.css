@@ -102,6 +102,37 @@ code {
   color: var(--dark-green);
   cursor: pointer;
 }
+
+.delete-promotion-btn .btnContained{
+  background-color: var(--delete-red)!important;
+}
+
+.customer-promotion{
+border: 1px solid var(--light-gray);
+border-radius: 3px;
+}
+.title-promotion{
+  font-size: small;
+  font-weight: 600;
+  color: var(--gray);
+}
+.title-promotion-with{
+  color: var(--gray);
+  font-size: medium;
+  font-weight: 600;
+}
+.container-promotion{
+  border-right: 1px solid var(--dark-green);
+  text-align: center;
+}
+.circel-delete-icon{
+  cursor: pointer;
+}
+.title-promotion-{
+  text-align: left;
+}
+
+
 @media screen and (max-width: 450px) {
   .statsCardVehicleCon{
     width: 100%;
@@ -109,4 +140,23 @@ code {
   .statsCardVehicle{
     margin: 0 !important;
   }
+  .product-hide-show{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container-promotion{
+    border-right: none;
+    text-align: left;
+   }
+   .title-promotion{
+    margin-bottom: 0!important;
+    margin-top: 5px;
+   }
+   .title-promotion-with{
+    margin-top: 5px;
+
+   }
 }

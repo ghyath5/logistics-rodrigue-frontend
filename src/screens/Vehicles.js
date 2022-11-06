@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BtnContained from "../components/layout/BtnContained";
-import InputOutlined from "../components/layout/InputOutlined";
-import { StatsCardVehclie } from "../components/layout/StatsCardVehclie";
+ import { StatsCardVehclie } from "../components/layout/StatsCardVehclie";
 import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Vehciles from "../data/vehicle";
-import StatsCard from "../components/layout/StatsCard";
-import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
 
 export const Vehicles = ({ classes }) => {
   const [allVehciles, setAllVehclies] = useState(Vehciles);
@@ -107,7 +105,7 @@ export const Vehicles = ({ classes }) => {
         <div>
           <BtnContained
             title="Add Vehicles"
-            handelClick={() => nav("/addnewvehicle")}
+            onClick={() => nav("/addnewvehicle")}
           />
         </div>
       </div>

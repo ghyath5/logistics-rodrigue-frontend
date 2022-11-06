@@ -6,6 +6,7 @@ import StatsCard from "../components/layout/StatsCard";
 import PRODUCTS from "../data/products";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState(PRODUCTS);
@@ -13,6 +14,7 @@ const Products = () => {
   const [productsActive, setTotalActive] = useState(0);
   const [productsHidden, setProductsHidden] = useState(0);
   const [rows, setRows] = useState([]);
+  const nav = useNavigate();
 
   const columns = [
     { id: "code", label: "Code", minWidth: 100 },
@@ -130,8 +132,8 @@ const Products = () => {
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="headerTitle">Manage Products</h3>
         <div className="d-flex gap-2">
-          <BtnContained title="Add Products" />
-          <BtnOutlined title="Manage categories" />
+          <BtnContained title="Add Products" onClick={()=>nav("/addproducts")} />
+          <BtnOutlined title="Manage categories" onClick={()=>nav("/managecategories")} />
         </div>
       </div>
       <div className="d-flex flex-wrap ">
