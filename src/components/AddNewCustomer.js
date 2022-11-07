@@ -1,12 +1,23 @@
 import React from "react";
 import DropDown from "./DropDown";
 import InputOutlined from "./layout/InputOutlined";
+import Layout from "./partials/Layout";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const AddNewCustomer = () => {
+  const nav = useNavigate();
   return (
-    <section>
-      <div className="">
-        <h4 className="headerTitle my-3">Add New Customer</h4>
+    <Layout>  
+      <div className="d-flex align-items-center justify-content-between flex-wrap ">
+        <div className="d-flex align-items-center ">
+          <ArrowBackIcon
+            className="ArrowBackIcon"
+            fontSize="medium"
+            onClick={() => nav("/customers")}
+          />
+          <h4 className="headerTitle my-3 mx-2">Add New Customer</h4>
+        </div>
       </div>
       <div className="formsContainer">
         <div className=" text-center mt-5 mb-4">
@@ -87,7 +98,7 @@ const AddNewCustomer = () => {
           </div>
         </div>
       </div>
-    </section>
+    </Layout>
   );
 };
 

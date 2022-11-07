@@ -143,6 +143,9 @@ border-radius: 3px;
   border: 2px solid var(--delete-red) !important;
 
 }
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked{
+  color: green !important;
+}
 
 
 @media screen and (max-width: 450px) {
