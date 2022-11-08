@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import InputOutlined from "./InputOutlined";
 import BtnOutlined from "./BtnOutlined";
- 
-const CardProduct = () => {
+
+const CardProduct = ({ rows, id, setNumbersOfProducts, numberOfProducts }) => {
+  // setState(prev => [...prev, {
+  //   name: prodName,
+  //   category, myCategory
+  // }])
+  const [prodName, setProdName] = useState("");
+  const handelClick = () => {
+    console.log(rows);
+    rows.filter((row, i) => i !== id);
+  };
   return (
-    <div className="customer-promotion pb-2 mb-4">
-      <div className="text-end pe-2 pt-1  ">
+    <div className="customer-promotion p-2 mb-4 position-relative">
+      <div
+        className="pe-2 pt-1 position-absolute top-0 end-0 "
+        onClick={() => handelClick()}
+      >
         <HighlightOffIcon
           color="error"
           fontSize="small"
@@ -43,12 +55,14 @@ const CardProduct = () => {
           />
         </div>
         <div className="col-md-2 col-sm-6 row gap-2">
-          <span className="formsLable align-self-center mb-2">Hide from order</span>
+          <span className="formsLable align-self-center mb-2">
+            Hide from order
+          </span>
           <div className="gap-2 product-hide-show">
-            <div className="mb-2">
+            <div className="mb-2 show  ">
               <BtnOutlined title="Show" />
             </div>
-            <div>
+            <div className="hide">
               <BtnOutlined title="Hide" />
             </div>
           </div>

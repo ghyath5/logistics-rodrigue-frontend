@@ -15,6 +15,7 @@ import AddNewStaffMember from "./AddNewStaffMember";
 import { AddPromotion } from "./AddPromotion";
 import AddProducts from "./AddProducts";
 import ManageProductCategories from "./ManageProductCategories";
+import AddNewOrders from "./AddNewOrders";
 
 const Main = () => {
   return (
@@ -34,6 +35,7 @@ const Main = () => {
           <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
           <Route exact path="addpromotion" element={<AddPromotion />} />
           <Route exact path="addproducts" element={<AddProducts />} />
+          <Route exact path="addneworders" element={<AddNewOrders />} />
           <Route
             exact
             path="managecategories"
