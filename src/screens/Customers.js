@@ -35,7 +35,6 @@ const Customers = () => {
       label: "Geocoding Status",
       minWidth: 50,
       class: "tableEditBtn",
-
     },
     {
       id: "paymetMethod",
@@ -114,7 +113,7 @@ const Customers = () => {
           <div>
             <BtnContained
               title="ADD NEW CUSTOMER"
-              onClick={() => nav("/addnewcustomer")}
+              handelClick={() => nav("/addnewcustomer")}
             />
           </div>
           <div>

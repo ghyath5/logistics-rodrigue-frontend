@@ -16,7 +16,7 @@ const Promotions = () => {
         <div>
           <BtnContained
             title="Add Promotion"
-            onClick={() => nav("/addpromotion")}
+            handelClick={() => nav("/addpromotion")}
           />
         </div>
       </div>

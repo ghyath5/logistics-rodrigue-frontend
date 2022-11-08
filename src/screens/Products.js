@@ -132,8 +132,14 @@ const Products = () => {
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="headerTitle">Manage Products</h3>
         <div className="d-flex gap-2">
-          <BtnContained title="Add Products" onClick={()=>nav("/addproducts")} />
-          <BtnOutlined title="Manage categories" onClick={()=>nav("/managecategories")} />
+          <BtnContained
+            title="Add Products"
+            handelClick={() => nav("/addproducts")}
+          />
+          <BtnOutlined
+            title="Manage categories"
+            handleClicked={() => nav("/managecategories")}
+          />
         </div>
       </div>
       <div className="d-flex flex-wrap ">

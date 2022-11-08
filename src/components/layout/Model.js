@@ -26,7 +26,7 @@ const Model = () => {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      <BtnContained title="Add" onClick={handleOpen} />
+      <BtnContained title="Add" handelClick={handleOpen} />
       <Modal
         keepMounted
         open={open}
@@ -43,7 +43,11 @@ const Model = () => {
               <InputOutlined />
               <div className="d-flex justify-content-between mt-4">
                 <BtnOutlined title="Add" />
-                <BtnOutlined title="Cancel" color="error" onClick={handleClose}/>
+                <BtnOutlined
+                  title="Cancel"
+                  color="error"
+                  onClick={handleClose}
+                />
               </div>
             </div>
           </Typography>
