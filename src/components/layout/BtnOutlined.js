@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const BtnOutlined = ({ title, classes, handleClicked }) => {
+const BtnOutlined = ({ title, classes, handleClick }) => {
   return (
     <Button
-      className={`capitalize btnOutlined logout ${classes}`}
+      className={`capitalize btnOutlined ${classes}`}
       variant="outlined"
-      onClick={handleClicked}
+      onClick={handleClick}
     >
       {title}
     </Button>

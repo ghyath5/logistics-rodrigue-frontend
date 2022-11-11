@@ -4,7 +4,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import BtnOutlined from "../layout/BtnOutlined";
 import { useNavigate } from "react-router-dom";
 
 const SideBarList = ({ toggleDrawer }) => {
@@ -15,9 +14,9 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Orders", goTo: "/orders" },
     { text: "Customers", goTo: "/customers" },
     { text: "Products", goTo: "/products" },
-    { text: "Promotions",goTo:"/promotions" },
-    { text: "Staff Members",goTo:"/stuffmember" },
-    { text: "Vehciles",goTo:"/vehicles" },
+    { text: "Promotions", goTo: "/promotions" },
+    { text: "Staff Members", goTo: "/stuffmember" },
+    { text: "Vehciles", goTo: "/vehicles" },
     { text: "Finalise Deliveries", goTo: "/finalise" },
   ];
 
@@ -41,9 +40,6 @@ const SideBarList = ({ toggleDrawer }) => {
           </ListItem>
         ))}
       </List>
-      {/* <div className="mt-5">
-        <BtnOutlined title="Log out" />
-      </div> */}
     </Box>
   );
 };

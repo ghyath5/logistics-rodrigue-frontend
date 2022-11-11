@@ -52,7 +52,7 @@ export default function Table({ columns, rows }) {
                           align={column.align}
                           className={
                             column.id === "Statu" || column.id === "NameModel"
-                              ? "stuts"
+                              ? "text-center"
                               : ""
                           }
                         >
@@ -81,7 +81,8 @@ export default function Table({ columns, rows }) {
                             }
                           >
                             {/* handleRemoveProduct(row["id"]) */}
-                            {column.id === "price" || column.id === "standardPrice"? (
+                            {column.id === "price" ||
+                            column.id === "standardPrice" ? (
                               `$ ${value}`
                             ) : column.id === "NameModel" ? (
                               <div className="d-flex flex-column">

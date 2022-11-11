@@ -13,6 +13,7 @@ import AddNewCustomer from "../components/AddNewCustomer";
 import AddNewVehicle from "./AddNewVehicle";
 import AddNewStaffMember from "./AddNewStaffMember";
 import { AddPromotion } from "./AddPromotion";
+import PromotionDetails from "./PromotionDetails";
 import AddProducts from "./AddProducts";
 import ManageProductCategories from "./ManageProductCategories";
 import AddNewOrders from "./AddNewOrders";
@@ -34,6 +35,7 @@ const Main = () => {
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
           <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
           <Route exact path="addpromotion" element={<AddPromotion />} />
+          <Route exact path="promotionDetails" element={<PromotionDetails />} />
           <Route exact path="addproducts" element={<AddProducts />} />
           <Route exact path="addneworders" element={<AddNewOrders />} />
           <Route

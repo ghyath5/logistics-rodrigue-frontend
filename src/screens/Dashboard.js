@@ -17,7 +17,12 @@ const Dashboard = () => {
         <div className="dashboardTitleContainer text-white">
           <h6>Welcome back</h6>
           <h3>Sonia Stewart</h3>
-          <BtnContained title="MANAGE MY INVENTORY" />
+          <BtnContained
+            title="MANAGE MY INVENTORY"
+            handleClick={() => {
+              console.log("MANAGE");
+            }}
+          />
         </div>
       </div>
       <Layout dashboard>

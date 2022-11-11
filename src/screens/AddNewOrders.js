@@ -9,7 +9,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 const AddNewOrders = () => {
   const [product, setProduct] = useState([1]);
@@ -33,24 +32,23 @@ const AddNewOrders = () => {
           fontSize="medium"
           onClick={() => nav("/orders")}
         />
-        <h4 className="headerTitle my-3 mx-2"> Add New Order</h4>
+        <h4 className="headerTitle my-3 mx-2">Add New Order</h4>
       </div>
       <div className="formsContainer">
-        <div className=" text-center mt-5 mb-4">
+        <div className="text-center mt-5 mb-4">
           <h5 className="formsTitles mx-3 mx-sm-4">New Order Details</h5>
         </div>
+
         <hr className="line mx-5"></hr>
 
-        <div className=" mx-3 mx-sm-4">
+        <div className="mx-3 mx-sm-4">
           <InputOutlined
             lable="Select Customer"
             defaultValue="Business Name"
             type="text"
           />
-
           <div className="mt-4 d-flex flex-column">
             <lable className="formsLable mb-2">Order Notes:</lable>
-
             <textarea
               id="outlined-multiline-static"
               multiline
@@ -58,33 +56,36 @@ const AddNewOrders = () => {
               placeholder="Order Notes"
             />
           </div>
-          <div className="mt-3">
-            <h5 className="formsTitles">New Order </h5>
+          <div className="mt-4">
+            <h5 className="formsTitles">New Order</h5>
           </div>
-          {product.map((item, i) => {
-            return (
-              <AddProduct
-                isDeleteable={product.length > 1}
-                index={item}
-                onRemove={() => removeComp(item)}
-              />
-            );
-          })}
-          <div className="my-3">
-            <BtnContained title="Add Product" onClick={addProduct} />
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <h6 className="m-0 formsLable">Delivery Fee:</h6>
-            <div>
-              <InputOutlined defaultValue="$" type="number" />
+          <div className="row m-0">
+            <div className="col-8 p-0">
+              {product.map((item, i) => {
+                return (
+                  <AddProduct
+                    isDeleteable={product.length > 1}
+                    index={item}
+                    onRemove={() => removeComp(item)}
+                  />
+                );
+              })}
+              <div className="my-3">
+                <BtnContained title="Add Product" handleClick={addProduct} />
+              </div>
+            </div>
+            <div className="col-4 p-4 orderTotalsbox">
+              <div className="d-flex mb-3 align-items-center">
+                <h6 className="m-0 me-2 formsLable">Delivery Fee:</h6>
+                <div>$ 0.00</div>
+              </div>
+              <div className="d-flex align-items-center">
+                <h6 className="m-0 me-2 formsLable">Total Cost:</h6>
+                <div>$ 0.00</div>
+              </div>
             </div>
           </div>
-          <div className="align-items-center gap-2 my-3">
-            <h6 className="m-0 formsLable">Total Cost: -</h6>
-          </div>
-          <div className="align-items-center gap-2 my-3">
-            <h6 className="m-0">Next Available Delivery Date: -</h6>
-          </div>
+
           <div className="d-flex flex-column my-3">
             <span className="formsLable">
               Use the above delivery time for this order?
@@ -141,7 +142,12 @@ const AddNewOrders = () => {
             </div>
           </div>
           <div className="text-center mt-5 mb-4">
-            <BtnContained title="save & confirm" />
+            <BtnContained
+              title="save & confirm"
+              handleClick={() => {
+                console.log("save");
+              }}
+            />
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ const CardProduct = ({ rows, id, setNumbersOfProducts, numberOfProducts }) => {
   //   category, myCategory
   // }])
   const [prodName, setProdName] = useState("");
-  const handelClick = () => {
+  const handleClick = () => {
     console.log(rows);
     rows.filter((row, i) => i !== id);
   };
@@ -17,12 +17,12 @@ const CardProduct = ({ rows, id, setNumbersOfProducts, numberOfProducts }) => {
     <div className="customer-promotion p-2 mb-4 position-relative">
       <div
         className="pe-2 pt-1 position-absolute top-0 end-0 "
-        onClick={() => handelClick()}
+        onClick={() => handleClick()}
       >
         <HighlightOffIcon
           color="error"
           fontSize="small"
-          className="circel-delete-icon"
+          className="circle-delete-icon"
         />
       </div>
       <div className="row  pb-2  mx-1">
@@ -60,10 +60,20 @@ const CardProduct = ({ rows, id, setNumbersOfProducts, numberOfProducts }) => {
           </span>
           <div className="gap-2 product-hide-show">
             <div className="mb-2 show  ">
-              <BtnOutlined title="Show" />
+              <BtnOutlined
+                title="Show"
+                handleClick={() => {
+                  console.log("Show");
+                }}
+              />
             </div>
             <div className="hide">
-              <BtnOutlined title="Hide" />
+              <BtnOutlined
+                title="Hide"
+                handleClick={() => {
+                  console.log("hide");
+                }}
+              />
             </div>
           </div>
         </div>

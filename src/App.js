@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Main from "./screens/Main";
 import Header from "./components/partials/Header";
 import SideBar from "./components/partials/SideBar";
@@ -11,6 +11,11 @@ import AuthRoutes from "./screens/AuthRoutes";
 function App() {
   const [isOpen, setOpen] = useState(true);
   const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem("qoreToken"));
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>

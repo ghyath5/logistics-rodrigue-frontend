@@ -12,6 +12,11 @@ import { Link } from "react-router-dom";
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
 
+  const handleLogout = () => {
+    localStorage.removeItem("qoreToken");
+    window.location.reload();
+  };
+
   return (
     <Box className="headerContainer">
       <AppBar position="fixed">
@@ -32,7 +37,9 @@ const Header = ({ isOpen, setOpen }) => {
               <img src={logo} alt="logo" />
             </Link>
           </div>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick={() => handleLogout()}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

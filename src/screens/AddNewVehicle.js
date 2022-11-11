@@ -64,7 +64,12 @@ const AddNewVehicle = () => {
           </div>
         </div>
         <div className="my-5 text-center">
-            <BtnContained title="CREATE VEHICLE"/>
+          <BtnContained
+            title="CREATE VEHICLE"
+            handleClick={() => {
+              console.log("create");
+            }}
+          />
         </div>
       </div>
     </Layout>

@@ -105,7 +105,7 @@ export const Vehicles = ({ classes }) => {
         <div>
           <BtnContained
             title="Add Vehicles"
-            handelClick={() => nav("/addnewvehicle")}
+            handleClick={() => nav("/addnewvehicle")}
           />
         </div>
       </div>

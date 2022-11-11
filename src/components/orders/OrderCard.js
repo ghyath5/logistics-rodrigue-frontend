@@ -31,7 +31,12 @@ const OrderCard = () => {
                 </span>
               </div>
               <div className="col-lg-4 col-md-4 col-sm-6 text-center left-orders p-0">
-                <BtnOutlined title="Confirmed" />
+                <BtnOutlined
+                  title="Confirmed"
+                  handleClick={() => {
+                    console.log("Confirmed");
+                  }}
+                />
               </div>
             </div>
           );

@@ -5,7 +5,7 @@ import BtnOutlined from "../../components/layout/BtnOutlined";
 import BtnContained from "../../components/layout/BtnContained";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ setToken }) => {
+const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
@@ -15,8 +15,8 @@ const Login = ({ setToken }) => {
   };
 
   const handleLogin = () => {
-    setToken("token");
-    nav("/");
+    localStorage.setItem("qoreToken", "token");
+    window.location.reload();
   };
 
   return (
@@ -45,20 +45,20 @@ const Login = ({ setToken }) => {
             setValue={setPassword}
             autoComplete="off"
           />
-          <div className="text-center mt-4">
+          <div className="text-center mt-5">
             <BtnContained
-              title="Create"
+              title="Login"
               classes="w-100"
-              handelClick={handleLogin}
+              handleClick={() => handleLogin()}
             />
             <h6 className="mt-2">I've forgotten my password</h6>
           </div>
-          <div className="text-center mt-5">
-            <p className="mt-2 mb-0">Don't have an account?</p>
+          <div className="text-center mt-3">
+            {/* <p className="mt-2 mb-0">Don't have an account?</p> */}
             <BtnOutlined
               title="SIGN UP NOW"
-              classes="w-100"
-              handleClicked={handleSignUp}
+              classes="w-100 mt-3"
+              handleClick={handleSignUp}
             />
           </div>
         </form>

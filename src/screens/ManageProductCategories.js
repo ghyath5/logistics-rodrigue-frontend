@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
- import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
- import Table from "../components/layout/Table";
+import Table from "../components/layout/Table";
 import Categories from "../data/categories";
 import Model from "../components/layout/Model";
 import CategoryCard from "../components/layout/CategoryCard";
 
-const ManageProductCategories = ({handleOpen}) => {
+const ManageProductCategories = ({ handleOpen }) => {
   const [allCategories, setAllCategories] = useState(Categories);
   const [categoriesTotal, setCategoriesTotal] = useState(0);
   const [categoriesActive, setTotalActive] = useState(0);
@@ -62,8 +62,6 @@ const ManageProductCategories = ({handleOpen}) => {
     view,
     remove
   ) {
-    // const density = population / size;
-    // return { name, code, population, size, density };
     return {
       id,
       name,
@@ -105,6 +103,7 @@ const ManageProductCategories = ({handleOpen}) => {
       p.orderListStatus === "hidden" && setCategoriesHidden((prev) => prev + 1);
     });
   }, [allCategories]);
+
   return (
     <Layout>
       <div className="d-flex align-items-center justify-content-between flex-wrap ">
@@ -118,14 +117,14 @@ const ManageProductCategories = ({handleOpen}) => {
         </div>
         <div className="d-flex gap-3 flex-wrap">
           <div className="gap-2">
-            <Model  />
+            <Model />
           </div>
         </div>
       </div>
       <div className="d-flex  flex-wrap mt-2">
-        <CategoryCard/>
-        <CategoryCard/>
-        <CategoryCard/>
+        <CategoryCard />
+        <CategoryCard />
+        <CategoryCard />
       </div>
       <div className="mt-4">
         <Table columns={columns} rows={rows} />

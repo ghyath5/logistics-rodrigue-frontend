@@ -5,21 +5,17 @@ import InputOutlined from "./InputOutlined";
 export const AddProduct = (props) => {
   const { isDeleteable, index, onRemove } = props;
   return (
-    <div className=" row gap-2">
+    <div className="row gap-2">
       <div className="col-md-5">
         <InputOutlined
           lable="Select Product"
           defaultValue="Select Product"
           type="text"
-         />
+        />
       </div>
-      <div className="col-md-5 row">
+      <div className="col-md-7 row">
         <div className="col-md-4">
-          <InputOutlined
-            lable="Unit Price"
-            defaultValue="Unit Price"
-            type="text"
-          />
+          <InputOutlined lable="Unit Price" defaultValue="$  " type="text" />
         </div>
         <div className="col-md-4">
           <InputOutlined lable="Quantity" defaultValue="1" type="text" />
@@ -29,8 +25,8 @@ export const AddProduct = (props) => {
         </div>
       </div>
       {isDeleteable && (
-        <div className="col-md-2 text-center delete-promotion-btn  align-self-end">
-          <BtnContained title="Remove"  onClick={() => onRemove(index)} />
+        <div className="text-start delete-promotion-btn mb-2">
+          <BtnContained title="Remove" handleClick={() => onRemove(index)} />
         </div>
       )}
     </div>

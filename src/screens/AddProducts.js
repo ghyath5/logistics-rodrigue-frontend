@@ -55,15 +55,29 @@ const AddProducts = () => {
       </div>
       <div className="d-flex justify-content-between flex-wrap my-4 gap-2">
         <div className="  ">
-          <BtnOutlined title="Add New" />
-          {/*  onClick={() => handleNewProduct()} */}
+          <BtnOutlined
+            title="Add New"
+            handleClick={() => {
+              console.log("add");
+            }}
+          />
         </div>
         <div className="gap-2  d-flex justify-content-between flex-wrap">
           <div className="">
-            <BtnOutlined title="Cancel" />
+            <BtnOutlined
+              title="Cancel"
+              handleClick={() => {
+                console.log("cancel");
+              }}
+            />
           </div>
           <div>
-            <BtnContained title="Confirm Products" />
+            <BtnContained
+              title="Confirm Products"
+              handleClick={() => {
+                console.log("confirm");
+              }}
+            />
           </div>
         </div>
       </div>

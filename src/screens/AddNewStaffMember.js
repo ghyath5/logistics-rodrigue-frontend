@@ -7,12 +7,12 @@ import BtnContained from "../components/layout/BtnContained";
 
 const AddNewStaffMember = () => {
   const nav = useNavigate();
-  const [firstName, setFirstName] = useState("")
-  const [lasttName, setLastName] = useState("")
-  console.log(firstName)
-  const handleSubmit = (e)=>{
+  const [firstName, setFirstName] = useState("");
+  const [lasttName, setLastName] = useState("");
+  console.log(firstName);
+  const handleSubmit = (e) => {
     e.prevent.default();
-  }
+  };
 
   return (
     <Layout>
@@ -24,7 +24,7 @@ const AddNewStaffMember = () => {
         />
         <h4 className="headerTitle my-3 mx-2"> Add New Staff Member</h4>
       </div>
-      <form className="formsContainer" onSubmit={handleSubmit} >
+      <form className="formsContainer" onSubmit={handleSubmit}>
         <div className="text-center">
           <h4 className="headerTitle my-4 mx-2">Staff Member Details</h4>
         </div>
@@ -37,7 +37,7 @@ const AddNewStaffMember = () => {
                 defaultValue="First Name"
                 type="text"
                 value={firstName}
-                setValue={(e)=>setFirstName(e.target.value)}
+                setValue={(e) => setFirstName(e.target.value)}
                 name="firstNmae"
                 id="firstName"
               />
@@ -48,7 +48,7 @@ const AddNewStaffMember = () => {
                 defaultValue="Last Name"
                 type="text"
                 value={lasttName}
-                setValue={(e)=>setLastName(e.target.value)}
+                setValue={(e) => setLastName(e.target.value)}
                 name="lasttName"
                 id="firslasttNametName"
               />
@@ -81,7 +81,12 @@ const AddNewStaffMember = () => {
           </div>
         </div>
         <div className="my-5 text-center">
-          <BtnContained title="CREATE STAFF MEMBER" />
+          <BtnContained
+            title="CREATE STAFF MEMBER"
+            handleClick={() => {
+              console.log("create");
+            }}
+          />
         </div>
       </form>
     </Layout>

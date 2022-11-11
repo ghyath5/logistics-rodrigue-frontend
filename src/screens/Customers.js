@@ -113,11 +113,16 @@ const Customers = () => {
           <div>
             <BtnContained
               title="ADD NEW CUSTOMER"
-              handelClick={() => nav("/addnewcustomer")}
+              handleClick={() => nav("/addnewcustomer")}
             />
           </div>
           <div>
-            <BtnOutlined title="VIEW ARCHIVED CUSTOMERS" />
+            <BtnOutlined
+              title="VIEW ARCHIVED CUSTOMERS"
+              handleClick={() => {
+                console.log("view archived");
+              }}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
- import Typography from "@mui/material/Typography";
+import Typography from "@mui/material/Typography";
 import BtnContained from "./BtnContained";
 import InputOutlined from "./InputOutlined";
 import BtnOutlined from "./BtnOutlined";
@@ -21,11 +21,13 @@ const style = {
 
 const Model = () => {
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   return (
     <div>
-      <BtnContained title="Add" handelClick={handleOpen} />
+      <BtnContained title="Add" handleClick={handleOpen} />
       <Modal
         keepMounted
         open={open}
@@ -41,11 +43,16 @@ const Model = () => {
             <div className="  gap-2">
               <InputOutlined />
               <div className="d-flex justify-content-center mt-3 gap-2">
-                <BtnOutlined title="Add" />
+                <BtnOutlined
+                  title="Add"
+                  handleClick={() => {
+                    console.log("Add");
+                  }}
+                />
                 <BtnOutlined
                   title="Cancel"
                   color="error"
-                  onClick={handleClose}
+                  handleClick={handleClose}
                 />
               </div>
             </div>

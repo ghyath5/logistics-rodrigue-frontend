@@ -134,11 +134,11 @@ const Products = () => {
         <div className="d-flex gap-2">
           <BtnContained
             title="Add Products"
-            handelClick={() => nav("/addproducts")}
+            handleClick={() => nav("/addproducts")}
           />
           <BtnOutlined
             title="Manage categories"
-            handleClicked={() => nav("/managecategories")}
+            handleClick={() => nav("/managecategories")}
           />
         </div>
       </div>

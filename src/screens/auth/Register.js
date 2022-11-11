@@ -10,6 +10,11 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleRegisterUser = () => {
+    localStorage.setItem("qoreToken", "token");
+    window.location.reload();
+  };
+
   return (
     <div className="row m-0 registrationContainer">
       <div className="col-12 col-sm-6 text-center align-self-center">
@@ -58,7 +63,12 @@ const Register = () => {
             autoComplete="new-password"
           />
           <div className="text-center mt-4">
-            <BtnOutlined title="Create" />
+            <BtnOutlined
+              title="Create"
+              handleClick={() => {
+                handleRegisterUser();
+              }}
+            />
           </div>
         </form>
       </div>
