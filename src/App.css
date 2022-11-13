@@ -249,6 +249,33 @@ textarea {
   color: var(--dark-green) !important;
 }
 
+.dateTimePicker .css-1ptx2yq-MuiInputBase-root-MuiInput-root:before {
+  border: 0;
+}
+
+.DropDownSearchContainer .css-1s2u09g-control,
+.DropDownSearchContainer .css-1pahdxg-control {
+  border: 0;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  padding: 5px 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.listItem {
+  background-color: var(--light-green);
+}
+
+.listItem input {
+  outline: none;
+  max-width: 100px;
+}
+
+.listItem .listItemTitle {
+  width: 300px;
+}
+
 /*finalize section*/
 .viewRoute {
   color: var(--dark-green);
