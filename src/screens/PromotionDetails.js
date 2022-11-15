@@ -102,7 +102,7 @@ const PromotionDetails = () => {
           </div>
           <div className="col-md-2 container-promotion pt-2 pb-1">
             <p className="title-promotion">Assigned By </p>
-            <p className="title-promotion-with">Sonia Stewart </p>
+            <p className="title-promotion-with">Rodrigue Abdallah </p>
           </div>
           <div className="col-md-2 pt-2 pb-1 text-center">
             <p className="title-promotion">Amount Owing </p>

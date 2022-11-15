@@ -31,8 +31,8 @@ const SideBar = ({ isOpen, setOpen }) => {
         variant={deviceType !== "laptop" ? "temporary" : "persistent"}
       >
         <div className="initial-container mb-3 mt-5">
-          <h2 className="initials-circle p-3">SS</h2>
-          <h5 className="my-1">Sonia Stewart </h5>
+          <h2 className="initials-circle p-3">RA</h2>
+          <h5 className="my-1">Rodrigue Abdallah</h5>
         </div>
         <div className="sideBarList">
           <SideBarList toggleDrawer={toggleDrawer} />

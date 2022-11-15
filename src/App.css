@@ -2,8 +2,8 @@
   --bg-color: #fafafa;
   --dark-green: #1b70a8;
   --light-green: #64b2d6;
-  /* --dark-green: #63894A;
-  --light-green: #33c770; */
+  /* --dark-green: #63894A;*/
+  --green: #33c770;
   --white: #fff;
   --light-gray: #eeebeb;
   --mid-gray: #c2c1c1;
@@ -17,6 +17,18 @@
 
 .textGray {
   color: var(--gray);
+}
+
+.textRed {
+  color: var(--delete-red);
+}
+
+.textGreen {
+  color: var(--green);
+}
+
+.textYellow {
+  color: var(--yelloww);
 }
 
 .App {
@@ -151,6 +163,10 @@ textarea {
   border: 1px solid var(--dark-green);
 }
 
+.TomorrowsCardContainer {
+  max-width: 700px;
+}
+
 .dashboardTitleContainer {
   position: absolute;
   top: 50%;
@@ -206,7 +222,6 @@ textarea {
 }
 
 .deliveriesTitle {
-  color: var(--light-green);
   font-weight: 500;
   font-size: 15px;
 }
