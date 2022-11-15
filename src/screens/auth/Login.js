@@ -20,11 +20,8 @@ const Login = () => {
   };
 
   return (
-    <div className="row m-0 registrationContainer">
-      <div className="col-12 col-sm-6 text-center align-self-center">
-        <img src={bigLogo} alt="bigLogo" className="bigLogo" />
-      </div>
-      <div className="col-12 col-sm-6 align-self-center">
+    <div className="registrationContainer d-flex justify-content-center align-items-center">
+      <div className="align-self-center mx-auto">
         <form className="registrationForm py-4 px-4">
           <h2 className="text-center mb-4 headerTitle">
             Login to My Monjay Account

@@ -112,7 +112,7 @@ textarea {
 
 /*Auth section*/
 .registrationContainer {
-  background-image: url('assets/trucks.png');
+  background-image: url('assets/loginBg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -127,12 +127,14 @@ textarea {
 
 .bigLogo {
   width: 480px;
+  font-size: 120px;
+  margin-left: 100px;
 }
 
 /*Dashboard section*/
 
 .dashboardBg {
-  background-image: url("../src/assets/trucks.png");
+  background-image: url("../src/assets/dashBg.jpg");
   margin: 0 !important;
   height: 300px;
   background-repeat: no-repeat;

@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import useDeviceType from "../../hooks/useDeviceType";
-import logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 
 const Header = ({ isOpen, setOpen }) => {
@@ -34,8 +33,7 @@ const Header = ({ isOpen, setOpen }) => {
               <MenuIcon />
             </IconButton>
             <Link to="/" className="logoLink">
-              {/* <img src={logo} alt="logo" /> */}
-              <h3 className="text-white">
+              <h3 className="text-white m-0">
                 <span className="text-black">Monjay</span> admin
               </h3>
             </Link>
