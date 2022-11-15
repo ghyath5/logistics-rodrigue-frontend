@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    localStorage.setItem("qoreToken", "token");
+    localStorage.setItem("monjayToken", "token");
     window.location.reload();
   };
 
@@ -27,7 +27,7 @@ const Login = () => {
       <div className="col-12 col-sm-6 align-self-center">
         <form className="registrationForm py-4 px-4">
           <h2 className="text-center mb-4 headerTitle">
-            Login to My Qore Account
+            Login to My Monjay Account
           </h2>
           <AuthInput
             label="User Name"

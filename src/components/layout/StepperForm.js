@@ -4,8 +4,10 @@ import Step from "@mui/material/Step";
 import { Box, Button, StepButton, Typography } from "@mui/material";
 import InputOutlined from "./InputOutlined";
 import DropDown from "../DropDown";
+import useDeviceType from "../../hooks/useDeviceType";
 
 const StepperForm = ({ steps, completed, setCompleted }) => {
+  const { deviceType } = useDeviceType();
   const [activeStep, setActiveStep] = useState(0);
 
   const totalSteps = () => {
@@ -57,17 +59,25 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   };
 
   return (
-    <Box sx={{ width: "100%" }} className="mt-3">
-      <Stepper nonLinear activeStep={activeStep} className="mx-5">
-        {steps.map((label, index) => (
-          <Step key={label} completed={completed[index]}>
-            <StepButton color="inherit" onClick={handleStep(index)}>
-              {label}
-            </StepButton>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
+    <Box sx={{ width: "100%", maxWidth: "100%" }}>
+      {deviceType !== "mobile" && (
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          className="mx-1 mx-sm-5 mt-3"
+        >
+          {steps.map((label, index) => {
+            return (
+              <Step key={label} completed={completed[index]}>
+                <StepButton color="inherit" onClick={handleStep(index)}>
+                  {label}
+                </StepButton>
+              </Step>
+            );
+          })}
+        </Stepper>
+      )}
+      <div className="w-100">
         {allStepsCompleted() ? (
           <div>
             <Typography sx={{ mt: 2, mb: 1 }}>
@@ -79,7 +89,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
             </Box>
           </div>
         ) : (
-          <div className="formsContainer mx-2 mt-4 px-3">
+          <div className="formsContainer mx-1 mx-sm-2 mt-sm-4 px-0 px-sm-3 w-100">
             {activeStep === 0 ? (
               <div className="mb-2 mt-4">
                 <div className=" mx-3 mx-sm-4">
@@ -94,7 +104,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                     defaultValue="Being Typing to search for a location"
                     type="text"
                   />
-                  <div className="d-flex flex-row gap-2 mt-2">
+                  <div className="d-sm-flex gap-2 mt-2">
                     <InputOutlined
                       lable="Delivery Address Line1"
                       defaultValue="Delivery Address Line1"
@@ -106,23 +116,10 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                       type="text"
                     />
                   </div>
-                  <div className="row justify-content-between mt-2">
-                    <div className="col-md-6">
-                      <InputOutlined lable="Suburb" defaultValue="Suburb" />
-                    </div>
-                    <div className=" col-md-6 justify-content-between">
-                      <div className="row">
-                        <div className="col-md-6 align-self-end">
-                          <DropDown lable="state" defaultValue="state" />
-                        </div>
-                        <div className="col-md-6">
-                          <InputOutlined
-                            lable="Postcode"
-                            defaultValue="Postcode"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                  <div className="d-sm-flex gap-2 align-items-center justify-content-between mt-2">
+                    <InputOutlined lable="Suburb" defaultValue="Suburb" />
+                    <DropDown lable="state" defaultValue="state" />
+                    <InputOutlined lable="Postcode" defaultValue="Postcode" />
                   </div>
                   <div className="mt-3 d-flex flex-column">
                     <lable className="formsLable mb-2">
@@ -142,7 +139,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
             ) : activeStep === 1 ? (
               <div className="mb-2 mt-4">
                 <div className=" mx-3 mx-sm-4">
-                  <div className="d-flex flex-row gap-2">
+                  <div className="d-sm-flex flex-row gap-2">
                     <InputOutlined
                       lable="First Name"
                       defaultValue="First Name"

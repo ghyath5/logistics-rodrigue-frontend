@@ -13,7 +13,7 @@ const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
 
   const handleLogout = () => {
-    localStorage.removeItem("qoreToken");
+    localStorage.removeItem("monjayToken");
     window.location.reload();
   };
 
@@ -33,8 +33,11 @@ const Header = ({ isOpen, setOpen }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Link to="/">
-              <img src={logo} alt="logo" />
+            <Link to="/" className="logoLink">
+              {/* <img src={logo} alt="logo" /> */}
+              <h3 className="text-white">
+                <span className="text-black">Monjay</span> admin
+              </h3>
             </Link>
           </div>
           <Button color="inherit" onClick={() => handleLogout()}>

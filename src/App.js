@@ -13,7 +13,7 @@ function App() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    setToken(localStorage.getItem("qoreToken"));
+    setToken(localStorage.getItem("monjayToken"));
   }, []);
 
   return (

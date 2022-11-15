@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const handleRegisterUser = () => {
-    localStorage.setItem("qoreToken", "token");
+    localStorage.setItem("monjayToken", "token");
     window.location.reload();
   };
 
@@ -23,7 +23,7 @@ const Register = () => {
       <div className="col-12 col-sm-6 align-self-center">
         <form className="registrationForm pt-5 pb-4 px-4">
           <h2 className="text-center mb-4 headerTitle">
-            Register to My Qore Account
+            Register to My Monjay Account
           </h2>
           <AuthInput
             label="Full Name"

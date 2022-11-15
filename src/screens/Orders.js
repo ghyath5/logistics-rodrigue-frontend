@@ -14,12 +14,12 @@ const Orders = () => {
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
         <h3 className="headerTitle my-2">Orders</h3>
         <div className="d-flex flex-wrap gap-2 mainBtn">
-          <BtnContained
+          {/* <BtnContained
             title="ORDER PLANING"
             handleClick={() => {
               console.log("ORDER");
             }}
-          />
+          /> */}
           <BtnContained
             title="ADD NEW ORDER"
             handleClick={() => nav("/addneworders")}

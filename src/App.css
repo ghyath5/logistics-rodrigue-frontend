@@ -40,6 +40,10 @@
   margin-left: var(--sidebar-width);
 }
 
+.logoLink {
+  text-decoration: none !important;
+}
+
 .headerTitle {
   color: var(--gray);
 }
@@ -264,7 +268,7 @@ textarea {
 }
 
 .listItem {
-  background-color: var(--light-green);
+  background-color: #cfebf9;
 }
 
 .listItem input {
@@ -372,6 +376,7 @@ textarea {
 .dropDownContainer .MuiFormControl-root {
   margin: 0 !important;
   background-color: var(--light-gray);
+  min-width: 300px;
 }
 
 .MuiInputBase-root .MuiSelect-select {
