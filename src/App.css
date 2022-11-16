@@ -31,9 +31,56 @@
   color: var(--yelloww);
 }
 
+.textLightBlue {
+  color: var(--light-green);
+}
+
 .App {
   min-height: 100vh;
   background-color: var(--bg-color);
+  position: relative;
+}
+
+.loaderContainer {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid;
+  border-color: var(--dark-green) transparent;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .headerContainer header {
@@ -393,7 +440,6 @@ textarea {
 .dropDownContainer .MuiFormControl-root {
   margin: 0 !important;
   background-color: var(--light-gray);
-  min-width: 300px;
 }
 
 .MuiInputBase-root .MuiSelect-select {
@@ -402,6 +448,19 @@ textarea {
 
 .MuiInputBase-root .MuiSelect-select :focus {
   outline: none !important;
+}
+
+.formsContainer .PhoneInputInput {
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  padding: 10px;
+  border: 0;
+  outline: none;
+}
+
+.PhoneInput,
+.addressColl>* {
+  flex: 1;
 }
 
 /* Promotion section*/
@@ -486,7 +545,6 @@ textarea {
   border: 2px solid var(--light-gray);
   background-color: var(--white);
   min-height: 180px;
-  margin-left: 1rem;
 }
 
 .nameModel {
@@ -517,6 +575,10 @@ textarea {
 .dateNamemodel {
   color: var(--gray);
   font-size: x-small;
+}
+
+.statsCardVehicleCon {
+  flex: 1 !important;
 }
 
 /*medias*/
@@ -554,10 +616,6 @@ textarea {
     margin: 40px 0;
   }
 
-  .statsCardVehicleCon {
-    width: 100%;
-  }
-
   .statsCardVehicle {
     margin: 0 !important;
   }
@@ -565,6 +623,12 @@ textarea {
   .product-hide-show {
     display: flex;
     justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .dropDownContainer .MuiFormControl-root {
+    min-width: 300px;
   }
 }
 
@@ -590,4 +654,5 @@ textarea {
   .title-promotion-with {
     margin-top: 5px;
   }
+
 }

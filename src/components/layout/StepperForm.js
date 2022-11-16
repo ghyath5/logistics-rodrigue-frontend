@@ -5,10 +5,18 @@ import { Box, Button, StepButton, Typography } from "@mui/material";
 import InputOutlined from "./InputOutlined";
 import DropDown from "../DropDown";
 import useDeviceType from "../../hooks/useDeviceType";
+import { useEffect } from "react";
+import PhoneNumberInput from "./PhoneNumberInput";
+import RadioGroupForm from "./RadioGroupForm";
 
 const StepperForm = ({ steps, completed, setCompleted }) => {
   const { deviceType } = useDeviceType();
   const [activeStep, setActiveStep] = useState(0);
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    console.log(deviceType);
+  }, [deviceType]);
 
   const totalSteps = () => {
     return steps.length;
@@ -116,7 +124,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                       type="text"
                     />
                   </div>
-                  <div className="d-sm-flex gap-2 align-items-center justify-content-between mt-2">
+                  <div className="addressColl d-sm-flex flex-wrap gap-2 align-items-center justify-content-between mt-2">
                     <InputOutlined lable="Suburb" defaultValue="Suburb" />
                     <DropDown lable="state" defaultValue="state" />
                     <InputOutlined lable="Postcode" defaultValue="Postcode" />
@@ -138,7 +146,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
               </div>
             ) : activeStep === 1 ? (
               <div className="mb-2 mt-4">
-                <div className=" mx-3 mx-sm-4">
+                <div className="mx-3 mx-sm-4">
                   <div className="d-sm-flex flex-row gap-2">
                     <InputOutlined
                       lable="First Name"
@@ -154,12 +162,52 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                       value="value"
                     />
                   </div>
+                  <div className="mt-3 d-md-flex flex-wrap gap-3">
+                    <PhoneNumberInput
+                      value={phone}
+                      setValue={setPhone}
+                      lable="Phone"
+                    />
+                    <PhoneNumberInput
+                      value={phone}
+                      setValue={setPhone}
+                      lable="Mobile"
+                    />
+                    <PhoneNumberInput
+                      value={phone}
+                      setValue={setPhone}
+                      lable="Direct Dial Number"
+                    />
+                  </div>
                 </div>
               </div>
             ) : activeStep === 2 ? (
-              <div>3</div>
+              <RadioGroupForm
+                lable="How often should deliveries occur?"
+                options={[
+                  { lable: "No Reoccuring Orders", value: "No" },
+                  { lable: "Once per Week", value: "once" },
+                  { lable: "Once per Fortnight", value: "night" },
+                ]}
+              />
             ) : (
-              <div>4</div>
+              <>
+                <RadioGroupForm
+                  lable="Default Payment Method: "
+                  options={[
+                    { lable: "Cash on Delivery", value: "cash" },
+                    { lable: "Account", value: "account" },
+                    { lable: "In / Out", value: "inout" },
+                  ]}
+                />
+                <RadioGroupForm
+                  lable="Should any other special pricing be used for any items ordered by this customer?"
+                  options={[
+                    { lable: "No, use default pricing", value: "no" },
+                    { lable: "Yes, use custom pricing", value: "yes" },
+                  ]}
+                />
+              </>
             )}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button

@@ -4,12 +4,6 @@ export default function useDeviceType() {
   const [deviceType, setDeviceType] = useState("laptop");
 
   useEffect(() => {
-    window.innerWidth < 450
-      ? setDeviceType("mobile")
-      : window.innerWidth < 900
-      ? setDeviceType("tablet")
-      : setDeviceType("laptop");
-
     window.addEventListener("resize", () => {
       window.innerWidth < 450
         ? setDeviceType("mobile")
@@ -18,6 +12,14 @@ export default function useDeviceType() {
         : setDeviceType("laptop");
     });
   }, []);
+
+  useEffect(() => {
+    window.innerWidth < 450
+      ? setDeviceType("mobile")
+      : window.innerWidth < 900
+      ? setDeviceType("tablet")
+      : setDeviceType("laptop");
+  }, [window.innerWidth]);
 
   return { deviceType };
 }

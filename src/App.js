@@ -15,14 +15,13 @@ function App() {
   useEffect(() => {
     setToken(localStorage.getItem("monjayToken"));
   }, []);
-
   return (
     <div className="App">
       <BrowserRouter>
         {token ? (
           <>
             <Header isOpen={isOpen} setOpen={setOpen} />
-            <div className="position-relative ">
+            <div className="">
               <SideBar isOpen={isOpen} setOpen={setOpen} />
               <Main />
             </div>

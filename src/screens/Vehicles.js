@@ -109,13 +109,11 @@ export const Vehicles = ({ classes }) => {
           />
         </div>
       </div>
-      <div className="d-flex flex-wrap  ">
-        {/* <StatsCard title="heloo" value={4} /> */}
+      <div className="d-sm-flex gap-2 justify-content-between flex-wrap w-100">
         <StatsCardVehclie title="Total No of Vehicles" value={4} />
-        <StatsCardVehclie title="Total No of Vehicles" value={4} />
-        <StatsCardVehclie title="Total No of Vehicles" value={4} />
-        <StatsCardVehclie title="Total No of Vehicles" value={4} />
-        <StatsCardVehclie title="Total No of Vehicles" value={4} />
+        <StatsCardVehclie title="On Road Vehicles" value={2} />
+        <StatsCardVehclie title="Out of Service Vehicles" value={0} />
+        <StatsCardVehclie title="Registration Due" value={2} />
       </div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>

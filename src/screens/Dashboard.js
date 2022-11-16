@@ -1,16 +1,21 @@
 import React from "react";
 import BtnContained from "../components/layout/BtnContained";
-import TomorrowsCard from "../components/dashboard/TomorrowsCard";
 import Routs from "../assets/routs.svg";
 import StatsCard from "../components/layout/StatsCard";
+import Loader from "../components/layout/Loader";
 import Bus from "../assets/bus.svg";
 import Person from "../assets/personIcon.svg";
 import Dollar from "../assets/dollarIcon.svg";
 import KiloMetre from "../assets/kilometre.svg";
 import Layout from "../components/partials/Layout";
+import { useState } from "react";
 
 const Dashboard = () => {
-  return (
+  const [isLoading, setLoading] = useState(false);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <div className="dashboardBg position-relative">
         <div className="dashboardBgCover"></div>
@@ -48,12 +53,15 @@ const Dashboard = () => {
         <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
         <div className="dashboard-tomorrow pt-2">
           <div className="dashboard-inner my-4">
-            <TomorrowsCard
-              title="Deliveries for "
-              classes={"no-border"}
-              icon={Routs}
-              value="-"
-            />
+            <div className="scheduleCard no-border">
+              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
+                <img src={Routs} className="mb-2" alt="icon" />
+                <h5 className="m-0 textLightBlue">-</h5>
+                <span className="deliveriesTitle textLightBlue">
+                  Deliveries for
+                </span>
+              </div>
+            </div>
           </div>
           <hr className="mx-5 line"></hr>
           <div className="d-flex my-4 mx-auto justify-content-between py-2 TomorrowsCardContainer">

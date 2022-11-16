@@ -21,7 +21,7 @@ import AddNewOrders from "./AddNewOrders";
 const Main = () => {
   return (
     <>
-      <div className="position-relative mainContainer pt-4">
+      <div className="mainContainer pt-4">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />

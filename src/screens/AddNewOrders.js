@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
 import { AddProduct } from "../components/layout/AddProduct";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
+import RadioGroupForm from "../components/layout/RadioGroupForm";
 
 const AddNewOrders = () => {
   const [product, setProduct] = useState([1]);
@@ -85,54 +82,21 @@ const AddNewOrders = () => {
               </div>
             </div>
           </div>
-
-          <div className="d-flex flex-column my-3">
-            <span className="formsLable">
-              Use the above delivery time for this order?
-            </span>
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-              >
-                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-                <FormControlLabel
-                  value="no"
-                  control={<Radio />}
-                  label="No,deliver this on:"
-                />
-              </RadioGroup>
-            </FormControl>
-          </div>
-          <div className="d-flex flex-column my-3">
-            <span className="formsLable">
-              How often should deliveries occur?
-            </span>
-            <FormControl>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-              >
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No Reoccuring Orders"
-                />
-                <FormControlLabel
-                  value="once"
-                  control={<Radio />}
-                  label="Once per Week"
-                />
-                <FormControlLabel
-                  value="night"
-                  control={<Radio />}
-                  label="Once per Fortnight"
-                />
-              </RadioGroup>
-            </FormControl>
-          </div>
+          <RadioGroupForm
+            lable="Use the above delivery time for this order?"
+            options={[
+              { lable: "Yes", value: "yes" },
+              { lable: "No,deliver this on:", value: "no" },
+            ]}
+          />
+          <RadioGroupForm
+            lable="How often should deliveries occur?"
+            options={[
+              { lable: "No Reoccuring Orders", value: "No" },
+              { lable: "Once per Week", value: "once" },
+              { lable: "Once per Fortnight", value: "night" },
+            ]}
+          />
           <div className="my-3">
             <span className="formsLable">
               Purchase order number (Leave blank if none)
