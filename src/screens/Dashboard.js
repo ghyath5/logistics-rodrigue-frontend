@@ -37,16 +37,19 @@ const Dashboard = () => {
             title="Orders"
             value={1}
             desc="Need confirming for tomorrow"
+            classes="textYellow"
           />
           <StatsCard
             title="Deliveries"
             value={5}
             desc="Scheduled for tomorrow"
+            classes="textGreen"
           />
           <StatsCard
             title="Drivers"
             value={4}
             desc="Scheduled for tomorrow"
+            classes="textRed"
             last={true}
           />
         </div>

@@ -360,13 +360,13 @@ textarea {
 }
 
 .statsCard h3 {
-  color: var(--gray);
+  /* color: var(--gray); */
   opacity: 0.8;
   font-weight: 400 !important;
 }
 
 .statsCard h2 {
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .searchInputContainer {
