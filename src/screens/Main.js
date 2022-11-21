@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Products from "./Products";
-import Footer from "../components/partials/Footer";
 import Finalise from "./Finalise";
 import Customers from "./Customers";
 import Orders from "./Orders";
@@ -17,12 +16,18 @@ import PromotionDetails from "./PromotionDetails";
 import AddProducts from "./AddProducts";
 import ManageProductCategories from "./ManageProductCategories";
 import AddNewOrders from "./AddNewOrders";
+import NotFound from "./NotFound";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import PrivateRoutes from "../utils/PrivateRoutes";
 
 const Main = () => {
   return (
     <>
-      <div className="mainContainer pt-4">
-        <Routes>
+      <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
           <Route exact path="finalise" element={<Finalise />} />
@@ -31,7 +36,6 @@ const Main = () => {
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
           <Route exact path="stuffmember" element={<StaffMembers />} />
-
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
           <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
           <Route exact path="addpromotion" element={<AddPromotion />} />
@@ -43,15 +47,14 @@ const Main = () => {
             path="managecategories"
             element={<ManageProductCategories />}
           />
-
           <Route
             exact
             path="AddNewStaffMember"
             element={<AddNewStaffMember />}
           />
-        </Routes>
-      </div>
-      <Footer />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </>
   );
 };

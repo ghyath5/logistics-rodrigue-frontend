@@ -30,12 +30,12 @@ const Customers = () => {
       label: "Address",
       minWidth: 100,
     },
-    {
-      id: "geocodingStatus",
-      label: "Geocoding Status",
-      minWidth: 50,
-      class: "tableEditBtn",
-    },
+    // {
+    //   id: "geocodingStatus",
+    //   label: "Geocoding Status",
+    //   minWidth: 50,
+    //   class: "tableEditBtn",
+    // },
     {
       id: "paymetMethod",
       label: "Paymet Method",
@@ -48,7 +48,7 @@ const Customers = () => {
     },
     {
       id: "pendingOreds",
-      label: "Pending Oreds",
+      label: "Pending Orders",
       minWidth: 100,
     },
     {
@@ -64,7 +64,7 @@ const Customers = () => {
     code,
     customerName,
     address,
-    geocodingStatus,
+    // geocodingStatus,
     paymetMethod,
     sepicalPricing,
     pendingOreds,
@@ -77,7 +77,7 @@ const Customers = () => {
       code,
       customerName,
       address,
-      geocodingStatus,
+      // geocodingStatus,
       paymetMethod,
       sepicalPricing,
       pendingOreds,
@@ -93,15 +93,16 @@ const Customers = () => {
           p.code,
           p.customerName,
           p.address,
-          p.geocodingStatus,
+          // p.geocodingStatus,
           p.paymetMethod,
           p.sepicalPricing,
           p.pendingOreds,
-          "Archive"
+          "Archive Customer"
         ),
       ]);
     });
   }, []);
+
   return (
     <Layout>
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">

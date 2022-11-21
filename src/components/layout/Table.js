@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material";
 
 export default function Table({ columns, rows }) {
   const [page, setPage] = React.useState(0);
@@ -21,6 +22,16 @@ export default function Table({ columns, rows }) {
     setPage(0);
   };
 
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: 0,
+    },
+  }));
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -32,6 +43,7 @@ export default function Table({ columns, rows }) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
+                  className="tableHeading"
                 >
                   {column.label}
                 </TableCell>
@@ -43,7 +55,7 @@ export default function Table({ columns, rows }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, j) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={j}>
+                  <StyledTableRow hover role="checkbox" tabIndex={-1} key={j}>
                     {columns.map((column, i) => {
                       const value = row[column.id];
                       return (
@@ -98,7 +110,7 @@ export default function Table({ columns, rows }) {
                         </TableCell>
                       );
                     })}
-                  </TableRow>
+                  </StyledTableRow>
                 );
               })}
           </TableBody>

@@ -1,22 +1,42 @@
 import React, { useState } from "react";
-import bigLogo from "../../assets/logo_big.svg";
 import AuthInput from "../../components/layout/AuthInput";
 import BtnOutlined from "../../components/layout/BtnOutlined";
 import BtnContained from "../../components/layout/BtnContained";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const nav = useNavigate();
+  const [data, setData] = useState({});
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignUp = () => {
-    nav("/register");
+    navigate("/register");
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => {
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleLogin = () => {
-    localStorage.setItem("monjayToken", "token");
-    window.location.reload();
+    setError(false);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}auth/login`, {
+        username: data?.username,
+        password: data?.password,
+      })
+      .then((res) => {
+        Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      });
   };
 
   return (
@@ -30,18 +50,27 @@ const Login = () => {
             label="User Name"
             defaultValue="User Name"
             type="text"
-            value={userName}
-            setValue={setUserName}
+            name="username"
+            value={data?.username}
+            handleChange={handleChange}
             autoComplete="Off"
           />
           <AuthInput
             label="Password"
             defaultValue="Password"
             type="password"
-            value={password}
-            setValue={setPassword}
-            autoComplete="off"
+            name="password"
+            value={data?.password}
+            handleChange={handleChange}
+            autoComplete="Off"
           />
+          {error && (
+            <div className="position-relative">
+              <div className="errorMessageContainer text-center">
+                Wrong username or password
+              </div>
+            </div>
+          )}
           <div className="text-center mt-5">
             <BtnContained
               title="Login"

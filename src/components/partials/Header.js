@@ -6,14 +6,15 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import useDeviceType from "../../hooks/useDeviceType";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
-
+  const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("monjayToken");
-    window.location.reload();
+    Cookies.remove("monjayToken");
+    navigate("/login");
   };
 
   return (

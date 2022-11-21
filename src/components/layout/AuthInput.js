@@ -5,24 +5,37 @@ const AuthInput = ({
   label,
   placeHolder,
   value,
-  setValue,
+  name,
   type,
   autoComplete,
+  error,
+  handleChange,
+  handleBlur,
+  errorMessage,
 }) => {
   return (
-    <div className="input-outline mb-3">
-      <TextField
-        className="w-100"
-        id={label}
-        label={label}
-        variant="standard"
-        type={type}
-        placeholder={placeHolder}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        autoComplete={autoComplete}
-      />
-    </div>
+    <>
+      <div className="input-outline mb-3">
+        <TextField
+          className={error ? "w-100 errorInput" : "w-100"}
+          id={label}
+          name={name}
+          label={label}
+          variant="standard"
+          type={type}
+          placeholder={placeHolder}
+          value={value}
+          onChange={(e) => handleChange(e)}
+          onBlur={(e) => handleBlur(e)}
+          autoComplete={autoComplete}
+        />
+      </div>
+      {error && (
+        <div className="position-relative">
+          <div className="errorMessageReg text-end">{errorMessage}</div>
+        </div>
+      )}
+    </>
   );
 };
 

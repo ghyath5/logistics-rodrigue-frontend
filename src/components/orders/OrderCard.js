@@ -10,7 +10,9 @@ const OrderCard = () => {
           return (
             <div
               key={index}
-              className="row justify-content-between orderConainer align-items-center my-4 mx-0"
+              className={`row justify-content-between orderConainer align-items-center my-4 mx-0 ${
+                index % 2 ? "orderConainerbg2" : "orderConainerbg1"
+              }`}
             >
               <div className="col-lg-4 col-md-4 col-sm-6 p-0">
                 <h5 className="order-title">{order.title}</h5>

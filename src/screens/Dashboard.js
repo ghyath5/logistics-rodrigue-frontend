@@ -17,7 +17,7 @@ const Dashboard = () => {
     <Loader />
   ) : (
     <>
-      <div className="dashboardBg position-relative">
+      <div className="mainContainer dashboardBg position-relative">
         <div className="dashboardBgCover"></div>
         <div className="dashboardTitleContainer text-white">
           <h6>Welcome back</h6>
@@ -37,24 +37,27 @@ const Dashboard = () => {
             title="Orders"
             value={1}
             desc="Need confirming for tomorrow"
-            classes="textYellow"
+            classes="bgYellow"
+            col={4}
           />
           <StatsCard
             title="Deliveries"
             value={5}
             desc="Scheduled for tomorrow"
-            classes="textGreen"
+            classes="bgGreen"
+            col={4}
           />
           <StatsCard
             title="Drivers"
             value={4}
             desc="Scheduled for tomorrow"
-            classes="textRed"
+            classes="bgRed"
             last={true}
+            col={4}
           />
         </div>
         <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
-        <div className="dashboard-tomorrow pt-2">
+        <div className="dashboard-tomorrow pt-2 bgLightGray">
           <div className="dashboard-inner my-4">
             <div className="scheduleCard no-border">
               <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">

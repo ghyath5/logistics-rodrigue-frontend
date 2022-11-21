@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import BtnContained from "../components/layout/BtnContained";
-import { StatsCardVehclie } from "../components/layout/StatsCardVehclie";
 import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Vehciles from "../data/vehicle";
 import { useNavigate } from "react-router-dom";
+import StatsCard from "../components/layout/StatsCard";
 
-export const Vehicles = ({ classes }) => {
+export const Vehicles = () => {
   const [allVehciles, setAllVehclies] = useState(Vehciles);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
@@ -109,11 +109,26 @@ export const Vehicles = ({ classes }) => {
           />
         </div>
       </div>
-      <div className="d-sm-flex gap-2 justify-content-between flex-wrap w-100">
-        <StatsCardVehclie title="Total No of Vehicles" value={4} />
-        <StatsCardVehclie title="On Road Vehicles" value={2} />
-        <StatsCardVehclie title="Out of Service Vehicles" value={0} />
-        <StatsCardVehclie title="Registration Due" value={2} />
+      <div className="row m-0 w-100">
+        <StatsCard
+          title="Total No of Vehicles"
+          value={4}
+          classes="bgLightBlue"
+          col={3}
+        />
+        <StatsCard
+          title="On Road Vehicles"
+          value={2}
+          classes="bgYellow"
+          col={3}
+        />
+        <StatsCard
+          title="Out of Service Vehicles"
+          value={1}
+          classes="bgGreen"
+          col={3}
+        />
+        <StatsCard title="Registration Due" value={2} classes="bgRed" col={3} />
       </div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>

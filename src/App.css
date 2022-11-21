@@ -35,6 +35,30 @@
   color: var(--light-green);
 }
 
+.bgLightGray {
+  background-color: var(--light-gray);
+}
+
+.bgGray {
+  background-color: var(--gray);
+}
+
+.bgRed {
+  background-color: var(--delete-red);
+}
+
+.bgGreen {
+  background-color: var(--green);
+}
+
+.bgYellow {
+  background-color: var(--yelloww);
+}
+
+.bgLightBlue {
+  background-color: var(--light-green);
+}
+
 .App {
   min-height: 100vh;
   background-color: var(--bg-color);
@@ -184,17 +208,35 @@ textarea {
   max-width: 500px;
 }
 
-.bigLogo {
-  width: 480px;
-  font-size: 120px;
-  margin-left: 100px;
+.errorInput .css-1ptx2yq-MuiInputBase-root-MuiInput-root {
+  color: var(--delete-red);
+}
+
+.errorInput .css-1ptx2yq-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid var(--delete-red);
+}
+
+.errorMessageContainer {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  color: var(--delete-red);
+}
+
+.errorMessageReg {
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  color: var(--delete-red);
+  font-size: 12px;
 }
 
 /*Dashboard section*/
 
 .dashboardBg {
   background-image: url("../src/assets/dashBg.jpg");
-  margin: 0 !important;
   height: 300px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -207,7 +249,7 @@ textarea {
 }
 
 .dashboard-tomorrow {
-  border: 1px solid var(--dark-green);
+  border: 1px solid var(--gray);
 }
 
 .TomorrowsCardContainer {
@@ -232,13 +274,24 @@ textarea {
   text-align: -webkit-center;
 }
 
+.giftIcon {
+  position: absolute;
+  left: 30px;
+  top: 5;
+  color: #8219d8;
+}
+
+.selected {
+  background-color: rgba(0, 84, 240, 0.1);
+}
+
 .sideBarList .MuiBox-root {
   text-align-last: center;
 }
 
 .sideBarList .list-btn {
   border-bottom: 1px solid var(--light-gray) !important;
-  color: var(--dark-green) !important;
+  color: var(--dark-green);
 }
 
 .sideBarList li:first-child {
@@ -285,10 +338,17 @@ textarea {
 }
 
 .orderConainer {
-  background-color: var(--white);
   border-radius: 5px;
   border: 1px solid var(--dark-green);
   padding: 20px;
+}
+
+.orderConainerbg1 {
+  background-color: var(--white);
+}
+
+.orderConainerbg2 {
+  background-color: var(--light-gray);
 }
 
 .Address-orders {
@@ -355,8 +415,8 @@ textarea {
 .statsCard {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
-  background-color: var(--white);
   min-height: 180px;
+  color: white;
 }
 
 .statsCard h3 {
@@ -386,6 +446,11 @@ textarea {
 .searchInputContainer img {
   cursor: pointer;
   max-width: 18px;
+}
+
+.tableHeading {
+  font-weight: bold !important;
+  color: black;
 }
 
 .tablePagination p {
@@ -532,18 +597,13 @@ textarea {
 /* Vehicle section*/
 
 .statsCardVehicle h5 {
-  color: var(--gray);
   font-weight: 400 !important;
-}
-
-.statsCardVehicle h2 {
-  color: var(--gray);
 }
 
 .statsCardVehicle {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);
-  background-color: var(--white);
+  color: var(--white) !important;
   min-height: 180px;
 }
 
@@ -604,10 +664,6 @@ textarea {
     padding: 10px 0;
   }
 
-  .bigLogo {
-    width: 300px;
-  }
-
   .registrationContainer {
     align-content: start;
   }
@@ -635,10 +691,6 @@ textarea {
 @media screen and (max-width: 900px) {
   .mainContainer {
     margin-left: 0;
-  }
-
-  .bigLogo {
-    width: clamp(290px, 85%, 380px);
   }
 
   .container-promotion {

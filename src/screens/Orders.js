@@ -4,6 +4,7 @@ import OrderCard from "../components/orders/OrderCard";
 import Layout from "../components/partials/Layout";
 import SearchInput from "../components/layout/SearchInput";
 import { useNavigate } from "react-router-dom";
+import BtnOutlined from "../components/layout/BtnOutlined";
 
 const Orders = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,7 @@ const Orders = () => {
             title="ADD NEW ORDER"
             handleClick={() => nav("/addneworders")}
           />
-          <BtnContained
+          <BtnOutlined
             title="ADD COMPLETED ORDER"
             handleClick={() => {
               console.log("add");

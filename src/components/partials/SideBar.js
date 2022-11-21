@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import useDeviceType from "../../hooks/useDeviceType";
 import SideBarList from "./SideBarList";
 
 const SideBar = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
+  const [selectedItem, setSelectedItem] = useState(0);
 
   useEffect(() => {
     deviceType !== "laptop" ? setOpen(false) : setOpen(true);
@@ -35,7 +36,11 @@ const SideBar = ({ isOpen, setOpen }) => {
           <h5 className="my-1">Rodrigue Abdallah</h5>
         </div>
         <div className="sideBarList">
-          <SideBarList toggleDrawer={toggleDrawer} />
+          <SideBarList
+            toggleDrawer={toggleDrawer}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
         </div>
       </SwipeableDrawer>
     </>
