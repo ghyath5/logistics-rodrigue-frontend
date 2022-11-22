@@ -2,109 +2,37 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Table from "../components/layout/Table";
-import Categories from "../data/categories";
 import Model from "../components/layout/Model";
+import Loader from "../components/layout/Loader";
 import CategoryCard from "../components/layout/CategoryCard";
+import axios from "../axios";
 
-const ManageProductCategories = ({ handleOpen }) => {
-  const [allCategories, setAllCategories] = useState(Categories);
-  const [categoriesTotal, setCategoriesTotal] = useState(0);
-  const [categoriesActive, setTotalActive] = useState(0);
-  const [categoriesHidden, setCategoriesHidden] = useState(0);
-  const [rows, setRows] = useState([]);
+const ManageProductCategories = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
   const nav = useNavigate();
 
-  const columns = [
-    { id: "name", label: "Name ", minWidth: 150, class: ["nameModel"] },
-    {
-      id: "Deliveries",
-      label: "Deliveries ",
-      minWidth: 150,
-    },
-    {
-      id: "standardPrice",
-      label: "Standard Price",
-      minWidth: 150,
-    },
-
-    {
-      id: "status",
-      label: "Order List Status ",
-      minWidth: 150,
-      class: ["statusCellVisible", "statusCellHidden"],
-    },
-    {
-      id: "view",
-      label: "View ",
-      minWidth: 50,
-      class: ["tableEditBtn"],
-    },
-    {
-      id: "remove",
-      label: "Remove ",
-      minWidth: 50,
-      class: ["tableDeleteBtn"],
-      action: (value) => handleRemoveProduct(value),
-    },
-  ];
-  const handleRemoveProduct = (id) => {
-    setAllCategories((prev) => prev.filter((p) => p.id !== id));
-    setRows((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  function createData(
-    id,
-    name,
-    Deliveries,
-    standardPrice,
-    status,
-    view,
-    remove
-  ) {
-    return {
-      id,
-      name,
-      Deliveries,
-      standardPrice,
-      status,
-      view,
-      remove,
-    };
-  }
-
   useEffect(() => {
-    setCategoriesTotal(Categories.length);
-    Categories.forEach((p) => {
-      p.active === true && setTotalActive((prev) => prev + 1);
-      p.orderListStatus === "hidden" && setCategoriesHidden((prev) => prev + 1);
-
-      setRows((prev) => [
-        ...prev,
-        createData(
-          p.id,
-          p.name,
-          p.Deliveries,
-          p.standardPrice,
-          p.orderListStatus,
-          "View",
-          "Remove"
-        ),
-      ]);
-    });
+    fetchCategories();
   }, []);
 
-  useEffect(() => {
-    setTotalActive(0);
-    setCategoriesHidden(0);
-    setCategoriesTotal(allCategories.length);
-    allCategories.forEach((p) => {
-      p.active === true && setTotalActive((prev) => prev + 1);
-      p.orderListStatus === "hidden" && setCategoriesHidden((prev) => prev + 1);
-    });
-  }, [allCategories]);
+  const fetchCategories = async () => {
+    await axios
+      .get("/categories")
+      .then((res) => {
+        setLoading(false);
+        setCategories(res.data);
+      })
+      .catch(console.error);
+  };
 
-  return (
+  // const handleRemoveProduct = (id) => {
+  //   setCategories((prev) => prev.filter((p) => p.id !== id));
+  // };
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div className="d-flex align-items-center justify-content-between flex-wrap ">
         <div className="d-flex align-items-center ">
@@ -121,13 +49,10 @@ const ManageProductCategories = ({ handleOpen }) => {
           </div>
         </div>
       </div>
-      <div className="d-flex  flex-wrap mt-2">
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-      </div>
-      <div className="mt-4">
-        <Table columns={columns} rows={rows} />
+      <div className="row m-0">
+        {categories.map((cat, i) => {
+          return <CategoryCard key={i} name={cat.name} />;
+        })}
       </div>
     </Layout>
   );

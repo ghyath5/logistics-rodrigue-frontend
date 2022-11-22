@@ -39,24 +39,22 @@ const Model = () => {
           <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
             Add New Category
           </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            <div className="  gap-2">
-              <InputOutlined />
-              <div className="d-flex justify-content-center mt-3 gap-2">
-                <BtnOutlined
-                  title="Add"
-                  handleClick={() => {
-                    console.log("Add");
-                  }}
-                />
-                <BtnOutlined
-                  title="Cancel"
-                  color="error"
-                  handleClick={handleClose}
-                />
-              </div>
+          <div className="gap-2">
+            <InputOutlined />
+            <div className="d-flex justify-content-center mt-3 gap-2">
+              <BtnOutlined
+                title="Add"
+                handleClick={() => {
+                  console.log("Add");
+                }}
+              />
+              <BtnOutlined
+                title="Cancel"
+                color="error"
+                handleClick={handleClose}
+              />
             </div>
-          </Typography>
+          </div>
         </Box>
       </Modal>
     </div>

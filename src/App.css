@@ -73,7 +73,6 @@
 }
 
 .loader {
-
   border: 3px solid var(--white);
   border-radius: 50%;
   display: inline-block;
@@ -143,6 +142,13 @@
 }
 
 .mainContainer {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainDashboardContainer {
   margin-left: var(--sidebar-width);
 }
 
@@ -377,6 +383,11 @@ textarea {
   text-align: center;
 }
 
+.orderConfirmed {
+  color: var(--green) !important;
+  border: 2px solid var(--green) !important;
+}
+
 .order-title {
   color: var(--dark-green);
 }
@@ -434,6 +445,12 @@ textarea {
 }
 
 /*Products section*/
+.categoryCard {
+  border-radius: var(--border-radius);
+  border: 2px solid var(--light-gray);
+  min-height: 180px;
+}
+
 .statsCard {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);

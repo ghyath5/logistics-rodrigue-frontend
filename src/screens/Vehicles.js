@@ -14,14 +14,14 @@ export const Vehicles = () => {
   const columns = [
     {
       id: "NameModel",
-      label: "Name && Model",
-      minWidth: 100,
+      label: "Name and Model",
+      minWidth: 120,
       class: ["nameModel"],
     },
     {
       id: "Statu",
       label: "Status",
-      minWidth: 200,
+      minWidth: 180,
       class: [
         "statusCellHidden",
         "statuCellOnRoad",
@@ -115,23 +115,13 @@ export const Vehicles = () => {
       </div>
       <div className="row m-0 w-100">
         <StatsCard
-          title="Total No of Vehicles"
+          title="Total Vehicles"
           value={4}
           classes="bgLightBlue"
           col={3}
         />
-        <StatsCard
-          title="On Road Vehicles"
-          value={2}
-          classes="bgGreen"
-          col={3}
-        />
-        <StatsCard
-          title="Out of Service Vehicles"
-          value={1}
-          classes="bgRed"
-          col={3}
-        />
+        <StatsCard title="On Road" value={2} classes="bgGreen" col={3} />
+        <StatsCard title="Out of Service" value={1} classes="bgRed" col={3} />
         <StatsCard
           title="Registration Due"
           value={2}

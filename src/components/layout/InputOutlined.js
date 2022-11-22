@@ -10,9 +10,9 @@ const InputOutlined = ({
 }) => {
   return (
     <div className="mt-2 input-outline d-flex flex-column">
-      <lable for={id} className="formsLable mb-2">
+      <label htmlFor={id} className="formsLable mb-2">
         {lable}
-      </lable>
+      </label>
       <input
         placeholder={defaultValue}
         id={id}

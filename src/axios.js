@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${Cookies.get("monjayToken")}`;
+  config.headers.token = `Bearer ${Cookies.get("monjayToken")}`;
   return config;
 });
 

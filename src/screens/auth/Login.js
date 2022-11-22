@@ -98,7 +98,6 @@ const Login = () => {
             <h6 className="mt-2">I've forgotten my password</h6>
           </div>
           <div className="text-center mt-3">
-            {/* <p className="mt-2 mb-0">Don't have an account?</p> */}
             <BtnOutlined
               title="SIGN UP NOW"
               classes="w-100 mt-3"

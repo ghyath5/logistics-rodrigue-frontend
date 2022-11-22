@@ -34,7 +34,7 @@ export default function Table({ columns, rows }) {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 500 }}>
         <Tablee stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -58,7 +58,6 @@ export default function Table({ columns, rows }) {
                   <StyledTableRow hover role="checkbox" tabIndex={-1} key={j}>
                     {columns.map((column, i) => {
                       const value = row[column.id];
-                      console.log(column.class);
                       return (
                         <TableCell
                           key={i}
@@ -93,8 +92,7 @@ export default function Table({ columns, rows }) {
                               column.action && column.action(row["id"])
                             }
                           >
-                            {column.id === "price" ||
-                            column.id === "standardPrice" ? (
+                            {column.id === "price" ? (
                               `$ ${value}`
                             ) : column.id === "NameModel" ? (
                               <div className="d-flex flex-column">

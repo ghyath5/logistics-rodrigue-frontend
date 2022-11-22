@@ -85,12 +85,24 @@ const Finalise = () => {
     <Layout>
       <h3 className="headerTitle my-2">Finalise Deliveries</h3>
       <div className="row m-0">
-        <StatsCard title="Esitmated" value={3000.1 + "$"} />
-        <StatsCard title="Number of Deliveries" value={25} />
+        <StatsCard
+          title="Esitmated"
+          value={3000.1 + "$"}
+          classes="bgGreen"
+          col={4}
+        />
+        <StatsCard
+          title="Number of Deliveries"
+          value={25}
+          classes="bgLightBlue"
+          col={4}
+        />
         <StatsCard
           title="Esitmated Distance"
           value={222.5 + "km"}
           last={true}
+          classes="bgYellow"
+          col={4}
         />
       </div>
       <div className="d-flex justify-content-between align-items-center my-3">

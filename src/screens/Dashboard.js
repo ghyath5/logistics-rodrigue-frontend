@@ -17,7 +17,7 @@ const Dashboard = () => {
     <Loader />
   ) : (
     <>
-      <div className="mainContainer dashboardBg position-relative">
+      <div className="mainDashboardContainer dashboardBg position-relative">
         <div className="dashboardBgCover"></div>
         <div className="dashboardTitleContainer text-white">
           <h6>Welcome back</h6>

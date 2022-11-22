@@ -2,7 +2,6 @@ const Categories = [
   {
     id: 1,
     name: "Kibbi 100p",
-    standardPrice: 60.36,
     Deliveries: 20,
     orderListStatus: "visible",
     active: true,
@@ -10,7 +9,6 @@ const Categories = [
   {
     id: 2,
     name: "Kibbi 100p",
-    standardPrice: 60.36,
     Deliveries: 20,
     orderListStatus: "visible",
     active: true,
@@ -18,7 +16,6 @@ const Categories = [
   {
     id: 3,
     name: "Kibbi 100p",
-    standardPrice: 60.36,
     Deliveries: 20,
     orderListStatus: "hidden",
     active: true,
@@ -26,7 +23,6 @@ const Categories = [
   {
     id: 4,
     name: "Kibbi 100p",
-    standardPrice: 60.36,
     Deliveries: 20,
     orderListStatus: "hidden",
     active: true,
