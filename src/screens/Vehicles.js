@@ -16,14 +16,18 @@ export const Vehicles = () => {
       id: "NameModel",
       label: "Name && Model",
       minWidth: 100,
-      class: "nameModel",
+      class: ["nameModel"],
     },
     {
       id: "Statu",
       label: "Status",
       minWidth: 200,
-      class:
-        "statusCellHidden/statuCellOnRoad/statuCellOutOfService/statusCellVisible",
+      class: [
+        "statusCellHidden",
+        "statuCellOnRoad",
+        "statuCellOutOfService",
+        "statusCellVisible",
+      ],
     },
     {
       id: "RegistrationDue",
@@ -44,14 +48,14 @@ export const Vehicles = () => {
       id: "setting",
       label: "Setting",
       minWidth: 50,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
 
     {
       id: "remove",
       label: "Delete",
       minWidth: 100,
-      class: "tableDeleteBtn",
+      class: ["tableDeleteBtn"],
     },
   ];
 
@@ -119,16 +123,21 @@ export const Vehicles = () => {
         <StatsCard
           title="On Road Vehicles"
           value={2}
-          classes="bgYellow"
+          classes="bgGreen"
           col={3}
         />
         <StatsCard
           title="Out of Service Vehicles"
           value={1}
-          classes="bgGreen"
+          classes="bgRed"
           col={3}
         />
-        <StatsCard title="Registration Due" value={2} classes="bgRed" col={3} />
+        <StatsCard
+          title="Registration Due"
+          value={2}
+          classes="bgYellow"
+          col={3}
+        />
       </div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>

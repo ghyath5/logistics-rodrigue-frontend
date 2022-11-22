@@ -4,16 +4,17 @@ import AuthInput from "../../components/layout/AuthInput";
 import Cookies from "js-cookie";
 import BtnContained from "../../components/layout/BtnContained";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import validator from "validator";
 
 const Register = () => {
-  // const [fullName, setFullName] = useState("");
-  // const [userName, setUserName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [rePassword, setRePassword] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    repass: "",
+  });
   const [errors, setErrors] = useState({
     username: false,
     name: false,
@@ -23,6 +24,19 @@ const Register = () => {
     repass: false,
   });
   const navigate = useNavigate();
+
+  const allVAlid = () => {
+    let valid;
+    let errs = Object.values(errors);
+    errs.includes(true) ? (valid = false) : (valid = true);
+    return valid;
+  };
+
+  const hasError = (name, bool) => {
+    setErrors((prev) => {
+      return { ...prev, [name]: bool };
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,65 +50,66 @@ const Register = () => {
     validate(name, value);
   };
 
-  const clearErrors = () => {
-    setErrors({});
-  };
-
   const validate = (name, value) => {
     switch (name) {
       case "username":
       case "name":
-        value.length < 3
-          ? setErrors((prev) => {
-              return { ...prev, [name]: true };
-            })
-          : setErrors((prev) => {
-              return { ...prev, [name]: false };
-            });
+        value &&
+          (value.length < 3 ? hasError(name, true) : hasError(name, false));
         break;
       case "email":
-        // code block
+        value &&
+          (validator.isEmail(value)
+            ? hasError(name, false)
+            : hasError(name, true));
         break;
       case "phone":
-        // code block
+        value &&
+          (validator.isMobilePhone(value.toString(), ["en-AU"])
+            ? hasError(name, false)
+            : hasError(name, true));
         break;
       case "password":
-        value.length < 8
-          ? setErrors((prev) => {
-              return { ...prev, [name]: true };
-            })
-          : setErrors((prev) => {
-              return { ...prev, [name]: false };
-            });
+        console.log(value);
+        value &&
+          (validator.isStrongPassword(value, {
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+          })
+            ? hasError(name, false)
+            : hasError(name, true));
+        break;
+      case "repass":
+        value &&
+          (validator.equals(value, data?.password)
+            ? hasError(name, false)
+            : hasError(name, true));
         break;
       default:
         console.log("");
     }
-
-    // handleRegisterUser();
   };
 
   const handleRegisterUser = () => {
-    clearErrors();
-    // axios
-    //   .post(`${process.env.REACT_APP_BASE_URL}auth/register`, {
-    //     name: data.name,
-    //     username: data.username,
-    //     email: data.email,
-    //     phonenumber: data.phone,
-    //     password: data.password,
-    //     role: 1,
-    //   })
-    //   .then((res) => {
-    //     Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
-    //     navigate("/");
-    //   })
-    //   .catch(console.error);
+    allVAlid() &&
+      axios
+        .post(`${process.env.REACT_APP_BASE_URL}auth/register`, {
+          name: data.name,
+          username: data.username,
+          email: data.email,
+          phonenumber: data.phone,
+          password: data.password,
+          role: 1,
+        })
+        .then((res) => {
+          Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
+          navigate("/");
+        })
+        .catch(console.error);
   };
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
 
   return (
     <div className="registrationContainer d-flex justify-content-center align-items-center">

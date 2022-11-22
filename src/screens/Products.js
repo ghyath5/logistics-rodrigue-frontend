@@ -43,20 +43,20 @@ const Products = () => {
       id: "status",
       label: "Status",
       minWidth: 100,
-      class: "statusCellVisible/statusCellHidden",
+      class: ["statusCellVisible", "statusCellHidden"],
     },
     {
       id: "remove",
       label: "Remove ",
       minWidth: 100,
-      class: "tableDeleteBtn",
+      class: ["tableDeleteBtn"],
       action: (value) => handleRemoveProduct(value),
     },
     {
       id: "edit",
       label: "Edit ",
       minWidth: 100,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
   ];
 
@@ -143,9 +143,25 @@ const Products = () => {
         </div>
       </div>
       <div className="d-flex flex-wrap ">
-        <StatsCard title="Total No. of Products" value={productsTotal} />
-        <StatsCard title="Active Products" value={productsActive} />
-        <StatsCard title="Hidden Products" value={productsHidden} last={true} />
+        <StatsCard
+          title="Total No. of Products"
+          value={productsTotal}
+          classes="bgGreen"
+          col={4}
+        />
+        <StatsCard
+          title="Active Products"
+          value={productsActive}
+          classes="bgLightBlue"
+          col={4}
+        />
+        <StatsCard
+          title="Hidden Products"
+          value={productsHidden}
+          last={true}
+          classes="bgYellow"
+          col={4}
+        />
       </div>
       <div className="d-flex justify-content-between align-items-center my-4">
         <h3 className="headerTitle">All Products</h3>

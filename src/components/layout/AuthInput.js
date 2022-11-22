@@ -26,7 +26,7 @@ const AuthInput = ({
           placeholder={placeHolder}
           value={value}
           onChange={(e) => handleChange(e)}
-          onBlur={(e) => handleBlur(e)}
+          onBlur={(e) => handleBlur && handleBlur(e)}
           autoComplete={autoComplete}
         />
       </div>

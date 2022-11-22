@@ -33,7 +33,7 @@ const columns = [
     id: "viewRoutes",
     label: "View Routes ",
     minWidth: 100,
-    class: "viewRoute",
+    class: ["viewRoute"],
   },
 ];
 

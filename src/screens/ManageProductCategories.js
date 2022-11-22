@@ -16,7 +16,7 @@ const ManageProductCategories = ({ handleOpen }) => {
   const nav = useNavigate();
 
   const columns = [
-    { id: "name", label: "Name ", minWidth: 150, class: "nameModel" },
+    { id: "name", label: "Name ", minWidth: 150, class: ["nameModel"] },
     {
       id: "Deliveries",
       label: "Deliveries ",
@@ -32,19 +32,19 @@ const ManageProductCategories = ({ handleOpen }) => {
       id: "status",
       label: "Order List Status ",
       minWidth: 150,
-      class: "statusCellVisible/statusCellHidden",
+      class: ["statusCellVisible", "statusCellHidden"],
     },
     {
       id: "view",
       label: "View ",
       minWidth: 50,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
     {
       id: "remove",
       label: "Remove ",
       minWidth: 50,
-      class: "tableDeleteBtn",
+      class: ["tableDeleteBtn"],
       action: (value) => handleRemoveProduct(value),
     },
   ];

@@ -15,7 +15,7 @@ export const StaffMembers = () => {
       id: "staffId",
       label: "Staff ID",
       minWidth: 70,
-      class: "nameModel",
+      class: ["nameModel"],
     },
     {
       id: "name",
@@ -46,14 +46,14 @@ export const StaffMembers = () => {
       id: "edit",
       label: "Edit",
       minWidth: 50,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
 
     {
       id: "remove",
       label: "Delete",
       minWidth: 100,
-      class: "tableDeleteBtn",
+      class: ["tableDeleteBtn"],
     },
   ];
 

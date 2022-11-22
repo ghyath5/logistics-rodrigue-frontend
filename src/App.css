@@ -73,14 +73,39 @@
 }
 
 .loader {
-  width: 48px;
-  height: 48px;
+
   border: 3px solid var(--white);
   border-radius: 50%;
   display: inline-block;
   position: relative;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+}
+
+.bigLoader {
+  width: 48px;
+  height: 48px;
+}
+
+.bigLoader::after {
+  width: 56px;
+  height: 56px;
+}
+
+.smallLoader {
+  width: 24px;
+  height: 24px;
+}
+
+.smallLoader::after {
+  width: 28px;
+  height: 28px;
+}
+
+
+.smallLoader::after {
+  width: 28px;
+  height: 28px;
 }
 
 .loader::after {
@@ -90,8 +115,6 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
   border-radius: 50%;
   border: 3px solid;
   border-color: var(--dark-green) transparent;
@@ -249,7 +272,7 @@ textarea {
 }
 
 .dashboard-tomorrow {
-  border: 1px solid var(--gray);
+  border: 3px solid rgb(187, 187, 187);
 }
 
 .TomorrowsCardContainer {
@@ -276,9 +299,8 @@ textarea {
 
 .giftIcon {
   position: absolute;
-  left: 30px;
+  left: 40px;
   top: 5;
-  color: #8219d8;
 }
 
 .selected {

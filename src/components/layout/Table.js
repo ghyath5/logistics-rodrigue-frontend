@@ -58,6 +58,7 @@ export default function Table({ columns, rows }) {
                   <StyledTableRow hover role="checkbox" tabIndex={-1} key={j}>
                     {columns.map((column, i) => {
                       const value = row[column.id];
+                      console.log(column.class);
                       return (
                         <TableCell
                           key={i}
@@ -70,29 +71,28 @@ export default function Table({ columns, rows }) {
                         >
                           <span
                             className={`
-                              ${column.class ? column.class : ""} 
                               ${column.id !== "code" ? "text-capitalize" : ""}
                               ${
-                                column.id === "status" && value === "visible"
-                                  ? column.class?.split("/")[0]
-                                  : column.class?.split("/")[1]
-                              }
-                              ${
-                                column.id === "Statu" &&
-                                value === "Registration Due"
-                                  ? column.class?.split("/")[0]
-                                  : value === "On Road"
-                                  ? column.class?.split("/")[1]
-                                  : value === "Out of service"
-                                  ? column.class?.split("/")[2]
-                                  : column.class?.split("/")[3]
+                                column.class &&
+                                (column.id === "status"
+                                  ? value === "visible"
+                                    ? column.class[0]
+                                    : column.class[1]
+                                  : column.id === "Statu"
+                                  ? value === "Registration Due"
+                                    ? column.class[0]
+                                    : value === "On Road"
+                                    ? column.class[1]
+                                    : value === "Out of service"
+                                    ? column.class[2]
+                                    : column.class[3]
+                                  : column.class[0])
                               }
                             `}
                             onClick={() =>
                               column.action && column.action(row["id"])
                             }
                           >
-                            {/* handleRemoveProduct(row["id"]) */}
                             {column.id === "price" ||
                             column.id === "standardPrice" ? (
                               `$ ${value}`

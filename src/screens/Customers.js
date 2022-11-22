@@ -23,7 +23,7 @@ const Customers = () => {
       id: "customerName",
       label: "Customer Name",
       minWidth: 100,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
     {
       id: "address",
@@ -55,7 +55,7 @@ const Customers = () => {
       id: "archive",
       label: "Archive",
       minWidth: 50,
-      class: "tableEditBtn",
+      class: ["tableEditBtn"],
     },
   ];
 
