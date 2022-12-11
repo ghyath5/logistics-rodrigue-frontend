@@ -50,7 +50,7 @@ const DropDown = ({ lable, defaultValue }) => {
 
   return (
     <div className="dropDownContainer d-flex flex-column mt-2">
-      <lable className="formsLable mb-2">State</lable>
+      <label className="formsLable mb-2">State</label>
       <FormControl>
         <Select
           id=""

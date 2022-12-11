@@ -26,9 +26,38 @@ const ManageProductCategories = () => {
       .catch(console.error);
   };
 
-  // const handleRemoveProduct = (id) => {
-  //   setCategories((prev) => prev.filter((p) => p.id !== id));
-  // };
+  const addCategory = (name) => {
+    setLoading(true);
+    let data = { name: name };
+    axios
+      .post("/categories", data)
+      .then((res) => {
+        setCategories((prev) => [
+          ...prev,
+          { _id: res.data._id, name: res.data.name, products: 0 },
+        ]);
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
+
+  const updateCategory = (id, name) => {
+    setLoading(true);
+    axios
+      .put(`/categories/${id}`, { name: name })
+      .then(() => {
+        setCategories((prev) =>
+          prev.map((cat) => {
+            if (cat._id === id) {
+              return { ...cat, name: name };
+            }
+            return cat;
+          })
+        );
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
 
   return isLoading ? (
     <Loader />
@@ -43,15 +72,24 @@ const ManageProductCategories = () => {
           />
           <h4 className="headerTitle my-3 mx-2">Manage Product Categories</h4>
         </div>
-        <div className="d-flex gap-3 flex-wrap">
-          <div className="gap-2">
-            <Model />
-          </div>
-        </div>
+        <Model
+          handleAction={addCategory}
+          btn="Add"
+          title="Add New Category"
+          defaultValue="category name"
+        />
       </div>
       <div className="row m-0">
         {categories.map((cat, i) => {
-          return <CategoryCard key={i} name={cat.name} />;
+          return (
+            <CategoryCard
+              key={i}
+              id={cat._id}
+              name={cat.name}
+              handleAction={updateCategory}
+              isUpdate={true}
+            />
+          );
         })}
       </div>
     </Layout>

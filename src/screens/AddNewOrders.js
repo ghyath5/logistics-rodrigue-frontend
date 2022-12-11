@@ -45,10 +45,9 @@ const AddNewOrders = () => {
             type="text"
           />
           <div className="mt-4 d-flex flex-column">
-            <lable className="formsLable mb-2">Order Notes:</lable>
+            <label className="formsLable mb-2">Order Notes:</label>
             <textarea
               id="outlined-multiline-static"
-              multiline
               rows={4}
               placeholder="Order Notes"
             />

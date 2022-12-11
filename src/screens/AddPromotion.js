@@ -6,36 +6,91 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InputOutlined from "../components/layout/InputOutlined";
 import DatePicker from "../components/layout/DatePicker";
 import DropDownSearch from "../components/layout/DropDownSearch";
-import RadiosGroup from "../components/layout/RadiosGroup";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List } from "@mui/material";
 import ProductListItem from "../components/promotions/ProductListItem";
-
-const categoriesOps = [
-  { label: "Search", value: "", isDisabled: true },
-  { label: "Finger Foods", value: "1" },
-  { label: "Deserts", value: "2" },
-  { label: "Dips", value: "3" },
-  { label: "All", value: "4" },
-];
+import validator from "validator";
 
 const options = [
-  { label: "Search", value: "", isDisabled: true },
   { label: "First Product", value: "1", price: "10" },
   { label: "Second Product", value: "2", price: "10" },
   { label: "Third Product", value: "3", price: "10" },
   { label: "Fourth Product", value: "4", price: "10" },
 ];
 
-const targets = [
-  { label: "Category targeted", value: "category" },
-  { label: "Product targeted", value: "product" },
-];
-
 export const AddPromotion = () => {
   const nav = useNavigate();
-  const [promotionTarget, setPromotionTarget] = useState("category");
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    from: "",
+    to: "",
+    products: [],
+  });
+  const [errors, setErrors] = useState({
+    name: false,
+    description: false,
+    from: false,
+    to: false,
+    products: false,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    // console.log("handleBlur", name, value);
+    validate(name, value);
+  };
+
+  const allVAlid = () => {
+    let valid;
+    let errs = Object.values(errors);
+    errs.includes(true) ? (valid = false) : (valid = true);
+    return valid;
+  };
+
+  const hasError = (name, bool) => {
+    setErrors((prev) => {
+      return { ...prev, [name]: bool };
+    });
+  };
+
+  const validate = (name, value) => {
+    switch (name) {
+      case "name":
+        value &&
+          (value.length < 3 ? hasError(name, true) : hasError(name, false));
+        break;
+      case "description":
+        value &&
+          (validator.isEmail(value)
+            ? hasError(name, false)
+            : hasError(name, true));
+        break;
+      case "from":
+        value &&
+          (validator.isMobilePhone(value.toString(), ["en-AU"])
+            ? hasError(name, false)
+            : hasError(name, true));
+        break;
+      case "to":
+        value &&
+          (validator.isMobilePhone(value.toString(), ["en-AU"])
+            ? hasError(name, false)
+            : hasError(name, true));
+        break;
+      case "products":
+        value !== "" ? hasError(name, false) : hasError(name, true);
+        break;
+      default:
+        console.log("");
+    }
+  };
 
   return (
     <Layout>
@@ -45,7 +100,7 @@ export const AddPromotion = () => {
           fontSize="medium"
           onClick={() => nav("/vehicles")}
         />
-        <h4 className="headerTitle my-3 mx-2"> Add New Promotion</h4>
+        <h4 className="headerTitle my-3 mx-2">Add New Promotion</h4>
       </div>
       <div className="formsContainer">
         <div className="text-center">
@@ -55,10 +110,9 @@ export const AddPromotion = () => {
         <div className="mx-4">
           <InputOutlined lable="Name" defaultValue="Name" type="text" />
           <div className="d-flex flex-column mt-3">
-            <lable className="formsLable mb-2">Description</lable>
+            <label className="formsLable mb-2">Description</label>
             <textarea
               id="outlined-multiline-static"
-              multiline
               rows={4}
               placeholder="Promotion description"
             />
@@ -71,36 +125,28 @@ export const AddPromotion = () => {
               <DatePicker lable="to" />
             </div>
           </div>
-          <div>
+          {/* <div>
             <RadiosGroup
               lable="Promotion Target"
               options={targets}
               value={promotionTarget}
               setValue={setPromotionTarget}
             />
-          </div>
+          </div> */}
           <div className="mt-3">
             <DropDownSearch
-              lable="Add category to promotion"
-              options={categoriesOps}
-              isDisabled={promotionTarget !== "category" && true}
-              isMulti={true}
-              values={categories}
-              setValues={setCategories}
-            />
-          </div>
-          <div className="mt-3">
-            <DropDownSearch
+              name="products"
               lable="Add product to promotion"
               options={options}
-              isDisabled={promotionTarget === "category" && true}
-              isMulti={false}
-              values={products}
-              setValues={setProducts}
+              isDisabled={false}
+              isMulti={true}
+              values={data?.products}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
             />
           </div>
           <List className="w-100">
-            {products.map((p, i) => {
+            {data?.products.map((p, i) => {
               return <ProductListItem product={p} key={i} />;
             })}
           </List>

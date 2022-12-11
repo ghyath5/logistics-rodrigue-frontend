@@ -3,24 +3,23 @@ import { useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
+import Loader from "../components/layout/Loader";
 import Layout from "../components/partials/Layout";
-import STAFF from "../data/StaffMembers";
+import axios from "../axios";
+import { roles } from "../data/configs";
 
 export const StaffMembers = () => {
-  const [allStaff, setAllStaff] = useState(STAFF);
-  const nav = useNavigate();
+  const [isLoading, setLoading] = useState(true);
+  const [allStaff, setAllStaff] = useState([]);
   const [rows, setRows] = useState([]);
+  const nav = useNavigate();
+
   const columns = [
-    {
-      id: "staffId",
-      label: "Staff ID",
-      minWidth: 70,
-      class: ["nameModel"],
-    },
     {
       id: "name",
       label: "Name",
       minWidth: 100,
+      class: ["nameModel"],
     },
     {
       id: "accountType",
@@ -47,6 +46,9 @@ export const StaffMembers = () => {
       label: "Edit",
       minWidth: 50,
       class: ["tableEditBtn"],
+      action: (id) => {
+        nav("/EditStaffMember", { state: { id: id, edit: true } });
+      },
     },
 
     {
@@ -54,12 +56,12 @@ export const StaffMembers = () => {
       label: "Delete",
       minWidth: 100,
       class: ["tableDeleteBtn"],
+      action: (id) => handleDeleteMember(id),
     },
   ];
 
   function createData(
     id,
-    staffId,
     name,
     accountType,
     phoneNumber,
@@ -72,7 +74,6 @@ export const StaffMembers = () => {
     // return { name, code, population, size, density };
     return {
       id,
-      staffId,
       name,
       accountType,
       phoneNumber,
@@ -82,29 +83,57 @@ export const StaffMembers = () => {
       remove,
     };
   }
+
   useEffect(() => {
     allStaff.forEach((p) => {
       setRows((prev) => [
         ...prev,
         createData(
-          p.id,
-          p.staffId,
+          p._id,
           p.name,
-          p.accountType,
-          p.phoneNumber,
-          p.emailAddress,
-          p.lastLogin,
+          roles[p.role],
+          p.phonenumber,
+          p.email,
+          p.lastlogin ? p.lastlogin : "_",
           "Edit",
           "Delete"
         ),
       ]);
     });
+  }, [allStaff]);
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
-  return (
+  const fetchUsers = async () => {
+    await axios
+      .get("/users?page=1&limit=100")
+      .then((res) => {
+        setAllStaff(res.data);
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
+
+  const handleDeleteMember = async (id) => {
+    setAllStaff((prev) => prev.filter((S) => S._id !== id));
+    setRows((prev) => prev.filter((S) => S.id !== id));
+
+    await axios
+      .delete(`/users/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  };
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div>
-        <h3 className="headerTitle my-2">Stuff Members</h3>
+        <h3 className="headerTitle my-2">Staff Members</h3>
       </div>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div>
@@ -113,7 +142,9 @@ export const StaffMembers = () => {
         <div>
           <BtnContained
             title="add new staff member"
-            handleClick={() => nav("/AddNewStaffMember")}
+            handleClick={() =>
+              nav("/AddNewStaffMember", { state: { edit: false } })
+            }
           />
         </div>
       </div>

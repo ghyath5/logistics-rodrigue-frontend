@@ -6,9 +6,9 @@ const PhoneNumberInput = ({ lable, value, setValue }) => {
   return (
     <div className="mt-3 mt-md-0 PhoneInput">
       <div className="flex-column w-100">
-        <lable for={lable} className="formsLable mb-2">
+        <label htmlFor={lable} className="formsLable mb-2">
           {lable}
-        </lable>
+        </label>
         <PhoneInput
           id={lable}
           placeholder="Enter phone number"

@@ -11,9 +11,9 @@ const DatePicker = ({ id, lable }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="d-flex flex-column dateTimePicker">
-        <lable for={id} className="formsLable mb-2">
+        <label htmlFor={id} className="formsLable mb-2">
           {lable}
-        </lable>
+        </label>
         <DateTimePicker
           id={id}
           renderInput={(props) => (

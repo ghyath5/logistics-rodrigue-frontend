@@ -130,14 +130,14 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                     <InputOutlined lable="Postcode" defaultValue="Postcode" />
                   </div>
                   <div className="mt-3 d-flex flex-column">
-                    <lable className="formsLable mb-2">
+                    <label className="formsLable mb-2">
                       Customer Notes (Max of 250 Characters)*
-                    </lable>
+                    </label>
 
                     <textarea
                       id="outlined-multiline-static"
                       label="Custimer Notes (Max of 250 Characters)"
-                      multiline
+                      // multiline
                       rows={4}
                       placeholder="Default Value"
                     />

@@ -7,15 +7,20 @@ const ProductListItem = ({ product }) => {
 
   const handleDiscount = (e) => {
     setDiscount(e.target.value);
-    setNewPrice((product.price * (100 - e.target.value)) / 100);
+    setNewPrice((product?.price * (100 - e.target.value)) / 100);
+  };
+
+  const handleNewPrice = (e) => {
+    setNewPrice(e.target.value);
+    setDiscount(100 - (e.target.value * 100) / product?.price);
   };
 
   return (
     <ListItem className="listItem mt-1 py-3">
-      <ListItemText primary={product.label} className="listItemTitle" />
+      <ListItemText primary={product?.label} className="listItemTitle" />
       <ListItemText
         className="text-center"
-        primary={"old price: " + product.price + "$"}
+        primary={"old price: " + product?.price + "$"}
       />
       <ListItemText className="text-end me-2" primary="discount: " />
       <input
@@ -23,6 +28,7 @@ const ProductListItem = ({ product }) => {
         className="bg-transparent"
         placeholder="0"
         onChange={handleDiscount}
+        value={newPrice && discount}
       />
       <span className="ms-1">%</span>
       <ListItemText className="text-end me-2" primary="new Price: " />
@@ -31,6 +37,7 @@ const ProductListItem = ({ product }) => {
         className="bg-transparent"
         placeholder="0.00"
         value={discount && newPrice}
+        onChange={handleNewPrice}
       />
       <span className="ms-1">$</span>
     </ListItem>

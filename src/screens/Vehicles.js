@@ -5,11 +5,20 @@ import Table from "../components/layout/Table";
 import Vehciles from "../data/vehicle";
 import { useNavigate } from "react-router-dom";
 import StatsCard from "../components/layout/StatsCard";
+// import axios from "../axios";
 
 export const Vehicles = () => {
   const [allVehciles, setAllVehclies] = useState(Vehciles);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+
+  // useEffect(()=>{
+  //   fetchVehicles()
+  // },[])
+
+  // const fetchVehicles = () => {
+  //   axios.get(``).then((res)=>setAllVehclies(res.data)).catch(console.error)
+  // }
 
   const columns = [
     {

@@ -35,7 +35,7 @@ const Main = () => {
           <Route exact path="orders" element={<Orders />} />
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
-          <Route exact path="stuffmember" element={<StaffMembers />} />
+          <Route exact path="staffmembers" element={<StaffMembers />} />
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
           <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
           <Route exact path="addpromotion" element={<AddPromotion />} />
@@ -52,6 +52,7 @@ const Main = () => {
             path="AddNewStaffMember"
             element={<AddNewStaffMember />}
           />
+          <Route exact path="EditStaffMember" element={<AddNewStaffMember />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

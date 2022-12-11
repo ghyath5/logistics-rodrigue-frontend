@@ -13,9 +13,9 @@ const RadiosGroup = ({ lable, options, value, setValue }) => {
 
   return (
     <FormControl className="mt-3">
-      <lable for="DropDownSearch" className="formsLable">
+      <label htmlFor="DropDownSearch" className="formsLable">
         {lable}
-      </lable>
+      </label>
       <RadioGroup
         id="DropDownSearch"
         row

@@ -206,10 +206,16 @@
   font-weight: bold;
 }
 
-.formsInput {
+.formsInputCont {
   background-color: var(--light-gray);
   border-radius: 5px;
   padding: 10px;
+  border: 0;
+  outline: none;
+}
+
+.formsInput {
+  background-color: var(--light-gray);
   border: 0;
   outline: none;
 }
@@ -237,6 +243,16 @@ textarea {
   max-width: 500px;
 }
 
+.errorInputO {
+  border: 1px solid var(--delete-red) !important;
+  color: var(--delete-red) !important;
+}
+
+.errorDD .css-1s2u09g-control {
+  border: 1px solid var(--delete-red) !important;
+  color: var(--delete-red) !important;
+}
+
 .errorInput .css-1ptx2yq-MuiInputBase-root-MuiInput-root {
   color: var(--delete-red);
 }
@@ -256,7 +272,14 @@ textarea {
 .errorMessageReg {
   position: absolute;
   top: -15px;
-  left: 0;
+  right: 0;
+  color: var(--delete-red);
+  font-size: 12px;
+}
+
+.errorMessagenormal {
+  position: absolute;
+  top: 0;
   right: 0;
   color: var(--delete-red);
   font-size: 12px;
@@ -412,6 +435,25 @@ textarea {
 
 .dateTimePicker .css-1ptx2yq-MuiInputBase-root-MuiInput-root:before {
   border: 0;
+}
+
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root,
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:hover:not(.Mui-disabled):before,
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:hover,
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:after,
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:before {
+  content: "";
+  border: 0;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  padding: 2px 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:before,
+.ddSelect .css-19mk8g1-MuiInputBase-root-MuiFilledInput-root:after {
+  display: none !important;
 }
 
 .DropDownSearchContainer .css-1s2u09g-control,

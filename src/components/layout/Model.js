@@ -19,15 +19,23 @@ const style = {
   p: 2,
 };
 
-const Model = () => {
+const Model = ({ id, handleAction, btn, title, defaultValue, isUpdate }) => {
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState(isUpdate ? defaultValue : "");
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setName("");
+    setOpen(false);
+  };
 
   return (
     <div>
-      <BtnContained title="Add" handleClick={handleOpen} />
+      {isUpdate ? (
+        <BtnOutlined title={btn} handleClick={handleOpen} />
+      ) : (
+        <BtnContained title={btn} handleClick={handleOpen} />
+      )}
       <Modal
         keepMounted
         open={open}
@@ -37,15 +45,22 @@ const Model = () => {
       >
         <Box sx={style}>
           <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Add New Category
+            {title}
           </Typography>
           <div className="gap-2">
-            <InputOutlined />
+            <InputOutlined
+              lable=""
+              defaultValue={defaultValue}
+              type="text"
+              value={name}
+              setValue={(value) => setName(value)}
+              name={title}
+            />
             <div className="d-flex justify-content-center mt-3 gap-2">
               <BtnOutlined
-                title="Add"
+                title={isUpdate ? "Update" : "Add"}
                 handleClick={() => {
-                  console.log("Add");
+                  isUpdate ? handleAction(id, name) : handleAction(name);
                 }}
               />
               <BtnOutlined
