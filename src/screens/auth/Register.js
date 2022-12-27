@@ -111,10 +111,15 @@ const Register = () => {
         .catch(console.error);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleRegisterUser();
+  };
+
   return (
     <div className="registrationContainer d-flex justify-content-center align-items-center">
       <div className="align-self-center">
-        <form className="registrationForm py-4 px-4">
+        <form className="registrationForm py-4 px-4" onSubmit={onSubmit}>
           <h2 className="text-center mb-2 headerTitle">
             Register to My Monjay Account
           </h2>

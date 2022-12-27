@@ -6,18 +6,12 @@ import Loader from "../../components/layout/Loader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
 
 const Login = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const handleSignUp = () => {
     navigate("/register");
@@ -31,31 +25,35 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setLoading(true);
     setError(false);
-    setSending(true);
     axios
       .post(`${process.env.REACT_APP_BASE_URL}auth/login`, {
         username: data?.username,
         password: data?.password,
       })
       .then((res) => {
-        setSending(false);
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         navigate("/");
       })
       .catch((err) => {
         console.error(err);
-        setSending(false);
         setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
+  return (
     <div className="registrationContainer d-flex justify-content-center align-items-center">
       <div className="align-self-center mx-auto">
-        <form className="registrationForm py-4 px-4">
+        <form className="registrationForm py-4 px-4" onSubmit={onSubmit}>
           <h2 className="text-center mb-4 headerTitle">
             Login to My Monjay Account
           </h2>
@@ -84,13 +82,14 @@ const Login = () => {
               </div>
             </div>
           )}
-          {sending && (
+          {isLoading && (
             <div className="position-relative">
               <Loader small />
             </div>
           )}
           <div className="text-center mt-5">
             <BtnContained
+              type="submit"
               title="Login"
               classes="w-100"
               handleClick={() => handleLogin()}

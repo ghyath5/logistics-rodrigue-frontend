@@ -47,7 +47,7 @@ export const StaffMembers = () => {
       minWidth: 50,
       class: ["tableEditBtn"],
       action: (id) => {
-        nav("/EditStaffMember", { state: { id: id, edit: true } });
+        nav("/EditStaffMember", { state: { id: id } });
       },
     },
 
@@ -85,24 +85,6 @@ export const StaffMembers = () => {
   }
 
   useEffect(() => {
-    allStaff.forEach((p) => {
-      setRows((prev) => [
-        ...prev,
-        createData(
-          p._id,
-          p.name,
-          roles[p.role],
-          p.phonenumber,
-          p.email,
-          p.lastlogin ? p.lastlogin : "_",
-          "Edit",
-          "Delete"
-        ),
-      ]);
-    });
-  }, [allStaff]);
-
-  useEffect(() => {
     fetchUsers();
   }, []);
 
@@ -111,9 +93,24 @@ export const StaffMembers = () => {
       .get("/users?page=1&limit=100")
       .then((res) => {
         setAllStaff(res.data);
-        setLoading(false);
+        res.data?.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.name,
+              roles[p.role]?.label,
+              p.phonenumber,
+              p.email,
+              p.lastlogin ? p.lastlogin : "_",
+              "Edit",
+              "Delete"
+            ),
+          ]);
+        });
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setLoading(false));
   };
 
   const handleDeleteMember = async (id) => {
@@ -142,9 +139,7 @@ export const StaffMembers = () => {
         <div>
           <BtnContained
             title="add new staff member"
-            handleClick={() =>
-              nav("/AddNewStaffMember", { state: { edit: false } })
-            }
+            handleClick={() => nav("/AddNewStaffMember")}
           />
         </div>
       </div>

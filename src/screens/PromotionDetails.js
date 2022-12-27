@@ -1,12 +1,31 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import BtnContained from "../components/layout/BtnContained";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "../axios";
 
 const PromotionDetails = () => {
   const nav = useNavigate();
+  const location = useLocation();
+  const [promotion, setPromotion] = useState({});
+
+  useEffect(() => {
+    setPromotion(location.state?.promotion);
+  }, [location.state?.promotion]);
+
+  const handleDeletePromotion = async (id) => {
+    await axios
+      .delete(`/promotion/${id}`)
+      .then(() => {
+        nav("/promotions");
+      })
+      .catch(console.error);
+  };
+
   return (
     <Layout>
       <div className="d-flex align-items-center justify-content-between flex-wrap ">
@@ -23,7 +42,9 @@ const PromotionDetails = () => {
             <BtnContained
               title="Edit Promotion"
               handleClick={() => {
-                console.log("edit");
+                nav("/editpromotion", {
+                  state: { id: promotion._id },
+                });
               }}
             />
           </div>
@@ -31,7 +52,7 @@ const PromotionDetails = () => {
             <BtnContained
               title="Delete Promotion"
               handleClick={() => {
-                console.log("delete");
+                handleDeletePromotion(promotion._id);
               }}
             />
           </div>
@@ -39,27 +60,31 @@ const PromotionDetails = () => {
       </div>
       <div className="promotion-container px-4 py-3 mt-2">
         <div>
-          <h4>Black friday</h4>
-          <h6>more than 40% off on these selected products</h6>
-          <span className="range-date">ends in: 06:30am,28 October 2022</span>
+          <h4 className="text-capitalize">{promotion?.name}</h4>
+          <h6>{promotion?.description}</h6>
+          <span className="range-date">
+            ends in: {new Date(promotion?.to).toString().split("GMT")[0]}
+          </span>
         </div>
         <hr style={{ color: "#495767" }}></hr>
         <div>
-          <h6>Promotion Details</h6>
+          <h6>Promotion Details //hardcoded</h6>
         </div>
         <div className="row text-promotion">
-          <span className="col-md-4 col-sm-12">
+          <span className="col-md-12 col-sm-12">
             Traditinal Falfel Poushes 225g - $50.00
             <span className="fromDolar"> (From $2.5)</span>
           </span>
-          <span className="col-md-8 col-sm-12">
+          <span className="col-md-12 col-sm-12">
             Coles Med del Traditional Falfel 225g - $50.00
             <span className="fromDolar"> (From $2.5)</span>
           </span>
         </div>
       </div>
       <div className="d-flex align-items-center justify-content-between flex-wrap my-3 ">
-        <h4 className="headerTitle my-3 mx-2">Customers With this Promotion</h4>
+        <h4 className="headerTitle my-3 mx-2">
+          Customers With this Promotion //hardcoded
+        </h4>
         <div>
           <BtnContained
             title="add customers to promotion"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -6,8 +6,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
 
-const SideBarList = ({ toggleDrawer, selectedItem, setSelectedItem }) => {
+const SideBarList = ({ toggleDrawer }) => {
   const navigate = useNavigate();
+  const [selectedItem, setSelectedItem] = useState("");
+
+  useEffect(() => {
+    setSelectedItem(window.location.pathname);
+  }, []);
 
   const myList = [
     { text: "Dashboard", goTo: "/" },
@@ -20,8 +25,8 @@ const SideBarList = ({ toggleDrawer, selectedItem, setSelectedItem }) => {
     { text: "Finalise Deliveries", goTo: "/finalise" },
   ];
 
-  const handleItemSelected = (goTo, i) => {
-    setSelectedItem(i);
+  const handleItemSelected = (goTo) => {
+    setSelectedItem(goTo);
     toggleDrawer();
     navigate(goTo && goTo);
   };
@@ -33,8 +38,8 @@ const SideBarList = ({ toggleDrawer, selectedItem, setSelectedItem }) => {
           <ListItem
             key={item.text}
             disablePadding
-            className={`${selectedItem === index ? "selected" : ""}`}
-            onClick={() => handleItemSelected(item?.goTo && item.goTo, index)}
+            className={`${selectedItem === item.goTo ? "selected" : ""}`}
+            onClick={() => handleItemSelected(item?.goTo && item.goTo)}
           >
             <ListItemButton className="list-btn position-relative">
               {index === 4 && (

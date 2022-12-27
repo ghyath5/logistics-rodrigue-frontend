@@ -1,0 +1,21 @@
+promotion
+
+user    
+    assign promotion
+
+Order
+    select user
+        get users promotion if exist
+            save category id or products ids and prices available in this promotion
+                detect selected product if matched
+
+
+
+picked a customer
+    sent customer id
+
+customer has promotions?
+    no? return all products (get all)(default page 1 limit 100)
+    yes? && category promotion? return products filtered by category
+         && product promotion? return products filtered by product discounted first
+

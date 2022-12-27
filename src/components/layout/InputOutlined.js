@@ -14,6 +14,7 @@ const InputOutlined = ({
   autoComplete,
   error,
   errorMessage,
+  classes,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -22,7 +23,7 @@ const InputOutlined = ({
   };
 
   return (
-    <>
+    <div className={`flex-column ${classes && classes}`}>
       <div className="mt-2 input-outline d-flex flex-column">
         {lable && (
           <label htmlFor={id} className="formsLable mb-2">
@@ -71,7 +72,7 @@ const InputOutlined = ({
           <div className="errorMessagenormal">{errorMessage}</div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

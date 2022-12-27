@@ -21,7 +21,7 @@ const ManageProductCategories = () => {
       .get("/categories")
       .then((res) => {
         setLoading(false);
-        setCategories(res.data);
+        setCategories(res.data.categories);
       })
       .catch(console.error);
   };

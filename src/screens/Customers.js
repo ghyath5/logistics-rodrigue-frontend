@@ -4,26 +4,42 @@ import BtnOutlined from "../components/layout/BtnOutlined";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
-import CUSTOMERS from "../data/customers";
 import { useNavigate } from "react-router-dom";
+import axios from "../axios";
+import Loader from "../components/layout/Loader";
 
-const Customers = () => {
-  const [allCustomers, setAllCustomers] = useState(CUSTOMERS);
+const Customers = ({ archived }) => {
+  const [isLoading, setLoading] = useState(true);
+  const [archiveTriggered, setrchiveTriggered] = useState(false);
+  const [allCustomers, setAllCustomers] = useState([]);
 
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
 
   const columns = [
     {
-      id: "code",
+      id: "id",
       label: "ID",
+      noCell: true,
+    },
+    {
+      id: "archived",
+      label: "archived",
+      noCell: true,
+    },
+    {
+      id: "codeid",
+      label: "codeId",
       minWidth: 70,
     },
     {
-      id: "customerName",
-      label: "Customer Name",
+      id: "businessName",
+      label: "Business Name",
       minWidth: 100,
       class: ["tableEditBtn"],
+      action: (id) => {
+        nav("/customerDetails", { state: { id: id } });
+      },
     },
     {
       id: "address",
@@ -46,85 +62,127 @@ const Customers = () => {
       label: "Sepical Pricing",
       minWidth: 50,
     },
-    {
-      id: "pendingOreds",
-      label: "Pending Orders",
-      minWidth: 100,
-    },
+    // {
+    //   id: "pendingOreds",
+    //   label: "Pending Orders",
+    //   minWidth: 100,
+    // },
     {
       id: "archive",
-      label: "Archive",
+      label: archived ? "Unarchive" : "Archive",
       minWidth: 50,
       class: ["tableEditBtn"],
+      action: (id, is) => toggleArchiveCustomer(id, is),
     },
   ];
 
   function createData(
     id,
-    code,
-    customerName,
+    archived,
+    codeid,
+    businessName,
     address,
     // geocodingStatus,
     paymetMethod,
     sepicalPricing,
-    pendingOreds,
+    // pendingOreds,
     archive
   ) {
-    // const density = population / size;
-    // return { name, code, population, size, density };
     return {
       id,
-      code,
-      customerName,
+      archived,
+      codeid,
+      businessName,
       address,
       // geocodingStatus,
       paymetMethod,
       sepicalPricing,
-      pendingOreds,
+      // pendingOreds,
       archive,
     };
   }
-  useEffect(() => {
-    allCustomers.forEach((p) => {
-      setRows((prev) => [
-        ...prev,
-        createData(
-          p.id,
-          p.code,
-          p.customerName,
-          p.address,
-          // p.geocodingStatus,
-          p.paymetMethod,
-          p.sepicalPricing,
-          p.pendingOreds,
-          "Archive Customer"
-        ),
-      ]);
-    });
-  }, []);
 
-  return (
+  useEffect(() => {
+    fetchUsers();
+  }, [archived, archiveTriggered]);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    await axios
+      .get(
+        `/customers?page=1&limit=9&isarchived=${archived ? archived : false}`
+      )
+      .then((res) => {
+        setAllCustomers(res.data);
+        setRows([]);
+        res.data.customers.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.isarchived,
+              p.codeid,
+              p.businessname,
+              p.address[0],
+              // p.geocodingStatus,
+              p.paymentmethod?.name,
+              p.ispricingdefault ? "default" : "else",
+              // p.pendingorders?.length,
+              archived ? "Unarchive Now" : "Archive Now"
+            ),
+          ]);
+        });
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  const toggleArchiveCustomer = async (id, is) => {
+    setLoading(true);
+    const body = {
+      isarchived: !is,
+    };
+    await axios
+      .put(`/customers/${id}`, body)
+      .then((res) => {
+        console.log("archive");
+      })
+      .catch(console.error)
+      .finally(() => {
+        setrchiveTriggered(!archiveTriggered);
+      });
+  };
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h3 className="headerTitle my-2">Customers</h3>
+        <h3 className="headerTitle my-2">
+          {archived ? "Archived customers" : "Customers"}
+        </h3>
         <div className="d-flex flex-wrap gap-2 mainBtn align-items-center">
           <div>
             <SearchInput />
           </div>
-          <div>
-            <BtnContained
-              title="ADD NEW CUSTOMER"
-              handleClick={() => nav("/addnewcustomer")}
-            />
-          </div>
-          <div>
-            <BtnOutlined
-              title="VIEW ARCHIVED CUSTOMERS"
-              handleClick={() => {
-                console.log("view archived");
-              }}
-            />
-          </div>
+          {!archived && (
+            <>
+              <div>
+                <BtnContained
+                  title="ADD NEW CUSTOMER"
+                  handleClick={() => nav("/addnewcustomer")}
+                />
+              </div>
+              <div>
+                <BtnOutlined
+                  title="VIEW ARCHIVED CUSTOMERS"
+                  handleClick={() => {
+                    nav("/archivedCustomers");
+                  }}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="mt-4">

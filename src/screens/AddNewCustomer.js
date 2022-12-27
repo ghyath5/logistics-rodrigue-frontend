@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "./partials/Layout";
+import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-import StepperForm from "./layout/StepperForm";
+import StepperForm from "../components/layout/StepperForm";
 
 const steps = [
   "Business Details",

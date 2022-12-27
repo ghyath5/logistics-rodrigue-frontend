@@ -2,23 +2,60 @@ import React, { useState, useEffect } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
-import Vehciles from "../data/vehicle";
 import { useNavigate } from "react-router-dom";
 import StatsCard from "../components/layout/StatsCard";
-// import axios from "../axios";
+import Loader from "../components/layout/Loader";
+import axios from "../axios";
+import { vehiclesStatuses } from "../data/configs";
 
 export const Vehicles = () => {
-  const [allVehciles, setAllVehclies] = useState(Vehciles);
+  const [loading, setLoading] = useState(true);
+  const [allVehciles, setAllVehclies] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
 
-  // useEffect(()=>{
-  //   fetchVehicles()
-  // },[])
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
 
-  // const fetchVehicles = () => {
-  //   axios.get(``).then((res)=>setAllVehclies(res.data)).catch(console.error)
-  // }
+  const fetchVehicles = async () => {
+    setLoading(true);
+    await axios
+      .get(`/vehicles`)
+      .then((res) => {
+        setAllVehclies(res.data);
+        setRows([]);
+        res.data?.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.model + "/" + p.plate,
+              p.make,
+              vehiclesStatuses[p.status]?.label,
+              new Date(p.expiresIn).toDateString(),
+              new Date(p.updatedAt).toDateString(),
+              "Setting",
+              "Delete"
+            ),
+          ]);
+        });
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  const handleDeleteVehicle = async (id) => {
+    setAllVehclies((prev) => prev.filter((S) => S._id !== id));
+    setRows((prev) => prev.filter((S) => S.id !== id));
+
+    await axios
+      .delete(`/vehicles/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  };
 
   const columns = [
     {
@@ -26,6 +63,11 @@ export const Vehicles = () => {
       label: "Name and Model",
       minWidth: 120,
       class: ["nameModel"],
+    },
+    {
+      id: "manufacturingYear",
+      label: "Make Year",
+      minWidth: 50,
     },
     {
       id: "Statu",
@@ -44,20 +86,16 @@ export const Vehicles = () => {
       minWidth: 150,
     },
     {
-      id: "AssignedDriver",
-      label: "Assigned Driver",
-      minWidth: 50,
-    },
-    {
       id: "LastUsedOn",
-      label: "Last Used On",
-      minWidth: 50,
+      label: "Last Use",
+      minWidth: 150,
     },
     {
       id: "setting",
       label: "Setting",
       minWidth: 50,
       class: ["tableEditBtn"],
+      action: (id) => nav("/editvehicle", { state: { id: id } }),
     },
 
     {
@@ -65,15 +103,16 @@ export const Vehicles = () => {
       label: "Delete",
       minWidth: 100,
       class: ["tableDeleteBtn"],
+      action: (id) => handleDeleteVehicle(id),
     },
   ];
 
   function createData(
     id,
     NameModel,
+    manufacturingYear,
     Statu,
     RegistrationDue,
-    AssignedDriver,
     LastUsedOn,
     setting,
     remove
@@ -83,33 +122,18 @@ export const Vehicles = () => {
     return {
       id,
       NameModel,
+      manufacturingYear,
       Statu,
       RegistrationDue,
-      AssignedDriver,
       LastUsedOn,
       setting,
       remove,
     };
   }
-  useEffect(() => {
-    allVehciles.forEach((p) => {
-      setRows((prev) => [
-        ...prev,
-        createData(
-          p.id,
-          p.NameModel,
-          p.Statu,
-          p.RegistrationDue,
-          p.AssignedDriver,
-          p.LastUsedOn,
-          "Setting",
-          "Delete"
-        ),
-      ]);
-    });
-  }, []);
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
@@ -124,16 +148,26 @@ export const Vehicles = () => {
       </div>
       <div className="row m-0 w-100">
         <StatsCard
-          title="Total Vehicles"
-          value={4}
+          title="Available"
+          value={allVehciles?.length}
           classes="bgLightBlue"
           col={3}
         />
-        <StatsCard title="On Road" value={2} classes="bgGreen" col={3} />
-        <StatsCard title="Out of Service" value={1} classes="bgRed" col={3} />
+        <StatsCard
+          title="On Road"
+          value={allVehciles?.filter((x) => x.status === 1).length}
+          classes="bgGreen"
+          col={3}
+        />
+        <StatsCard
+          title="Out of Service"
+          value={allVehciles?.filter((x) => x.status === 2).length}
+          classes="bgRed"
+          col={3}
+        />
         <StatsCard
           title="Registration Due"
-          value={2}
+          value={allVehciles?.filter((x) => x.status === 0).length}
           classes="bgYellow"
           col={3}
         />

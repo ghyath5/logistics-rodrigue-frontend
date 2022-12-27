@@ -10,16 +10,10 @@ import customAxios from "../axios";
 import { useEffect } from "react";
 import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
+import { roles } from "../data/configs";
 
-const rolesOps = [
-  { label: "Admin", value: "1" },
-  { label: "User", value: "0" },
-  { label: "Driver", value: "2" },
-];
-
-const AddNewStaffMember = () => {
+const AddNewStaffMember = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(false);
-  const [isEdit, setEdit] = useState(false);
   const [data, setData] = useState({
     username: "",
     name: "",
@@ -40,10 +34,6 @@ const AddNewStaffMember = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    setEdit(location.state?.edit);
-  }, [location.state?.edit]);
 
   useEffect(() => {
     isEdit && fetchUserById(location.state?.id);
@@ -260,7 +250,7 @@ const AddNewStaffMember = () => {
                 <DDSearch
                   name="role"
                   lable="Select a role"
-                  options={rolesOps}
+                  options={roles}
                   isDisabled={false}
                   isMulti={false}
                   val={data?.role}

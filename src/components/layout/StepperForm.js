@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import { Box, Button, StepButton, Typography } from "@mui/material";
-import InputOutlined from "./InputOutlined";
-import DropDown from "../DropDown";
+import { Button, StepButton } from "@mui/material";
 import useDeviceType from "../../hooks/useDeviceType";
+import Loader from "./Loader";
+import BtnContained from "./BtnContained";
+import Form1 from "../customer/Form1";
+import Form2 from "../customer/Form2";
+import Form3 from "../customer/Form3";
+import Form4 from "../customer/Form4";
+import axios from "../../axios";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import PhoneNumberInput from "./PhoneNumberInput";
-import RadioGroupForm from "./RadioGroupForm";
 
 const StepperForm = ({ steps, completed, setCompleted }) => {
   const { deviceType } = useDeviceType();
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const [phone, setPhone] = useState("");
-
-  useEffect(() => {
-    console.log(deviceType);
-  }, [deviceType]);
+  const [isLoading, setLoading] = useState(true);
+  const [allDone, setAllDone] = useState(false);
+  const [data, setData] = useState({ isconsolidatedbiller: true });
+  const form1Ref = useRef();
+  const form2Ref = useRef();
+  const form3Ref = useRef();
+  const form4Ref = useRef();
+  const [occurs, setOccurs] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   const totalSteps = () => {
     return steps.length;
@@ -41,9 +50,41 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
-    setActiveStep(newActiveStep);
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
+    console.log({ activeStep });
+
+    switch (activeStep) {
+      case 0:
+        if (form1Ref.current.allVAlid()) {
+          setActiveStep(newActiveStep);
+          newCompleted[activeStep] = true;
+          setCompleted(newCompleted);
+        }
+        break;
+      case 1:
+        if (form2Ref.current.allVAlid()) {
+          setActiveStep(newActiveStep);
+          newCompleted[activeStep] = true;
+          setCompleted(newCompleted);
+        }
+        break;
+      case 2:
+        if (form3Ref.current.allVAlid()) {
+          setActiveStep(newActiveStep);
+          newCompleted[activeStep] = true;
+          setCompleted(newCompleted);
+        }
+        break;
+      case 3:
+        if (form4Ref.current.allVAlid()) {
+          newCompleted[activeStep] = true;
+          setCompleted(newCompleted);
+          setAllDone(true);
+        }
+        break;
+      default:
+        console.log(activeStep);
+        break;
+    }
   };
 
   const handleBack = () => {
@@ -61,13 +102,67 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
     handleNext();
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
+  const handleAddCustomer = () => {
+    setLoading(true);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}customers`, data)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        navigate("/customers");
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch(console.error);
   };
 
-  return (
-    <Box sx={{ width: "100%", maxWidth: "100%" }}>
+  useEffect(() => {
+    allDone && handleAddCustomer();
+  }, [allDone]);
+
+  useEffect(() => {
+    fetchOccurs();
+    fetchPayments();
+  }, []);
+
+  const fetchOccurs = async () => {
+    await axios
+      .get(`/deliveryoccur`)
+      .then((res) => {
+        res.data.deliveryOccur.forEach((element) => {
+          setOccurs((prev) => [
+            ...prev,
+            { lable: element.name, value: element._id },
+          ]);
+        });
+      })
+      .finally(() => setLoading(false))
+      .catch(console.error);
+  };
+  const fetchPayments = async () => {
+    await axios
+      .get(`/paymentmethod`)
+      .then((res) => {
+        res.data.paymentMethods.forEach((element) => {
+          setPayments((prev) => [
+            ...prev,
+            { lable: element.name, value: element._id },
+          ]);
+        });
+      })
+      .finally(() => setLoading(false))
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    allDone && handleAddCustomer();
+  }, [allDone]);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <div className="w-100">
       {deviceType !== "mobile" && (
         <Stepper
           nonLinear
@@ -85,155 +180,42 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           })}
         </Stepper>
       )}
-      <div className="w-100">
-        {allStepsCompleted() ? (
-          <div>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </div>
-        ) : (
+      {!allStepsCompleted() && (
+        <div className="w-100">
           <div className="formsContainer mx-1 mx-sm-2 mt-sm-4 px-0 px-sm-3 w-100">
-            {activeStep === 0 ? (
-              <div className="mb-2 mt-4">
-                <div className=" mx-3 mx-sm-4">
-                  <InputOutlined
-                    lable="Business Name"
-                    defaultValue="Business Name"
-                    type="text"
-                  />
-                  <InputOutlined lable="ABN" defaultValue="ABN" type="text" />
-                  <InputOutlined
-                    lable="Delivery Address"
-                    defaultValue="Being Typing to search for a location"
-                    type="text"
-                  />
-                  <div className="d-sm-flex gap-2 mt-2">
-                    <InputOutlined
-                      lable="Delivery Address Line1"
-                      defaultValue="Delivery Address Line1"
-                      type="text"
-                    />
-                    <InputOutlined
-                      lable="Delivery Address Line2"
-                      defaultValue="Delivery Address Line1"
-                      type="text"
-                    />
-                  </div>
-                  <div className="addressColl d-sm-flex flex-wrap gap-2 align-items-center justify-content-between mt-2">
-                    <InputOutlined lable="Suburb" defaultValue="Suburb" />
-                    <DropDown lable="state" defaultValue="state" />
-                    <InputOutlined lable="Postcode" defaultValue="Postcode" />
-                  </div>
-                  <div className="mt-3 d-flex flex-column">
-                    <label className="formsLable mb-2">
-                      Customer Notes (Max of 250 Characters)*
-                    </label>
+            <div className="mb-2 mt-4 mx-3 mx-sm-4">
+              {activeStep === 0 ? (
+                <Form1 ref={form1Ref} setData={setData} />
+              ) : activeStep === 1 ? (
+                <Form2 ref={form2Ref} setData={setData} />
+              ) : activeStep === 2 ? (
+                <Form3 ref={form3Ref} setData={setData} occurs={occurs} />
+              ) : (
+                activeStep === 3 && (
+                  <Form4 ref={form4Ref} setData={setData} payments={payments} />
+                )
+              )}
+            </div>
 
-                    <textarea
-                      id="outlined-multiline-static"
-                      label="Custimer Notes (Max of 250 Characters)"
-                      // multiline
-                      rows={4}
-                      placeholder="Default Value"
-                    />
-                  </div>
-                </div>
-              </div>
-            ) : activeStep === 1 ? (
-              <div className="mb-2 mt-4">
-                <div className="mx-3 mx-sm-4">
-                  <div className="d-sm-flex flex-row gap-2">
-                    <InputOutlined
-                      lable="First Name"
-                      defaultValue="First Name"
-                    />
-                    <InputOutlined lable="Last Name" defaultValue="Last Name" />
-                  </div>
-                  <div>
-                    <InputOutlined
-                      lable="Email Address"
-                      defaultValue="Email Address"
-                      email="email"
-                      value="value"
-                    />
-                  </div>
-                  <div className="mt-3 d-md-flex flex-wrap gap-3">
-                    <PhoneNumberInput
-                      value={phone}
-                      setValue={setPhone}
-                      lable="Phone"
-                    />
-                    <PhoneNumberInput
-                      value={phone}
-                      setValue={setPhone}
-                      lable="Mobile"
-                    />
-                    <PhoneNumberInput
-                      value={phone}
-                      setValue={setPhone}
-                      lable="Direct Dial Number"
-                    />
-                  </div>
-                </div>
-              </div>
-            ) : activeStep === 2 ? (
-              <RadioGroupForm
-                lable="How often should deliveries occur?"
-                options={[
-                  { lable: "No Reoccuring Orders", value: "No" },
-                  { lable: "Once per Week", value: "once" },
-                  { lable: "Once per Fortnight", value: "night" },
-                ]}
-              />
-            ) : (
-              <>
-                <RadioGroupForm
-                  lable="Default Payment Method: "
-                  options={[
-                    { lable: "Cash on Delivery", value: "cash" },
-                    { lable: "Account", value: "account" },
-                    { lable: "In / Out", value: "inout" },
-                  ]}
-                />
-                <RadioGroupForm
-                  lable="Should any other special pricing be used for any items ordered by this customer?"
-                  options={[
-                    { lable: "No, use default pricing", value: "no" },
-                    { lable: "Yes, use custom pricing", value: "yes" },
-                  ]}
-                />
-              </>
-            )}
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
+            <div className="d-flex justify-content-between my-3 mx-4">
+              <BtnContained
                 disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button
-                onClick={
+                handleClick={handleBack}
+                title="Back"
+              />
+              <BtnContained
+                title="Next"
+                handleClick={
                   completedSteps() === totalSteps() - 1
                     ? handleComplete
                     : handleNext
                 }
-                sx={{ mr: 1 }}
-              >
-                Next
-              </Button>
-            </Box>
+              />
+            </div>
           </div>
-        )}
-      </div>
-    </Box>
+        </div>
+      )}
+    </div>
   );
 };
 

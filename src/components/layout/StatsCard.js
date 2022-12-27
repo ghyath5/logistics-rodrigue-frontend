@@ -1,14 +1,11 @@
 import React from "react";
-import useDeviceType from "../../hooks/useDeviceType";
 
 const StatsCard = ({ icon, last, title, value, classes, col }) => {
-  const { deviceType } = useDeviceType();
-
   return (
     <div
       className={`${
-        last && deviceType === "tablet"
-          ? "col-12 p-0"
+        last
+          ? `col-sm-12 col-md-${col} p-0`
           : `p-0 col-12 col-sm-6 col-md-${col} `
       } `}
     >

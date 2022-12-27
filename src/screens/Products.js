@@ -3,13 +3,15 @@ import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
 import seacrIcon from "../assets/search.svg";
 import StatsCard from "../components/layout/StatsCard";
-import PRODUCTS from "../data/products";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
+import Loader from "../components/layout/Loader";
 import { useNavigate } from "react-router-dom";
+import axios from "../axios";
 
 const Products = () => {
-  const [allProducts, setAllProducts] = useState(PRODUCTS);
+  const [loading, setLoading] = useState(true);
+  const [allProducts, setAllProducts] = useState([]);
   const [productsTotal, setProductsTotal] = useState(0);
   const [productsActive, setTotalActive] = useState(0);
   const [productsHidden, setProductsHidden] = useState(0);
@@ -50,17 +52,34 @@ const Products = () => {
       label: "Remove ",
       minWidth: 100,
       class: ["tableDeleteBtn"],
-      action: (value) => handleRemoveProduct(value),
+      action: (id) => handleRemoveProduct(id),
     },
     {
       id: "edit",
       label: "Edit ",
       minWidth: 100,
       class: ["tableEditBtn"],
+      action: (id) => nav("/editproducts", { state: { id: id } }),
     },
   ];
 
-  const handleRemoveProduct = (id) => {
+  const handleRemoveProduct = async (id) => {
+    setLoading(true);
+    setProductsTotal((prev) => prev - 1);
+
+    let deletedProducts = allProducts.filter((p) => p._id === id)[0];
+    deletedProducts.visibility === true
+      ? setTotalActive((prev) => prev - 1)
+      : setProductsHidden((prev) => prev - 1);
+
+    await axios
+      .delete(`/products/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+
     setAllProducts((prev) => prev.filter((p) => p.id !== id));
     setRows((prev) => prev.filter((p) => p.id !== id));
   };
@@ -77,8 +96,6 @@ const Products = () => {
     remove,
     edit
   ) {
-    // const density = population / size;
-    // return { name, code, population, size, density };
     return {
       id,
       code,
@@ -94,40 +111,45 @@ const Products = () => {
   }
 
   useEffect(() => {
-    setProductsTotal(PRODUCTS.length);
-    PRODUCTS.forEach((p) => {
-      p.active === true && setTotalActive((prev) => prev + 1);
-      p.orderListStatus === "hidden" && setProductsHidden((prev) => prev + 1);
-
-      setRows((prev) => [
-        ...prev,
-        createData(
-          p.id,
-          p.code,
-          p.name,
-          p.category,
-          p.price,
-          p.unitsPerBox,
-          p.priorityNbr,
-          p.orderListStatus,
-          "Delete",
-          "Edit"
-        ),
-      ]);
-    });
+    fetchProducts();
   }, []);
 
-  useEffect(() => {
-    setTotalActive(0);
-    setProductsHidden(0);
-    setProductsTotal(allProducts.length);
-    allProducts.forEach((p) => {
-      p.active === true && setTotalActive((prev) => prev + 1);
-      p.orderListStatus === "hidden" && setProductsHidden((prev) => prev + 1);
-    });
-  }, [allProducts]);
+  const fetchProducts = async () => {
+    setLoading(true);
+    await axios
+      .get("/products?page=1&limit=100")
+      .then((res) => {
+        setRows([]);
+        setProductsTotal(res.data.productsCount);
+        setTotalActive(res.data.visibleProducts);
+        setProductsHidden(res.data.hiddenProducts);
+        setAllProducts(res.data.products);
 
-  return (
+        res.data.products.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.generatedCode,
+              p.name,
+              p.categoryId,
+              p.price,
+              p.unitesperbox,
+              p.prioritynumber,
+              p.visibility === false ? "Hidden" : "Visible",
+              "Delete",
+              "Edit"
+            ),
+          ]);
+        });
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Layout>
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="headerTitle">Manage Products</h3>
@@ -144,7 +166,7 @@ const Products = () => {
       </div>
       <div className="d-flex flex-wrap ">
         <StatsCard
-          title="Total No. of Products"
+          title="Total Products"
           value={productsTotal}
           classes="bgGreen"
           col={4}

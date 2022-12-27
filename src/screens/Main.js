@@ -4,11 +4,12 @@ import Dashboard from "./Dashboard";
 import Products from "./Products";
 import Finalise from "./Finalise";
 import Customers from "./Customers";
+import CustomerDetails from "./CustomerDetails";
 import Orders from "./Orders";
 import { Vehicles } from "./Vehicles";
 import Promotions from "./Promotions";
 import { StaffMembers } from "./StaffMembers";
-import AddNewCustomer from "../components/AddNewCustomer";
+import AddNewCustomer from "./AddNewCustomer";
 import AddNewVehicle from "./AddNewVehicle";
 import AddNewStaffMember from "./AddNewStaffMember";
 import { AddPromotion } from "./AddPromotion";
@@ -31,16 +32,53 @@ const Main = () => {
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
           <Route exact path="finalise" element={<Finalise />} />
-          <Route exact path="customers" element={<Customers />} />
+          <Route
+            exact
+            path="customers"
+            element={<Customers archived={false} />}
+          />
+          <Route exact path="customerDetails" element={<CustomerDetails />} />
           <Route exact path="orders" element={<Orders />} />
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
           <Route exact path="staffmembers" element={<StaffMembers />} />
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
-          <Route exact path="addnewvehicle" element={<AddNewVehicle />} />
-          <Route exact path="addpromotion" element={<AddPromotion />} />
+          <Route
+            exact
+            path="archivedCustomers"
+            element={<Customers archived={true} />}
+          />
+          <Route
+            exact
+            path="addnewvehicle"
+            element={<AddNewVehicle isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editvehicle"
+            element={<AddNewVehicle isEdit={true} />}
+          />
+          <Route
+            exact
+            path="addpromotion"
+            element={<AddPromotion isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editpromotion"
+            element={<AddPromotion isEdit={true} />}
+          />
           <Route exact path="promotionDetails" element={<PromotionDetails />} />
-          <Route exact path="addproducts" element={<AddProducts />} />
+          <Route
+            exact
+            path="addproducts"
+            element={<AddProducts isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editproducts"
+            element={<AddProducts isEdit={true} />}
+          />
           <Route exact path="addneworders" element={<AddNewOrders />} />
           <Route
             exact
@@ -50,9 +88,13 @@ const Main = () => {
           <Route
             exact
             path="AddNewStaffMember"
-            element={<AddNewStaffMember />}
+            element={<AddNewStaffMember isEdit={false} />}
           />
-          <Route exact path="EditStaffMember" element={<AddNewStaffMember />} />
+          <Route
+            exact
+            path="EditStaffMember"
+            element={<AddNewStaffMember isEdit={true} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

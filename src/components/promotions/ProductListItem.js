@@ -1,9 +1,14 @@
 import { ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
+import { useEffect } from "react";
 
-const ProductListItem = ({ product }) => {
+const ProductListItem = ({ data, product, setData }) => {
   const [discount, setDiscount] = useState(0);
   const [newPrice, setNewPrice] = useState(0);
+
+  useEffect(() => {
+    console.log({ product });
+  }, [product]);
 
   const handleDiscount = (e) => {
     setDiscount(e.target.value);
@@ -13,6 +18,10 @@ const ProductListItem = ({ product }) => {
   const handleNewPrice = (e) => {
     setNewPrice(e.target.value);
     setDiscount(100 - (e.target.value * 100) / product?.price);
+    // let current = data.filter((p) => p.productId === product.value)[0];
+    // setData((prev) => {
+    //   return { ...prev, productId:current.productId, newprice: e.target.value, discount:100 - (e.target.value * 100) / product?.price};
+    // });
   };
 
   return (

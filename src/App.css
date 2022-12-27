@@ -15,6 +15,10 @@
   --border-radius: 8px;
 }
 
+/* body {
+  background-color: #495767;
+} */
+
 .textGray {
   color: var(--gray);
 }
@@ -57,6 +61,11 @@
 
 .bgLightBlue {
   background-color: var(--light-green);
+}
+
+.rounded-50 {
+  border-radius: 50%;
+  aspect-ratio: 1 !important;
 }
 
 .App {
@@ -160,16 +169,16 @@
   color: var(--gray);
 }
 
-.mainContainer .btnOutlined {
-  border: 2px solid var(--dark-green);
-  color: var(--dark-green);
-  font-weight: 600;
+.btnOutlined {
+  border: 2px solid var(--dark-green) !important;
+  color: var(--dark-green) !important;
+  font-weight: 600 !important;
 }
 
-.mainContainer .btnOutlined:is(:hover, :focus) {
-  border: 2px solid var(--dark-green);
-  color: var(--dark-green);
-  background: rgba(0, 0, 0, 0.2);
+.btnOutlined:is(:hover, :focus) {
+  border: 2px solid var(--dark-green) !important;
+  color: var(--dark-green) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
 }
 
 .mainContainer .btnContained {
@@ -217,6 +226,7 @@
 .formsInput {
   background-color: var(--light-gray);
   border: 0;
+  border-radius: 5px !important;
   outline: none;
 }
 
@@ -354,13 +364,38 @@ textarea {
   margin-bottom: 0 !important;
 }
 
+.detailsCard {
+  border-radius: 10px;
+  border: 1px solid rgba(57, 87, 112, 0.54);
+  box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.54);
+  -webkit-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.54);
+}
+
+.geoItem {
+  border-radius: 10px;
+  border: 1px solid rgba(57, 87, 112, 0.34);
+  box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -webkit-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+}
+
 .initials-circle {
   border-radius: 50%;
   border: 1px solid var(--dark-green);
-  box-shadow: 0px 14px 23px 0px rgb(81 112 57 / 54%);
-  -webkit-box-shadow: 0px 14px 23px 0px rgb(81 112 78 / 14%);
-  -moz-box-shadow: 0px 14px 23px 0px rgba(81, 112, 57, 0.54);
+  box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -webkit-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
   color: var(--dark-green) !important;
+  aspect-ratio: 1 !important;
+  width: fit-content;
+}
+
+.initials-circle-bg {
+  background-image: url('./assets/avatar.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-size: 100% 100%; */
 }
 
 .sideBarList .css-10hburv-MuiTypography-root {
@@ -423,6 +458,19 @@ textarea {
   border: 2px solid var(--dark-green);
   border-radius: var(--border-radius);
   margin-bottom: auto;
+}
+
+.myAccordion .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+  margin-bottom: 16px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(57, 87, 112, 0.34);
+  box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -webkit-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+  -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
+}
+
+.myAccordion .css-1elwnq4-MuiPaper-root-MuiAccordion-root:before {
+  display: none;
 }
 
 .delete-promotion-btn .btnContained {
@@ -609,6 +657,11 @@ textarea {
   flex: 1;
 }
 
+.subText {
+  color: var(--gray);
+  font-size: 25px;
+}
+
 /* Promotion section*/
 .promotion-customer {
   color: var(--dark-green);
@@ -722,6 +775,11 @@ textarea {
   flex: 1 !important;
 }
 
+.css-1ptx2yq-MuiInputBase-root-MuiInput-root.Mui-error:after,
+.css-1ptx2yq-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 0 !important;
+}
+
 /*medias*/
 
 @media screen and (max-width: 450px) {
@@ -786,6 +844,10 @@ textarea {
 
   .title-promotion-with {
     margin-top: 5px;
+  }
+
+  .mainDashboardContainer {
+    margin-left: 0;
   }
 
 }

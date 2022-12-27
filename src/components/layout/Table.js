@@ -13,7 +13,7 @@ export default function Table({ columns, rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
 
@@ -43,7 +43,13 @@ export default function Table({ columns, rows }) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  className="tableHeading"
+                  className={
+                    column.noCell
+                      ? `d-none`
+                      : column.id === "Statu"
+                      ? "text-center tableHeading"
+                      : "tableHeading"
+                  }
                 >
                   {column.label}
                 </TableCell>
@@ -63,7 +69,9 @@ export default function Table({ columns, rows }) {
                           key={i}
                           align={column.align}
                           className={
-                            column.id === "Statu" || column.id === "NameModel"
+                            column.noCell
+                              ? "d-none"
+                              : column.id === "Statu"
                               ? "text-center"
                               : ""
                           }
@@ -74,7 +82,7 @@ export default function Table({ columns, rows }) {
                               ${
                                 column.class &&
                                 (column.id === "status"
-                                  ? value === "visible"
+                                  ? value === "Visible"
                                     ? column.class[0]
                                     : column.class[1]
                                   : column.id === "Statu"
@@ -89,7 +97,11 @@ export default function Table({ columns, rows }) {
                               }
                             `}
                             onClick={() =>
-                              column.action && column.action(row["id"])
+                              column.action && column.id === "archive"
+                                ? column.action(row["id"], row["archived"])
+                                : column.action &&
+                                  "archive" &&
+                                  column.action(row["id"])
                             }
                           >
                             {column.id === "price" ? (

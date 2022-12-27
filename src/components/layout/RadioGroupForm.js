@@ -6,7 +6,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 
-const RadioGroupForm = ({ lable, options }) => {
+const RadioGroupForm = ({ name, lable, options, val, handleChange }) => {
   return (
     <div className="d-flex flex-column my-3">
       <span className="formsLable">{lable}</span>
@@ -14,7 +14,9 @@ const RadioGroupForm = ({ lable, options }) => {
         <RadioGroup
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
+          name={name}
+          value={val}
+          onChange={handleChange}
         >
           {options.map((option, i) => {
             return (
