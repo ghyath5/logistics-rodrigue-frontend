@@ -27,7 +27,11 @@ const Accordionn = ({ data }) => {
               id="panel1bh-header"
             >
               <div className="w-100 d-flex justify-content-between align-items-center">
-                <h4 className="text-capitalize">{item?.customer}</h4>
+                <h4 className="text-capitalize">
+                  {item?.customer !== null
+                    ? item.customer.customername
+                    : "customer"}
+                </h4>
                 <div className="d-flex flex-column justify-content-center">
                   <span className="d-flex align-items-end">
                     status:
@@ -41,7 +45,35 @@ const Accordionn = ({ data }) => {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>products and shipping details</Typography>
+              <div className="d-flex gap-5">
+                <div>
+                  <p className="m-0 fw-bold">Products:</p>
+                  <div className="row text-promotion">
+                    {item?.products.map((item, i) => {
+                      return (
+                        <span key={i} className="fs-6">
+                          {item.product.name} - ${item.product.price}
+                          <span className="fromDolar"> x{item.quantity}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <p className="m-0 fw-bold">Delivery details:</p>
+                  <div className="row text-promotion">
+                    <span key={i} className="fs-6">
+                      {item?.customer !== null
+                        ? item.customer.address[0] +
+                          ", " +
+                          item.customer.suburb +
+                          ", " +
+                          item.customer.state
+                        : "customer address"}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </AccordionDetails>
           </Accordion>
         );

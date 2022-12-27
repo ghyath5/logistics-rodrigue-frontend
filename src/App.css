@@ -473,6 +473,10 @@ textarea {
   display: none;
 }
 
+.myAccordion .css-o4b71y-MuiAccordionSummary-content.Mui-expanded {
+  margin-bottom: 0;
+}
+
 .delete-promotion-btn .btnContained {
   background-color: var(--delete-red) !important;
 }
