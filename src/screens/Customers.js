@@ -110,7 +110,7 @@ const Customers = ({ archived }) => {
     setLoading(true);
     await axios
       .get(
-        `/customers?page=1&limit=9&isarchived=${archived ? archived : false}`
+        `/customers?page=1&limit=10&isarchived=${archived ? archived : false}`
       )
       .then((res) => {
         setAllCustomers(res.data);

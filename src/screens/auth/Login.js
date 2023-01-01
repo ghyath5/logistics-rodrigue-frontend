@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthInput from "../../components/layout/AuthInput";
-import BtnOutlined from "../../components/layout/BtnOutlined";
+// import BtnOutlined from "../../components/layout/BtnOutlined";
 import BtnContained from "../../components/layout/BtnContained";
 import Loader from "../../components/layout/Loader";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,9 @@ const Login = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignUp = () => {
-    navigate("/register");
-  };
+  // const handleSignUp = () => {
+  //   navigate("/register");
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,6 +34,7 @@ const Login = () => {
       })
       .then((res) => {
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
+        Cookies.set("monjayUser", res.data.name, { expires: 3 });
         navigate("/");
       })
       .catch((err) => {
@@ -96,13 +97,13 @@ const Login = () => {
             />
             <h6 className="mt-2">I've forgotten my password</h6>
           </div>
-          <div className="text-center mt-3">
+          {/* <div className="text-center mt-3">
             <BtnOutlined
               title="SIGN UP NOW"
               classes="w-100 mt-3"
               handleClick={handleSignUp}
             />
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

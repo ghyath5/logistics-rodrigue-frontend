@@ -31,7 +31,7 @@ const DDSearch = ({
 
   const handleChangee = (event) => {
     handleChange(event);
-    handleBlur(event);
+    handleBlur && handleBlur(event);
 
     const {
       target: { value },
@@ -40,7 +40,7 @@ const DDSearch = ({
   };
 
   const handleBlurr = (event) => {
-    handleBlur(event);
+    handleBlur && handleBlur(event);
   };
 
   return (

@@ -18,6 +18,18 @@ export const states = [
   { label: "Western Australia", value: "5" },
 ];
 export const targets = [
-  { label: "Category targeted", value: "category" },
-  { label: "Product targeted", value: "product" },
+  { lable: "Category targeted", value: "category" },
+  { lable: "Product targeted", value: "product" },
+];
+export const orderStatues = [
+  { label: "Pending", value: "0" },
+  { label: "Confirmed", value: "1" },
+  { label: "Delivered", value: "2" },
+  { label: "Canceled", value: "3" },
+];
+export const runsStatues = [
+  { label: "Pending", value: "0" },
+  { label: "on the way", value: "1" },
+  { label: "finished", value: "2" },
+  { label: "Canceled", value: "3" },
 ];

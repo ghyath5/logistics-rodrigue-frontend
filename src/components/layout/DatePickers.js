@@ -55,7 +55,7 @@ export const DateTimePickerr = ({
   handleChange,
 }) => {
   const handleTime = (string) => {
-    let newTime = new Date(string).toISOString();
+    let newTime = new Date(string).toDateString();
     handleChange({ target: { name: name, value: newTime } });
   };
 

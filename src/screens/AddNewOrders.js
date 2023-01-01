@@ -4,7 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
-import { AddProduct } from "../components/layout/AddProduct";
+import AddProduct from "../components/layout/AddProduct";
 import RadioGroupForm from "../components/layout/RadioGroupForm";
 
 const AddNewOrders = () => {

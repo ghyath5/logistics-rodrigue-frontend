@@ -18,6 +18,9 @@
 /* body {
   background-color: #495767;
 } */
+input:disabled {
+  color: black !important;
+}
 
 .textGray {
   color: var(--gray);
@@ -66,6 +69,19 @@
 .rounded-50 {
   border-radius: 50%;
   aspect-ratio: 1 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.scrollY {
+  overflow-y: auto;
+  max-height: 100px;
+}
+
+.modalMinWidth {
+  min-width: 400px;
 }
 
 .App {
@@ -372,6 +388,7 @@ textarea {
   -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.54);
 }
 
+
 .geoItem {
   border-radius: 10px;
   border: 1px solid rgba(57, 87, 112, 0.34);
@@ -388,7 +405,15 @@ textarea {
   -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
   color: var(--dark-green) !important;
   aspect-ratio: 1 !important;
-  width: fit-content;
+  width: 120px;
+  position: relative;
+}
+
+.initials-circle h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .initials-circle-bg {
@@ -663,7 +688,7 @@ textarea {
 
 .subText {
   color: var(--gray);
-  font-size: 25px;
+  /* font-size: 25px; */
 }
 
 /* Promotion section*/

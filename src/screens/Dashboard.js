@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import Routs from "../assets/routs.svg";
 import StatsCard from "../components/layout/StatsCard";
@@ -8,10 +8,19 @@ import Person from "../assets/personIcon.svg";
 import Dollar from "../assets/dollarIcon.svg";
 import KiloMetre from "../assets/kilometre.svg";
 import Layout from "../components/partials/Layout";
-import { useState } from "react";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [isLoading, setLoading] = useState(true);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    setUser(Cookies.get("monjayUser"));
+    setLoading(false);
+  }, []);
 
   return isLoading ? (
     <Loader />
@@ -21,11 +30,11 @@ const Dashboard = () => {
         <div className="dashboardBgCover"></div>
         <div className="dashboardTitleContainer text-white">
           <h6>Welcome back</h6>
-          <h3>Rodrigue Abdallah</h3>
+          <h3 className="text-capitalize">{user}</h3>
           <BtnContained
             title="MANAGE MY INVENTORY"
             handleClick={() => {
-              console.log("MANAGE");
+              navigate("/products");
             }}
           />
         </div>

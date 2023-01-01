@@ -2,7 +2,7 @@ import React from "react";
 import BtnContained from "./BtnContained";
 import InputOutlined from "./InputOutlined";
 
-export const AddProduct = (props) => {
+const AddProduct = (props) => {
   const { isDeleteable, index, onRemove } = props;
   return (
     <div className="row gap-2">
@@ -32,3 +32,4 @@ export const AddProduct = (props) => {
     </div>
   );
 };
+export default AddProduct;

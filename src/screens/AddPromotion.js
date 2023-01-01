@@ -7,94 +7,105 @@ import InputOutlined from "../components/layout/InputOutlined";
 import TextAreaOutlined from "../components/layout/TextAreaOutlined";
 import { DateTimePickerr } from "../components/layout/DatePickers";
 import { List } from "@mui/material";
-import ProductListItem from "../components/promotions/ProductListItem";
 import Loader from "../components/layout/Loader";
-import dayjs from "dayjs";
 import axios from "../axios";
 import { useEffect } from "react";
 import DDSearch from "../components/layout/DDSearch";
 import RadioGroupForm from "../components/layout/RadioGroupForm";
 import { targets } from "../data/configs";
-
-// const categoriesOps = [
-//   { label: "Search", value: "", isDisabled: true },
-//   { label: "Finger Foods", value: "1" },
-//   { label: "Deserts", value: "2" },
-//   { label: "Dips", value: "3" },
-//   { label: "All", value: "4" },
-// ];
-
-// const options = [
-//   { label: "Search", value: "", isDisabled: true },
-//   { label: "First Product", value: "1", price: "10" },
-//   { label: "Second Product", value: "2", price: "10" },
-//   { label: "Third Product", value: "3", price: "10" },
-//   { label: "Fourth Product", value: "4", price: "10" },
-// ];
+import moment from "moment/moment";
+import ProductListItem from "../components/promotions/ProductListItem";
 
 export const AddPromotion = ({ isEdit }) => {
   const nav = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [promotionTarget, setPromotionTarget] = useState(targets[0].value);
   // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [data, setData] = useState({
-    name: "",
-    description: "",
-    from: !isEdit ? dayjs(new Date()) : "",
-    to: "",
-    products: [],
-    // categories: [],
-  });
+  const [categories, setCategories] = useState([]);
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [productsToAdd, setProductsToAdd] = useState([]);
+  const [categoryToAdd, setCategoryToAdd] = useState("");
   const [errors, setErrors] = useState({
     name: false,
     description: false,
     from: false,
     to: false,
     products: false,
+    category: false,
   });
 
   useEffect(() => {
-    console.log({ data });
-  }, [data]);
+    console.log(categoryToAdd);
+  }, [categoryToAdd]);
+
+  const handleChangeTarget = (e) => {
+    setPromotionTarget(e.target.value);
+  };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProductsAndCategories();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    isEdit && fetchUserById(location.state?.id);
+    isEdit && fetchPromotionById(location.state?.id);
   }, [isEdit, location.state?.id]);
 
-  const fetchProducts = () => {
+  const fetchProductsAndCategories = async () => {
     setLoading(true);
-    axios
+    await axios
       .get(`/products`)
       .then((res) => {
         res.data.products.forEach((prod) => {
           setProducts((prev) => [
             ...prev,
-            { label: prod.name, value: prod._id, price: prod.price },
+            {
+              label: prod.name,
+              value: prod._id,
+              price: prod.price,
+              newprice: prod.price,
+            },
           ]);
         });
+      })
+      .then(() => {
+        fetchCategories();
       })
       .catch(console.error)
       .finally(() => setLoading(false));
   };
 
-  const fetchUserById = (id) => {
+  const fetchCategories = () => {
+    axios
+      .get(`/categories`)
+      .then((res) => {
+        res.data.categories.forEach((cat) => {
+          setCategories((prev) => [
+            ...prev,
+            { label: cat.name, value: cat._id },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const fetchPromotionById = (id) => {
     setLoading(true);
     axios
       .get(`/promotion/${id}`)
       .then((res) => {
-        setData({
-          name: res.data.name,
-          description: res.data.description,
-          from: res.data.from,
-          to: res.data.to,
-          products: [],
-        });
+        setName(res.data.name);
+        setDescription(res.data.description);
+        setFrom(res.data.from);
+        setTo(res.data.to);
+        setProductsToAdd([]);
+        setCategoryToAdd({});
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -102,15 +113,30 @@ export const AddPromotion = ({ isEdit }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => {
-      return {
-        ...prev,
-        [name]:
-          name === "products"
-            ? [...prev.products, { productId: value }]
-            : value,
-      };
-    });
+    if (name === "category") {
+      let selectedCategory = categories.filter((cat) => cat.value === value)[0];
+      setProductsToAdd([]);
+      setCategoryToAdd({
+        categoryId: value,
+        discountpercentage: 0,
+        name: selectedCategory.label,
+      });
+    } else if (name === "products") {
+      setCategoryToAdd("");
+      if (value !== "") {
+        let newProd = products.filter((prod) => prod.value === value)[0];
+        setProductsToAdd((prev) => [
+          ...prev,
+          {
+            productId: newProd.value,
+            oldprice: newProd.price,
+            newprice: newProd.price,
+            name: newProd.label,
+          },
+        ]);
+        setProducts((prev) => [...prev.filter((p) => p.value !== value)]);
+      }
+    }
   };
 
   const handleBlur = (e) => {
@@ -156,11 +182,12 @@ export const AddPromotion = ({ isEdit }) => {
       setLoading(true);
       axios
         .post(`/promotion`, {
-          name: data.name,
-          description: data.description,
-          from: data.from,
-          to: data.to,
-          products: data?.products,
+          name: name,
+          description: description,
+          from: from,
+          to: to,
+          categorypromotion: categoryToAdd,
+          productspromotion: productsToAdd,
         })
         .then((res) => {
           console.log(res);
@@ -171,24 +198,39 @@ export const AddPromotion = ({ isEdit }) => {
     }
   };
 
-  const handleUpdateStaffMember = () => {
+  const handleUpdatePromotion = () => {
     if (allVAlid()) {
       setLoading(true);
       axios
         .put(`/promotion/${location.state?.id}`, {
-          name: data.name,
-          description: data.description,
-          from: data.from,
-          to: data.to,
-          products: data?.products,
+          name: name,
+          description: description,
+          from: from,
+          to: to,
+          categorypromotion: categoryToAdd,
+          productspromotion: productsToAdd,
         })
         .then((res) => {
-          console.log(res);
           nav("/promotions");
         })
         .catch(console.error)
         .finally(() => setLoading(false));
     }
+  };
+
+  const handleProdPriceChange = (id, newPrice) => {
+    let prod = productsToAdd.filter((p) => p.productId === id)[0];
+    prod.newprice = newPrice;
+    setProductsToAdd((prev) => [
+      ...prev.filter((p) => p.productId !== id),
+      prod,
+    ]);
+  };
+
+  const handleDiscountChange = (newDiscount) => {
+    let selectedCat = categoryToAdd;
+    selectedCat.discountpercentage = newDiscount;
+    setCategoryToAdd(selectedCat);
   };
 
   return loading ? (
@@ -217,8 +259,8 @@ export const AddPromotion = ({ isEdit }) => {
             defaultValue="Name"
             type="text"
             name="name"
-            value={data?.name}
-            handleChange={handleChange}
+            value={name}
+            handleChange={(e) => setName(e.target.value)}
             handleBlur={handleBlur}
             error={errors?.name}
             errorMessage="should be at least 3 letters"
@@ -230,8 +272,8 @@ export const AddPromotion = ({ isEdit }) => {
               defaultValue="Description"
               type="text"
               name="description"
-              value={data?.description}
-              handleChange={handleChange}
+              value={description}
+              handleChange={(e) => setDescription(e.target.value)}
               handleBlur={handleBlur}
               error={errors?.description}
               errorMessage="should be at least 30 letters"
@@ -243,9 +285,9 @@ export const AddPromotion = ({ isEdit }) => {
                 lable="from"
                 id="dateFrom"
                 name="from"
-                minDate={dayjs(new Date())}
-                value={data?.from}
-                handleChange={handleChange}
+                minDate={moment().clone().add(1, "days")}
+                value={from}
+                handleChange={(e) => setFrom(e.target.value)}
                 handleBlur={handleBlur}
                 error={errors?.from}
                 errorMessage="you must select a start date"
@@ -256,9 +298,9 @@ export const AddPromotion = ({ isEdit }) => {
                 lable="to"
                 id="dateTo"
                 name="to"
-                minDate={data?.from ? data.from : dayjs(new Date())}
-                value={data?.to}
-                handleChange={handleChange}
+                minDate={moment(from).clone().add(1, "days")}
+                value={to}
+                handleChange={(e) => setTo(e.target.value)}
                 handleBlur={handleBlur}
                 error={errors?.to}
                 errorMessage="you must select an end date"
@@ -271,41 +313,31 @@ export const AddPromotion = ({ isEdit }) => {
               lable="Promotion Target"
               options={targets}
               val={promotionTarget}
-              handleChange={setPromotionTarget}
-            />
-          </div>
-          {/* <div className="mt-3">
-            <DDSearch
-              name="categories"
-              lable="Add category to promotion"
-              options={categoriesOps}
-              isDisabled={promotionTarget !== "category" && true}
-              isMulti={true}
-              val={data?.products.length === 0 ? "" : data?.products[0]?.label}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              error={errors?.products}
-              errorMessage="please select at least 1 product"
+              handleChange={handleChangeTarget}
             />
           </div>
           <div className="mt-3">
             <DDSearch
-              lable="Add product to promotion"
-              options={options}
-              isDisabled={promotionTarget === "category" && true}
+              name="category"
+              lable="Add category to promotion"
+              options={categories}
+              isDisabled={promotionTarget !== "category" && true}
               isMulti={false}
-              values={products}
-              setValues={setProducts}
+              val={categoryToAdd}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              error={errors?.category}
+              errorMessage="please select 1 category"
             />
-          </div> */}
+          </div>
           <div>
             <DDSearch
               name="products"
               lable="Add product to promotion"
               options={products}
-              isDisabled={false}
+              isDisabled={promotionTarget !== "product" && true}
               isMulti={false}
-              val={data?.products.length === 0 ? "" : data?.products[0]?.label}
+              val=""
               handleChange={handleChange}
               handleBlur={handleBlur}
               error={errors?.products}
@@ -314,26 +346,30 @@ export const AddPromotion = ({ isEdit }) => {
           </div>
 
           <List className="w-100">
-            {data?.products.length > 0 &&
-              data?.products.map((p, i) => {
+            {productsToAdd.length > 0 ? (
+              productsToAdd.map((p, i) => {
                 return (
                   <ProductListItem
-                    product={
-                      products?.filter((prod) => p.value === prod.productId)[0]
-                    }
-                    key={i}
-                    setData={setData}
-                    data={data}
+                    item={p}
+                    index={i}
+                    handleChange={handleProdPriceChange}
                   />
                 );
-              })}
+              })
+            ) : categoryToAdd !== "" ? (
+              <ProductListItem
+                type="category"
+                item={categoryToAdd}
+                handleChange={handleDiscountChange}
+              />
+            ) : null}
           </List>
         </div>
         <div className="my-4 text-center">
           <BtnContained
             title={isEdit ? "UPDATE PROMOTION" : "CREATE PROMOTION"}
             handleClick={() => {
-              isEdit ? handleUpdateStaffMember() : handleAddNewPromotion();
+              isEdit ? handleUpdatePromotion() : handleAddNewPromotion();
             }}
           />
         </div>

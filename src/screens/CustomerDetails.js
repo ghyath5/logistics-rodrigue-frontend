@@ -2,33 +2,52 @@ import axios from "../axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
+import DDSearch from "../components/layout/DDSearch";
 import Layout from "../components/partials/Layout";
 import Loader from "../components/layout/Loader";
-import OrderCard from "../components/orders/OrderCard";
+// import OrderCard from "../components/orders/OrderCard";
 import phoneIcon from "../assets/phone.svg";
 import mapIcon from "../assets/map.svg";
 import boardIcon from "../assets/board.svg";
 import { states } from "../data/configs";
+import Modal from "../components/layout/Modal";
 
 const CustomerDetails = () => {
   const location = useLocation();
   const [isLoading, setLoading] = useState(true);
   const [customer, setCustomer] = useState([]);
 
+  const [promotions, setPromotions] = useState([]);
+  const [promotionToAdd, setPromotionToAdd] = useState("");
+
   useEffect(() => {
-    fetchCustomer(location.state?.id);
+    fetchCustomerAndPromotion(location.state?.id);
   }, [location.state?.id]);
 
-  const fetchCustomer = async (id) => {
+  const fetchCustomerAndPromotion = async (id) => {
     setLoading(true);
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
         setCustomer(res.data);
-        console.log(res.data);
       })
+      .then(() => fetchPromotions())
       .catch(console.error)
       .finally(() => setLoading(false));
+  };
+
+  const fetchPromotions = async () => {
+    await axios
+      .get(`/promotion`)
+      .then((res) => {
+        res.data.promotions.forEach((prom) => {
+          setPromotions((prev) => [
+            ...prev,
+            { label: prom.name, value: prom._id },
+          ]);
+        });
+      })
+      .catch(console.error);
   };
 
   const archiveCustomer = async (id) => {
@@ -40,6 +59,21 @@ const CustomerDetails = () => {
       .put(`/customers/${id}`, body)
       .then((res) => {
         console.log("archived");
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  const handleAddPromotionToCustomer = async (id, promId) => {
+    setPromotionToAdd(promId);
+    setLoading(true);
+    const body = {
+      promotions: [...customer.promotions, promId],
+    };
+    await axios
+      .put(`/customers/${id}`, body)
+      .then((res) => {
+        setCustomer(res.data);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -64,9 +98,9 @@ const CustomerDetails = () => {
       </div>
       <div className="mt-4 row">
         <div className="col-12 col-sm-6 col-md-4 mb-3 mb-sm-0">
-          <div className="detailsCard px-3 py-4 text-center">
-            <div>
-              <h1 className="initials-circle initials-circle-bg p-5 mx-auto">
+          <div className="detailsCard px-3 py-4 text-center h-100">
+            <div className="initials-circle initials-circle-bg mx-auto">
+              <h1>
                 {customer.customername.split(" ").length > 1
                   ? customer.customername
                       .split(" ")[0]
@@ -86,7 +120,9 @@ const CustomerDetails = () => {
               <BtnContained
                 title="Send Email"
                 handleClick={() => {
-                  console.log("Email");
+                  // var mailto_link = "mailto:" + customer.email;
+                  // window.open(mailto_link, "emailWindow");
+                  console.log("email");
                 }}
               />
             </div>
@@ -131,21 +167,57 @@ const CustomerDetails = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-sm-12 col-md-4 mb-3 mb-sm-0 ">
-          <div className="h-100 d-flex flex-md-column gap-4 mt-sm-3 mt-md-0">
-            <div className="detailsCard h-100 w-100  px-3 py-4 ">
+        <div className="col-sm-12 col-md-4 mb-3 mb-sm-0 ">
+          <div className="h-100 d-flex flex-column gap-4 mt-sm-3 mt-md-0">
+            <div className="detailsCard h-100 w-100 px-3 py-4 ">
               <h5>Orders</h5>
               <hr />
-              <h1 className="text-center mb-0 mt-4 pt-2">
-                50<span className="subText">(total)</span>
-              </h1>
+              <h6 className="mb-0 pt-2">
+                Total:{" "}
+                <span className="subText">
+                  {customer.totalOrders > 0
+                    ? customer.totalOrders + " order"
+                    : "no previous orders"}
+                </span>
+              </h6>
+              <h6 className="mb-0 pt-2">
+                Total USD:{" "}
+                <span className="subText">
+                  {customer.totalOrders > 0 ? "2500 $" : "0 $"}
+                </span>
+              </h6>
             </div>
-            <div className="detailsCard h-100 w-100  px-3 py-4 ">
-              <h5>Orders Cost</h5>
+            <div className="detailsCard h-100 w-100 px-3 py-4 ">
+              <div className="d-flex justify-content-between align-items-center">
+                <h5>Promotions</h5>
+                <Modal btnTitle="Add" title="Select a Promotion">
+                  <DDSearch
+                    name="categoryId"
+                    lable=""
+                    options={promotions}
+                    isDisabled={false}
+                    isMulti={false}
+                    val={promotionToAdd}
+                    handleChange={(e) =>
+                      handleAddPromotionToCustomer(customer._id, e.target.value)
+                    }
+                  />
+                </Modal>
+              </div>
               <hr />
-              <h1 className="text-center mb-0 mt-4 pt-2">
-                2500<span className="subText">(USD)</span>
-              </h1>
+              <div className="scrollY">
+                {customer.promotions.length > 0 ? (
+                  customer.promotions.map((prom, i) => {
+                    return (
+                      <h6>
+                        {i + 1}- {prom.name}
+                      </h6>
+                    );
+                  })
+                ) : (
+                  <h6 className="text-center">None</h6>
+                )}
+              </div>
             </div>
           </div>
         </div>

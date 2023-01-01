@@ -19,3 +19,14 @@ customer has promotions?
     yes? && category promotion? return products filtered by category
          && product promotion? return products filtered by product discounted first
 
+
+new customer
+    is consolidated ? 
+        add
+            : (is branch)
+                    dropdown organisations
+                        if mawjoude 
+                            select
+                        if la2 
+                            add organisation popup
+

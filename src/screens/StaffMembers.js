@@ -92,8 +92,8 @@ export const StaffMembers = () => {
     await axios
       .get("/users?page=1&limit=100")
       .then((res) => {
-        setAllStaff(res.data);
-        res.data?.forEach((p) => {
+        setAllStaff(res.data.users);
+        res.data.users.forEach((p) => {
           setRows((prev) => [
             ...prev,
             createData(

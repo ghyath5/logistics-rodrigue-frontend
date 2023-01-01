@@ -62,16 +62,22 @@ const PromotionItem = ({ prom, deletePromotion }) => {
         <AccordionDetails>
           <hr style={{ color: "#495767" }} className="mt-0"></hr>
           <p>{prom.description}</p>
-          <h6>Products Details</h6>
+          <h6>{prom.categorypromotion ? "Category: " : "Products Details"}</h6>
           <div className="row text-promotion">
-            <span className="col-12">
-              Traditinal Falafel Poushes 225g -&gt; $
-              <span className="fromDolar"> (From $2.5)</span>
-            </span>
-            <span className="col-12">
-              Traditinal Falafel Poushes 225g -&gt; $
-              <span className="fromDolar"> (From $2.5)</span>
-            </span>
+            {prom.categorypromotion ? (
+              <span className="col-12">
+                {prom.categorypromotion.categoryId}
+              </span>
+            ) : (
+              prom.productspromotion.map((prod) => {
+                return (
+                  <span className="col-12">
+                    {prod.productId} -&gt; {prod.newprice}$
+                    <span className="fromDolar"> (From $oldPrice)</span>
+                  </span>
+                );
+              })
+            )}
           </div>
         </AccordionDetails>
       </Accordion>

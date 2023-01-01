@@ -19,7 +19,7 @@ import ManageProductCategories from "./ManageProductCategories";
 import AddNewOrders from "./AddNewOrders";
 import NotFound from "./NotFound";
 import Login from "./auth/Login";
-import Register from "./auth/Register";
+// import Register from "./auth/Register";
 import PrivateRoutes from "../utils/PrivateRoutes";
 
 const Main = () => {
@@ -27,7 +27,7 @@ const Main = () => {
     <>
       <Routes>
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        {/* <Route path="register" element={<Register />} /> */}
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />

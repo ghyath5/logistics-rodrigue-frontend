@@ -70,7 +70,6 @@ const Register = () => {
             : hasError(name, true));
         break;
       case "password":
-        console.log(value);
         value &&
           (validator.isStrongPassword(value, {
             minLength: 8,

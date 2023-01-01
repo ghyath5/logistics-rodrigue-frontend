@@ -15,6 +15,7 @@ const InputOutlined = ({
   error,
   errorMessage,
   classes,
+  disabled,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -48,6 +49,7 @@ const InputOutlined = ({
             onChange={(e) => handleChange(e)}
             onBlur={(e) => handleBlur && handleBlur(e)}
             autoComplete={autoComplete}
+            disabled={disabled && disabled}
           />
           {name === "password" &&
             (!visible ? (

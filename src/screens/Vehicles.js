@@ -23,9 +23,9 @@ export const Vehicles = () => {
     await axios
       .get(`/vehicles`)
       .then((res) => {
-        setAllVehclies(res.data);
+        setAllVehclies(res.data.vehicles);
         setRows([]);
-        res.data?.forEach((p) => {
+        res.data.vehicles.forEach((p) => {
           setRows((prev) => [
             ...prev,
             createData(

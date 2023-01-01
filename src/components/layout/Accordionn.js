@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import DDSearch from "../layout/DDSearch";
+import { orderStatues } from "../../data/configs";
 
 const Accordionn = ({ data }) => {
   const [expanded, setExpanded] = useState(null);
+  const [status, setStatuses] = useState(0);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
@@ -29,7 +31,7 @@ const Accordionn = ({ data }) => {
               <div className="w-100 d-flex justify-content-between align-items-center">
                 <h4 className="text-capitalize">
                   {item?.customer !== null
-                    ? item.customer.customername
+                    ? item.customer.businessname
                     : "customer"}
                 </h4>
                 <div className="d-flex flex-column justify-content-center">
@@ -71,6 +73,19 @@ const Accordionn = ({ data }) => {
                           item.customer.state
                         : "customer address"}
                     </span>
+                  </div>
+                </div>
+                <div>
+                  <p className="m-0 fw-bold">Actions:</p>
+                  <div className="row text-promotion">
+                    <DDSearch
+                      name="status"
+                      options={orderStatues}
+                      isDisabled={false}
+                      isMulti={false}
+                      val={status}
+                      handleChange={(e) => setStatuses(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>

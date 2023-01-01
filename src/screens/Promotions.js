@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import PromotionItem from "../components/promotions/PromotionItem";
 import Loader from "../components/layout/Loader";
-// import Accordionn from "../components/layout/Accordionn";
 
 const Promotions = () => {
   const nav = useNavigate();
@@ -52,7 +51,6 @@ const Promotions = () => {
           />
         </div>
       </div>
-      {/* <Accordionn data={promotions} /> */}
       {promotions?.map((prom, i) => {
         return (
           <PromotionItem

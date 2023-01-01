@@ -132,7 +132,7 @@ const Products = () => {
               p._id,
               p.generatedCode,
               p.name,
-              p.categoryId,
+              p.categoryId?.name,
               p.price,
               p.unitesperbox,
               p.prioritynumber,
