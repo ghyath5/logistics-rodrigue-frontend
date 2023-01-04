@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
-import Routs from "../assets/routs.svg";
+// import Routs from "../assets/routs.svg";
 import StatsCard from "../components/layout/StatsCard";
 import Loader from "../components/layout/Loader";
-import Bus from "../assets/bus.svg";
-import Person from "../assets/personIcon.svg";
-import Dollar from "../assets/dollarIcon.svg";
-import KiloMetre from "../assets/kilometre.svg";
+// import Bus from "../assets/bus.svg";
+// import Person from "../assets/personIcon.svg";
+// import Dollar from "../assets/dollarIcon.svg";
+// import KiloMetre from "../assets/kilometre.svg";
 import Layout from "../components/partials/Layout";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import LinearChart from "../components/LinearChart";
+import PieChart from "../components/PieChart";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -65,7 +67,26 @@ const Dashboard = () => {
             col={4}
           />
         </div>
-        <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
+        <div className="mt-4">
+          <LinearChart />
+          <div className="d-flex justify-content-around">
+            <div className="mt-3">
+              <p className="text-center">Top 5 employees</p>
+              <PieChart
+                data={[12, 19, 3, 5, 2, 3]}
+                names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
+              />
+            </div>
+            <div className="mt-3">
+              <p className="text-center">Top 5 Customers</p>
+              <PieChart
+                data={[2, 10, 6, 20, 20, 1]}
+                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              />
+            </div>
+          </div>
+        </div>
+        {/* <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
         <div className="dashboard-tomorrow pt-2 bgLightGray">
           <div className="dashboard-inner my-4">
             <div className="scheduleCard no-border">
@@ -109,7 +130,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </Layout>
     </>
   );

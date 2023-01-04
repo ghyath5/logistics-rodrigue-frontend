@@ -11,7 +11,7 @@ const Form1 = forwardRef(({ setData }, ref) => {
     address: "",
     suburb: "",
     state: "",
-    postcode: 0,
+    postcode: "",
     notes: "",
   });
   const [step1Eerrors, setStep1Errors] = useState({
@@ -50,18 +50,26 @@ const Form1 = forwardRef(({ setData }, ref) => {
 
   const allVAlid = () => {
     let valid;
-    let datas = Object.values(step1Data);
     let errs = Object.values(step1Eerrors);
-    errs.includes(true) || datas.includes("")
-      ? (valid = false)
-      : (valid = true);
+    errs.includes(true) ? (valid = false) : (valid = true);
+
+    for (const [key, value] of Object.entries(step1Data)) {
+      if (key !== "notes" && value === "") {
+        valid = false;
+      }
+    }
+
     if (valid) {
-      setData((prev) => {
-        return { ...prev, ...step1Data };
-      });
+      for (const [key, value] of Object.entries(step1Data)) {
+        value !== "" &&
+          setData((prev) => {
+            return { ...prev, [key]: value };
+          });
+      }
     } else {
       Object.entries(step1Data).forEach(([key, val]) => {
-        val === "" &&
+        key !== "notes" &&
+          val === "" &&
           setStep1Errors((prev) => {
             return { ...prev, [key]: true };
           });
@@ -78,11 +86,6 @@ const Form1 = forwardRef(({ setData }, ref) => {
       case "address":
       case "postcode":
         value === "" || value.length < 4
-          ? hasError(name, true)
-          : hasError(name, false);
-        break;
-      case "notes":
-        value === "" || value.length < 10
           ? hasError(name, true)
           : hasError(name, false);
         break;
@@ -175,8 +178,8 @@ const Form1 = forwardRef(({ setData }, ref) => {
           value={step1Data?.notes}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step1Eerrors?.notes}
-          errorMessage="should be at least 10 letters"
+          // error={step1Eerrors?.notes}
+          // errorMessage="should be at least 10 letters"
         />
       </div>
     </div>

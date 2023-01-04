@@ -13,7 +13,6 @@ import AddNewCustomer from "./AddNewCustomer";
 import AddNewVehicle from "./AddNewVehicle";
 import AddNewStaffMember from "./AddNewStaffMember";
 import { AddPromotion } from "./AddPromotion";
-import PromotionDetails from "./PromotionDetails";
 import AddProducts from "./AddProducts";
 import ManageProductCategories from "./ManageProductCategories";
 import AddNewOrders from "./AddNewOrders";
@@ -68,7 +67,6 @@ const Main = () => {
             path="editpromotion"
             element={<AddPromotion isEdit={true} />}
           />
-          <Route exact path="promotionDetails" element={<PromotionDetails />} />
           <Route
             exact
             path="addproducts"
@@ -79,7 +77,7 @@ const Main = () => {
             path="editproducts"
             element={<AddProducts isEdit={true} />}
           />
-          <Route exact path="addneworders" element={<AddNewOrders />} />
+          <Route exact path="addneworder" element={<AddNewOrders />} />
           <Route
             exact
             path="managecategories"

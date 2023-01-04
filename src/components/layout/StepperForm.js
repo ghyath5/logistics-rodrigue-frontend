@@ -27,6 +27,8 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const [occurs, setOccurs] = useState([]);
   const [payments, setPayments] = useState([]);
 
+  useEffect(() => console.log(data), [data]);
+
   const totalSteps = () => {
     return steps.length;
   };
@@ -51,6 +53,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     console.log({ activeStep });
+    console.log({ newActiveStep });
 
     switch (activeStep) {
       case 0:
@@ -78,7 +81,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
         if (form4Ref.current.allVAlid()) {
           newCompleted[activeStep] = true;
           setCompleted(newCompleted);
-          setAllDone(true);
+          setActiveStep(newActiveStep);
         }
         break;
       default:
@@ -118,15 +121,11 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   };
 
   useEffect(() => {
-    allDone && handleAddCustomer();
-  }, [allDone]);
-
-  useEffect(() => {
-    fetchOccurs();
-    fetchPayments();
+    fetchOccursAndPayments();
   }, []);
 
-  const fetchOccurs = async () => {
+  const fetchOccursAndPayments = async () => {
+    setLoading(true);
     await axios
       .get(`/deliveryoccur`)
       .then((res) => {
@@ -137,6 +136,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           ]);
         });
       })
+      .then(() => fetchPayments())
       .finally(() => setLoading(false))
       .catch(console.error);
   };
@@ -151,9 +151,14 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           ]);
         });
       })
-      .finally(() => setLoading(false))
       .catch(console.error);
   };
+
+  useEffect(() => {
+    console.log(allStepsCompleted());
+    console.log(data.length);
+    allStepsCompleted() && Object.keys(data).length >= 13 && setAllDone(true);
+  }, [allStepsCompleted, data]);
 
   useEffect(() => {
     allDone && handleAddCustomer();

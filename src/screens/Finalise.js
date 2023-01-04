@@ -10,7 +10,7 @@ const columns = [
   { id: "estimatedRevenue", label: "Estimated Revenue", minWidth: 150 },
   {
     id: "numberOfDeliveries",
-    label: "Number Of Deliveries",
+    label: "Deliveries",
     minWidth: 150,
   },
   {
@@ -92,7 +92,7 @@ const Finalise = () => {
           col={4}
         />
         <StatsCard
-          title="Number of Deliveries"
+          title="Deliveries"
           value={25}
           classes="bgLightBlue"
           col={4}

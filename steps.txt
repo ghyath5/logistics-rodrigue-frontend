@@ -30,3 +30,15 @@ new customer
                         if la2 
                             add organisation popup
 
+
+runs containing orders
+    if orders.count are too much
+        split run into 2
+            create a new run containing half of the previous orders
+
+
+//0, 1, 2
+get all orders where deliveryoccur !== 0
+    if order status !== pending
+        re-create order with auto-generated flag === true
+            

@@ -103,10 +103,10 @@ const Customers = ({ archived }) => {
   }
 
   useEffect(() => {
-    fetchUsers();
+    fetchCustomers();
   }, [archived, archiveTriggered]);
 
-  const fetchUsers = async () => {
+  const fetchCustomers = async () => {
     setLoading(true);
     await axios
       .get(

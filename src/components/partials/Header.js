@@ -7,9 +7,17 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import useDeviceType from "../../hooks/useDeviceType";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove("monjayToken");
+    navigate("/login");
+  };
 
   return (
     <Box className="headerContainer">
@@ -33,8 +41,8 @@ const Header = ({ isOpen, setOpen }) => {
               </h3>
             </Link>
           </div>
-          <Button color="inherit" onClick={() => console.log("settings")}>
-            Settings
+          <Button color="inherit" onClick={handleLogout}>
+            LOGOUT
           </Button>
         </Toolbar>
       </AppBar>

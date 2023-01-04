@@ -38,7 +38,9 @@ const PromotionItem = ({ prom, deletePromotion }) => {
               <h4 className="text-capitalize m-0">{prom.name}</h4>
               <div
                 onClick={() =>
-                  nav("/promotionDetails", { state: { promotion: prom } })
+                  nav("/editpromotion", {
+                    state: { id: prom._id },
+                  })
                 }
               >
                 <SettingsIcon className="settingIcon" />
@@ -66,14 +68,18 @@ const PromotionItem = ({ prom, deletePromotion }) => {
           <div className="row text-promotion">
             {prom.categorypromotion ? (
               <span className="col-12">
-                {prom.categorypromotion.categoryId}
+                {prom.categorypromotion.categoryId.name}{" "}
+                {prom.categorypromotion.discountpercentage}% discount
               </span>
             ) : (
               prom.productspromotion.map((prod) => {
                 return (
                   <span className="col-12">
-                    {prod.productId} -&gt; {prod.newprice}$
-                    <span className="fromDolar"> (From $oldPrice)</span>
+                    {prod.productId.name} -&gt; {prod.newprice}$
+                    <span className="fromDolar">
+                      {" "}
+                      (From {prod.productId.price}$)
+                    </span>
                   </span>
                 );
               })
@@ -86,36 +92,3 @@ const PromotionItem = ({ prom, deletePromotion }) => {
 };
 
 export default PromotionItem;
-
-/* 'ps-4 pe-2 promotion-container' <div className="d-flex justify-content-end gap-1 me-1">
-        <div
-          onClick={() =>
-            nav("/promotionDetails", { state: { promotion: prom } })
-          }
-        >
-          <SettingsIcon className="settingIcon" />
-        </div>
-        <div onClick={() => deletePromotion(prom._id)}>
-          <DeleteIcon className="deleteIcon" />
-        </div>
-      </div>
-      <div>
-        <h4>{prom.name}</h4>
-        <span className="range-date">
-          {dates.from} - {dates.to}
-        </span>
-      </div>
-      <hr style={{ color: "#495767" }} className="me-4"></hr>
-      <div>
-        <h6>Products Details</h6>
-      </div>
-      <div className="row text-promotion">
-        {prom.listprice.map((item, i) => {
-          return (
-            <span className="col-12" key={i}>
-              Traditinal Falafel Poushes 225g -&gt; ${item.newprice}
-              <span className="fromDolar"> (From $2.5)</span>
-            </span>
-          );
-        })}
-      </div> */

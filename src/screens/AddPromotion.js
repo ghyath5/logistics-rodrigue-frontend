@@ -40,10 +40,6 @@ export const AddPromotion = ({ isEdit }) => {
     category: false,
   });
 
-  useEffect(() => {
-    console.log(categoryToAdd);
-  }, [categoryToAdd]);
-
   const handleChangeTarget = (e) => {
     setPromotionTarget(e.target.value);
   };
@@ -104,8 +100,23 @@ export const AddPromotion = ({ isEdit }) => {
         setDescription(res.data.description);
         setFrom(res.data.from);
         setTo(res.data.to);
-        setProductsToAdd([]);
-        setCategoryToAdd({});
+        res.data.productspromotion.length > 0
+          ? res.data.productspromotion.forEach((prod) => {
+              setProductsToAdd((prev) => [
+                ...prev,
+                {
+                  productId: prod._id,
+                  oldprice: prod.productId.price,
+                  newprice: prod.newprice,
+                  name: prod.productId.name,
+                },
+              ]);
+            })
+          : setCategoryToAdd({
+              categoryId: res.data.categorypromotion.categoryId._id,
+              discountpercentage: res.data.categorypromotion.discountpercentage,
+              name: res.data.categorypromotion.categoryId.name,
+            });
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -241,7 +252,7 @@ export const AddPromotion = ({ isEdit }) => {
         <ArrowBackIcon
           className="ArrowBackIcon"
           fontSize="medium"
-          onClick={() => nav("/vehicles")}
+          onClick={() => nav("/promotions")}
         />
         <h4 className="headerTitle my-3 mx-2">
           {isEdit ? "Edit Promotion" : "Add New Promotion"}

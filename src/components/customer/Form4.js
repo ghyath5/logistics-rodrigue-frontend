@@ -4,11 +4,11 @@ import RadioGroupForm from "../layout/RadioGroupForm";
 const Form4 = forwardRef(({ setData, payments }, ref) => {
   const [step4Data, setStep4Data] = useState({
     paymentmethod: payments[0].value,
-    ispricingdefault: "false",
+    // ispricingdefault: "false",
   });
   const [step4Eerrors, setStep4Errors] = useState({
     paymentmethod: false,
-    ispricingdefault: false,
+    // ispricingdefault: false,
   });
 
   useImperativeHandle(ref, () => ({
@@ -60,7 +60,7 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
         val={step4Data?.paymentmethod}
         handleChange={handleChange}
       />
-      <RadioGroupForm
+      {/* <RadioGroupForm
         name="ispricingdefault"
         lable="Should any other special pricing be used for any items ordered by this customer?"
         options={[
@@ -69,7 +69,7 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
         ]}
         val={step4Data?.ispricingdefault}
         handleChange={handleChange}
-      />
+      /> */}
     </div>
   );
 });

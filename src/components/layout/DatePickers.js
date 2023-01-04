@@ -13,6 +13,7 @@ export const DatePickerr = ({
   minDate,
   value,
   handleChange,
+  shouldDisableDate,
 }) => {
   const handleTime = (string) => {
     let newTime = new Date(string).toISOString();
@@ -40,6 +41,8 @@ export const DatePickerr = ({
               variant="standard"
             />
           )}
+          shouldDisableDate={shouldDisableDate && shouldDisableDate}
+          // inputFormat="'Week of' MMM d"
         />
       </LocalizationProvider>
     </div>

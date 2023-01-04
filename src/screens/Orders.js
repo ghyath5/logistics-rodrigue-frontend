@@ -6,23 +6,24 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import Accordionn from "../components/layout/Accordionn";
-import { Pagination } from "@mui/material";
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setAllOrders] = useState([]);
+  const [expanded, setExpanded] = useState(null);
+
   const nav = useNavigate();
 
   useEffect(() => {
-    fetchVehicles();
+    fetchOrders();
   }, []);
 
-  const fetchVehicles = async () => {
+  const fetchOrders = async () => {
     setLoading(true);
     await axios
-      .get(`/orders`)
+      .get(`/orders?done=all`)
       .then((res) => {
         setAllOrders(res.data.orders);
       })
@@ -39,16 +40,27 @@ const Orders = () => {
         <div className="d-flex flex-wrap gap-2 mainBtn">
           <BtnContained
             title="ADD NEW ORDER"
-            handleClick={() => nav("/addneworders")}
+            handleClick={() => nav("/addneworder")}
           />
         </div>
       </div>
       <div className="d-flex justify-content-between mb-3">
         <SearchInput value={searchQuery} setValue={setSearchQuery} />
-        <Pagination count={page} color="primary" />
       </div>
-      <div>
-        <Accordionn data={orders} />
+      <div className="myAccordion">
+        {orders.map((item, i) => {
+          return (
+            <Accordionn
+              item={item}
+              key={i}
+              id={i}
+              allOrders={orders}
+              setAllOrders={setAllOrders}
+              setExpanded={setExpanded}
+              expanded={expanded}
+            />
+          );
+        })}
       </div>
     </Layout>
   );

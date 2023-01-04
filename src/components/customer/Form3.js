@@ -1,15 +1,15 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-// import InputOutlined from "../layout/InputOutlined";
 import RadioGroupForm from "../layout/RadioGroupForm";
+import InputOutlined from "../layout/InputOutlined";
 
 const Form3 = forwardRef(({ setData, occurs }, ref) => {
   const [step3Data, setStep3Data] = useState({
     deliveryoccur: occurs[0].value,
-    // deliveryFee: "0",
+    deliveryfee: "",
   });
   const [step3Eerrors, setStep3Errors] = useState({
     deliveryoccur: false,
-    // deliveryFee: false,
+    deliveryfee: false,
   });
 
   useImperativeHandle(ref, () => ({
@@ -25,26 +25,31 @@ const Form3 = forwardRef(({ setData, occurs }, ref) => {
     });
   };
 
-  const handleBlur = () => {};
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    value < 0 ? hasError(name, true) : hasError(name, false);
+  };
+
+  const hasError = (name, bool) => {
+    setStep3Errors((prev) => {
+      return { ...prev, [name]: bool };
+    });
+  };
 
   const allVAlid = () => {
     let valid;
-    let datas = Object.values(step3Data);
     let errs = Object.values(step3Eerrors);
-    errs.includes(true) || datas.includes("")
-      ? (valid = false)
-      : (valid = true);
+
+    errs.includes(true) ? (valid = false) : (valid = true);
+
     if (valid) {
-      setData((prev) => {
-        return { ...prev, ...step3Data };
-      });
-    } else {
-      Object.entries(step3Data).forEach(([key, val]) => {
-        val === "" &&
-          setStep3Errors((prev) => {
-            return { ...prev, [key]: true };
+      step3Data.deliveryfee === ""
+        ? setData((prev) => {
+            return { ...prev, ...step3Data, deliveryfee: "0" };
+          })
+        : setData((prev) => {
+            return { ...prev, ...step3Data };
           });
-      });
     }
     return valid;
   };
@@ -58,17 +63,18 @@ const Form3 = forwardRef(({ setData, occurs }, ref) => {
         val={step3Data?.deliveryoccur}
         handleChange={handleChange}
       />
-      {/* <InputOutlined
-        lable="Delivery Fees"
+      <InputOutlined
+        lable="Delivery Fees $"
         defaultValue="0"
-        type="text"
-        name="deliveryFee"
-        value={step3Data?.deliveryFee}
+        type="number"
+        name="deliveryfee"
+        classes="w-50"
+        value={step3Data?.deliveryfee}
         handleChange={handleChange}
         handleBlur={handleBlur}
-        error={step3Eerrors?.deliveryFee}
-        errorMessage="please add delivery fees"
-      /> */}
+        error={step3Eerrors?.deliveryfee}
+        errorMessage="should be bigger than 0"
+      />
     </div>
   );
 });

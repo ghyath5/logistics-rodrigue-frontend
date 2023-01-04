@@ -44,19 +44,31 @@ const Form2 = forwardRef(({ setData }, ref) => {
 
   const allVAlid = () => {
     let valid;
-    let datas = Object.values(step2Data);
     let errs = Object.values(step2Eerrors);
-    errs.includes(true) || datas.includes("")
-      ? (valid = false)
-      : (valid = true);
+    errs.includes(true) ? (valid = false) : (valid = true);
+
+    for (const [key, value] of Object.entries(step2Data)) {
+      if (
+        key !== "mobilenumber" &&
+        key !== "directdialnumber" &&
+        value === ""
+      ) {
+        valid = false;
+      }
+    }
+
     if (valid) {
-      setData((prev) => {
-        return { ...prev, ...step2Data };
-      });
-      // setData((prev) => [...prev, ...step2Data]);
+      for (const [key, value] of Object.entries(step2Data)) {
+        value !== "" &&
+          setData((prev) => {
+            return { ...prev, [key]: value };
+          });
+      }
     } else {
       Object.entries(step2Data).forEach(([key, val]) => {
-        val === "" &&
+        key !== "mobilenumber" &&
+          key !== "directdialnumber" &&
+          val === "" &&
           setStep2Errors((prev) => {
             return { ...prev, [key]: true };
           });
@@ -79,9 +91,14 @@ const Form2 = forwardRef(({ setData }, ref) => {
             : hasError(name, true));
         break;
       case "phonenumber":
+        validator.isMobilePhone(value.toString(), ["en-AU"])
+          ? hasError(name, false)
+          : hasError(name, true);
+        break;
       case "mobilenumber":
       case "directdialnumber":
-        value &&
+        console.log(value.length);
+        value.length > 0 &&
           (validator.isMobilePhone(value.toString(), ["en-AU"])
             ? hasError(name, false)
             : hasError(name, true));
