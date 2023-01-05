@@ -20,6 +20,7 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Customers", goTo: "/customers" },
     { text: "Products", goTo: "/products" },
     { text: "Promotions", goTo: "/promotions" },
+    { text: "Routes", goTo: "/routes" },
     { text: "Staff Members", goTo: "/staffmembers" },
     { text: "Vehicles", goTo: "/vehicles" },
     { text: "Finalise Deliveries", goTo: "/finalise" },
@@ -36,7 +37,7 @@ const SideBarList = ({ toggleDrawer }) => {
       <List>
         {myList.map((item, index) => (
           <ListItem
-            key={item.text}
+            key={index}
             disablePadding
             className={`${selectedItem === item.goTo ? "selected" : ""}`}
             onClick={() => handleItemSelected(item?.goTo && item.goTo)}

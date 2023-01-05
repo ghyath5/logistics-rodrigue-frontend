@@ -99,9 +99,7 @@ export default function Table({ columns, rows }) {
                             onClick={() =>
                               column.action && column.id === "archive"
                                 ? column.action(row["id"], row["archived"])
-                                : column.action &&
-                                  "archive" &&
-                                  column.action(row["id"])
+                                : column.action && column.action(row["id"])
                             }
                           >
                             {column.id === "price" ? (

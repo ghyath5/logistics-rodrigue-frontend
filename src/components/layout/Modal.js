@@ -11,7 +11,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Modal = ({ btnTitle, title, classes, children }) => {
+const Modal = ({
+  btnTitle,
+  title,
+  classes,
+  children,
+  handleAddOrganisation,
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,6 +26,11 @@ const Modal = ({ btnTitle, title, classes, children }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    setOpen(false);
+    handleAddOrganisation();
   };
 
   return (
@@ -37,7 +48,7 @@ const Modal = ({ btnTitle, title, classes, children }) => {
         <DialogContent className="modalMinWidth">{children}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Add</Button>
+          <Button onClick={handleSubmit}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>

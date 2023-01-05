@@ -68,69 +68,26 @@ const Dashboard = () => {
           />
         </div>
         <div className="mt-4">
-          <LinearChart />
           <div className="d-flex justify-content-around">
-            <div className="mt-3">
-              <p className="text-center">Top 5 employees</p>
+            <div className="w-100 mx-3 mt-3">
               <PieChart
                 data={[12, 19, 3, 5, 2, 3]}
                 names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
+                title="Top 5 Products"
               />
             </div>
-            <div className="mt-3">
-              <p className="text-center">Top 5 Customers</p>
+            <div className="w-100 mx-3 mt-3">
               <PieChart
                 data={[2, 10, 6, 20, 20, 1]}
                 names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+                title="Top 5 Customers"
               />
             </div>
           </div>
+          <div className="lineshartContainer mx-auto">
+            <LinearChart />
+          </div>
         </div>
-        {/* <h3 className="headerTitle my-3">Deliveries for Tomorrow</h3>
-        <div className="dashboard-tomorrow pt-2 bgLightGray">
-          <div className="dashboard-inner my-4">
-            <div className="scheduleCard no-border">
-              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
-                <img src={Routs} className="mb-2" alt="icon" />
-                <h5 className="m-0 textLightBlue">-</h5>
-                <span className="deliveriesTitle textLightBlue">
-                  Deliveries for
-                </span>
-              </div>
-            </div>
-          </div>
-          <hr className="mx-5 line"></hr>
-          <div className="d-flex my-4 mx-auto justify-content-between py-2 TomorrowsCardContainer">
-            <div className="scheduleCard no-border">
-              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
-                <img src={Bus} className="mb-2" alt="icon" />
-                <h5 className="m-0 textYellow">12</h5>
-                <span className="deliveriesTitle textYellow">Vehicles</span>
-              </div>
-            </div>
-            <div className="scheduleCard no-border">
-              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
-                <img src={Dollar} className="mb-2" alt="icon" />
-                <h5 className="m-0 textGreen">50</h5>
-                <span className="deliveriesTitle textGreen">Sales</span>
-              </div>
-            </div>
-            <div className="scheduleCard no-border">
-              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
-                <img src={KiloMetre} className="mb-2" alt="icon" />
-                <h5 className="m-0 textRed">43</h5>
-                <span className="deliveriesTitle textRed">Deliveries</span>
-              </div>
-            </div>
-            <div className="scheduleCard no-border">
-              <div className="text-center my-2 d-flex flex-column align-items-center mx-auto">
-                <img src={Person} className="mb-2" alt="icon" />
-                <h5 className="m-0 textGray">7</h5>
-                <span className="deliveriesTitle textGray">Drivers</span>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </Layout>
     </>
   );

@@ -1,8 +1,7 @@
 :root {
   --bg-color: #fafafa;
-  --dark-green: #1b70a8;
-  --light-green: #64b2d6;
-  /* --dark-green: #63894A;*/
+  --dark-bleu: #1b70a8;
+  --light-blue: #64b2d6;
   --green: #33c770;
   --white: #fff;
   --light-gray: #eeebeb;
@@ -13,11 +12,21 @@
   --yelloww: rgb(253, 181, 27);
   --sidebar-width: 250px;
   --border-radius: 8px;
+
 }
+
+/* #root {
+  background-color: #000 !important;
+}
+
+.sidebarContainer .MuiDrawer-paperAnchorLeft {
+  background-color: #404040;
+} */
 
 /* body {
   background-color: #495767;
 } */
+
 input:disabled {
   color: black !important;
 }
@@ -39,7 +48,7 @@ input:disabled {
 }
 
 .textLightBlue {
-  color: var(--light-green);
+  color: var(--light-blue);
 }
 
 .bgLightGray {
@@ -63,7 +72,7 @@ input:disabled {
 }
 
 .bgLightBlue {
-  background-color: var(--light-green);
+  background-color: var(--light-blue);
 }
 
 .rounded-50 {
@@ -141,7 +150,7 @@ input:disabled {
   transform: translate(-50%, -50%);
   border-radius: 50%;
   border: 3px solid;
-  border-color: var(--dark-green) transparent;
+  border-color: var(--dark-bleu) transparent;
 }
 
 @keyframes rotation {
@@ -155,7 +164,7 @@ input:disabled {
 }
 
 .headerContainer header {
-  background-color: var(--dark-green);
+  background-color: var(--dark-bleu);
 }
 
 .sidebarContainer .MuiDrawer-paperAnchorLeft {
@@ -177,6 +186,10 @@ input:disabled {
   margin-left: var(--sidebar-width);
 }
 
+.lineshartContainer {
+  max-width: 80%;
+}
+
 .logoLink {
   text-decoration: none !important;
 }
@@ -186,26 +199,26 @@ input:disabled {
 }
 
 .btnOutlined {
-  border: 2px solid var(--dark-green) !important;
-  color: var(--dark-green) !important;
+  border: 2px solid var(--dark-bleu) !important;
+  color: var(--dark-bleu) !important;
   font-weight: 600 !important;
 }
 
 .btnOutlined:is(:hover, :focus) {
-  border: 2px solid var(--dark-green) !important;
-  color: var(--dark-green) !important;
+  border: 2px solid var(--dark-bleu) !important;
+  color: var(--dark-bleu) !important;
   background: rgba(0, 0, 0, 0.2) !important;
 }
 
 .mainContainer .btnContained {
   color: var(--white);
-  background: var(--dark-green);
+  background: var(--dark-bleu);
   font-weight: 600;
 }
 
 .mainContainer .btnContained:is(:hover, :focus) {
   color: var(--white);
-  background: var(--dark-green);
+  background: var(--dark-bleu);
   opacity: 0.8;
 }
 
@@ -368,7 +381,7 @@ textarea {
 
 .sideBarList .list-btn {
   border-bottom: 1px solid var(--light-gray) !important;
-  color: var(--dark-green);
+  color: var(--dark-bleu);
 }
 
 .sideBarList li:first-child {
@@ -399,11 +412,11 @@ textarea {
 
 .initials-circle {
   border-radius: 50%;
-  border: 1px solid var(--dark-green);
+  border: 1px solid var(--dark-bleu);
   box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
   -webkit-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
   -moz-box-shadow: 0px 14px 23px 0px rgba(57, 87, 112, 0.14);
-  color: var(--dark-green) !important;
+  color: var(--dark-bleu) !important;
   aspect-ratio: 1 !important;
   width: 120px;
   position: relative;
@@ -432,7 +445,7 @@ textarea {
 }
 
 .line {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
   font-weight: bolder;
 }
 
@@ -442,19 +455,19 @@ textarea {
 }
 
 .scheduleCard {
-  color: var(--light-green);
+  color: var(--light-blue);
 }
 
 /*orders section*/
 
 .order-title-border {
-  border-right: 1px solid var(--dark-green);
-  border-left: 1px solid var(--dark-green);
+  border-right: 1px solid var(--dark-bleu);
+  border-left: 1px solid var(--dark-bleu);
 }
 
 .orderConainer {
   border-radius: 5px;
-  border: 1px solid var(--dark-green);
+  border: 1px solid var(--dark-bleu);
   padding: 20px;
 }
 
@@ -476,7 +489,7 @@ textarea {
 }
 
 .order-title {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
 }
 
 .order-card-lable {
@@ -484,7 +497,7 @@ textarea {
 }
 
 .orderTotalsbox {
-  border: 2px solid var(--dark-green);
+  border: 2px solid var(--dark-bleu);
   border-radius: var(--border-radius);
   margin-bottom: auto;
 }
@@ -511,7 +524,7 @@ textarea {
 }
 
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
-  color: var(--dark-green) !important;
+  color: var(--dark-bleu) !important;
 }
 
 .dateTimePicker .css-1ptx2yq-MuiInputBase-root-MuiInput-root:before {
@@ -562,7 +575,7 @@ textarea {
 
 /*finalize section*/
 .viewRoute {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
   cursor: pointer;
   font-weight: 600;
 }
@@ -592,7 +605,7 @@ textarea {
 }
 
 .searchInputContainer {
-  border: 2px solid var(--dark-green);
+  border: 2px solid var(--dark-bleu);
   border-radius: var(--border-radius);
 }
 
@@ -626,16 +639,16 @@ textarea {
 }
 
 .tableEditBtn {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
   font-weight: 600;
   cursor: pointer;
 }
 
 .statusCellVisible {
-  color: var(--light-green);
+  color: var(--light-blue);
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid var(--light-green);
+  border: 1px solid var(--light-blue);
   padding: 5% 10%;
   border-radius: 50px;
 }
@@ -654,7 +667,7 @@ textarea {
 }
 
 .show .btnOutlined {
-  color: var(--dark-green) !important;
+  color: var(--dark-bleu) !important;
 }
 
 .hide .btnOutlined {
@@ -697,11 +710,11 @@ textarea {
 
 /* Promotion section*/
 .promotion-customer {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
 }
 
 .ArrowBackIcon {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
   cursor: pointer;
 }
 
@@ -717,7 +730,7 @@ textarea {
 
 .settingIcon {
   cursor: pointer;
-  color: var(--dark-green);
+  color: var(--dark-bleu);
 }
 
 .deleteIcon {
@@ -753,7 +766,7 @@ textarea {
 }
 
 .container-promotion {
-  border-right: 1px solid var(--dark-green);
+  border-right: 1px solid var(--dark-bleu);
   text-align: center;
 }
 
@@ -775,7 +788,7 @@ textarea {
 }
 
 .nameModel {
-  color: var(--dark-green);
+  color: var(--dark-bleu);
   font-weight: bold;
   font-size: medium;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Products from "./Products";
 import Finalise from "./Finalise";
@@ -16,10 +16,12 @@ import { AddPromotion } from "./AddPromotion";
 import AddProducts from "./AddProducts";
 import ManageProductCategories from "./ManageProductCategories";
 import AddNewOrders from "./AddNewOrders";
-import NotFound from "./NotFound";
+// import NotFound from "./NotFound";
 import Login from "./auth/Login";
 // import Register from "./auth/Register";
 import PrivateRoutes from "../utils/PrivateRoutes";
+import Routess from "./Routess";
+import AddNewRoute from "./AddNewRoute";
 
 const Main = () => {
   return (
@@ -36,6 +38,8 @@ const Main = () => {
             path="customers"
             element={<Customers archived={false} />}
           />
+          <Route exact path="routes" element={<Routess />} />
+          <Route exact path="addnewroute" element={<AddNewRoute />} />
           <Route exact path="customerDetails" element={<CustomerDetails />} />
           <Route exact path="orders" element={<Orders />} />
           <Route exact path="vehicles" element={<Vehicles />} />
@@ -93,7 +97,8 @@ const Main = () => {
             path="EditStaffMember"
             element={<AddNewStaffMember isEdit={true} />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
       </Routes>
     </>

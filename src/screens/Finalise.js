@@ -1,114 +1,79 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
-import StatsCard from "../components/layout/StatsCard";
-import SearchInput from "../components/layout/SearchInput";
-import finalise from "../data/finalise";
 import Table from "../components/layout/Table";
+import Loader from "../components/layout/Loader";
+import axios from "../axios";
 
 const columns = [
-  { id: "date", label: "Date", minWidth: 100 },
-  { id: "estimatedRevenue", label: "Estimated Revenue", minWidth: 150 },
   {
-    id: "numberOfDeliveries",
-    label: "Deliveries",
-    minWidth: 150,
+    id: "date",
+    label: "Date",
+    minWidth: 100,
+  },
+  { id: "route", label: "Route", minWidth: 100 },
+  { id: "ordersCount", label: "Orders Count", minWidth: 50 },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
   },
   {
-    id: "driversScheduled",
-    label: "Drivers Scheduled",
-    minWidth: 50,
-  },
-  {
-    id: "vehiclesUsed",
-    label: "Vehicles Used",
-    minWidth: 50,
-  },
-  {
-    id: "estimatedDistance",
-    label: "Estimated Distance",
-    minWidth: 50,
-  },
-
-  {
-    id: "viewRoutes",
-    label: "View Routes ",
+    id: "viewOrders",
+    label: "actions",
     minWidth: 100,
     class: ["viewRoute"],
   },
 ];
 
-const Finalise = () => {
+const Runs = () => {
   const [rows, setRows] = useState([]);
-  const [allFinalise, setAllFinalise] = useState(finalise);
+  const [loading, setLoading] = useState(true);
+  const [allRuns, setRuns] = useState([]);
 
   useEffect(() => {
-    allFinalise.forEach((f) => {
-      setRows((prev) => [
-        ...prev,
-        createData(
-          f.id,
-          f.date,
-          f.estimatedRevenue,
-          f.numberOfDeliveries,
-          f.driversScheduled,
-          f.vehiclesUsed,
-          f.estimatedDistance,
-          "View Routes"
-        ),
-      ]);
-    });
+    fetchRuns();
   }, []);
 
-  function createData(
-    id,
-    date,
-    estimatedRevenue,
-    numberOfDeliveries,
-    driversScheduled,
-    vehiclesUsed,
-    estimatedDistance,
-    viewRoutes
-  ) {
+  function createData(id, route, ordersCount, status, date, viewOrders) {
     return {
       id,
+      route,
+      ordersCount,
+      status,
       date,
-      estimatedRevenue,
-      numberOfDeliveries,
-      driversScheduled,
-      vehiclesUsed,
-      estimatedDistance,
-      viewRoutes,
+      viewOrders,
     };
   }
 
-  return (
+  const fetchRuns = async () => {
+    setLoading(true);
+    await axios
+      .get("runs")
+      .then((res) => {
+        setRuns(res.data.runs);
+        res.data.runs.forEach((f) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              f._id,
+              f.route,
+              f.orders.length,
+              f.status,
+              f.date,
+              "View details"
+            ),
+          ]);
+        });
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Layout>
-      <h3 className="headerTitle my-2">Finalise Deliveries</h3>
-      <div className="row m-0">
-        <StatsCard
-          title="Esitmated"
-          value={3000.1 + "$"}
-          classes="bgGreen"
-          col={4}
-        />
-        <StatsCard
-          title="Deliveries"
-          value={25}
-          classes="bgLightBlue"
-          col={4}
-        />
-        <StatsCard
-          title="Esitmated Distance"
-          value={222.5 + "km"}
-          last={true}
-          classes="bgYellow"
-          col={4}
-        />
-      </div>
-      <div className="d-flex justify-content-between align-items-center my-3">
-        <h3 className="headerTitle">Previous Delivery Routes</h3>
-        <SearchInput />
-      </div>
+      <h3 className="headerTitle my-2">Runs</h3>
       <div className="finaliseTableContainer">
         <Table columns={columns} rows={rows} />
       </div>
@@ -116,4 +81,4 @@ const Finalise = () => {
   );
 };
 
-export default Finalise;
+export default Runs;

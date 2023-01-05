@@ -30,7 +30,7 @@ const ManageProductCategories = () => {
     setLoading(true);
     let data = { name: name };
     axios
-      .post("/categories", data)
+      .post("categories", data)
       .then((res) => {
         setCategories((prev) => [
           ...prev,

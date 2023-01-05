@@ -11,7 +11,7 @@ import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import { useEffect } from "react";
 import { DatePickerr } from "../components/layout/DatePickers";
-import moment from "moment";
+import moment from "moment/moment";
 
 const AddNewOrders = () => {
   const [isLoading, setLoading] = useState(true);
@@ -61,7 +61,7 @@ const AddNewOrders = () => {
     setSelectedCustomer(e.target.value);
     await axios
       .post(
-        `/orders/sendcustomeridfororder/${e.target.value}?page=1&limit=1&isarchived=false`
+        `orders/sendcustomeridfororder/${e.target.value}?page=1&limit=1&isarchived=false`
       )
       .then((res) => {
         console.log(res.data);

@@ -2,23 +2,15 @@ import React, { useEffect, useState } from "react";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import useDeviceType from "../../hooks/useDeviceType";
 import SideBarList from "./SideBarList";
-// import BtnOutlined from "../layout/BtnOutlined";
-// import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const SideBar = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
-  // const navigate = useNavigate();
   const [user, setUser] = useState("");
 
   useEffect(() => {
     setUser(Cookies.get("monjayUser"));
   }, []);
-
-  // const handleLogout = () => {
-  //   Cookies.remove("monjayToken");
-  //   navigate("/login");
-  // };
 
   useEffect(() => {
     deviceType !== "laptop" ? setOpen(false) : setOpen(true);
@@ -56,15 +48,6 @@ const SideBar = ({ isOpen, setOpen }) => {
         <div className="sideBarList">
           <SideBarList toggleDrawer={toggleDrawer} />
         </div>
-        {/* <div className="mx-auto mt-5">
-          <BtnOutlined
-            classes="px-5"
-            title="LOGOUT"
-            handleClick={() => {
-              handleLogout();
-            }}
-          />
-        </div> */}
       </SwipeableDrawer>
     </>
   );

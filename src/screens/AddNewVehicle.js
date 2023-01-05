@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
-import dayjs from "dayjs";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
 import InputOutlined from "../components/layout/InputOutlined";
@@ -10,17 +9,18 @@ import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
 import { DatePickerr } from "../components/layout/DatePickers";
 import { vehiclesStatuses } from "../data/configs";
+import moment from "moment/moment";
 
 const AddNewVehicle = ({ isEdit }) => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState({
     plate: "",
     model: "",
     make: "",
     color: "",
-    expiresIn: dayjs(new Date()),
+    expiresIn: moment("L"),
     status: "",
   });
   const [errors, setErrors] = useState({
@@ -46,7 +46,7 @@ const AddNewVehicle = ({ isEdit }) => {
           model: res.data.model,
           make: res.data.make,
           color: res.data.color,
-          expiresIn: dayjs(new Date(res.data.expiresIn)),
+          expiresIn: moment(new Date(res.data.expiresIn)).format("L"),
           status: vehiclesStatuses[res.data.status].value,
         });
         setLoading(false);
@@ -226,7 +226,7 @@ const AddNewVehicle = ({ isEdit }) => {
                 id="regDue"
                 lable="Registration Expiry Date"
                 name="expiresIn"
-                minDate={dayjs(new Date())}
+                minDate={moment("L")}
                 value={data?.expiresIn}
                 handleChange={handleChange}
                 handleBlur={handleBlur}

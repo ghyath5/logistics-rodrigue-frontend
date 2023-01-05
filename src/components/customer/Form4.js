@@ -1,15 +1,43 @@
+import { Checkbox, FormControlLabel } from "@mui/material";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { useEffect } from "react";
 import RadioGroupForm from "../layout/RadioGroupForm";
+import DDSearch from "../layout/DDSearch";
+import axios from "../../axios";
+import InputOutlined from "../layout/InputOutlined";
+import Modal from "../layout/Modal";
 
 const Form4 = forwardRef(({ setData, payments }, ref) => {
   const [step4Data, setStep4Data] = useState({
     paymentmethod: payments[0].value,
-    // ispricingdefault: "false",
+    isconsolidatedbiller: true,
+    organisation: "",
   });
   const [step4Eerrors, setStep4Errors] = useState({
     paymentmethod: false,
-    // ispricingdefault: false,
+    isconsolidatedbiller: false,
+    organisation: false,
   });
+  const [organisations, setOrganisations] = useState([]);
+  const [addedOrg, setAddedOrg] = useState("");
+
+  useEffect(() => {
+    console.log({ step4Data });
+  }, [step4Data]);
+
+  useEffect(() => {
+    fetchOrganisations();
+  }, []);
+
+  const fetchOrganisations = async () => {
+    await axios
+      .get("organization")
+      .then((res) => {
+        setOrganisations(["new org", ...res.data.organizations]);
+        //should create the options ddFormat
+      })
+      .catch(console.error);
+  };
 
   useImperativeHandle(ref, () => ({
     allVAlid() {
@@ -24,11 +52,6 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
     });
   };
 
-  const handleBlur = () => {
-    // const { name, value } = e.target;
-    // // validate(name, value);
-  };
-
   const allVAlid = () => {
     let valid;
     let datas = Object.values(step4Data);
@@ -37,6 +60,7 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
       ? (valid = false)
       : (valid = true);
     if (valid) {
+      //add only payment if isconsolidatedbiller else add payment and organisation
       setData((prev) => {
         return { ...prev, ...step4Data };
       });
@@ -51,6 +75,22 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
     return valid;
   };
 
+  const handleToggleConsolidate = () => {
+    setStep4Data((prev) => {
+      return { ...prev, isconsolidatedbiller: !prev.isconsolidatedbiller };
+    });
+  };
+
+  const handleAddOrganisation = async (addedOrg) => {
+    await axios
+      .post(`organization`, { name: addedOrg })
+      .then((res) => {
+        console.log(res);
+        //should add to the options ddFormat
+      })
+      .catch(console.error);
+  };
+
   return (
     <div>
       <RadioGroupForm
@@ -60,16 +100,62 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
         val={step4Data?.paymentmethod}
         handleChange={handleChange}
       />
-      {/* <RadioGroupForm
-        name="ispricingdefault"
-        lable="Should any other special pricing be used for any items ordered by this customer?"
-        options={[
-          { lable: "No, use default pricing", value: "false" },
-          { lable: "Yes, use custom pricing", value: "true" },
-        ]}
-        val={step4Data?.ispricingdefault}
-        handleChange={handleChange}
-      /> */}
+      <FormControlLabel
+        control={
+          <Checkbox defaultChecked onChange={() => handleToggleConsolidate()} />
+        }
+        label="Is Consolidate Biller"
+        labelPlacement="start"
+        className="m-0"
+      />
+      {!step4Data.isconsolidatedbiller &&
+        (organisations.length > 0 ? (
+          <>
+            <DDSearch
+              name="organisation"
+              lable="Organisations"
+              options={organisations}
+              isDisabled={false}
+              isMulti={false}
+              val={step4Data?.organisation}
+              handleChange={handleChange}
+              // handleBlur={handleBlur}
+              error={step4Eerrors?.organisation}
+              errorMessage="please pick a state"
+            />
+            <div className="mt-3">
+              <Modal
+                btnTitle="Add Organisation"
+                title="Add Organisation"
+                handleAddOrganisation={handleAddOrganisation}
+              >
+                <InputOutlined
+                  lable=""
+                  defaultValue="Organisation"
+                  type="text"
+                  name="Organisation"
+                  value={addedOrg}
+                  handleChange={(e) => setAddedOrg(e.target.value)}
+                />
+              </Modal>
+            </div>
+          </>
+        ) : (
+          <Modal
+            btnTitle="Add Organisation"
+            title="Add Organisation"
+            handleAddOrganisation={handleAddOrganisation}
+          >
+            <InputOutlined
+              lable=""
+              defaultValue="Organisation"
+              type="text"
+              name="Organisation"
+              value={addedOrg}
+              handleChange={(e) => setAddedOrg(e.target.value)}
+            />
+          </Modal>
+        ))}
     </div>
   );
 });

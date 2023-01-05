@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
+import Loader from "../components/layout/Loader";
 import { useNavigate } from "react-router-dom";
 import StatsCard from "../components/layout/StatsCard";
-import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import { vehiclesStatuses } from "../data/configs";
 

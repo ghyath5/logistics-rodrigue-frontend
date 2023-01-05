@@ -72,9 +72,9 @@ const PromotionItem = ({ prom, deletePromotion }) => {
                 {prom.categorypromotion.discountpercentage}% discount
               </span>
             ) : (
-              prom.productspromotion.map((prod) => {
+              prom.productspromotion.map((prod, ii) => {
                 return (
-                  <span className="col-12">
+                  <span key={ii} className="col-12">
                     {prod.productId.name} -&gt; {prod.newprice}$
                     <span className="fromDolar">
                       {" "}

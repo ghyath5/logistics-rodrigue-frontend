@@ -19,7 +19,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [allDone, setAllDone] = useState(false);
-  const [data, setData] = useState({ isconsolidatedbiller: true });
+  const [data, setData] = useState({});
   const form1Ref = useRef();
   const form2Ref = useRef();
   const form3Ref = useRef();
@@ -27,7 +27,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const [occurs, setOccurs] = useState([]);
   const [payments, setPayments] = useState([]);
 
-  useEffect(() => console.log(data), [data]);
+  // useEffect(() => console.log(data), [data]);
 
   const totalSteps = () => {
     return steps.length;
@@ -40,6 +40,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const isLastStep = () => {
     return activeStep === totalSteps() - 1;
   };
+
   const allStepsCompleted = () => {
     return completedSteps() === totalSteps();
   };
@@ -47,13 +48,11 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const handleNext = () => {
     const newCompleted = completed;
     const newActiveStep =
-      isLastStep() && !allStepsCompleted()
+      (isLastStep() && !allStepsCompleted()) || activeStep + 1 in completed
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
-    console.log({ activeStep });
-    console.log({ newActiveStep });
 
     switch (activeStep) {
       case 0:
@@ -108,9 +107,8 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const handleAddCustomer = () => {
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}customers`, data)
+      .post(`customers`, data)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         navigate("/customers");
       })
@@ -140,6 +138,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
       .finally(() => setLoading(false))
       .catch(console.error);
   };
+
   const fetchPayments = async () => {
     await axios
       .get(`/paymentmethod`)
@@ -155,9 +154,7 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   };
 
   useEffect(() => {
-    console.log(allStepsCompleted());
-    console.log(data.length);
-    allStepsCompleted() && Object.keys(data).length >= 13 && setAllDone(true);
+    allStepsCompleted() && setAllDone(true);
   }, [allStepsCompleted, data]);
 
   useEffect(() => {
@@ -197,7 +194,12 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                 <Form3 ref={form3Ref} setData={setData} occurs={occurs} />
               ) : (
                 activeStep === 3 && (
-                  <Form4 ref={form4Ref} setData={setData} payments={payments} />
+                  <Form4
+                    ref={form4Ref}
+                    setData={setData}
+                    payments={payments}
+                    setLoading={setLoading}
+                  />
                 )
               )}
             </div>
