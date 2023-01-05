@@ -16,14 +16,13 @@ const Routess = () => {
     fetchRoutes();
   }, []);
 
-  function createData(id, name, description, from, to, note, remove) {
+  function createData(id, name, description, from, to, remove) {
     return {
       id,
       name,
       description,
       from,
       to,
-      note,
       remove,
     };
   }
@@ -38,7 +37,7 @@ const Routess = () => {
         res.data.routes.forEach((p) => {
           setRows((prev) => [
             ...prev,
-            createData(p._id, p.name, p.note, p.from, p.to, p.note, "Delete"),
+            createData(p._id, p.name, p.description, p.from, p.to, "Delete"),
           ]);
         });
       })
@@ -77,11 +76,6 @@ const Routess = () => {
     {
       id: "to",
       label: "To",
-      minWidth: 150,
-    },
-    {
-      id: "note",
-      label: "Note",
       minWidth: 150,
     },
     {

@@ -56,7 +56,7 @@ const Runs = () => {
             ...prev,
             createData(
               f._id,
-              f.route,
+              f.route?.name,
               f.orders.length,
               f.status,
               f.date,

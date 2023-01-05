@@ -81,7 +81,7 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
     });
   };
 
-  const handleAddOrganisation = async (addedOrg) => {
+  const handleAddOrganisation = async () => {
     await axios
       .post(`organization`, { name: addedOrg })
       .then((res) => {
