@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import faker from "faker";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  BarElement,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
   Legend,
@@ -57,20 +57,6 @@ export const options = {
   },
 };
 
-// const labels = [
-//   "January",
-//   "February",
-//   "March",
-//   "April",
-//   "May",
-//   "June",
-//   "July",
-//   "August",
-//   "September",
-//   "October",
-//   "November",
-//   "December",
-// ];
 const labels = [...Array(31).keys()];
 
 export const data = {
@@ -92,7 +78,7 @@ export const data = {
 };
 
 const LinearChart = () => {
-  return <Line options={options} data={data} />;
+  return <Bar options={options} data={data} />;
 };
 
 export default LinearChart;

@@ -3,32 +3,35 @@ import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import axios from "../axios";
-
-const columns = [
-  {
-    id: "date",
-    label: "Date",
-    minWidth: 100,
-  },
-  { id: "route", label: "Route", minWidth: 100 },
-  { id: "ordersCount", label: "Orders Count", minWidth: 50 },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 100,
-  },
-  {
-    id: "viewOrders",
-    label: "actions",
-    minWidth: 100,
-    class: ["viewRoute"],
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 const Runs = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [allRuns, setRuns] = useState([]);
+  const nav = useNavigate();
+
+  const columns = [
+    {
+      id: "date",
+      label: "Date",
+      minWidth: 100,
+    },
+    { id: "route", label: "Route", minWidth: 100 },
+    { id: "ordersCount", label: "Orders Count", minWidth: 50 },
+    {
+      id: "status",
+      label: "Status",
+      minWidth: 100,
+    },
+    {
+      id: "viewOrders",
+      label: "actions",
+      minWidth: 100,
+      class: ["viewRoute"],
+      action: (id) => nav("/editvehicle", { state: { id: id } }),
+    },
+  ];
 
   useEffect(() => {
     fetchRuns();
@@ -60,7 +63,7 @@ const Runs = () => {
               f.orders.length,
               f.status,
               f.date,
-              "View details"
+              "View / assign"
             ),
           ]);
         });

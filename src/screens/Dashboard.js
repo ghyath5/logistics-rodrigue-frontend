@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
-// import Routs from "../assets/routs.svg";
 import StatsCard from "../components/layout/StatsCard";
 import Loader from "../components/layout/Loader";
-// import Bus from "../assets/bus.svg";
-// import Person from "../assets/personIcon.svg";
-// import Dollar from "../assets/dollarIcon.svg";
-// import KiloMetre from "../assets/kilometre.svg";
 import Layout from "../components/partials/Layout";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import LinearChart from "../components/LinearChart";
 import PieChart from "../components/PieChart";
+// import axios from "../axios";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState("");
 
   useEffect(() => {
     setUser(Cookies.get("monjayUser"));
-    setLoading(false);
+    // fetchStatistics();
   }, []);
+
+  // const fetchStatistics = async () => {
+  //   await axios
+  //     .post("statistics/day?date=12/24/2022")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
 
   return isLoading ? (
     <Loader />
@@ -71,14 +79,14 @@ const Dashboard = () => {
           <div className="d-flex justify-content-around">
             <div className="w-100 mx-3 mt-3">
               <PieChart
-                data={[12, 19, 3, 5, 2, 3]}
+                data={[30, 19, 22, 5, 16, 40]}
                 names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
                 title="Top 5 Products"
               />
             </div>
             <div className="w-100 mx-3 mt-3">
               <PieChart
-                data={[2, 10, 6, 20, 20, 1]}
+                data={[20, 10, 6, 13, 50, 1]}
                 names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
                 title="Top 5 Customers"
               />

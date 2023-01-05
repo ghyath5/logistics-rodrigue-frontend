@@ -53,7 +53,7 @@ const Model = ({ id, handleAction, btn, title, defaultValue, isUpdate }) => {
               defaultValue={defaultValue}
               type="text"
               value={name}
-              setValue={(value) => setName(value)}
+              handleChange={(e) => setName(e.target.value)}
               name={title}
             />
             <div className="d-flex justify-content-center mt-3 gap-2">

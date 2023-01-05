@@ -177,13 +177,14 @@ const AddNewOrders = () => {
           </div>
           <div className="d-flex">
             <div className="col-12 col-sm-8 ">
-              <RadioGroupForm
+              {/* <RadioGroupForm
                 name="deliveriesoccur"
                 lable="How often should deliveries occur?"
                 options={deliveryOccurs}
                 val={deliveriesoccur}
                 handleChange={(e) => setDeliveriesoccur(e.target.value)}
-              />
+              /> */}
+
               {/* <div className="my-3">
                 <span className="formsLable">
                   Purchase order number (Leave blank if none)

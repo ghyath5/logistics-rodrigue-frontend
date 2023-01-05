@@ -21,9 +21,9 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Products", goTo: "/products" },
     { text: "Promotions", goTo: "/promotions" },
     { text: "Routes", goTo: "/routes" },
+    { text: "Runs", goTo: "/runs" },
     { text: "Staff Members", goTo: "/staffmembers" },
     { text: "Vehicles", goTo: "/vehicles" },
-    { text: "Finalise Deliveries", goTo: "/finalise" },
   ];
 
   const handleItemSelected = (goTo) => {

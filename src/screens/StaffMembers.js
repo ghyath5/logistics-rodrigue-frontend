@@ -90,10 +90,10 @@ export const StaffMembers = () => {
 
   const fetchUsers = async () => {
     await axios
-      .get("/users?page=1&limit=100")
+      .get("people/users?page=1&limit=100")
       .then((res) => {
         setAllStaff(res.data.users);
-        res.data.users.forEach((p) => {
+        res.data.forEach((p) => {
           setRows((prev) => [
             ...prev,
             createData(

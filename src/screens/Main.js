@@ -32,7 +32,7 @@ const Main = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
-          <Route exact path="finalise" element={<Finalise />} />
+          <Route exact path="runs" element={<Finalise />} />
           <Route
             exact
             path="customers"

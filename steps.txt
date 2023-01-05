@@ -42,3 +42,12 @@ get all orders where deliveryoccur !== 0
     if order status !== pending
         re-create order with auto-generated flag === true
             
+
+login, with rememberme = true
+    return hashed password in res
+        next login
+            get user by name
+                check if rememberme true
+                    yes ? use the password without hashing
+                        else: hash 3adi w login
+

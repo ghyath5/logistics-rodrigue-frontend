@@ -1,8 +1,9 @@
 import React from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJSS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJSS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data, names, title }) => {
   const options = {
@@ -17,19 +18,29 @@ const PieChart = ({ data, names, title }) => {
       },
     },
   };
+
   const dataa = {
     labels: names,
     datasets: [
       {
-        label: "# of Votes",
+        label: "%",
         data: data,
+        datalabels: {
+          color: "#000",
+          formatter: (ctx, args) => {
+            const index = args.dataIndex;
+            return args.dataset.data[index] > 7
+              ? `${args.dataset.data[index]} %`
+              : "";
+          },
+        },
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 206, 86, 0.2)",
           "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
           "rgba(255, 159, 64, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
@@ -43,7 +54,7 @@ const PieChart = ({ data, names, title }) => {
       },
     ],
   };
-  return <Pie data={dataa} options={options} />;
+  return <Pie data={dataa} options={options} plugins={[ChartDataLabels]} />;
 };
 
 export default PieChart;
