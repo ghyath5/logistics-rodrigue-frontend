@@ -5,12 +5,12 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJSS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ data, names, title }) => {
+const PieChart = ({ data, names, title, labelsPosition }) => {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: "left",
+        position: labelsPosition,
       },
       title: {
         display: true,

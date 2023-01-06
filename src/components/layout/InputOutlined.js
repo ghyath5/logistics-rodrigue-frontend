@@ -25,7 +25,11 @@ const InputOutlined = ({
 
   return (
     <div className={`flex-column ${classes && classes}`}>
-      <div className="mt-2 input-outline d-flex flex-column">
+      <div
+        className={`input-outline d-flex flex-column ${
+          lable !== "" ? "mt-2" : ""
+        }`}
+      >
         {lable && (
           <label htmlFor={id} className="formsLable mb-2">
             {lable}

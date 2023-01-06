@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import LinearChart from "../components/LinearChart";
 import PieChart from "../components/PieChart";
-// import axios from "../axios";
+import axios from "../axios";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,20 +17,22 @@ const Dashboard = () => {
 
   useEffect(() => {
     setUser(Cookies.get("monjayUser"));
-    // fetchStatistics();
+    fetchStatistics();
   }, []);
 
-  // const fetchStatistics = async () => {
-  //   await axios
-  //     .post("statistics/day?date=12/24/2022")
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch(console.error)
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const fetchStatistics = async () => {
+    await axios
+      .get(
+        "/statistics/sales-by-date-range?to1=2023-01-10&to2=2022-12-10&days=30"
+      )
+      .then((res) => {
+        // console.log(res.data);
+      })
+      .catch(console.error)
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return isLoading ? (
     <Loader />
@@ -77,22 +79,46 @@ const Dashboard = () => {
         </div>
         <div className="mt-4">
           <div className="d-flex justify-content-around">
-            <div className="w-100 mx-3 mt-3">
+            {/* <div className="w-100 mx-3 mt-3 p-3">
               <PieChart
                 data={[30, 19, 22, 5, 16, 40]}
                 names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
                 title="Top 5 Products"
               />
-            </div>
-            <div className="w-100 mx-3 mt-3">
+            </div> */}
+            <div className="w-50 mx-3 mt-3 p-3">
               <PieChart
                 data={[20, 10, 6, 13, 50, 1]}
                 names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
                 title="Top 5 Customers"
+                labelsPosition="right"
               />
             </div>
           </div>
-          <div className="lineshartContainer mx-auto">
+          <div className="d-flex justify-content-around">
+            <div className="w-100 mx-3 mt-3 p-3">
+              <PieChart
+                data={[30, 19, 22, 5, 16, 40]}
+                names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
+                title="Top 5 Products in Dips"
+              />
+            </div>
+            <div className="w-100 mx-3 mt-3 p-3">
+              <PieChart
+                data={[20, 10, 6, 13, 50, 1]}
+                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+                title="Top 5 Products in Deserts"
+              />
+            </div>
+            <div className="w-100 mx-3 mt-3 p-3">
+              <PieChart
+                data={[20, 10, 6, 13, 50, 1]}
+                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+                title="Top 5 Products in Finger Food"
+              />
+            </div>
+          </div>
+          <div className="lineshartContainer my-5 mx-auto">
             <LinearChart />
           </div>
         </div>

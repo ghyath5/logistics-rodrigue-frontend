@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BtnContained from "../components/layout/BtnContained";
+import BtnOutlined from "../components/layout/BtnOutlined";
 import Layout from "../components/partials/Layout";
 import SearchInput from "../components/layout/SearchInput";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +24,20 @@ const Orders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     await axios
-      .get(`/orders?done=all`)
+      .get(`/orders?page=1&limit=30&done=all`)
       .then((res) => {
         setAllOrders(res.data.orders);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  const generateFutureOrders = async () => {
+    setLoading(true);
+    await axios
+      .post(`/orders/deliveryoccur`)
+      .then((res) => {
+        console.log(res);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -39,6 +51,10 @@ const Orders = () => {
         <h3 className="headerTitle my-2">Orders</h3>
         <div className="d-flex flex-wrap gap-2 mainBtn">
           <BtnContained
+            title="GENERATE FUTURE ORDERS"
+            handleClick={() => generateFutureOrders()}
+          />
+          <BtnOutlined
             title="ADD NEW ORDER"
             handleClick={() => nav("/addneworder")}
           />

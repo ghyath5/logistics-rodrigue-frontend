@@ -13,7 +13,28 @@
   --sidebar-width: 250px;
   --border-radius: 8px;
 
+  /* --bgg: #495767; */
+
+  background-color: var(--bg-color) !important;
 }
+
+.light-theme {
+  background-color: #fafafa !important;
+}
+
+.dark-theme {
+  background-color: #495767 !important;
+}
+
+input {
+  background-color: transparent !important;
+}
+
+/* .light{
+  --bg-color: #fafafa;
+  --dark-bleu: #1b70a8;
+  --light-blue: #64b2d6;
+} */
 
 /* #root {
   background-color: #000 !important;
@@ -80,6 +101,14 @@ input:disabled {
   aspect-ratio: 1 !important;
 }
 
+.fw-700 {
+  font-weight: 700;
+}
+
+.mt-10 {
+  margin-top: 10rem;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -107,7 +136,6 @@ input:disabled {
 }
 
 .loader {
-  border: 3px solid var(--white);
   border-radius: 50%;
   display: inline-block;
   position: relative;
@@ -502,6 +530,7 @@ textarea {
   margin-bottom: auto;
 }
 
+
 .myAccordion .css-1elwnq4-MuiPaper-root-MuiAccordion-root {
   margin-bottom: 16px !important;
   border-radius: 10px !important;
@@ -517,6 +546,10 @@ textarea {
 
 .myAccordion .css-o4b71y-MuiAccordionSummary-content.Mui-expanded {
   margin-bottom: 0;
+}
+
+.delete-promotion-btn {
+  background-color: var(--delete-red) !important;
 }
 
 .delete-promotion-btn .btnContained {
@@ -581,6 +614,11 @@ textarea {
 }
 
 /*Products section*/
+.prodRowEditBox {
+  border-radius: var(--border-radius);
+  border: 2px solid var(--light-gray);
+}
+
 .categoryCard {
   border-radius: var(--border-radius);
   border: 2px solid var(--light-gray);

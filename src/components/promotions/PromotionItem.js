@@ -22,7 +22,7 @@ const PromotionItem = ({ prom, deletePromotion }) => {
   }, [prom]);
 
   return (
-    <div className="py-3 mb-2">
+    <div className="py-2 mb-2">
       <Accordion
         key={`panel-${prom._id}`}
         expanded={expanded === prom._id}
@@ -68,11 +68,11 @@ const PromotionItem = ({ prom, deletePromotion }) => {
           <div className="row text-promotion">
             {prom.categorypromotion ? (
               <span className="col-12">
-                {prom.categorypromotion.categoryId.name}{" "}
-                {prom.categorypromotion.discountpercentage}% discount
+                {prom.categorypromotion?.categoryId?.name}{" "}
+                {prom.categorypromotion?.discountpercentage}% discount
               </span>
             ) : (
-              prom.productspromotion.map((prod, ii) => {
+              prom.productspromotion?.map((prod, ii) => {
                 return (
                   <span key={ii} className="col-12">
                     {prod.productId.name} -&gt; {prod.newprice}$

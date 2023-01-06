@@ -4,6 +4,9 @@ import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
+import { runsStatuses } from "../data/configs";
+import emptyBox from "../assets/noData.svg";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 const Runs = () => {
   const [rows, setRows] = useState([]);
@@ -13,12 +16,22 @@ const Runs = () => {
 
   const columns = [
     {
+      id: "driver",
+      label: "Driver",
+      minWidth: 100,
+    },
+    {
+      id: "vehicle",
+      label: "Vehicle",
+      minWidth: 100,
+    },
+    {
       id: "date",
       label: "Date",
       minWidth: 100,
     },
     { id: "route", label: "Route", minWidth: 100 },
-    { id: "ordersCount", label: "Orders Count", minWidth: 50 },
+    { id: "ordersCount", label: "Orders", minWidth: 50 },
     {
       id: "status",
       label: "Status",
@@ -29,7 +42,7 @@ const Runs = () => {
       label: "actions",
       minWidth: 100,
       class: ["viewRoute"],
-      action: (id) => nav("/editvehicle", { state: { id: id } }),
+      action: (id) => nav("/editrun", { state: { id: id } }),
     },
   ];
 
@@ -37,9 +50,20 @@ const Runs = () => {
     fetchRuns();
   }, []);
 
-  function createData(id, route, ordersCount, status, date, viewOrders) {
+  function createData(
+    id,
+    driver,
+    vehicle,
+    route,
+    ordersCount,
+    status,
+    date,
+    viewOrders
+  ) {
     return {
       id,
+      driver,
+      vehicle,
       route,
       ordersCount,
       status,
@@ -59,11 +83,13 @@ const Runs = () => {
             ...prev,
             createData(
               f._id,
+              "TBD",
+              "TBD",
               f.route?.name,
               f.orders.length,
-              f.status,
-              f.date,
-              "View / assign"
+              runsStatuses[f.status].label,
+              new Date(f.date.split("T")[0]).toDateString(),
+              "View / Edit"
             ),
           ]);
         });
@@ -78,7 +104,11 @@ const Runs = () => {
     <Layout>
       <h3 className="headerTitle my-2">Runs</h3>
       <div className="finaliseTableContainer">
-        <Table columns={columns} rows={rows} />
+        {allRuns.length > 0 ? (
+          <Table columns={columns} rows={rows} />
+        ) : (
+          <NoDataPlaceHolder current="Runs" />
+        )}
       </div>
     </Layout>
   );

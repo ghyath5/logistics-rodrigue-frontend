@@ -64,7 +64,6 @@ const Products = () => {
   ];
 
   const handleRemoveProduct = async (id) => {
-    setLoading(true);
     setProductsTotal((prev) => prev - 1);
 
     let deletedProducts = allProducts.filter((p) => p._id === id)[0];

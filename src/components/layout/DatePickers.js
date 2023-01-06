@@ -5,6 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment/moment";
 
 export const DatePickerr = ({
   id,
@@ -31,8 +32,8 @@ export const DatePickerr = ({
           id="date"
           value={value}
           minDate={minDate && minDate}
-          onChange={(newValue) => {
-            handleTime(newValue);
+          onChange={(d) => {
+            handleTime(moment(new Date(d["$d"])).format("L"));
           }}
           renderInput={(params) => (
             <TextField

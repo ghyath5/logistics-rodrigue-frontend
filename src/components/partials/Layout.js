@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import Footer from "./Footer";
 
 const Layout = ({ children, dashboard }) => {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    let t = localStorage.getItem("monjay-theme");
+    setTheme(t);
+  }, []);
+
   return (
-    <div className="mainContainer pt-4">
+    <div className={`mainContainer pt-4 ${theme}-theme`}>
       <div
-        className={`container py-2 py-sm-2 ${
+        className={`container  py-2 py-sm-2 ${
           dashboard ? "mt-2" : "mt-4 mt-sm-5"
         }`}
       >

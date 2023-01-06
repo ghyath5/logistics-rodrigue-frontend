@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import BtnContained from "../layout/BtnContained";
 import InputOutlined from "../layout/InputOutlined";
 
-const ProductListItem = ({ item, index, handleChange, type }) => {
+const ProductListItem = ({ item, handleChange, handleRemove }) => {
   const [discount, setDiscount] = useState(0);
-  const [newPrice, setNewPrice] = useState("");
-  const [newPriceError, setNewPriceError] = useState(false);
-  const [addHidden, setAddHidden] = useState(false);
+  const [doneEditing, setDoneEditing] = useState(false);
+
+  const submitCategory = () => {
+    if (discount > 0) {
+      setDoneEditing(true);
+      handleChange(discount);
+      setDiscount(discount + "%");
+    }
+  };
 
   return (
-    <div className="row gap-2 mt-2" key={index}>
-      <div className="col-md-5">
+    <div className="prodRowEditBox w-100 p-2 mb-3">
+      <div className="d-flex gap-3 align-items-center">
         <InputOutlined
           lable=""
           defaultValue="Select Product"
@@ -19,94 +25,36 @@ const ProductListItem = ({ item, index, handleChange, type }) => {
           disabled={true}
           id="prodName"
           name="prodName"
+          classes="w-100"
+        />
+        <InputOutlined
+          lable=""
+          defaultValue={item.discountpercentage + "%"}
+          type="number"
+          id="catDiscount"
+          name="catDiscount"
+          disabled={doneEditing && true}
+          classes="w-50 "
+          handleChange={(e) => setDiscount(e.target.value)}
         />
       </div>
-      <div className="col-md-7 row">
-        {type !== "category" && (
-          <>
-            <div className="d-flex col-md-6">
-              <p className="align-self-center m-0 me-3">Old price:</p>
-              <InputOutlined
-                lable=""
-                defaultValue="$  "
-                type="text"
-                value={`$  ${item.oldprice}`}
-                disabled={true}
-                id="prodPrice"
-                name="prodPrice"
-              />
-            </div>
-
-            <div className="d-flex col-md-6">
-              <p className="align-self-center m-0 me-3">New price:</p>
-              <InputOutlined
-                lable=""
-                defaultValue={item.newprice}
-                type="number"
-                id="prodNewPrice"
-                name="prodNewPrice"
-                disabled={addHidden && true}
-                handleChange={(e) => setNewPrice(e.target.value)}
-              />
-              {addHidden && (
-                <p
-                  onClick={() => setAddHidden(false)}
-                  className="my-0 ms-2 text-primary text-end align-self-center pointer"
-                >
-                  Edit
-                </p>
-              )}
-            </div>
-          </>
-        )}
-        {type === "category" && (
-          <div className="d-flex col-md-6">
-            <p className="align-self-center m-0 me-3">Discount:</p>
-            <InputOutlined
-              lable=""
-              defaultValue={item.discountpercentage}
-              type="number"
-              id="catDiscount"
-              name="catDiscount"
-              disabled={addHidden && true}
-              handleChange={(e) => setDiscount(e.target.value)}
-            />
-            {addHidden && (
-              <p
-                onClick={() => setAddHidden(false)}
-                className="my-0 ms-2 text-primary text-end align-self-center pointer"
-              >
-                Edit
-              </p>
-            )}
-          </div>
-        )}
-      </div>
-      {!addHidden && (
-        <div className="text-start mb-2 d-flex justify-content-end align-items-center">
-          {newPriceError && (
-            <p className="my-0 me-3 text-danger text-center">
-              please add a new price
-            </p>
-          )}
+      <div className="d-flex justify-content-end align-items-center gap-3 mt-2">
+        <BtnContained
+          title="Remove"
+          handleClick={() => {
+            handleRemove();
+          }}
+          classes="delete-promotion-btn"
+        />
+        {!doneEditing && (
           <BtnContained
             title="Add"
             handleClick={() => {
-              if (discount > 0) {
-                handleChange(discount);
-              } else {
-                if (newPrice !== "") {
-                  handleChange(item.productId, newPrice);
-                  setAddHidden(true);
-                } else {
-                  setNewPriceError(true);
-                }
-              }
+              submitCategory();
             }}
-            classes="me-3"
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

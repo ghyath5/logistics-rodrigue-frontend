@@ -124,12 +124,12 @@ const AddProducts = ({ isEdit }) => {
       setLoading(true);
       axios
         .post(`/products`, {
-          assignedcode: data.code,
+          assignedCode: data.code,
           name: data.name,
           categoryId: data.categoryId,
-          price: data.price,
-          unitesperbox: data.unitesperbox,
-          prioritynumber: data.prioritynumber,
+          price: parseFloat(data.price),
+          unitesperbox: parseInt(data.unitesperbox),
+          prioritynumber: parseInt(data.prioritynumber),
           visibility: data.visibility,
         })
         .then((res) => {
@@ -156,7 +156,7 @@ const AddProducts = ({ isEdit }) => {
       setLoading(true);
       axios
         .put(`/products/${location.state?.id}`, {
-          assignedcode: data.code,
+          assignedCode: data.code,
           name: data.name,
           categoryId: data.categoryId,
           price: data.price,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,6 +10,9 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
+import Popover from "@mui/material/Popover";
+import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
   const navigate = useNavigate();
@@ -17,6 +20,16 @@ const Header = ({ isOpen, setOpen }) => {
   const handleLogout = () => {
     Cookies.remove("monjayToken");
     navigate("/login");
+  };
+
+  const handleToggleTheme = () => {
+    let theme = localStorage.getItem("monjay-theme");
+    if (theme === "light") {
+      localStorage.setItem("monjay-theme", "dark");
+    } else {
+      localStorage.setItem("monjay-theme", "light");
+    }
+    window.location.reload();
   };
 
   return (
@@ -41,9 +54,50 @@ const Header = ({ isOpen, setOpen }) => {
               </h3>
             </Link>
           </div>
-          <Button color="inherit" onClick={handleLogout}>
-            LOGOUT
-          </Button>
+          <PopupState variant="popover" popupId="demo-popup-popover">
+            {(popupState) => (
+              <div>
+                <Button
+                  variant="text"
+                  className="text-white fw-700"
+                  {...bindTrigger(popupState)}
+                >
+                  SETTINGS
+                </Button>
+                <Popover
+                  {...bindPopover(popupState)}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <div className="d-flex flex-column align-items-start p-2">
+                    <Button
+                      className="w-100  justify-content-start"
+                      color="inherit"
+                      onClick={handleToggleTheme}
+                    >
+                      TOGGLE THEME
+                    </Button>
+                    <Button
+                      className="w-100  justify-content-start"
+                      color="inherit"
+                      onClick={handleLogout}
+                    >
+                      LOGOUT
+                    </Button>
+                  </div>
+                </Popover>
+              </div>
+            )}
+          </PopupState>
+          {/* <Button className="text-white" onClick={"bottom-end"}>
+            SETTINGS
+          </Button> */}
         </Toolbar>
       </AppBar>
     </Box>

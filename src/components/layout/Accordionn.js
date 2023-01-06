@@ -129,15 +129,16 @@ const Accordionn = ({
               <p className="m-0 fw-bold">Delivery details:</p>
               <div className="row text-promotion">
                 <span className="fs-6">
-                  {item.customer.address[0] +
-                    ", " +
-                    item.customer.suburb +
-                    ", " +
-                    item.customer.state}
+                  {item.customer?.address &&
+                    item.customer?.address[0] +
+                      ", " +
+                      item.customer?.suburb +
+                      ", " +
+                      item.customer?.state}
                 </span>
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex align-items-start">
               <p className="m-0 me-2 fw-bold">Change Status:</p>
               <div className="row text-promotion w-100">
                 <DDSearch

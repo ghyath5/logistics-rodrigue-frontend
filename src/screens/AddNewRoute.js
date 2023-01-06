@@ -13,7 +13,7 @@ const AddNewRoute = () => {
   const [data, setData] = useState({
     name: "",
     places: "",
-    note: "",
+    description: "",
     from: "",
     to: "",
   });
@@ -51,6 +51,7 @@ const AddNewRoute = () => {
         valid = false;
       }
     }
+    console.log(valid);
     return valid;
   };
 
@@ -68,7 +69,7 @@ const AddNewRoute = () => {
         .post(`/routes`, {
           name: data.name,
           places: data.places,
-          note: data.note,
+          description: data.description,
           from: data.from,
           to: data.to,
         })
@@ -158,12 +159,12 @@ const AddNewRoute = () => {
             </div>
             <div className="col-sm-12 col-md-6">
               <InputOutlined
-                id="note"
-                lable="Note"
-                defaultValue="Note"
+                id="description"
+                lable="Description"
+                defaultValue="Description"
                 type="text"
-                name="note"
-                value={data?.note}
+                name="description"
+                value={data?.description}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 // error={errors?.note}

@@ -191,7 +191,11 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
               ) : activeStep === 1 ? (
                 <Form2 ref={form2Ref} setData={setData} />
               ) : activeStep === 2 ? (
-                <Form3 ref={form3Ref} setData={setData} occurs={occurs} />
+                <Form3
+                  ref={form3Ref}
+                  setData={setData}
+                  occurs={occurs.reverse()}
+                />
               ) : (
                 activeStep === 3 && (
                   <Form4

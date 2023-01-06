@@ -15,6 +15,7 @@ import RadioGroupForm from "../components/layout/RadioGroupForm";
 import { targets } from "../data/configs";
 import moment from "moment/moment";
 import ProductListItem from "../components/promotions/ProductListItem";
+import ProdRowDetails from "../components/ProdRowDetails";
 
 export const AddPromotion = ({ isEdit }) => {
   const nav = useNavigate();
@@ -24,6 +25,8 @@ export const AddPromotion = ({ isEdit }) => {
   // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  // const [finalProductsList, setFinalProductsList] = useState([]);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -66,6 +69,8 @@ export const AddPromotion = ({ isEdit }) => {
               value: prod._id,
               price: prod.price,
               newprice: prod.price,
+              assignedCode: prod.assignedCode,
+              upb: prod.unitesperbox,
             },
           ]);
         });
@@ -109,6 +114,8 @@ export const AddPromotion = ({ isEdit }) => {
                   oldprice: prod.productId.price,
                   newprice: prod.newprice,
                   name: prod.productId.name,
+                  assignedCode: prod.productId.assignedCode,
+                  upb: prod.productId.unitesperbox,
                 },
               ]);
             })
@@ -143,6 +150,8 @@ export const AddPromotion = ({ isEdit }) => {
             oldprice: newProd.price,
             newprice: newProd.price,
             name: newProd.label,
+            assignedCode: newProd.assignedCode,
+            upb: newProd.upb,
           },
         ]);
         setProducts((prev) => [...prev.filter((p) => p.value !== value)]);
@@ -174,10 +183,10 @@ export const AddPromotion = ({ isEdit }) => {
         value &&
           (value.length < 3 ? hasError(name, true) : hasError(name, false));
         break;
-      case "description":
-        value &&
-          (value.length < 30 ? hasError(name, true) : hasError(name, false));
-        break;
+      // case "description":
+      //   value &&
+      //     (value.length < 10 ? hasError(name, true) : hasError(name, false));
+      //   break;
       case "to":
       case "from":
       case "products":
@@ -238,9 +247,26 @@ export const AddPromotion = ({ isEdit }) => {
     ]);
   };
 
+  const handleRemoveProd = (id) => {
+    let prod = productsToAdd.filter((p) => p.productId === id)[0];
+    setProductsToAdd((prev) => [...prev.filter((p) => p.productId !== id)]);
+    setProducts((prev) => [
+      {
+        label: prod.name,
+        value: prod.productId,
+        price: prod.oldprice,
+        newprice: prod.newprice,
+        assignedCode: prod.assignedCode,
+        upb: prod.upb,
+      },
+      ...prev,
+    ]);
+  };
+
   const handleDiscountChange = (newDiscount) => {
     let selectedCat = categoryToAdd;
     selectedCat.discountpercentage = newDiscount;
+    console.log(selectedCat);
     setCategoryToAdd(selectedCat);
   };
 
@@ -286,8 +312,8 @@ export const AddPromotion = ({ isEdit }) => {
               value={description}
               handleChange={(e) => setDescription(e.target.value)}
               handleBlur={handleBlur}
-              error={errors?.description}
-              errorMessage="should be at least 30 letters"
+              // error={errors?.description}
+              // errorMessage="should be at least 10 letters"
             />
           </div>
           <div className="d-flex gap-3">
@@ -360,18 +386,19 @@ export const AddPromotion = ({ isEdit }) => {
             {productsToAdd.length > 0 ? (
               productsToAdd.map((p, i) => {
                 return (
-                  <ProductListItem
+                  <ProdRowDetails
+                    key={i}
                     item={p}
-                    index={i}
                     handleChange={handleProdPriceChange}
+                    handleRemove={handleRemoveProd}
                   />
                 );
               })
             ) : categoryToAdd !== "" ? (
               <ProductListItem
-                type="category"
                 item={categoryToAdd}
                 handleChange={handleDiscountChange}
+                handleRemove={() => setCategoryToAdd("")}
               />
             ) : null}
           </List>

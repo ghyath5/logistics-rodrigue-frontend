@@ -27,7 +27,7 @@ export const orderStatues = [
   { label: "Delivered", value: "2" },
   { label: "Canceled", value: "3" },
 ];
-export const runsStatues = [
+export const runsStatuses = [
   { label: "Pending", value: "0" },
   { label: "on the way", value: "1" },
   { label: "finished", value: "2" },

@@ -22,6 +22,7 @@ import Login from "./auth/Login";
 import PrivateRoutes from "../utils/PrivateRoutes";
 import Routess from "./Routess";
 import AddNewRoute from "./AddNewRoute";
+import EditRun from "./EditRun";
 
 const Main = () => {
   return (
@@ -33,6 +34,7 @@ const Main = () => {
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
           <Route exact path="runs" element={<Finalise />} />
+          <Route exact path="editrun" element={<EditRun />} />
           <Route
             exact
             path="customers"
