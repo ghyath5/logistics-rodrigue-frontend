@@ -151,7 +151,9 @@ const Products = () => {
   ) : (
     <Layout>
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
-        <h3 className="headerTitle">Manage Products</h3>
+        <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
+          Manage Products
+        </h3>
         <div className="d-flex gap-2">
           <BtnContained
             title="Add Products"
@@ -185,7 +187,9 @@ const Products = () => {
         />
       </div>
       <div className="d-flex justify-content-between align-items-center my-4">
-        <h3 className="headerTitle">All Products</h3>
+        <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
+          All Products
+        </h3>
         <div className="searchInputContainer d-flex px-2 py-1">
           <input placeholder="search" className="border-0" />
           <img src={seacrIcon} alt="searchIcon" />

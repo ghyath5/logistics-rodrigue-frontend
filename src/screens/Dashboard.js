@@ -12,10 +12,13 @@ import axios from "../axios";
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const [theme, setTheme] = useState("light");
   const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState("");
 
   useEffect(() => {
+    let t = localStorage.getItem("monjay-theme");
+    setTheme(t);
     setUser(Cookies.get("monjayUser"));
     fetchStatistics();
   }, []);
@@ -52,7 +55,7 @@ const Dashboard = () => {
         </div>
       </div>
       <Layout dashboard>
-        <h3 className="headerTitle mb-2 mt-0">Schedule Overview</h3>
+        <h3 className={`headerss-${theme} mb-2 mt-0`}>Schedule Overview</h3>
         <div className="row m-0">
           <StatsCard
             title="Orders"

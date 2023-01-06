@@ -196,11 +196,23 @@ const AddNewOrders = () => {
           fontSize="medium"
           onClick={() => nav("/orders")}
         />
-        <h4 className="headerTitle my-3 mx-2">Add New Order</h4>
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
+          Add New Order
+        </h4>
       </div>
       <div className="formsContainer px-4 ">
         <div className="text-center mt-5 mb-4">
-          <h5 className="formsTitles mx-3 mx-sm-4">New Order Details</h5>
+          <h5
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )}  mx-3 mx-sm-4`}
+          >
+            New Order Details
+          </h5>
         </div>
 
         <hr className="line"></hr>
@@ -255,7 +267,7 @@ const AddNewOrders = () => {
             <div className="col-12 col-sm-4 mt-3 p-4 orderTotalsbox">
               <div className="d-flex mb-3 align-items-center">
                 <h6 className="m-0 me-2 formsLable">Delivery Fee:</h6>
-                <div>
+                <div className="textLightBlue">
                   {selectedCustomer.deliveryfee > 0
                     ? "$ " + selectedCustomer.deliveryfee.toFixed(2)
                     : "$ " + (0).toFixed(2)}
@@ -263,7 +275,9 @@ const AddNewOrders = () => {
               </div>
               <div className="d-flex align-items-center">
                 <h6 className="m-0 me-2 formsLable">Total Cost:</h6>
-                <div>$ {parseFloat(orderTotal).toFixed(2)}</div>
+                <div className="textLightBlue">
+                  $ {parseFloat(orderTotal).toFixed(2)}
+                </div>
               </div>
             </div>
           </div>

@@ -174,8 +174,17 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           {steps.map((label, index) => {
             return (
               <Step key={label} completed={completed[index]}>
-                <StepButton color="inherit" onClick={handleStep(index)}>
-                  {label}
+                <StepButton
+                  onClick={handleStep(index)}
+                  className={`headerss-${localStorage.getItem("monjay-theme")}`}
+                >
+                  <span
+                    className={`headerss-${localStorage.getItem(
+                      "monjay-theme"
+                    )}`}
+                  >
+                    {label}
+                  </span>
                 </StepButton>
               </Step>
             );

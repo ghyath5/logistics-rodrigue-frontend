@@ -110,13 +110,25 @@ const EditRun = () => {
           fontSize="medium"
           onClick={() => navigate("/runs")}
         />
-        <h4 className="headerTitle my-3 mx-2">Edit Run</h4>
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
+          Edit Run
+        </h4>
       </div>
       <div className="formsContainer">
         <div className="text-center">
-          <h4 className="headerTitle my-4 mx-2">Run Details</h4>
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-4 mx-2`}
+          >
+            Run Details
+          </h4>
         </div>
-        <hr className="line mx-5"></hr>
+        <hr className={`line mx-5`}></hr>
         <div className="mx-4">
           {/* <DDSearch
                 name="driver"
@@ -175,7 +187,13 @@ const EditRun = () => {
           />
         </div>
         <div className="myAccordion mx-4">
-          <p className="fw-700">Orders List:</p>
+          <p
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} fw-700`}
+          >
+            Orders List:
+          </p>
           {orders?.map((item, i) => {
             return (
               <Accordionn

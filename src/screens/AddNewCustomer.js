@@ -24,7 +24,13 @@ const AddNewCustomer = () => {
             fontSize="medium"
             onClick={() => nav("/customers")}
           />
-          <h4 className="headerTitle my-3 mx-2">Add New Customer</h4>
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-3 mx-2`}
+          >
+            Add New Customer
+          </h4>
         </div>
       </div>
       <StepperForm

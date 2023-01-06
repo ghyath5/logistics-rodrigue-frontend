@@ -93,7 +93,11 @@ const Routess = () => {
     <Layout>
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
-          <h3 className="headerTitle my-2">Routes</h3>
+          <h3
+            className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
+          >
+            Routes
+          </h3>
         </div>
         <div>
           <BtnContained

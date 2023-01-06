@@ -158,7 +158,7 @@ const Customers = ({ archived }) => {
   ) : (
     <Layout>
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h3 className="headerTitle my-2">
+        <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
           {archived ? "Archived customers" : "Customers"}
         </h3>
         <div className="d-flex flex-wrap gap-2 mainBtn align-items-center">

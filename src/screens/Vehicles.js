@@ -137,7 +137,11 @@ export const Vehicles = () => {
     <Layout>
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
-          <h3 className="headerTitle my-2">Vehicles</h3>
+          <h3
+            className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
+          >
+            Vehicles
+          </h3>
         </div>
         <div>
           <BtnContained
@@ -172,9 +176,13 @@ export const Vehicles = () => {
           col={3}
         />
       </div>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex justify-content-between align-items-center mt-3 mb-4">
         <div>
-          <h3 className="headerTitle my-2">All Vehicles</h3>
+          <h3
+            className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
+          >
+            All Vehicles
+          </h3>
         </div>
         <div></div>
       </div>

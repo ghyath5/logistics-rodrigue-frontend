@@ -130,7 +130,9 @@ export const StaffMembers = () => {
   ) : (
     <Layout>
       <div>
-        <h3 className="headerTitle my-2">Staff Members</h3>
+        <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
+          Staff Members
+        </h3>
       </div>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div>

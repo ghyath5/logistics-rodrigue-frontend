@@ -26,7 +26,10 @@ const SideBar = ({ isOpen, setOpen }) => {
         sx={{
           flexShrink: 0,
         }}
-        className={`sidebarContainer w-100 position-fixed ${
+        sidebarContainer
+        className={`${localStorage.getItem(
+          "monjay-theme"
+        )}-sidebarContainer sidebarContainer w-100 position-fixed  ${
           deviceType === "laptop" ? "mt-5" : ""
         }`}
         anchor={"left"}
@@ -36,7 +39,7 @@ const SideBar = ({ isOpen, setOpen }) => {
         hideBackdrop={deviceType !== "laptop" ? false : true}
         variant={deviceType !== "laptop" ? "temporary" : "persistent"}
       >
-        <div className="initials-circle initials-circle-bg mx-auto mb-3 mt-5">
+        <div className={`initials-circle initials-circle-bg mx-auto mb-3 mt-5`}>
           <h1>
             {user.split(" ").length > 1
               ? user.split(" ")[0].charAt(0).toUpperCase() +
@@ -44,8 +47,10 @@ const SideBar = ({ isOpen, setOpen }) => {
               : user.split(" ")[0].charAt(0).toUpperCase()}
           </h1>
         </div>
-        <h5 className="my-1 text-center text-capitalize">{user}</h5>
-        <div className="sideBarList">
+        <h5 className="my-1 text-center text-capitalize textLightBlue">
+          {user}
+        </h5>
+        <div className={`sideBarList`}>
           <SideBarList toggleDrawer={toggleDrawer} />
         </div>
       </SwipeableDrawer>

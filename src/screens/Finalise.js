@@ -102,7 +102,9 @@ const Runs = () => {
     <Loader />
   ) : (
     <Layout>
-      <h3 className="headerTitle my-2">Runs</h3>
+      <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
+        Runs
+      </h3>
       <div className="finaliseTableContainer">
         {allRuns.length > 0 ? (
           <Table columns={columns} rows={rows} />

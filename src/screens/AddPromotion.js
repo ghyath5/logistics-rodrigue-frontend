@@ -280,13 +280,23 @@ export const AddPromotion = ({ isEdit }) => {
           fontSize="medium"
           onClick={() => nav("/promotions")}
         />
-        <h4 className="headerTitle my-3 mx-2">
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
           {isEdit ? "Edit Promotion" : "Add New Promotion"}
         </h4>
       </div>
       <div className="formsContainer">
         <div className="text-center">
-          <h4 className="headerTitle my-4 mx-2">Promotion Details</h4>
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-4 mx-2`}
+          >
+            Promotion Details
+          </h4>
         </div>
         <hr className="line mx-5"></hr>
         <div className="mx-4">
@@ -344,7 +354,7 @@ export const AddPromotion = ({ isEdit }) => {
               />
             </div>
           </div>
-          <div>
+          <div className={`headerss-${localStorage.getItem("monjay-theme")}`}>
             <RadioGroupForm
               name="promTarget"
               lable="Promotion Target"

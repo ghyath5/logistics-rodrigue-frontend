@@ -70,7 +70,13 @@ const ManageProductCategories = () => {
             fontSize="medium"
             onClick={() => nav("/products")}
           />
-          <h4 className="headerTitle my-3 mx-2">Manage Product Categories</h4>
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-3 mx-2`}
+          >
+            Manage Product Categories
+          </h4>
         </div>
         <Model
           handleAction={addCategory}

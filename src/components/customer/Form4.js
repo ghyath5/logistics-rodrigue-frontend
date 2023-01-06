@@ -92,7 +92,7 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
   };
 
   return (
-    <div>
+    <div className={`headerss-${localStorage.getItem("monjay-theme")}`}>
       <RadioGroupForm
         name="paymentmethod"
         lable="Default Payment Method: "

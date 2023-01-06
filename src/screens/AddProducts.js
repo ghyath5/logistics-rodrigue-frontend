@@ -193,13 +193,23 @@ const AddProducts = ({ isEdit }) => {
           fontSize="medium"
           onClick={() => nav("/products")}
         />
-        <h4 className="headerTitle my-3 mx-2">
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
           {isEdit ? "Update Product" : "Add Product"}
         </h4>
       </div>
       <div className="formsContainer">
         <div className="text-center">
-          <h4 className="headerTitle my-4 mx-2">Product Details</h4>
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-4 mx-2`}
+          >
+            Product Details
+          </h4>
         </div>
         <hr className="line mx-5"></hr>
         <div className="mx-4">
@@ -293,7 +303,9 @@ const AddProducts = ({ isEdit }) => {
               />
             </div>
           </div>
-          <div className="row">
+          <div
+            className={`headerss-${localStorage.getItem("monjay-theme")} row`}
+          >
             <RadioGroupForm
               name="visibility"
               lable="Visibility in Order List?"
