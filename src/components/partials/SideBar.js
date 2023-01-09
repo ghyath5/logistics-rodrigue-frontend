@@ -26,7 +26,6 @@ const SideBar = ({ isOpen, setOpen }) => {
         sx={{
           flexShrink: 0,
         }}
-        sidebarContainer
         className={`${localStorage.getItem(
           "monjay-theme"
         )}-sidebarContainer sidebarContainer w-100 position-fixed  ${

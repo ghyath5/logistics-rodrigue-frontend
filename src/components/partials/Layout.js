@@ -8,6 +8,10 @@ const Layout = ({ children, dashboard }) => {
   useEffect(() => {
     let t = localStorage.getItem("monjay-theme");
     setTheme(t);
+    document.documentElement.style.setProperty(
+      "--bg-color",
+      t === "light" ? "#fafafa" : "#353f4a"
+    );
   }, []);
 
   return (
