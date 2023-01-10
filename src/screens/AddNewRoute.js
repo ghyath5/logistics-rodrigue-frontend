@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
+import { useEffect } from "react";
 
-const AddNewRoute = () => {
+const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -22,6 +24,27 @@ const AddNewRoute = () => {
     from: false,
     to: false,
   });
+
+  useEffect(() => {
+    isEdit && fetchRouteById(location.state?.id);
+  }, [isEdit, location.state?.id]);
+
+  const fetchRouteById = async (id) => {
+    setLoading(true);
+    await axios
+      .get(`/routes/${id}`)
+      .then((res) => {
+        setData({
+          name: res.data,
+          places: res.data,
+          description: res.data,
+          from: res.data,
+          to: res.data,
+        });
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,6 +104,26 @@ const AddNewRoute = () => {
     }
   };
 
+  const handleUpdateRoute = () => {
+    if (allVAlid()) {
+      setLoading(true);
+      axios
+        .put(`/routes/${location.state?.id}`, {
+          name: data.name,
+          places: data.places,
+          description: data.description,
+          from: data.from,
+          to: data.to,
+        })
+        .then((res) => {
+          setLoading(false);
+          navigate("/routes");
+        })
+        .catch(console.error)
+        .finally(() => setLoading(false));
+    }
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -96,7 +139,7 @@ const AddNewRoute = () => {
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          Add New Route
+          {isEdit ? " Edit Route" : " Add New Route"}
         </h4>
       </div>
       <div className="formsContainer">
@@ -186,8 +229,10 @@ const AddNewRoute = () => {
         </div>
         <div className="my-5 text-center">
           <BtnContained
-            title="CREATE ROUTE"
-            handleClick={() => handleAddNewRoute()}
+            title={isEdit ? "EDIT ROUTE" : "CREATE ROUTE"}
+            handleClick={() =>
+              isEdit ? handleUpdateRoute() : handleAddNewRoute()
+            }
           />
         </div>
       </div>

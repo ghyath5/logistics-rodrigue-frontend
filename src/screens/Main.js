@@ -42,6 +42,12 @@ const Main = () => {
           />
           <Route exact path="routes" element={<Routess />} />
           <Route exact path="addnewroute" element={<AddNewRoute />} />
+
+          <Route
+            exact
+            path="editRoute"
+            element={<AddNewRoute isEdit={true} />}
+          />
           <Route exact path="customerDetails" element={<CustomerDetails />} />
           <Route exact path="orders" element={<Orders />} />
           <Route exact path="vehicles" element={<Vehicles />} />

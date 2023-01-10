@@ -16,13 +16,14 @@ const Routess = () => {
     fetchRoutes();
   }, []);
 
-  function createData(id, name, description, from, to, remove) {
+  function createData(id, name, description, from, to, edit, remove) {
     return {
       id,
       name,
       description,
       from,
       to,
+      edit,
       remove,
     };
   }
@@ -37,7 +38,15 @@ const Routess = () => {
         res.data.routes.forEach((p) => {
           setRows((prev) => [
             ...prev,
-            createData(p._id, p.name, p.description, p.from, p.to, "Delete"),
+            createData(
+              p._id,
+              p.name,
+              p.description,
+              p.from,
+              p.to,
+              "Edit",
+              "Delete"
+            ),
           ]);
         });
       })
@@ -77,6 +86,13 @@ const Routess = () => {
       id: "to",
       label: "To",
       minWidth: 150,
+    },
+    {
+      id: "edit",
+      label: "Edit",
+      minWidth: 50,
+      class: ["tableEditBtn"],
+      action: (id) => nav("/editRoute", { state: { id: id } }),
     },
     {
       id: "remove",

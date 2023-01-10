@@ -90,19 +90,20 @@ export const StaffMembers = () => {
 
   const fetchUsers = async () => {
     await axios
-      .get("people/users?page=1&limit=100")
+      .get("people/staffmembers?page=1&limit=100")
       .then((res) => {
-        setAllStaff(res.data.users);
-        res.data.forEach((p) => {
+        let all = [...res.data.data.users, ...res.data.data.drivers];
+        setAllStaff(all);
+        all.forEach((p) => {
           setRows((prev) => [
             ...prev,
             createData(
-              p._id,
-              p.name,
-              roles[p.role]?.label,
-              p.phonenumber,
-              p.email,
-              p.lastlogin ? p.lastlogin : "_",
+              p?._id,
+              p?.name,
+              roles[p?.role]?.label ? roles[p.role].label : "Driver",
+              p?.phonenumber,
+              p?.email,
+              p?.lastlogin ? p?.lastlogin : "_",
               "Edit",
               "Delete"
             ),
@@ -120,7 +121,7 @@ export const StaffMembers = () => {
     await axios
       .delete(`/users/${id}`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
       })
       .catch(console.error);
   };

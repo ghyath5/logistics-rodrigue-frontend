@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LinearChart from "../components/LinearChart";
 import PieChart from "../components/PieChart";
 import axios from "../axios";
+import faker from "faker";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ const Dashboard = () => {
   const [theme, setTheme] = useState("light");
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState("");
+  const [dashData, setDashData] = useState([]);
+  const [topCategories, setTopCategories] = useState([]);
+  const [topCustomers, setTopCustomers] = useState({ data: [], labels: [] });
   const [lineChartData, setLineChartData] = useState([
     { dataSet1: [], dataSet2: [], labels: [] },
   ]);
@@ -23,8 +27,51 @@ const Dashboard = () => {
     let t = localStorage.getItem("monjay-theme");
     setTheme(t);
     setUser(Cookies.get("monjayUser"));
-    fetchStatistics();
+    fetchPieStatistics();
   }, []);
+
+  const fetchPieStatistics = async () => {
+    setLoading(true);
+    await axios
+      .get("/customers/get-top")
+      .then((res) => {
+        setDashData([res.data.todayOrders, res.data.todayRuns]);
+        setTopCustomers({ data: res.data.data, labels: res.data.labels });
+      })
+      .then(fetchCategoriesStatistics)
+      .then(fetchStatistics)
+      .catch(console.error)
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const fetchCategoriesStatistics = async () => {
+    await axios
+      .get("/products/get-top-by-category?total=5")
+      .then((res) => {
+        let value = [];
+        res.data.forEach((el) => {
+          value.push(
+            el.data.map((val) => {
+              return Math.round(val);
+            })
+          );
+        });
+
+        value.forEach((val, i) => {
+          setTopCategories((prev) => [
+            ...prev,
+            {
+              data: [...val],
+              labels: [...res.data[i].labels],
+              title: res.data[i].title,
+            },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
 
   const fetchStatistics = async () => {
     const labels = [...Array(31).keys()];
@@ -34,19 +81,21 @@ const Dashboard = () => {
         "/statistics/sales-by-date-range?to1=2023-02-01&to2=2023-01-01&days=30"
       )
       .then((res) => {
-        // console.log(res.data);
         setLineChartData([
           {
-            dataSet1: [res.data.dataset1],
-            dataSet2: [res.data.dataset2],
-            labels: [labels],
+            // dataSet1: res.data.dataset1,
+            // dataSet2: res.data.dataset2,
+            dataSet1: labels.map(() =>
+              faker.datatype.number({ min: 200, max: 800 })
+            ),
+            dataSet2: labels.map(() =>
+              faker.datatype.number({ min: 200, max: 800 })
+            ),
+            labels: labels,
           },
         ]);
       })
-      .catch(console.error)
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(console.error);
   };
 
   return isLoading ? (
@@ -71,36 +120,41 @@ const Dashboard = () => {
         <div className="row m-0">
           <StatsCard
             title="Orders"
-            value={1}
+            value={dashData[0]}
             desc="Need confirming for tomorrow"
-            classes="bgYellow"
-            col={4}
-          />
-          <StatsCard
-            title="Deliveries"
-            value={5}
-            desc="Scheduled for tomorrow"
             classes="bgGreen"
-            col={4}
+            col={6}
           />
           <StatsCard
-            title="Drivers"
-            value={4}
+            title="runs"
+            value={dashData[1]}
             desc="Scheduled for tomorrow"
-            classes="bgRed"
-            last={true}
-            col={4}
+            classes="bgYellow"
+            col={6}
           />
         </div>
         <div className="row gapY mt-4">
           <div className="mx-auto mt-3 col-sm-12 col-md-5">
             <PieChart
-              data={[20, 10, 6, 13, 50, 1]}
-              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              // data={[20, 10, 6, 13, 50, 1]}
+              // names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              data={topCustomers.data}
+              names={topCustomers.labels}
               title="Top 5 Customers"
             />
           </div>
-          <div className="mx-auto mt-3 col-sm-12 col-md-5">
+          {topCategories.map((cat, i) => {
+            return (
+              <div key={i} className="mx-auto mt-3 col-sm-12 col-md-5">
+                <PieChart
+                  data={cat.data}
+                  names={cat.labels}
+                  title={`Top 5 Products in ${cat.title}`}
+                />
+              </div>
+            );
+          })}
+          {/* <div className="mx-auto mt-3 col-sm-12 col-md-5">
             <PieChart
               data={[30, 19, 22, 5, 16, 40]}
               names={["John Doe", "Hart", "Barlowe", "Larry", "Kristian"]}
@@ -120,7 +174,7 @@ const Dashboard = () => {
               names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
               title="Top 5 Products in Finger Food"
             />
-          </div>
+          </div> */}
           <div className="lineshartContainer my-5 mx-auto">
             <LinearChart data={lineChartData[0]} />
           </div>
