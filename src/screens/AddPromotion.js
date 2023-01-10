@@ -363,34 +363,35 @@ export const AddPromotion = ({ isEdit }) => {
               handleChange={handleChangeTarget}
             />
           </div>
-          <div className="mt-3">
-            <DDSearch
-              name="category"
-              lable="Add category to promotion"
-              options={categories}
-              isDisabled={promotionTarget !== "category" && true}
-              isMulti={false}
-              val={categoryToAdd}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              error={errors?.category}
-              errorMessage="please select 1 category"
-            />
-          </div>
-          <div>
-            <DDSearch
-              name="products"
-              lable="Add product to promotion"
-              options={products}
-              isDisabled={promotionTarget !== "product" && true}
-              isMulti={false}
-              val=""
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              error={errors?.products}
-              errorMessage="please select at least 1 product"
-            />
-          </div>
+          {promotionTarget === "category" ? (
+            <div className="mt-3">
+              <DDSearch
+                name="category"
+                lable="Add category to promotion"
+                options={categories}
+                isMulti={false}
+                val={categoryToAdd}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                error={errors?.category}
+                errorMessage="please select 1 category"
+              />
+            </div>
+          ) : (
+            <div>
+              <DDSearch
+                name="products"
+                lable="Add product to promotion"
+                options={products}
+                isMulti={false}
+                val=""
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                error={errors?.products}
+                errorMessage="please select at least 1 product"
+              />
+            </div>
+          )}
 
           <List className="w-100">
             {productsToAdd.length > 0 ? (

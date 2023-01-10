@@ -38,17 +38,17 @@ const SideBar = ({ isOpen, setOpen }) => {
         hideBackdrop={deviceType !== "laptop" ? false : true}
         variant={deviceType !== "laptop" ? "temporary" : "persistent"}
       >
-        <div className={`initials-circle initials-circle-bg mx-auto mb-3 mt-5`}>
+        {/* <div className={`initials-circle initials-circle-bg mx-auto mb-3 mt-5`}>
           <h1>
             {user.split(" ").length > 1
               ? user.split(" ")[0].charAt(0).toUpperCase() +
                 user.split(" ")[1].charAt(0).toUpperCase()
               : user.split(" ")[0].charAt(0).toUpperCase()}
           </h1>
-        </div>
-        <h5 className="my-1 text-center text-capitalize textLightBlue">
+        </div> */}
+        <h2 className="my-5 text-center text-capitalize textLightBlue">
           {user}
-        </h5>
+        </h2>
         <div className={`sideBarList`}>
           <SideBarList toggleDrawer={toggleDrawer} />
         </div>

@@ -46,10 +46,10 @@ const AddProducts = ({ isEdit }) => {
       .get(`/products/${id}`)
       .then((res) => {
         setData({
-          code: res.data.code,
+          code: res.data.assignedCode,
           name: res.data.name,
           categoryId: (categories?.filter(
-            (cat) => cat.value === res.data.categoryId
+            (cat) => cat.value === res.data.categoryId._id
           )[0]).value,
           price: res.data.price,
           unitesperbox: res.data.unitesperbox,
@@ -98,10 +98,18 @@ const AddProducts = ({ isEdit }) => {
     let valid;
     let errs = Object.values(errors);
     errs.includes(true) ? (valid = false) : (valid = true);
+    for (const [key, value] of Object.entries(data)) {
+      if (value === "") {
+        hasError(key, true);
+        valid = false;
+      }
+    }
     return valid;
   };
 
   const validate = (name, value) => {
+    console.log({ name, value });
+
     switch (name) {
       case "code":
       case "name":

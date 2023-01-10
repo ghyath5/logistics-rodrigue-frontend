@@ -51,7 +51,6 @@ const AddNewRoute = () => {
         valid = false;
       }
     }
-    console.log(valid);
     return valid;
   };
 

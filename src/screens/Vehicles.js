@@ -35,7 +35,7 @@ export const Vehicles = () => {
               vehiclesStatuses[p.status]?.label,
               new Date(p.expiresIn).toDateString(),
               new Date(p.updatedAt).toDateString(),
-              "Setting",
+              "Edit",
               "Delete"
             ),
           ]);
@@ -92,7 +92,7 @@ export const Vehicles = () => {
     },
     {
       id: "setting",
-      label: "Setting",
+      label: "Edit",
       minWidth: 50,
       class: ["tableEditBtn"],
       action: (id) => nav("/editvehicle", { state: { id: id } }),
