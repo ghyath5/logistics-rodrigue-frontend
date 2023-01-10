@@ -7,6 +7,7 @@ import Layout from "../components/partials/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 const Customers = ({ archived }) => {
   const [isLoading, setLoading] = useState(true);
@@ -186,7 +187,11 @@ const Customers = ({ archived }) => {
         </div>
       </div>
       <div className="mt-4">
-        <Table columns={columns} rows={rows} />
+        {rows.length > 0 ? (
+          <Table columns={columns} rows={rows} />
+        ) : (
+          <NoDataPlaceHolder />
+        )}
       </div>
     </Layout>
   );

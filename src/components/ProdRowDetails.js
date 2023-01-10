@@ -98,9 +98,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
       <div className="d-flex justify-content-end align-items-center gap-3 mt-2">
         <BtnContained
           title="Remove"
-          handleClick={() => {
-            removeProd();
-          }}
+          handleClick={removeProd}
           classes="delete-promotion-btn"
         />
         {!doneEditing && (

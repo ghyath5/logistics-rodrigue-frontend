@@ -7,9 +7,12 @@ import Loader from "../components/layout/Loader";
 import Layout from "../components/partials/Layout";
 import axios from "../axios";
 import { roles } from "../data/configs";
+import DeleteModal from "../components/DeleteModal";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 export const StaffMembers = () => {
   const [isLoading, setLoading] = useState(true);
+  const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
   const [allStaff, setAllStaff] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
@@ -115,21 +118,24 @@ export const StaffMembers = () => {
   };
 
   const handleDeleteMember = async (id) => {
-    setAllStaff((prev) => prev.filter((S) => S._id !== id));
-    setRows((prev) => prev.filter((S) => S.id !== id));
-
     await axios
       .delete(`/users/${id}`)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        setAllStaff((prev) => prev.filter((S) => S._id !== id));
+        setRows((prev) => prev.filter((S) => S.id !== id));
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setCantDeleteModalVisible(true);
+        }
+      });
   };
 
   return isLoading ? (
     <Loader />
   ) : (
     <Layout>
+      {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div>
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
           Staff Members
@@ -146,8 +152,13 @@ export const StaffMembers = () => {
           />
         </div>
       </div>
+
       <div className="mt-4">
-        <Table columns={columns} rows={rows} />
+        {rows.length > 0 ? (
+          <Table columns={columns} rows={rows} />
+        ) : (
+          <NoDataPlaceHolder />
+        )}
       </div>
     </Layout>
   );

@@ -5,6 +5,7 @@ import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import BtnContained from "../components/layout/BtnContained";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 const Routess = () => {
   const [loading, setLoading] = useState(true);
@@ -122,7 +123,11 @@ const Routess = () => {
           />
         </div>
       </div>
-      <Table columns={columns} rows={rows} />
+      {rows.length > 0 ? (
+        <Table columns={columns} rows={rows} />
+      ) : (
+        <NoDataPlaceHolder />
+      )}
     </Layout>
   );
 };

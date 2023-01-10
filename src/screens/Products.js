@@ -6,11 +6,14 @@ import StatsCard from "../components/layout/StatsCard";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";
 import Loader from "../components/layout/Loader";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
+import DeleteModal from "../components/DeleteModal";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
+  const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [productsTotal, setProductsTotal] = useState(0);
   const [productsActive, setTotalActive] = useState(0);
@@ -64,23 +67,24 @@ const Products = () => {
   ];
 
   const handleRemoveProduct = async (id) => {
-    setProductsTotal((prev) => prev - 1);
-
-    let deletedProducts = allProducts.filter((p) => p._id === id)[0];
-    deletedProducts.visibility === true
-      ? setTotalActive((prev) => prev - 1)
-      : setProductsHidden((prev) => prev - 1);
-
     await axios
       .delete(`/products/${id}`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .then(() => {
+        let deletedProducts = allProducts.filter((p) => p._id === id)[0];
+        deletedProducts.visibility === true
+          ? setTotalActive((prev) => prev - 1)
+          : setProductsHidden((prev) => prev - 1);
 
-    setAllProducts((prev) => prev.filter((p) => p.id !== id));
-    setRows((prev) => prev.filter((p) => p.id !== id));
+        setProductsTotal((prev) => prev - 1);
+        setAllProducts((prev) => prev.filter((p) => p.id !== id));
+        setRows((prev) => prev.filter((p) => p.id !== id));
+      })
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setCantDeleteModalVisible(true);
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   function createData(
@@ -150,6 +154,7 @@ const Products = () => {
     <Loader />
   ) : (
     <Layout>
+      {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
           Manage Products
@@ -196,7 +201,11 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <Table columns={columns} rows={rows} />
+        {rows.length > 0 ? (
+          <Table columns={columns} rows={rows} />
+        ) : (
+          <NoDataPlaceHolder />
+        )}
       </div>
     </Layout>
   );

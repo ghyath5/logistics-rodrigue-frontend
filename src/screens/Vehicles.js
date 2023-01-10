@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import StatsCard from "../components/layout/StatsCard";
 import axios from "../axios";
 import { vehiclesStatuses } from "../data/configs";
+import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 export const Vehicles = () => {
   const [loading, setLoading] = useState(true);
@@ -184,10 +185,12 @@ export const Vehicles = () => {
             All Vehicles
           </h3>
         </div>
-        <div></div>
       </div>
-      <div></div>
-      <Table columns={columns} rows={rows} />
+      {rows.length > 0 ? (
+        <Table columns={columns} rows={rows} />
+      ) : (
+        <NoDataPlaceHolder />
+      )}
     </Layout>
   );
 };
