@@ -21,6 +21,10 @@
   background-color: var(--bg-color) !important;
 }
 
+.gapY {
+  row-gap: 10px;
+}
+
 .light-theme {
   background-color: #fafafa !important;
 }
@@ -215,8 +219,26 @@ input:disabled {
   margin-left: var(--sidebar-width);
 }
 
-.lineshartContainer {
-  max-width: 80%;
+@media screen and (min-width: 1000px) {
+
+  .lineshartContainer {
+    max-width: 80%;
+    min-height: 500px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+
+  .lineshartContainer {
+    min-height: 400px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+
+  .lineshartContainer {
+    min-height: 300px;
+  }
 }
 
 .logoLink {

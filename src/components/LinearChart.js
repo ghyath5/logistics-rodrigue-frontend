@@ -8,10 +8,12 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import { Bar } from "react-chartjs-2";
-import faker from "faker";
+// import faker from "faker";
+import "chartjs-adapter-moment";
 
 ChartJS.register(
   CategoryScale,
@@ -21,10 +23,11 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  TimeScale,
   zoomPlugin
 );
 
-const LinearChart = () => {
+const LinearChart = ({ data }) => {
   const [theme, setTheme] = useState({ opa: 0.2, color: "#343536" });
 
   useEffect(() => {
@@ -36,13 +39,17 @@ const LinearChart = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     color: theme.color,
     scales: {
       y: {
         ticks: { color: theme.color },
       },
       x: {
-        ticks: { color: theme.color },
+        type: "category",
+        ticks: {
+          color: theme.color,
+        },
       },
     },
     transitions: {
@@ -73,11 +80,15 @@ const LinearChart = () => {
       },
       zoom: {
         zoom: {
+          drag: {
+            enabled: false,
+          },
           wheel: {
             enabled: true,
+            speed: 0.05,
           },
           pinch: {
-            enabled: true,
+            enabled: false,
           },
           mode: "x",
         },
@@ -85,26 +96,26 @@ const LinearChart = () => {
     },
   };
 
-  const labels = [...Array(31).keys()];
-
-  const data = {
-    labels,
+  const datta = {
+    labels: data.labels[0],
     datasets: [
       {
         label: "sales of January",
-        data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
+        // data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
+        data: data.dataSet1[0],
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
         label: "sales of February",
-        data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
+        // data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
+        data: data.dataSet2[0],
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: `rgba(53, 162, 235, ${theme.opa})`,
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={datta} />;
 };
 
 export default LinearChart;

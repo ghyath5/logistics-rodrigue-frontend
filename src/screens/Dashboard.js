@@ -13,8 +13,11 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [theme, setTheme] = useState("light");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState("");
+  const [lineChartData, setLineChartData] = useState([
+    { dataSet1: [], dataSet2: [], labels: [] },
+  ]);
 
   useEffect(() => {
     let t = localStorage.getItem("monjay-theme");
@@ -24,12 +27,21 @@ const Dashboard = () => {
   }, []);
 
   const fetchStatistics = async () => {
+    const labels = [...Array(31).keys()];
+
     await axios
       .get(
-        "/statistics/sales-by-date-range?to1=2023-01-10&to2=2022-12-10&days=30"
+        "/statistics/sales-by-date-range?to1=2023-02-01&to2=2023-01-01&days=30"
       )
       .then((res) => {
         // console.log(res.data);
+        setLineChartData([
+          {
+            dataSet1: [res.data.dataset1],
+            dataSet2: [res.data.dataset2],
+            labels: [labels],
+          },
+        ]);
       })
       .catch(console.error)
       .finally(() => {
@@ -80,49 +92,37 @@ const Dashboard = () => {
             col={4}
           />
         </div>
-        <div className="mt-4">
-          <div className="d-flex justify-content-around">
-            {/* <div className="w-100 mx-3 mt-3 p-3">
-              <PieChart
-                data={[30, 19, 22, 5, 16, 40]}
-                names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
-                title="Top 5 Products"
-              />
-            </div> */}
-            <div className="w-50 mx-3 mt-3 p-3">
-              <PieChart
-                data={[20, 10, 6, 13, 50, 1]}
-                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-                title="Top 5 Customers"
-                labelsPosition="right"
-              />
-            </div>
+        <div className="row gapY mt-4">
+          <div className="mx-auto mt-3 col-sm-12 col-md-5">
+            <PieChart
+              data={[20, 10, 6, 13, 50, 1]}
+              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              title="Top 5 Customers"
+            />
           </div>
-          <div className="d-flex justify-content-around">
-            <div className="w-100 mx-3 mt-3 p-3">
-              <PieChart
-                data={[30, 19, 22, 5, 16, 40]}
-                names={["John", "Hart", "Barlowe", "Larry", "Kristian"]}
-                title="Top 5 Products in Dips"
-              />
-            </div>
-            <div className="w-100 mx-3 mt-3 p-3">
-              <PieChart
-                data={[20, 10, 6, 13, 50, 1]}
-                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-                title="Top 5 Products in Deserts"
-              />
-            </div>
-            <div className="w-100 mx-3 mt-3 p-3">
-              <PieChart
-                data={[20, 10, 6, 13, 50, 1]}
-                names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-                title="Top 5 Products in Finger Food"
-              />
-            </div>
+          <div className="mx-auto mt-3 col-sm-12 col-md-5">
+            <PieChart
+              data={[30, 19, 22, 5, 16, 40]}
+              names={["John Doe", "Hart", "Barlowe", "Larry", "Kristian"]}
+              title="Top 5 Products in Dips"
+            />
+          </div>
+          <div className="mx-auto mt-3 col-sm-12 col-md-5">
+            <PieChart
+              data={[20, 10, 6, 13, 50, 1]}
+              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              title="Top 5 Products in Deserts"
+            />
+          </div>
+          <div className="mx-auto mt-3 col-sm-12 col-md-5">
+            <PieChart
+              data={[20, 10, 6, 13, 50, 1]}
+              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+              title="Top 5 Products in Finger Food"
+            />
           </div>
           <div className="lineshartContainer my-5 mx-auto">
-            <LinearChart />
+            <LinearChart data={lineChartData[0]} />
           </div>
         </div>
       </Layout>
