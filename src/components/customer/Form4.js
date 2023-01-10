@@ -33,8 +33,12 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
     await axios
       .get("organization")
       .then((res) => {
-        setOrganisations(["new org", ...res.data.organizations]);
-        //should create the options ddFormat
+        res.data.organizations.forEach((org) => {
+          setOrganisations((prev) => [
+            ...prev,
+            { label: org.name, value: org._id },
+          ]);
+        });
       })
       .catch(console.error);
   };
@@ -85,8 +89,10 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
     await axios
       .post(`organization`, { name: addedOrg })
       .then((res) => {
-        console.log(res);
-        //should add to the options ddFormat
+        setOrganisations((prev) => [
+          { label: res.data.name, value: res.data._id },
+          ...prev,
+        ]);
       })
       .catch(console.error);
   };

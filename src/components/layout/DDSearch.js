@@ -70,7 +70,7 @@ const DDSearch = ({
               <span className="textGray">Select...</span>
             </MenuItem>
             {options.map((opt, i) => (
-              <MenuItem key={opt.value} value={opt.value}>
+              <MenuItem key={i} value={opt.value}>
                 {opt.label}
               </MenuItem>
             ))}
