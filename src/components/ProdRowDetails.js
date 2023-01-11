@@ -38,7 +38,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
     <div className="prodRowEditBox w-100 p-2 mb-3">
       <div className="d-flex gap-3 align-items-center">
         <InputOutlined
-          lable=""
+          lable="name"
           defaultValue="Select Product"
           type="text"
           value={item.name}
@@ -48,7 +48,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
           classes="w-100"
         />
         <InputOutlined
-          lable=""
+          lable="price"
           defaultValue={item.oldprice}
           type="number"
           value={item.oldprice}
@@ -58,7 +58,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
           classes="w-50"
         />
         <InputOutlined
-          lable=""
+          lable="new price *"
           defaultValue={item.newprice}
           type="number"
           value={newPrice}
@@ -71,7 +71,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
         {type && type === "order" && (
           <>
             <InputOutlined
-              lable=""
+              lable="quantity *"
               defaultValue={1}
               type="number"
               value={quantity}
@@ -82,7 +82,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
               handleChange={(e) => setQuantity(e.target.value)}
             />
             <InputOutlined
-              lable=""
+              lable="total"
               defaultValue={1}
               type="number"
               value={total}

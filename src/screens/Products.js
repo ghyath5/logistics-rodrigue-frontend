@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
 import seacrIcon from "../assets/search.svg";
@@ -10,6 +10,8 @@ import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import DeleteModal from "../components/DeleteModal";
+import SearchInput from "../components/layout/SearchInput";
+import debounce from "lodash.debounce";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,7 @@ const Products = () => {
   const [productsHidden, setProductsHidden] = useState(0);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     { id: "code", label: "Code", minWidth: 100 },
@@ -150,6 +153,25 @@ const Products = () => {
       .finally(() => setLoading(false));
   };
 
+  const searchForProducts = async (q) => {
+    await axios
+      .post(`/products/find?find=${q}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  };
+
+  const debouncedFilter = useCallback(
+    debounce((q) => searchForProducts(q), 400),
+    []
+  );
+
+  const handleSearchInputChange = (q) => {
+    setSearchQuery(q);
+    debouncedFilter(q);
+  };
+
   return loading ? (
     <Loader />
   ) : (
@@ -195,16 +217,13 @@ const Products = () => {
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
           All Products
         </h3>
-        <div className="searchInputContainer d-flex px-2 py-1">
-          <input placeholder="search" className="border-0" />
-          <img src={seacrIcon} alt="searchIcon" />
-        </div>
+        <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
       </div>
       <div>
         {rows.length > 0 ? (
           <Table columns={columns} rows={rows} />
         ) : (
-          <NoDataPlaceHolder />
+          <NoDataPlaceHolder current="Products" />
         )}
       </div>
     </Layout>

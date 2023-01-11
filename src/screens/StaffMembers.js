@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
+import BtnOutlined from "../components/layout/BtnOutlined";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
@@ -9,6 +10,7 @@ import axios from "../axios";
 import { roles } from "../data/configs";
 import DeleteModal from "../components/DeleteModal";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
+import debounce from "lodash.debounce";
 
 export const StaffMembers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -16,6 +18,7 @@ export const StaffMembers = () => {
   const [allStaff, setAllStaff] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const columns = [
     {
@@ -131,6 +134,25 @@ export const StaffMembers = () => {
       });
   };
 
+  const searchForUsers = async (q) => {
+    await axios
+      .post(`/users/find?find=${q}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  };
+
+  const debouncedFilter = useCallback(
+    debounce((q) => searchForUsers(q), 400),
+    []
+  );
+
+  const handleSearchInputChange = (q) => {
+    setSearchQuery(q);
+    debouncedFilter(q);
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -143,11 +165,11 @@ export const StaffMembers = () => {
       </div>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div>
-          <SearchInput />
+          <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
         </div>
-        <div>
+        <div className="d-flex gap-3">
           <BtnContained
-            title="add new staff member"
+            title="add staff member"
             handleClick={() => nav("/AddNewStaffMember")}
           />
         </div>
@@ -157,7 +179,7 @@ export const StaffMembers = () => {
         {rows.length > 0 ? (
           <Table columns={columns} rows={rows} />
         ) : (
-          <NoDataPlaceHolder />
+          <NoDataPlaceHolder current="Staff Members" />
         )}
       </div>
     </Layout>

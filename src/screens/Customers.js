@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
 import SearchInput from "../components/layout/SearchInput";
@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import debounce from "lodash.debounce";
 
 const Customers = ({ archived }) => {
   const [isLoading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const [archiveTriggered, setrchiveTriggered] = useState(false);
   const [allCustomers, setAllCustomers] = useState([]);
 
@@ -154,17 +157,76 @@ const Customers = ({ archived }) => {
       });
   };
 
+  const searchForCustomer = async (q) => {
+    await axios
+      .post(`/customers/find?find=${q}`)
+      .then((res) => {
+        setAllCustomers(res.data);
+        setRows([]);
+        res.data.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.isarchived,
+              p.codeid,
+              p.businessname,
+              p.address[0],
+              // p.geocodingStatus,
+              p.paymentmethod?.name,
+              p.ispricingdefault ? "default" : "else",
+              // p.pendingorders?.length,
+              archived ? "Unarchive Now" : "Archive Now"
+            ),
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const debouncedFilter = useCallback(
+    debounce((q) => searchForCustomer(q), 400),
+    []
+  );
+
+  const handleSearchInputChange = (q) => {
+    setSearchQuery(q);
+    debouncedFilter(q);
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
     <Layout>
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
-          {archived ? "Archived customers" : "Customers"}
-        </h3>
+        {archived ? (
+          <div className="d-flex justify-content-start align-items-center">
+            <ArrowBackIcon
+              className="ArrowBackIcon me-3"
+              fontSize="medium"
+              onClick={() => nav("/customers")}
+            />
+            <h3
+              className={`headerss-${localStorage.getItem(
+                "monjay-theme"
+              )} my-2`}
+            >
+              Archived customers
+            </h3>
+          </div>
+        ) : (
+          <h3
+            className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
+          >
+            Customers
+          </h3>
+        )}
         <div className="d-flex flex-wrap gap-2 mainBtn align-items-center">
           <div>
-            <SearchInput />
+            <SearchInput
+              value={searchQuery}
+              setValue={handleSearchInputChange}
+            />
           </div>
           {!archived && (
             <>
@@ -190,7 +252,7 @@ const Customers = ({ archived }) => {
         {rows.length > 0 ? (
           <Table columns={columns} rows={rows} />
         ) : (
-          <NoDataPlaceHolder />
+          <NoDataPlaceHolder current="customers" />
         )}
       </div>
     </Layout>

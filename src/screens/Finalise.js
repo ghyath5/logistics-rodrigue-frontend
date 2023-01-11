@@ -83,10 +83,8 @@ const Runs = () => {
             ...prev,
             createData(
               f._id,
-              "To be assigned",
-              "To be assigned",
-              // f.driver ? f.driver : "To be assigned",
-              // f.vehicle ? f.vehicle : "To be assigned",
+              f?.driver?.name,
+              f?.vehicle?.plate,
               f.route?.name,
               f.orders.length,
               runsStatuses[f.status].label,

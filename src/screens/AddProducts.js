@@ -108,8 +108,6 @@ const AddProducts = ({ isEdit }) => {
   };
 
   const validate = (name, value) => {
-    console.log({ name, value });
-
     switch (name) {
       case "code":
       case "name":
@@ -118,9 +116,11 @@ const AddProducts = ({ isEdit }) => {
         break;
       case "categoryId":
       case "price":
-      case "unitesperbox":
       case "prioritynumber":
         value !== "" ? hasError(name, false) : hasError(name, true);
+        break;
+      case "unitesperbox":
+        value > 0 ? hasError(name, false) : hasError(name, true);
         break;
       default:
         console.log("");

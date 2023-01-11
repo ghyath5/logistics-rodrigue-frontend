@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
 import DDSearch from "../components/layout/DDSearch";
 import Loader from "../components/layout/Loader";
@@ -11,11 +11,13 @@ import { useEffect } from "react";
 import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment/moment";
 import ProdRowDetails from "../components/ProdRowDetails";
+import NewSearchDD from "../components/layout/NewSearchDD";
 
-const AddNewOrders = () => {
+const AddNewOrders = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
   const nav = useNavigate();
+  const location = useLocation();
   const [products, setProducts] = useState([]);
 
   const [selectedCustomer, setSelectedCustomer] = useState([]);
@@ -41,9 +43,46 @@ const AddNewOrders = () => {
       setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
   }, [selectedCustomer]);
 
+  const handleSearchCustomers = async (q) => {
+    console.log("after", q);
+
+    // await axios
+    //   .get(`/customers?page=1&limit=10000&isarchived=false`)
+    //   .then((res) => {
+    //     res.data.customers.forEach((cust) => {
+    //       setCustomers((prev) => [
+    //         ...prev,
+    //         {
+    //           label: cust.businessname,
+    //           value: cust._id,
+    //           deliveryfee: cust.deliveryfee,
+    //         },
+    //       ]);
+    //     });
+    //   })
+    //   .catch(console.error)
+    //   .finally(() => setLoading(false));
+  };
+  useEffect(() => {
+    isEdit && fetchOrderById(location.state?.id);
+  }, [isEdit, location.state?.id]);
+
+  const fetchOrderById = async (id) => {
+    await axios
+      .get(`/orders/${id}`)
+      .then((res) => {
+        //   customer: selectedCustomer.value,
+        // products: filteredProducts,
+        // date: date,
+        // totalamount: parseFloat(orderTotal),
+        // status: 0,
+      })
+      .catch(console.error);
+  };
+
   const fetchCustomers = async () => {
     await axios
-      .get(`/customers?page=1&limit=10&isarchived=false`)
+      .get(`/customers?page=1&limit=10000&isarchived=false`)
       .then((res) => {
         res.data.customers.forEach((cust) => {
           setCustomers((prev) => [
@@ -60,15 +99,13 @@ const AddNewOrders = () => {
       .finally(() => setLoading(false));
   };
 
-  const handleSendCustomerId = async (e) => {
+  const handleSendCustomerId = async (custId) => {
     setLoading(true);
-    setSelectedCustomer(
-      customers.filter((cust) => cust.value === e.target.value)[0]
-    );
+    setSelectedCustomer(customers.filter((cust) => cust.value === custId)[0]);
 
     await axios
       .post(
-        `orders/sendcustomeridfororder/${e.target.value}?page=1&limit=30&isarchived=false`
+        `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`
       )
       .then((res) => {
         res.data.data.forEach((prod) => {
@@ -201,7 +238,7 @@ const AddNewOrders = () => {
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          Add New Order
+          {isEdit ? "Edit Order" : "Add New Order"}
         </h4>
       </div>
       <div className="formsContainer px-4 ">
@@ -211,23 +248,21 @@ const AddNewOrders = () => {
               "monjay-theme"
             )}  mx-3 mx-sm-4`}
           >
-            New Order Details
+            Order Details
           </h5>
         </div>
 
         <hr className="line"></hr>
 
         <div>
-          <DDSearch
-            name="customers"
-            lable="customers"
-            options={customers}
-            isDisabled={false}
-            isMulti={false}
-            val={selectedCustomer.value ? selectedCustomer.value : ""}
-            handleChange={handleSendCustomerId}
+          <NewSearchDD
+            data={customers}
+            handleSearch={handleSearchCustomers}
+            handleSelect={handleSendCustomerId}
           />
           <DatePickerr
+            inputFormat="DD-MM-YYYY"
+            views={["year", "month", "day"]}
             lable="Delivery date"
             id="orderDate"
             name="orderDate"
@@ -245,9 +280,6 @@ const AddNewOrders = () => {
               isMulti={false}
               val={selectedProducts}
               handleChange={handleSelectProduct}
-              // handleBlur={handleBlur}
-              // error={step1Eerrors?.state}
-              // errorMessage="please pick a state"
             />
             <div className="p-0 mt-3">
               {selectedProducts.map((item, i) => {
@@ -286,7 +318,7 @@ const AddNewOrders = () => {
             <BtnContained
               title="save & confirm"
               handleClick={() => {
-                handleSubmitOrder();
+                isEdit ? console.log("edit now") : handleSubmitOrder();
               }}
             />
             {errorr && <p className="text-danger">{errorrMessage}</p>}

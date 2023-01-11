@@ -23,6 +23,8 @@ import PrivateRoutes from "../utils/PrivateRoutes";
 import Routess from "./Routess";
 import AddNewRoute from "./AddNewRoute";
 import EditRun from "./EditRun";
+import { Drivers } from "./Drivers";
+import AddNewDriver from "./AddNewDriver";
 
 const Main = () => {
   return (
@@ -52,6 +54,7 @@ const Main = () => {
           <Route exact path="orders" element={<Orders />} />
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
+          <Route exact path="drivers" element={<Drivers />} />
           <Route exact path="staffmembers" element={<StaffMembers />} />
           <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
           <Route
@@ -68,6 +71,16 @@ const Main = () => {
             exact
             path="editvehicle"
             element={<AddNewVehicle isEdit={true} />}
+          />
+          <Route
+            exact
+            path="addNewDriver"
+            element={<AddNewDriver isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editDriver"
+            element={<AddNewDriver isEdit={true} />}
           />
           <Route
             exact
@@ -89,7 +102,16 @@ const Main = () => {
             path="editproducts"
             element={<AddProducts isEdit={true} />}
           />
-          <Route exact path="addneworder" element={<AddNewOrders />} />
+          <Route
+            exact
+            path="addneworder"
+            element={<AddNewOrders isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editOrder"
+            element={<AddNewOrders isEdit={true} />}
+          />
           <Route
             exact
             path="managecategories"

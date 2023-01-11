@@ -6,12 +6,14 @@ import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import BtnContained from "../components/layout/BtnContained";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
+import DeleteModal from "../components/DeleteModal";
 
 const Routess = () => {
   const [loading, setLoading] = useState(true);
   const [allRoutes, setAllRoutes] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
 
   useEffect(() => {
     fetchRoutes();
@@ -56,15 +58,17 @@ const Routess = () => {
   };
 
   const handleDeleteRoute = async (id) => {
-    setAllRoutes((prev) => prev.filter((S) => S._id !== id));
-    setRows((prev) => prev.filter((S) => S.id !== id));
-
     await axios
       .delete(`/routes/${id}`)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        setAllRoutes((prev) => prev.filter((S) => S._id !== id));
+        setRows((prev) => prev.filter((S) => S.id !== id));
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setCantDeleteModalVisible(true);
+        }
+      });
   };
 
   const columns = [
@@ -108,6 +112,7 @@ const Routess = () => {
     <Loader />
   ) : (
     <Layout>
+      {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
           <h3
@@ -126,7 +131,7 @@ const Routess = () => {
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
       ) : (
-        <NoDataPlaceHolder />
+        <NoDataPlaceHolder current="Routes" />
       )}
     </Layout>
   );

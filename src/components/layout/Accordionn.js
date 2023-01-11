@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -101,13 +101,18 @@ const Accordionn = ({
               <div className="row text-promotion">
                 {item?.products.map((item, i) => {
                   return (
-                    <span key={i} className="fs-6">
+                    <span
+                      key={i}
+                      className={`fs-6 maxw ${
+                        i % 2 === 0 ? "textGray2" : "textGray"
+                      }`}
+                    >
                       {item.product.name} - ${item.pricePerUnit}
                     </span>
                   );
                 })}
                 {item.customer.deliveryfee > 0 && (
-                  <span className="fs-6">
+                  <span className="fs-6 textGray">
                     Delivery Fees - ${item.customer.deliveryfee}
                   </span>
                 )}
@@ -118,7 +123,12 @@ const Accordionn = ({
               <div className="row text-promotion">
                 {item?.products.map((item, i) => {
                   return (
-                    <span key={i} className="fs-6">
+                    <span
+                      key={i}
+                      className={`fs-6 ${
+                        i % 2 === 0 ? "textGray2" : "textGray"
+                      }`}
+                    >
                       {item.quantity}
                     </span>
                   );

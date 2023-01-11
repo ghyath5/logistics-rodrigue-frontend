@@ -9,7 +9,7 @@ const SearchInput = ({ value, setValue }) => {
           placeholder="search"
           className="border-0 bg-transparent"
           value={value}
-          onChange={(e) => setValue(e)}
+          onChange={(e) => setValue(e.target.value)}
         />
         <img src={seacrIcon} alt="searchIcon" />
       </div>

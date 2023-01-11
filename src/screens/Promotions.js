@@ -62,7 +62,7 @@ const Promotions = () => {
         </div>
       </div>
       {promotions.length === 0 ? (
-        <NoDataPlaceHolder />
+        <NoDataPlaceHolder current="Promotions" />
       ) : (
         promotions?.map((prom, i) => {
           return (

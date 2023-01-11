@@ -23,6 +23,7 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Routes", goTo: "/routes" },
     { text: "Runs", goTo: "/runs" },
     { text: "Staff Members", goTo: "/staffmembers" },
+    { text: "Drivers", goTo: "/drivers" },
     { text: "Vehicles", goTo: "/vehicles" },
   ];
 

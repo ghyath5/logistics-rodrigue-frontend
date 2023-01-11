@@ -9,6 +9,8 @@ import LinearChart from "../components/LinearChart";
 import PieChart from "../components/PieChart";
 import axios from "../axios";
 import faker from "faker";
+import { DatePickerr } from "../components/layout/DatePickers";
+import moment from "moment";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -18,6 +20,8 @@ const Dashboard = () => {
   const [user, setUser] = useState("");
   const [dashData, setDashData] = useState([]);
   const [topCategories, setTopCategories] = useState([]);
+  const [M1, setM1] = useState(new Date());
+  const [M2, setM2] = useState(new Date());
   const [topCustomers, setTopCustomers] = useState({ data: [], labels: [] });
   const [lineChartData, setLineChartData] = useState([
     { dataSet1: [], dataSet2: [], labels: [] },
@@ -76,9 +80,14 @@ const Dashboard = () => {
   const fetchStatistics = async () => {
     const labels = [...Array(31).keys()];
 
+    let m1 = moment(new Date(M1)).add(1, "months");
+    let m2 = moment(new Date(M2)).add(1, "months");
+
     await axios
       .get(
-        "/statistics/sales-by-date-range?to1=2023-02-01&to2=2023-01-01&days=30"
+        `/statistics/sales-by-date-range?to1=${m1.format("YYYY")}-${m1.format(
+          "MM"
+        )}-01&to2=${m2.format("YYYY")}-${m2.format("MM")}-01&days=30`
       )
       .then((res) => {
         setLineChartData([
@@ -116,7 +125,9 @@ const Dashboard = () => {
         </div>
       </div>
       <Layout dashboard>
-        <h3 className={`headerss-${theme} mb-2 mt-0`}>Schedule Overview</h3>
+        <h3 className={`headerss-${theme} mb-2 mt-0`}>
+          Today's Schedule Overview
+        </h3>
         <div className="row m-0">
           <StatsCard
             title="Orders"
@@ -145,13 +156,15 @@ const Dashboard = () => {
           </div>
           {topCategories.map((cat, i) => {
             return (
-              <div key={i} className="mx-auto mt-3 col-sm-12 col-md-5">
-                <PieChart
-                  data={cat.data}
-                  names={cat.labels}
-                  title={`Top 5 Products in ${cat.title}`}
-                />
-              </div>
+              cat.data.length > 0 && (
+                <div key={i} className="mx-auto mt-3 col-sm-12 col-md-5">
+                  <PieChart
+                    data={cat.data}
+                    names={cat.labels}
+                    title={`Top 5 Products in ${cat.title}`}
+                  />
+                </div>
+              )
             );
           })}
           {/* <div className="mx-auto mt-3 col-sm-12 col-md-5">
@@ -175,8 +188,33 @@ const Dashboard = () => {
               title="Top 5 Products in Finger Food"
             />
           </div> */}
-          <div className="lineshartContainer my-5 mx-auto">
+          <div className="lineshartContainer mt-5 mx-auto">
             <LinearChart data={lineChartData[0]} />
+          </div>
+          <div className="d-flex justify-content-center align-items-end gap-3">
+            <DatePickerr
+              inputFormat="MM-YY"
+              views={["year", "month"]}
+              lable="First month"
+              id="orderDate"
+              name="orderDate"
+              value={M1}
+              handleChange={(e) => setM1(e.target.value)}
+            />
+            <DatePickerr
+              inputFormat="MM-YY"
+              views={["year", "month"]}
+              lable="Second month"
+              id="orderDate"
+              name="orderDate"
+              value={M2}
+              handleChange={(e) => setM2(e.target.value)}
+            />
+            <BtnContained
+              title="COMPARE"
+              handleClick={fetchStatistics}
+              classes="p-2"
+            />
           </div>
         </div>
       </Layout>

@@ -28,10 +28,62 @@ const EditRun = () => {
   });
   const [expanded, setExpanded] = useState(null);
   const [orders, setAllOrders] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
+  const [drivers, setDrivers] = useState([]);
 
   useEffect(() => {
     fetchRunById(location.state?.id);
   }, [location.state?.id]);
+
+  const fetchRunById = async (id) => {
+    setLoading(true);
+    await axios
+      .get(`/runs/${id}`)
+      .then((res) => {
+        setData({
+          driver: res.data.driver._id,
+          vehicle: res.data.vehicle._id,
+          status: runsStatuses[res.data.status].value,
+          note: res.data.note ? res.data.note : "Note",
+        });
+        setOldData({
+          driver: res.data.driver._id,
+          vehicle: res.data.vehicle._id,
+          status: runsStatuses[res.data.status].value,
+          note: res.data.note ? res.data.note : "Note",
+        });
+        setAllOrders(res.data.orders ? res.data.orders : []);
+      })
+      .then(fetchVehicles)
+      .then(fetchDrivers)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
+
+  const fetchDrivers = async () => {
+    await axios
+      .get("/drivers")
+      .then((res) => {
+        res.data.drivers.forEach((dr) => {
+          setDrivers((prev) => [...prev, { label: dr.name, value: dr._id }]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const fetchVehicles = async () => {
+    await axios
+      .get(`/vehicles`)
+      .then((res) => {
+        res.data.vehicles.forEach((veh) => {
+          setVehicles((prev) => [
+            ...prev,
+            { label: veh.plate, value: veh._id },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,36 +97,14 @@ const EditRun = () => {
     console.log({ name, value });
   };
 
-  const fetchRunById = async (id) => {
-    await axios
-      .get(`/runs/${id}`)
-      .then((res) => {
-        setData({
-          driver: res.data.driver ? res.data.driver : "Driver",
-          vehicle: res.data.vehicle ? res.data.vehicle : "Vehicle",
-          status: runsStatuses[res.data.status].value,
-          note: res.data.note ? res.data.note : "Note",
-        });
-        setOldData({
-          driver: res.data.driver ? res.data.driver : "Driver",
-          vehicle: res.data.vehicle ? res.data.vehicle : "Vehicle",
-          status: runsStatuses[res.data.status].value,
-          note: res.data.note ? res.data.note : "Note",
-        });
-        setAllOrders(res.data.orders ? res.data.orders : []);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  };
-
   const allVAlid = () => {
-    let valid = false;
+    let valid = true;
 
-    if (data.status !== oldData.status || data.note !== oldData.note) {
-      valid = true;
-    } else {
-      valid = false;
-    }
+    // if (data.status !== oldData.status || data.note !== oldData.note) {
+    //   valid = true;
+    // } else {
+    //   valid = false;
+    // }
     return valid;
   };
 
@@ -83,13 +113,13 @@ const EditRun = () => {
     if (allVAlid()) {
       await axios
         .put(`/runs/${location.state?.id}`, {
-          // driver: data.driver,
-          //   vehicle: data.vehicle,
+          driver: data.driver,
+          vehicle: data.vehicle,
           status: data.status,
           note: data.note,
         })
         .then((res) => {
-          //   console.log(res.data);
+          console.log(res.data);
           navigate("/runs");
         })
         .catch(console.error)
@@ -115,7 +145,7 @@ const EditRun = () => {
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          Edit Run
+          Back to Runs
         </h4>
       </div>
       <div className="formsContainer">
@@ -125,35 +155,37 @@ const EditRun = () => {
               "monjay-theme"
             )} my-4 mx-2`}
           >
-            Run Details
+            Edit Run
           </h4>
         </div>
         <hr className={`line mx-5`}></hr>
         <div className="mx-4">
-          {/* <DDSearch
-                name="driver"
-                lable="Driver"
-                options={drivers}
-                isDisabled={false}
-                isMulti={false}
-                val={data?.driver}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                // error={errors?.status}
-                // errorMessage="you must select the status"
-              />
           <DDSearch
-                name="vehicle"
-                lable="Vehicle"
-                options={vehicles}
-                isDisabled={false}
-                isMulti={false}
-                val={data?.vehicle}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                // error={errors?.status}
-                // errorMessage="you must select the status"
-              /> */}
+            name="driver"
+            lable="Driver"
+            options={drivers}
+            isDisabled={false}
+            isMulti={false}
+            // defaultValue={drivers[0]}
+            val={data?.driver}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            // error={errors?.status}
+            // errorMessage="you must select the status"
+          />
+          <DDSearch
+            name="vehicle"
+            lable="Vehicle"
+            options={vehicles}
+            isDisabled={false}
+            isMulti={false}
+            // defaultValue={vehicles[0]}
+            val={data?.vehicle}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            // error={errors?.status}
+            // errorMessage="you must select the status"
+          />
           <DDSearch
             name="status"
             lable="Status"
@@ -186,28 +218,30 @@ const EditRun = () => {
             handleClick={() => handleUpdateRun()}
           />
         </div>
-        <div className="myAccordion mx-4">
-          <p
-            className={`headerss-${localStorage.getItem(
-              "monjay-theme"
-            )} fw-700`}
-          >
-            Orders List:
-          </p>
-          {orders?.map((item, i) => {
-            return (
-              <Accordionn
-                item={item}
-                key={i}
-                id={i}
-                allOrders={orders}
-                setAllOrders={setAllOrders}
-                setExpanded={setExpanded}
-                expanded={expanded}
-              />
-            );
-          })}
-        </div>
+        {orders.length > 0 && (
+          <div className="myAccordion mx-4">
+            <p
+              className={`headerss-${localStorage.getItem(
+                "monjay-theme"
+              )} fw-700`}
+            >
+              Orders List:
+            </p>
+            {orders.map((item, i) => {
+              return (
+                <Accordionn
+                  item={item}
+                  key={i}
+                  id={i}
+                  allOrders={orders}
+                  setAllOrders={setAllOrders}
+                  setExpanded={setExpanded}
+                  expanded={expanded}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </Layout>
   );

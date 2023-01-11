@@ -8,12 +8,14 @@ import StatsCard from "../components/layout/StatsCard";
 import axios from "../axios";
 import { vehiclesStatuses } from "../data/configs";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
+import DeleteModal from "../components/DeleteModal";
 
 export const Vehicles = () => {
   const [loading, setLoading] = useState(true);
   const [allVehciles, setAllVehclies] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
 
   useEffect(() => {
     fetchVehicles();
@@ -47,15 +49,17 @@ export const Vehicles = () => {
   };
 
   const handleDeleteVehicle = async (id) => {
-    setAllVehclies((prev) => prev.filter((S) => S._id !== id));
-    setRows((prev) => prev.filter((S) => S.id !== id));
-
     await axios
       .delete(`/vehicles/${id}`)
       .then((res) => {
-        console.log(res.data);
+        setAllVehclies((prev) => prev.filter((S) => S._id !== id));
+        setRows((prev) => prev.filter((S) => S.id !== id));
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.response.status === 403) {
+          setCantDeleteModalVisible(true);
+        }
+      });
   };
 
   const columns = [
@@ -136,6 +140,7 @@ export const Vehicles = () => {
     <Loader />
   ) : (
     <Layout>
+      {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
           <h3
@@ -189,7 +194,7 @@ export const Vehicles = () => {
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
       ) : (
-        <NoDataPlaceHolder />
+        <NoDataPlaceHolder current="Vehicles" />
       )}
     </Layout>
   );

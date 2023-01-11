@@ -15,6 +15,8 @@ export const DatePickerr = ({
   value,
   handleChange,
   shouldDisableDate,
+  inputFormat,
+  views,
 }) => {
   const handleTime = (string) => {
     let newTime = new Date(string).toISOString();
@@ -29,6 +31,8 @@ export const DatePickerr = ({
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en-gb"}>
         <DatePicker
           orientation="landscape"
+          views={views && views}
+          inputFormat={inputFormat && inputFormat}
           id="date"
           value={value}
           minDate={minDate && minDate}
