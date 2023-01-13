@@ -4,15 +4,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SideBarList = ({ toggleDrawer }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedItem, setSelectedItem] = useState("");
 
   useEffect(() => {
     setSelectedItem(window.location.pathname);
-  }, []);
+  }, [location]);
 
   const myList = [
     { text: "Dashboard", goTo: "/" },

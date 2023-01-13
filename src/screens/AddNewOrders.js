@@ -4,7 +4,6 @@ import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
-import DDSearch from "../components/layout/DDSearch";
 import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import { useEffect } from "react";
@@ -349,13 +348,17 @@ const AddNewOrders = ({ isEdit }) => {
         <hr className="line"></hr>
 
         <div>
-          <span className="mb-3 formsLable">Customer</span>
-          <NewSearchDD
-            data={customers}
-            handleSearch={handleSearchCustomers}
-            handleSelect={handleSendCustomerId}
-            placeHolder={searchPlaceHolder}
-          />
+          {!isEdit && (
+            <>
+              <span className="mb-3 formsLable">Customer</span>
+              <NewSearchDD
+                data={customers}
+                handleSearch={handleSearchCustomers}
+                handleSelect={handleSendCustomerId}
+                placeHolder={searchPlaceHolder}
+              />
+            </>
+          )}
           <DatePickerr
             inputFormat="DD-MM-YYYY"
             views={["year", "month", "day"]}

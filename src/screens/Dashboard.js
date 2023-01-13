@@ -17,6 +17,8 @@ const Dashboard = () => {
 
   const [theme, setTheme] = useState("light");
   const [isLoading, setLoading] = useState(true);
+  const [warningHidden, setWarningHidden] = useState(true);
+  const [vehiclesWarning, setVehiclesWarning] = useState("");
   const [user, setUser] = useState("");
   const [dashData, setDashData] = useState([]);
   const [topCategories, setTopCategories] = useState([]);
@@ -41,6 +43,14 @@ const Dashboard = () => {
       .then((res) => {
         setDashData([res.data.todayOrders, res.data.todayRuns]);
         setTopCustomers({ data: res.data.data, labels: res.data.labels });
+        if (res.data.vehicles.length > 0) {
+          res.data.vehicles.forEach((V) => {
+            setVehiclesWarning((prev) =>
+              prev ? prev + ` and ${V.plate}` : `${V.plate} `
+            );
+          });
+          setWarningHidden(false);
+        }
       })
       .then(fetchCategoriesStatistics)
       .then(fetchStatistics)
@@ -119,12 +129,24 @@ const Dashboard = () => {
           <BtnContained
             title="MANAGE MY INVENTORY"
             handleClick={() => {
-              navigate("/products");
+              navigate("/products", { state: { page: "products" } });
             }}
           />
         </div>
       </div>
       <Layout dashboard>
+        {!warningHidden && (
+          <div className="w-100 bg-danger text-center mb-3 text-white fs-4 position-relative">
+            Vehicle plate {vehiclesWarning} registration will end soon!
+            <span
+              className="position-absolute pointer"
+              onClick={() => setWarningHidden(true)}
+              style={{ right: 15 }}
+            >
+              X
+            </span>
+          </div>
+        )}
         <h3 className={`headerss-${theme} mb-2 mt-0`}>
           Today's Schedule Overview
         </h3>
@@ -145,15 +167,18 @@ const Dashboard = () => {
           />
         </div>
         <div className="row gapY mt-4">
-          <div className="mx-auto mt-3 col-sm-12 col-md-5">
-            <PieChart
-              // data={[20, 10, 6, 13, 50, 1]}
-              // names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-              data={topCustomers.data}
-              names={topCustomers.labels}
-              title="Top 5 Customers"
-            />
-          </div>
+          {topCustomers.data.length > 0 && (
+            <div className="mx-auto mt-3 col-sm-12 col-md-5">
+              <PieChart
+                // data={[20, 10, 6, 13, 50, 1]}
+                // names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
+                data={topCustomers.data}
+                names={topCustomers.labels}
+                title="Top 5 Customers"
+                nopercent
+              />
+            </div>
+          )}
           {topCategories.map((cat, i) => {
             return (
               cat.data.length > 0 && (

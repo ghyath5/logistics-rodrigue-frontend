@@ -156,7 +156,7 @@ export const Vehicles = () => {
           />
         </div>
       </div>
-      <div className="row m-0 w-100">
+      {/* <div className="row m-0 w-100">
         <StatsCard
           title="Available"
           value={allVehciles?.length}
@@ -181,8 +181,8 @@ export const Vehicles = () => {
           classes="bgYellow"
           col={3}
         />
-      </div>
-      <div className="d-flex justify-content-between align-items-center mt-3 mb-4">
+      </div> */}
+      {/* <div className="d-flex justify-content-between align-items-center mt-3 mb-4">
         <div>
           <h3
             className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
@@ -190,7 +190,7 @@ export const Vehicles = () => {
             All Vehicles
           </h3>
         </div>
-      </div>
+      </div> */}
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
       ) : (

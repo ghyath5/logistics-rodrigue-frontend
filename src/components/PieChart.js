@@ -6,7 +6,7 @@ import { useState } from "react";
 
 ChartJSS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ data, names, title, labelsPosition }) => {
+const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
   const [theme, setTheme] = useState({ opa: 0.2, color: "#343536" });
 
   useEffect(() => {
@@ -43,15 +43,17 @@ const PieChart = ({ data, names, title, labelsPosition }) => {
     labels: names,
     datasets: [
       {
-        label: "%",
+        label: nopercent ? "order" : "%",
         data: data,
         datalabels: {
           color: "#000",
           formatter: (ctx, args) => {
             const index = args.dataIndex;
-            return args.dataset.data[index] > 7
-              ? `${args.dataset.data[index]} %`
-              : "";
+            return !nopercent
+              ? args.dataset.data[index] > 7
+                ? `${Math.round(args.dataset.data[index])} %`
+                : ""
+              : `${Math.round(args.dataset.data[index])} order`;
           },
         },
         backgroundColor: [

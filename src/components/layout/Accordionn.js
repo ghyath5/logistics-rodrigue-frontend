@@ -90,7 +90,9 @@ const Accordionn = ({
                   <h5 className="mb-0 ms-2 me-3 textGreen">
                     {orderStatues[item.status].label}
                   </h5>
-                  <h4 className="mb-0 ms-2 me-3">{item.totalamount + "$"}</h4>
+                  <h4 className="mb-0 ms-2 me-3">
+                    {item.totalamount.toFixed(2) + "$"}
+                  </h4>
                 </div>
               </span>
             </div>
