@@ -5,9 +5,7 @@ export const roles = [
 ];
 export const vehiclesStatuses = [
   { label: "Registration Due", value: "0" },
-  { label: "On Road", value: "1" },
-  { label: "Out of service", value: "2" },
-  { label: "Available", value: "3" },
+  { label: "Available", value: "1" },
 ];
 export const states = [
   { label: "New South Wales", value: "0" },
@@ -22,10 +20,10 @@ export const targets = [
   { lable: "Product targeted", value: "product" },
 ];
 export const orderStatues = [
-  { label: "Pending", value: "0" },
-  { label: "Confirmed", value: "1" },
-  { label: "Delivered", value: "2" },
-  { label: "Canceled", value: "3" },
+  { label: "Pending", value: "0", class: "textYellow" },
+  { label: "Confirmed", value: "1", class: "textGreen" },
+  { label: "Delivered", value: "2", class: "textBlue" },
+  { label: "Canceled", value: "3", class: "textRed" },
 ];
 export const runsStatuses = [
   { label: "Pending", value: "0" },

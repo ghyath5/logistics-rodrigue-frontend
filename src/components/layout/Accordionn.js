@@ -87,7 +87,11 @@ const Accordionn = ({
                   <span>total:</span>
                 </div>
                 <div className="text-center" style={{ width: 120 }}>
-                  <h5 className="mb-0 ms-2 me-3 textGreen">
+                  <h5
+                    className={`mb-0 ms-2 me-3 ${
+                      orderStatues[item.status].class
+                    }`}
+                  >
                     {orderStatues[item.status].label}
                   </h5>
                   <h4 className="mb-0 ms-2 me-3">

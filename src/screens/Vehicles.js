@@ -4,7 +4,7 @@ import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import { useNavigate } from "react-router-dom";
-import StatsCard from "../components/layout/StatsCard";
+// import StatsCard from "../components/layout/StatsCard";
 import axios from "../axios";
 import { vehiclesStatuses } from "../data/configs";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
@@ -37,7 +37,7 @@ export const Vehicles = () => {
               p.make,
               vehiclesStatuses[p.status]?.label,
               new Date(p.expiresIn).toDateString(),
-              new Date(p.updatedAt).toDateString(),
+              // new Date(p.updatedAt).toDateString(),
               "Edit",
               "Delete"
             ),
@@ -78,23 +78,18 @@ export const Vehicles = () => {
       id: "Statu",
       label: "Status",
       minWidth: 180,
-      class: [
-        "statusCellHidden",
-        "statuCellOnRoad",
-        "statuCellOutOfService",
-        "statusCellVisible",
-      ],
+      class: ["statuCellOutOfService", "statusCellVisible"],
     },
     {
       id: "RegistrationDue",
       label: "Registration Due",
       minWidth: 150,
     },
-    {
-      id: "LastUsedOn",
-      label: "Last Use",
-      minWidth: 150,
-    },
+    // {
+    //   id: "LastUsedOn",
+    //   label: "Last Use",
+    //   minWidth: 150,
+    // },
     {
       id: "setting",
       label: "Edit",
@@ -118,7 +113,7 @@ export const Vehicles = () => {
     manufacturingYear,
     Statu,
     RegistrationDue,
-    LastUsedOn,
+    // LastUsedOn,
     setting,
     remove
   ) {
@@ -130,7 +125,7 @@ export const Vehicles = () => {
       manufacturingYear,
       Statu,
       RegistrationDue,
-      LastUsedOn,
+      // LastUsedOn,
       setting,
       remove,
     };

@@ -88,11 +88,7 @@ export default function Table({ columns, rows }) {
                                   : column.id === "Statu"
                                   ? value === "Registration Due"
                                     ? column.class[0]
-                                    : value === "On Road"
-                                    ? column.class[1]
-                                    : value === "Out of service"
-                                    ? column.class[2]
-                                    : column.class[3]
+                                    : column.class[1]
                                   : column.class[0])
                               }
                             `}
