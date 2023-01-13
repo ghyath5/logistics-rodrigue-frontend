@@ -34,7 +34,7 @@ const Orders = () => {
     await axios
       .post(`/orders/findbytext?name=${q}`)
       .then((res) => {
-        setAllOrders(res.data.orders);
+        setAllOrders(res.data);
       })
       .catch(console.error);
   };
