@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import BtnContained from "./layout/BtnContained";
 import InputOutlined from "./layout/InputOutlined";
 
-const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
+const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
   const [newPrice, setNewPrice] = useState(item.newprice);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(item.quantity || 1);
   const [total, setTotal] = useState(0);
-  const [doneEditing, setDoneEditing] = useState(false);
+  const [doneEditing, setDoneEditing] = useState(
+    item?.quantity && isEdit ? true : false
+  );
 
   useEffect(() => {
     setNewPrice(item.newprice);
@@ -97,7 +99,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type }) => {
       </div>
       <div className="d-flex justify-content-end align-items-center gap-3 mt-2">
         <BtnContained
-          title="Remove"
+          title="Cancel"
           handleClick={removeProd}
           classes="delete-promotion-btn"
         />

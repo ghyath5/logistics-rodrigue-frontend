@@ -57,6 +57,10 @@ input:disabled {
   color: black !important;
 }
 
+.textBlue {
+  color: var(--dark-bleu);
+}
+
 .textGray {
   color: var(--gray);
 }
@@ -976,7 +980,7 @@ textarea {
 }
 
 .maxw {
-  max-width: 300px;
+  max-width: 350px;
 }
 
 
@@ -1030,4 +1034,8 @@ textarea {
 
 .dropdown a:hover {
   background-color: #ddd;
+}
+
+.p-10 {
+  padding: 12px !important;
 }

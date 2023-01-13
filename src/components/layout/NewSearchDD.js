@@ -3,12 +3,12 @@
 import React, { useState, useCallback } from "react";
 import debounce from "lodash.debounce";
 
-const NewSearchDD = ({ data, handleSearch, handleSelect }) => {
+const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder }) => {
   const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
 
   const debouncedFilter = useCallback(
-    debounce((q) => handleSearch(q), 400),
+    debounce((q) => handleSearch(q), 600),
     []
   );
 
@@ -18,6 +18,11 @@ const NewSearchDD = ({ data, handleSearch, handleSelect }) => {
     debouncedFilter(q);
   };
 
+  const handlePick = (d) => {
+    handleSelect(d.value);
+    setVisible(false);
+  };
+
   const toggleDropDown = () => {
     setVisible(!visible);
   };
@@ -25,7 +30,7 @@ const NewSearchDD = ({ data, handleSearch, handleSelect }) => {
   return (
     <div className="dropdown w-100">
       <button onClick={toggleDropDown} className="dropbtn w-100">
-        Select a customer
+        {placeHolder}
       </button>
       {visible && (
         <div id="myDropdown" className="dropdown-content w-100">
@@ -39,7 +44,7 @@ const NewSearchDD = ({ data, handleSearch, handleSelect }) => {
           />
           {data.map((d, i) => {
             return (
-              <a onClick={() => handleSelect(d.value)} key={i}>
+              <a onClick={() => handlePick(d)} key={i}>
                 {d.label}
               </a>
             );

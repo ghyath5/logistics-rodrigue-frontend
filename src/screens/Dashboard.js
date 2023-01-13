@@ -213,7 +213,7 @@ const Dashboard = () => {
             <BtnContained
               title="COMPARE"
               handleClick={fetchStatistics}
-              classes="p-2"
+              classes="p-10"
             />
           </div>
         </div>

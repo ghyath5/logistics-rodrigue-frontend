@@ -15,17 +15,23 @@ import NewSearchDD from "../components/layout/NewSearchDD";
 
 const AddNewOrders = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(true);
+  const [prodConfirmed, setConfirmed] = useState(true);
   const [customers, setCustomers] = useState([]);
   const nav = useNavigate();
   const location = useLocation();
   const [products, setProducts] = useState([]);
 
-  const [selectedCustomer, setSelectedCustomer] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [date, setDate] = useState("");
   const [orderTotal, setOrderTotal] = useState(0);
+  const [nonEditedProducts, setNonEditedProducts] = useState([]);
   const [errorr, setError] = useState(false);
   const [errorrMessage, setErrorMessage] = useState("Invalid Data");
+  const [searchPlaceHolder, setSearchPlaceholder] = useState(
+    "Search a customer by name or code"
+  );
+  let CUSTOMERID;
 
   useEffect(() => {
     errorr &&
@@ -38,51 +44,10 @@ const AddNewOrders = ({ isEdit }) => {
     fetchCustomers();
   }, []);
 
-  useEffect(() => {
-    selectedCustomer.deliveryfee > 0 &&
-      setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
-  }, [selectedCustomer]);
-
-  const handleSearchCustomers = async (q) => {
-    console.log("after", q);
-
-    // await axios
-    //   .get(`/customers?page=1&limit=10000&isarchived=false`)
-    //   .then((res) => {
-    //     res.data.customers.forEach((cust) => {
-    //       setCustomers((prev) => [
-    //         ...prev,
-    //         {
-    //           label: cust.businessname,
-    //           value: cust._id,
-    //           deliveryfee: cust.deliveryfee,
-    //         },
-    //       ]);
-    //     });
-    //   })
-    //   .catch(console.error)
-    //   .finally(() => setLoading(false));
-  };
-  useEffect(() => {
-    isEdit && fetchOrderById(location.state?.id);
-  }, [isEdit, location.state?.id]);
-
-  const fetchOrderById = async (id) => {
-    await axios
-      .get(`/orders/${id}`)
-      .then((res) => {
-        //   customer: selectedCustomer.value,
-        // products: filteredProducts,
-        // date: date,
-        // totalamount: parseFloat(orderTotal),
-        // status: 0,
-      })
-      .catch(console.error);
-  };
-
   const fetchCustomers = async () => {
+    setLoading(true);
     await axios
-      .get(`/customers?page=1&limit=10000&isarchived=false`)
+      .get(`/customers?page=1&limit=10&isarchived=false`)
       .then((res) => {
         res.data.customers.forEach((cust) => {
           setCustomers((prev) => [
@@ -99,15 +64,38 @@ const AddNewOrders = ({ isEdit }) => {
       .finally(() => setLoading(false));
   };
 
-  const handleSendCustomerId = async (custId) => {
-    setLoading(true);
-    setSelectedCustomer(customers.filter((cust) => cust.value === custId)[0]);
+  useEffect(() => {
+    selectedCustomer.deliveryfee > 0 &&
+      setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
+  }, [selectedCustomer]);
 
+  const handleSearchCustomers = async (q) => {
+    await axios
+      .post(`/customers/find?find=${q}&page=1&limit=100000&isarchived=false`)
+      .then((res) => {
+        setCustomers([]);
+        res.data.forEach((cust) => {
+          setCustomers((prev) => [
+            ...prev,
+            {
+              label: cust.businessname,
+              value: cust._id,
+              deliveryfee: cust.deliveryfee,
+            },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const handleSearchProduct = async (q) => {
     await axios
       .post(
-        `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`
+        `/orders/sendcustomeridfororder/${CUSTOMERID}?find=${q}&page=1&limit=100000`
       )
       .then((res) => {
+        console.log(res.data.data);
+        setProducts([]);
         res.data.data.forEach((prod) => {
           setProducts((prev) => [
             ...prev,
@@ -122,8 +110,87 @@ const AddNewOrders = ({ isEdit }) => {
           ]);
         });
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    isEdit && customers.length > 0 && fetchOrderById(location.state?.id);
+  }, [isEdit, customers]);
+
+  const fetchOrderById = async (id) => {
+    await axios
+      .get(`/orders/${id}`)
+      .then((res) => {
+        let selectedCust = customers?.filter(
+          (cust) => cust.value === res.data.customer
+        )[0];
+        setSelectedCustomer(selectedCust);
+        setSearchPlaceholder(selectedCust.label);
+        handleSendCustomerId(selectedCust.value);
+        setDate(res.data.date);
+
+        setOrderTotal(res.data.totalamount);
+
+        let prods = res.data.products;
+        prods.forEach((prod) => {
+          setSelectedProducts((prev) => [
+            ...prev,
+            {
+              productId: prod.product._id,
+              oldprice: prod.product.price,
+              newprice: prod.product.newprice
+                ? prod.product.newprice
+                : prod.product.price,
+              name: prod.product.name,
+              assignedCode: prod.product.assignedCode,
+              upb: prod.product.unitesperbox,
+              quantity: prod.quantity,
+            },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const handleConfirmProduct = (id, total, quantity) => {
+    let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
+    prod.newprice = total / quantity;
+    prod.quantity = quantity;
+
+    setOrderTotal((prev) => (parseFloat(prev) + parseFloat(total)).toFixed(2));
+    setSelectedProducts((prev) => [
+      ...prev.filter((pro) => pro.productId !== id),
+      prod,
+    ]);
+    setConfirmed(true);
+  };
+
+  const handleSendCustomerId = async (custId) => {
+    let selectedCust = customers.filter((cust) => cust.value === custId)[0];
+    setSelectedCustomer(selectedCust);
+    CUSTOMERID = selectedCust.value;
+    await axios
+      .post(
+        `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`
+      )
+      .then((res) => {
+        setSearchPlaceholder(selectedCust.label);
+        setNonEditedProducts(res.data.data);
+        res.data.data.forEach((prod) => {
+          setProducts((prev) => [
+            ...prev,
+            {
+              label: prod.name,
+              value: prod._id,
+              price: prod.price,
+              newprice: prod.promotionPrice ? prod.promotionPrice : null,
+              assignedCode: prod.assignedCode,
+              upb: prod.unitesperbox,
+            },
+          ]);
+        });
+      })
+      .catch(console.error);
   };
 
   const allValid = () => {
@@ -181,8 +248,43 @@ const AddNewOrders = ({ isEdit }) => {
     }
   };
 
+  const handleUpdateOrder = async () => {
+    let filteredProducts = [];
+    selectedProducts.forEach((p) => {
+      filteredProducts = [
+        ...filteredProducts,
+        {
+          product: nonEditedProducts.filter((pr) => pr._id === p.productId)[0],
+          pricePerUnit: p.newprice,
+          quantity: p.quantity,
+        },
+      ];
+    });
+
+    let dataToSend = {
+      customer: selectedCustomer.value,
+      products: filteredProducts,
+      date: date,
+      totalamount: parseFloat(orderTotal),
+    };
+
+    if (allValid()) {
+      setLoading(true);
+      await axios
+        .put(`orders/${location.state?.id}`, dataToSend)
+        .then(() => {
+          nav("/orders");
+        })
+        .catch(console.error)
+        .finally(() => setLoading(false));
+    } else {
+      setError(true);
+    }
+  };
+
   const handleSelectProduct = (e) => {
-    let prod = products.filter((pro) => pro.value === e.target.value)[0];
+    setConfirmed(false);
+    let prod = products.filter((pro) => pro.value === e)[0];
     setSelectedProducts((prev) => [
       ...prev,
       {
@@ -196,27 +298,19 @@ const AddNewOrders = ({ isEdit }) => {
     ]);
   };
 
-  const handleConfirmProduct = (id, total, quantity) => {
-    let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
-    prod.newprice = total / quantity;
-    prod.quantity = quantity;
-
-    setOrderTotal((prev) => (parseFloat(prev) + parseFloat(total)).toFixed(2));
-    setSelectedProducts((prev) => [
-      ...prev.filter((pro) => pro.productId !== id),
-      prod,
-    ]);
-  };
-
   const handleRemoveProduct = (id) => {
     let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
 
-    setOrderTotal((prev) =>
-      (parseFloat(prev) - parseFloat(prod.newprice) * prod.quantity).toFixed(2)
-    );
+    orderTotal > 0 &&
+      setOrderTotal((prev) =>
+        (parseFloat(prev) - parseFloat(prod.newprice) * prod.quantity).toFixed(
+          2
+        )
+      );
     setSelectedProducts((prev) => [
       ...prev.filter((pro) => pro.productId !== id),
     ]);
+    setConfirmed(true);
   };
 
   function disableMondays(date) {
@@ -255,10 +349,12 @@ const AddNewOrders = ({ isEdit }) => {
         <hr className="line"></hr>
 
         <div>
+          <span className="mb-3 formsLable">Customer</span>
           <NewSearchDD
             data={customers}
             handleSearch={handleSearchCustomers}
             handleSelect={handleSendCustomerId}
+            placeHolder={searchPlaceHolder}
           />
           <DatePickerr
             inputFormat="DD-MM-YYYY"
@@ -271,15 +367,22 @@ const AddNewOrders = ({ isEdit }) => {
             handleChange={(e) => setDate(e.target.value)}
             shouldDisableDate={disableMondays}
           />
-          <div className="m-0">
-            <DDSearch
+          <div className="mt-2">
+            {/* <DDSearch
               name="products"
               lable="Products"
               options={products}
-              isDisabled={false}
+              isDisabled={!prodConfirmed}
               isMulti={false}
               val={selectedProducts}
               handleChange={handleSelectProduct}
+            /> */}
+            <span className="mb-3 formsLable">Products</span>
+            <NewSearchDD
+              data={products}
+              handleSearch={handleSearchProduct}
+              handleSelect={handleSelectProduct}
+              placeHolder={"Products"}
             />
             <div className="p-0 mt-3">
               {selectedProducts.map((item, i) => {
@@ -290,6 +393,7 @@ const AddNewOrders = ({ isEdit }) => {
                     handleChange={handleConfirmProduct}
                     handleRemove={handleRemoveProduct}
                     type="order"
+                    isEdit={isEdit}
                   />
                 );
               })}
@@ -316,9 +420,9 @@ const AddNewOrders = ({ isEdit }) => {
 
           <div className="text-center mt-3 mb-4">
             <BtnContained
-              title="save & confirm"
+              title={isEdit ? "UPDATE ORDER" : "SUBMIT ORDER"}
               handleClick={() => {
-                isEdit ? console.log("edit now") : handleSubmitOrder();
+                isEdit ? handleUpdateOrder() : handleSubmitOrder();
               }}
             />
             {errorr && <p className="text-danger">{errorrMessage}</p>}

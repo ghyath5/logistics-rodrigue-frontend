@@ -7,6 +7,7 @@ import DDSearch from "../layout/DDSearch";
 import { orderStatues } from "../../data/configs";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import axios from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const Accordionn = ({
   item,
@@ -16,6 +17,7 @@ const Accordionn = ({
   expanded,
   setExpanded,
 }) => {
+  const nav = useNavigate();
   const [open, setOpen] = useState(false);
   const [statuss, setStatus] = useState(item.status.toString());
 
@@ -98,12 +100,12 @@ const Accordionn = ({
           <div className="d-flex gap-5 mt-3">
             <div>
               <p className="m-0 fw-bold">Products:</p>
-              <div className="row text-promotion">
+              <div className="row text-promotion maxw">
                 {item?.products.map((item, i) => {
                   return (
                     <span
                       key={i}
-                      className={`fs-6 maxw ${
+                      className={`fs-6  ${
                         i % 2 === 0 ? "textGray2" : "textGray"
                       }`}
                     >
@@ -160,6 +162,12 @@ const Accordionn = ({
                   handleChange={handleChangeOrderStatus}
                 />
               </div>
+              <p
+                onClick={() => nav("/editOrder", { state: { id: item._id } })}
+                className="ms-3 fw-bold textBlue w-100 align-self-center pointer"
+              >
+                Edit Order
+              </p>
             </div>
           </div>
         </AccordionDetails>

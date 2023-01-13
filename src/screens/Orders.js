@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
@@ -19,9 +20,16 @@ const Orders = () => {
   const nav = useNavigate();
 
   useEffect(() => {
+    // del();
     fetchOrders();
   }, []);
 
+  // const del = async () => {
+  //   await axios
+  //     .delete(`/orders/63c083ede43f2bf05be90c50`)
+  //     .then((res) => {})
+  //     .catch(console.error);
+  // };
   const searchForOrders = async (q) => {
     await axios
       .post(`/orders/findbytext?name=${q}`)

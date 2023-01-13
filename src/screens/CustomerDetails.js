@@ -1,6 +1,6 @@
 import axios from "../axios";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
 import DDSearch from "../components/layout/DDSearch";
 import Layout from "../components/partials/Layout";
@@ -11,9 +11,11 @@ import mapIcon from "../assets/map.svg";
 import boardIcon from "../assets/board.svg";
 import { states } from "../data/configs";
 import Modal from "../components/layout/Modal";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const CustomerDetails = () => {
   const location = useLocation();
+  const nav = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [customer, setCustomer] = useState([]);
 
@@ -35,19 +37,24 @@ const CustomerDetails = () => {
     fetchCustomerAndPromotion(location.state?.id);
   }, [location.state?.id]);
 
-  const fetchCustomerAndPromotion = async (id) => {
-    setLoading(true);
+  const fetchCustomer = async (id) => {
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
         setCustomer(res.data);
+        res.data.promotions.forEach((prom) => {
+          setPromotions((prev) => [
+            ...prev.filter((p) => p.value !== prom._id),
+          ]);
+        });
       })
-      .then(() => fetchPromotions())
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   };
 
-  const fetchPromotions = async () => {
+  const fetchCustomerAndPromotion = async (id) => {
+    setLoading(true);
+
+    setPromotions([]);
     await axios
       .get(`/promotion`)
       .then((res) => {
@@ -58,7 +65,9 @@ const CustomerDetails = () => {
           ]);
         });
       })
-      .catch(console.error);
+      .then(() => fetchCustomer(id))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   };
 
   const archiveCustomer = async (id) => {
@@ -76,7 +85,6 @@ const CustomerDetails = () => {
   };
 
   const handleAddPromotionToCustomer = async (id, promId) => {
-    setPromotionToAdd(promId);
     setLoading(true);
     const body = {
       promotions: [...customer.promotions, promId],
@@ -84,7 +92,8 @@ const CustomerDetails = () => {
     await axios
       .put(`/customers/${id}`, body)
       .then((res) => {
-        setCustomer(res.data);
+        setPromotionToAdd(promId);
+        fetchCustomerAndPromotion(location.state?.id);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -95,7 +104,14 @@ const CustomerDetails = () => {
   ) : (
     <Layout>
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
-        <h3 className={`${themedFont.primary} my-2`}>Customer Details</h3>
+        <div className="d-flex gap-2 align-items-center">
+          <ArrowBackIcon
+            className="ArrowBackIcon"
+            fontSize="medium"
+            onClick={() => nav("/customers")}
+          />
+          <h3 className={`${themedFont.primary} my-2`}>Customer Details</h3>
+        </div>
         <div className=" mainBtn align-items-center">
           <div>
             <BtnContained
@@ -137,9 +153,9 @@ const CustomerDetails = () => {
               <BtnContained
                 title="Send Email"
                 handleClick={() => {
-                  // var mailto_link = "mailto:" + customer.email;
-                  // window.open(mailto_link, "emailWindow");
-                  console.log("email");
+                  var mailto_link =
+                    "mailto:" + customer.email + "?subject=Monjay";
+                  window.open(mailto_link, "emailWindow");
                 }}
               />
             </div>
@@ -230,17 +246,24 @@ const CustomerDetails = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className={themedFont.primary}>Promotions</h5>
                 <Modal btnTitle="Add" title="Select a Promotion">
-                  <DDSearch
-                    name="categoryId"
-                    lable=""
-                    options={promotions}
-                    isDisabled={false}
-                    isMulti={false}
-                    val={promotionToAdd}
-                    handleChange={(e) =>
-                      handleAddPromotionToCustomer(customer._id, e.target.value)
-                    }
-                  />
+                  {promotions.length > 0 ? (
+                    <DDSearch
+                      name="categoryId"
+                      lable=""
+                      options={promotions}
+                      isDisabled={false}
+                      isMulti={false}
+                      val={promotionToAdd}
+                      handleChange={(e) =>
+                        handleAddPromotionToCustomer(
+                          customer._id,
+                          e.target.value
+                        )
+                      }
+                    />
+                  ) : (
+                    "No available promotions at this time"
+                  )}
                 </Modal>
               </div>
               <hr />

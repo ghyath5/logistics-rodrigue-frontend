@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
@@ -16,9 +17,11 @@ const Customers = ({ archived }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [archiveTriggered, setrchiveTriggered] = useState(false);
   const [allCustomers, setAllCustomers] = useState([]);
+  const [organisations, setOrganisations] = useState([]);
 
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  var ORGS;
 
   const columns = [
     {
@@ -50,15 +53,15 @@ const Customers = ({ archived }) => {
       label: "Address",
       minWidth: 100,
     },
-    // {
-    //   id: "geocodingStatus",
-    //   label: "Geocoding Status",
-    //   minWidth: 50,
-    //   class: "tableEditBtn",
-    // },
+    {
+      id: "organization",
+      label: "Organization",
+      minWidth: 80,
+      class: "tableEditBtn",
+    },
     {
       id: "paymetMethod",
-      label: "Paymet Method",
+      label: "Payment Method",
       minWidth: 50,
     },
     {
@@ -86,7 +89,7 @@ const Customers = ({ archived }) => {
     codeid,
     businessName,
     address,
-    // geocodingStatus,
+    organization,
     paymetMethod,
     sepicalPricing,
     // pendingOreds,
@@ -98,7 +101,7 @@ const Customers = ({ archived }) => {
       codeid,
       businessName,
       address,
-      // geocodingStatus,
+      organization,
       paymetMethod,
       sepicalPricing,
       // pendingOreds,
@@ -107,19 +110,24 @@ const Customers = ({ archived }) => {
   }
 
   useEffect(() => {
-    fetchCustomers();
+    console.log(ORGS);
+  }, [ORGS]);
+  useEffect(() => {
+    fetchOrganisations();
   }, [archived, archiveTriggered]);
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = async (O) => {
     setLoading(true);
     await axios
       .get(
-        `/customers?page=1&limit=10&isarchived=${archived ? archived : false}`
+        `/customers?page=1&limit=100&isarchived=${archived ? archived : false}`
       )
       .then((res) => {
         setAllCustomers(res.data);
         setRows([]);
         res.data.customers.forEach((p) => {
+          let orgg = O?.filter((org) => org._id === p?.organization)[0]?.name;
+
           setRows((prev) => [
             ...prev,
             createData(
@@ -128,7 +136,7 @@ const Customers = ({ archived }) => {
               p.codeid,
               p.businessname,
               p.address[0],
-              // p.geocodingStatus,
+              p.organization ? orgg : "Consolidate biller",
               p.paymentmethod?.name,
               p.ispricingdefault ? "default" : "else",
               // p.pendingorders?.length,
@@ -139,6 +147,17 @@ const Customers = ({ archived }) => {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
+  };
+
+  const fetchOrganisations = async () => {
+    await axios
+      .get("organization")
+      .then((res) => {
+        ORGS = res.data.organizations;
+        setOrganisations(res.data.organizations);
+        fetchCustomers(res.data.organizations);
+      })
+      .catch(console.error);
   };
 
   const toggleArchiveCustomer = async (id, is) => {
@@ -164,6 +183,8 @@ const Customers = ({ archived }) => {
         setAllCustomers(res.data);
         setRows([]);
         res.data.forEach((p) => {
+          let orgg = ORGS?.filter((org) => org._id === p?.organization)[0]
+            ?.name;
           setRows((prev) => [
             ...prev,
             createData(
@@ -172,10 +193,9 @@ const Customers = ({ archived }) => {
               p.codeid,
               p.businessname,
               p.address[0],
-              // p.geocodingStatus,
+              p.organization ? orgg : "Consolidate biller",
               p.paymentmethod?.name,
               p.ispricingdefault ? "default" : "else",
-              // p.pendingorders?.length,
               archived ? "Unarchive Now" : "Archive Now"
             ),
           ]);

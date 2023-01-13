@@ -47,7 +47,7 @@ const SideBar = ({ isOpen, setOpen }) => {
           </h1>
         </div> */}
         <h2 className="my-5 text-center text-capitalize textLightBlue">
-          {user}
+          {user.split(" ")[0]}
         </h2>
         <div className={`sideBarList`}>
           <SideBarList toggleDrawer={toggleDrawer} />

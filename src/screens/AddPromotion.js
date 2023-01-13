@@ -22,12 +22,10 @@ export const AddPromotion = ({ isEdit }) => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [promotionTarget, setPromotionTarget] = useState(targets[0].value);
-  // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  // const [finalProductsList, setFinalProductsList] = useState([]);
-
+  const [catdis, setCatDis] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [from, setFrom] = useState("");
@@ -75,9 +73,7 @@ export const AddPromotion = ({ isEdit }) => {
           ]);
         });
       })
-      .then(() => {
-        fetchCategories();
-      })
+      .then(fetchCategories)
       .catch(console.error)
       .finally(() => setLoading(false));
   };
@@ -132,6 +128,7 @@ export const AddPromotion = ({ isEdit }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "category") {
+      setCatDis(true);
       let selectedCategory = categories.filter((cat) => cat.value === value)[0];
       setProductsToAdd([]);
       setCategoryToAdd({
@@ -268,6 +265,7 @@ export const AddPromotion = ({ isEdit }) => {
     selectedCat.discountpercentage = newDiscount;
     console.log(selectedCat);
     setCategoryToAdd(selectedCat);
+    setCatDis(false);
   };
 
   return loading ? (
@@ -332,7 +330,7 @@ export const AddPromotion = ({ isEdit }) => {
                 lable="from"
                 id="dateFrom"
                 name="from"
-                minDate={moment().clone().add(1, "days")}
+                minDate={moment().clone()}
                 value={from}
                 handleChange={(e) => setFrom(e.target.value)}
                 handleBlur={handleBlur}
@@ -370,6 +368,7 @@ export const AddPromotion = ({ isEdit }) => {
                 lable="Add category to promotion"
                 options={categories}
                 isMulti={false}
+                isDisabled={catdis}
                 val={categoryToAdd}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
