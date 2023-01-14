@@ -6,7 +6,6 @@ import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
-import DDSearch from "../components/layout/DDSearch";
 import { DatePickerr } from "../components/layout/DatePickers";
 import { vehiclesStatuses } from "../data/configs";
 import moment from "moment/moment";
@@ -21,7 +20,6 @@ const AddNewVehicle = ({ isEdit }) => {
     make: "",
     color: "",
     expiresIn: moment("L"),
-    status: "",
   });
   const [errors, setErrors] = useState({
     plate: false,
@@ -29,7 +27,6 @@ const AddNewVehicle = ({ isEdit }) => {
     make: false,
     color: false,
     expiresIn: false,
-    status: false,
   });
 
   useEffect(() => {
@@ -47,7 +44,6 @@ const AddNewVehicle = ({ isEdit }) => {
           make: res.data.make,
           color: res.data.color,
           expiresIn: moment(new Date(res.data.expiresIn)).format("L"),
-          status: vehiclesStatuses[res.data.status].value,
         });
         setLoading(false);
       })
@@ -89,7 +85,6 @@ const AddNewVehicle = ({ isEdit }) => {
         break;
       case "color":
       case "expiresIn":
-      case "status":
         value !== "" ? hasError(name, false) : hasError(name, true);
         break;
       default:
@@ -107,7 +102,7 @@ const AddNewVehicle = ({ isEdit }) => {
           make: data.make,
           color: data.color,
           expiresIn: data.expiresIn,
-          status: data.status,
+          status: 1,
         })
         .then((res) => {
           setLoading(false);
@@ -129,7 +124,6 @@ const AddNewVehicle = ({ isEdit }) => {
           make: data.make,
           color: data.color,
           expiresIn: data.expiresIn,
-          status: data.status,
         })
         .then((res) => {
           setLoading(false);
@@ -242,20 +236,6 @@ const AddNewVehicle = ({ isEdit }) => {
                 handleBlur={handleBlur}
                 error={errors?.expiresIn}
                 errorMessage="you must select it's expiry date"
-              />
-            </div>
-            <div className="col-md-6 mx-sm-12">
-              <DDSearch
-                name="status"
-                lable="Status"
-                options={vehiclesStatuses}
-                isDisabled={false}
-                isMulti={false}
-                val={data?.status}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                error={errors?.status}
-                errorMessage="you must select the status"
               />
             </div>
           </div>

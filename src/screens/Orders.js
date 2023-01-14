@@ -10,17 +10,43 @@ import axios from "../axios";
 import Accordionn from "../components/layout/Accordionn";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import debounce from "lodash.debounce";
+import { DatePickerr } from "../components/layout/DatePickers";
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setAllOrders] = useState([]);
   const [expanded, setExpanded] = useState(null);
+  const [fromLink, setFromLink] = useState("");
+  const [toLink, setToLink] = useState("");
+  const [M1, setM1] = useState(new Date());
+  const [M2, setM2] = useState(new Date());
 
   const nav = useNavigate();
 
+  const handleChangeM1 = (d) => {
+    let selectedD = new Date(d);
+    setM1(selectedD);
+    let from = {
+      day: String(selectedD.getDate()).padStart(2, "0"),
+      month: String(selectedD.getMonth() + 1).padStart(2, "0"),
+      year: selectedD.getFullYear(),
+    };
+    setFromLink(`${from.year}-${from.month}-${from.day}`);
+  };
+
+  const handleChangeM2 = (d) => {
+    let selectedD = new Date(d);
+    setM2(selectedD);
+    let to = {
+      day: String(selectedD.getDate()).padStart(2, "0"),
+      month: String(selectedD.getMonth() + 1).padStart(2, "0"),
+      year: selectedD.getFullYear(),
+    };
+    setToLink(`${to.year}-${to.month}-${to.day}`);
+  };
+
   useEffect(() => {
-    // del();
     fetchOrders();
   }, []);
 
@@ -30,6 +56,7 @@ const Orders = () => {
   //     .then((res) => {})
   //     .catch(console.error);
   // };
+
   const searchForOrders = async (q) => {
     await axios
       .post(`/orders/findbytext?name=${q}`)
@@ -71,6 +98,12 @@ const Orders = () => {
       .finally(() => setLoading(false));
   };
 
+  const exportReport = async () => {
+    window.open(
+      `https://logistics-rodrigue-backend.onrender.com/api/orders/export?from=${fromLink}&to=${toLink}`
+    );
+  };
+
   return loading ? (
     <Loader />
   ) : (
@@ -92,6 +125,29 @@ const Orders = () => {
       </div>
       <div className="d-flex justify-content-between mb-3">
         <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
+        <div className="d-flex align-items-center gap-3">
+          <DatePickerr
+            inputFormat="YYYY-MM-DD"
+            views={["year", "month", "day"]}
+            lable=""
+            id="orderDate"
+            name="orderDate"
+            value={M1}
+            handleChange={(e) => handleChangeM1(e.target.value)}
+            nol
+          />
+          <DatePickerr
+            inputFormat="YYYY-MM-DD"
+            views={["year", "month", "day"]}
+            lable=""
+            id="orderDate"
+            name="orderDate"
+            value={M2}
+            handleChange={(e) => handleChangeM2(e.target.value)}
+            nol
+          />
+          <BtnContained title="EXPORT REPORT" handleClick={exportReport} />
+        </div>
       </div>
       {orders.length > 0 ? (
         <div className="myAccordion">

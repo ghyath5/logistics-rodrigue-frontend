@@ -17,6 +17,7 @@ export const DatePickerr = ({
   shouldDisableDate,
   inputFormat,
   views,
+  nol,
 }) => {
   const handleTime = (string) => {
     let newTime = new Date(string).toISOString();
@@ -24,10 +25,14 @@ export const DatePickerr = ({
   };
 
   return (
-    <div className="d-flex flex-column dateTimePicker mt-2">
-      <label htmlFor={id} className="formsLable mb-2">
-        {lable}
-      </label>
+    <div
+      className={`d-flex flex-column dateTimePicker ${!nol ? "mt-2" : "mt-0"}`}
+    >
+      {!nol && (
+        <label htmlFor={id} className="formsLable mb-2">
+          {lable}
+        </label>
+      )}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en-gb"}>
         <DatePicker
           orientation="landscape"
@@ -42,7 +47,11 @@ export const DatePickerr = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              className="formsInput border-0 p-2"
+              className={
+                nol
+                  ? "formsInput border-0 py-1 px-2 m-0"
+                  : "formsInput border-0 p-2"
+              }
               variant="standard"
             />
           )}

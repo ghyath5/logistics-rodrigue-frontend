@@ -271,23 +271,23 @@ const AddNewStaffMember = ({ isEdit }) => {
                 />
               </div>
             </div>
-            {!isEdit && (
-              <div className="col-sm-12 col-md-6">
-                <InputOutlined
-                  name="password"
-                  id="password"
-                  lable="Password"
-                  defaultValue="password"
-                  type="password"
-                  value={data?.password}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  error={errors?.password}
-                  errorMessage="weak password"
-                  autoComplete="new-password"
-                />
-              </div>
-            )}
+            {/* {!isEdit && ( */}
+            <div className="col-sm-12 col-md-6">
+              <InputOutlined
+                name="password"
+                id="password"
+                lable="Password"
+                defaultValue="password"
+                type="password"
+                value={data?.password}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                error={errors?.password}
+                errorMessage="weak password"
+                autoComplete="new-password"
+              />
+            </div>
+            {/* )} */}
           </div>
         </div>
         <div className="my-5 text-center">

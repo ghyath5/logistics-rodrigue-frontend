@@ -138,7 +138,23 @@ export const StaffMembers = () => {
     await axios
       .post(`/users/find?find=${q}`)
       .then((res) => {
-        console.log(res.data);
+        setRows([]);
+        setAllStaff(res.data);
+        res.data.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p?._id,
+              p?.name,
+              roles[p?.role]?.label ? roles[p.role].label : "Driver",
+              p?.phonenumber,
+              p?.email,
+              p?.lastlogin ? p?.lastlogin : "_",
+              "Edit",
+              "Delete"
+            ),
+          ]);
+        });
       })
       .catch(console.error);
   };

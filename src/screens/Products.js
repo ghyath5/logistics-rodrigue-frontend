@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
@@ -157,7 +158,26 @@ const Products = () => {
     await axios
       .post(`/products/find?find=${q}`)
       .then((res) => {
-        console.log(res.data);
+        setRows([]);
+        setAllProducts(res.data);
+
+        res.data.forEach((p) => {
+          setRows((prev) => [
+            ...prev,
+            createData(
+              p._id,
+              p.generatedCode,
+              p.name,
+              p.categoryId?.name,
+              p.price,
+              p.unitesperbox,
+              p.prioritynumber,
+              p.visibility === false ? "Hidden" : "Visible",
+              "Delete",
+              "Edit"
+            ),
+          ]);
+        });
       })
       .catch(console.error);
   };

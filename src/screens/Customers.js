@@ -64,11 +64,6 @@ const Customers = ({ archived }) => {
       label: "Payment Method",
       minWidth: 50,
     },
-    {
-      id: "sepicalPricing",
-      label: "Sepical Pricing",
-      minWidth: 50,
-    },
     // {
     //   id: "pendingOreds",
     //   label: "Pending Orders",
@@ -91,8 +86,6 @@ const Customers = ({ archived }) => {
     address,
     organization,
     paymetMethod,
-    sepicalPricing,
-    // pendingOreds,
     archive
   ) {
     return {
@@ -103,8 +96,6 @@ const Customers = ({ archived }) => {
       address,
       organization,
       paymetMethod,
-      sepicalPricing,
-      // pendingOreds,
       archive,
     };
   }
@@ -136,10 +127,8 @@ const Customers = ({ archived }) => {
               p.codeid,
               p.businessname,
               p.address[0],
-              p.organization ? orgg : "Consolidate biller",
+              p.organization ? orgg : "-",
               p.paymentmethod?.name,
-              p.ispricingdefault ? "default" : "else",
-              // p.pendingorders?.length,
               archived ? "Unarchive Now" : "Archive Now"
             ),
           ]);
@@ -193,9 +182,8 @@ const Customers = ({ archived }) => {
               p.codeid,
               p.businessname,
               p.address[0],
-              p.organization ? orgg : "Consolidate biller",
+              p.organization ? orgg : "-",
               p.paymentmethod?.name,
-              p.ispricingdefault ? "default" : "else",
               archived ? "Unarchive Now" : "Archive Now"
             ),
           ]);
