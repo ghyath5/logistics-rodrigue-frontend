@@ -162,7 +162,7 @@ const Accordionn = ({
                 <DDSearch
                   name="status"
                   options={orderStatues}
-                  isDisabled={statuss === "3"}
+                  isDisabled={false}
                   isMulti={false}
                   val={statuss}
                   handleChange={handleChangeOrderStatus}
