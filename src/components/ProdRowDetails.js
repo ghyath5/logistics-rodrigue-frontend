@@ -40,7 +40,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
     <div className="prodRowEditBox w-100 p-2 mb-3">
       <div className="d-flex gap-3 align-items-center">
         <InputOutlined
-          lable="name"
+          lable="name of the product"
           defaultValue="Select Product"
           type="text"
           value={item.name}
