@@ -81,21 +81,20 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
     return activeStep === totalSteps() - 1;
   };
 
-  const allStepsCompleted = useCallback(() => {
+  const allStepsCompleted = () => {
     return completedSteps() === totalSteps();
-  });
-
-  useEffect(() => {
-    allStepsCompleted() && setAllDone(true);
-  }, [allStepsCompleted, data]);
+  };
 
   const handleNext = () => {
+    // console.log("isLastStep", isLastStep());
     const newCompleted = completed;
     const newActiveStep =
       (isLastStep() && !allStepsCompleted()) || activeStep + 1 in completed
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in completed))
+        : isLastStep() && allStepsCompleted()
+        ? setAllDone(true)
         : activeStep + 1;
 
     switch (activeStep) {
@@ -133,9 +132,9 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
     }
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
 
   const handleStep = (step) => () => {
     setActiveStep(step);
@@ -152,7 +151,7 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
     setLoading(true);
     axios
       .post(`customers`, data)
-      .then((res) => {
+      .then(() => {
         setLoading(false);
         navigate("/customers");
       })
@@ -277,12 +276,12 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
               )}
             </div>
 
-            <div className="d-flex justify-content-between my-3 mx-4">
-              <BtnContained
+            <div className="d-flex justify-content-end my-3 mx-4">
+              {/* <BtnContained
                 disabled={activeStep === 0}
                 handleClick={handleBack}
                 title="Back"
-              />
+              /> */}
               <BtnContained
                 title="Next"
                 handleClick={

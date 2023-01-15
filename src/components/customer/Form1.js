@@ -85,7 +85,7 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
       case "suburb":
       case "address":
       case "postcode":
-        value === "" || value.length < 4
+        value === "" || value.length < 3
           ? hasError(name, true)
           : hasError(name, false);
         break;

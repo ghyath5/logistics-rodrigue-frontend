@@ -123,7 +123,7 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
               handleChange={handleChange}
               // handleBlur={handleBlur}
               error={step4Eerrors?.organisation}
-              errorMessage="please pick a state"
+              errorMessage="please pick an organisation"
             />
             <div className="mt-3">
               <Modal
