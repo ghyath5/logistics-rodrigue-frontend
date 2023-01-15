@@ -226,6 +226,8 @@ const AddNewVehicle = ({ isEdit }) => {
             <div className="col-md-6 mx-sm-12">
               <DatePickerr
                 id="regDue"
+                inputFormat="DD-MM-YYYY"
+                views={["year", "month", "day"]}
                 lable="Registration Expiry Date"
                 name="expiresIn"
                 minDate={moment("L")}
