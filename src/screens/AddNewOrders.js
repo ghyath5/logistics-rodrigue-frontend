@@ -93,7 +93,6 @@ const AddNewOrders = ({ isEdit }) => {
         `/orders/sendcustomeridfororder/${CUSTOMERID}?find=${q}&page=1&limit=100000`
       )
       .then((res) => {
-        console.log(res.data.data);
         setProducts([]);
         res.data.data.forEach((prod) => {
           setProducts((prev) => [

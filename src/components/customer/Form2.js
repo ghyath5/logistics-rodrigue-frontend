@@ -2,13 +2,13 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import InputOutlined from "../layout/InputOutlined";
 import validator from "validator";
 
-const Form2 = forwardRef(({ setData }, ref) => {
+const Form2 = forwardRef(({ setData, isEdit, data }, ref) => {
   const [step2Data, setStep2Data] = useState({
-    customername: "",
-    email: "",
-    phonenumber: "",
-    mobilenumber: "",
-    directdialnumber: "",
+    customername: isEdit ? data.customername : "",
+    email: isEdit ? data.email : "",
+    phonenumber: isEdit ? data.phonenumber : "",
+    mobilenumber: isEdit ? data.mobilenumber : "",
+    directdialnumber: isEdit ? data.directdialnumber : "",
   });
   const [step2Eerrors, setStep2Errors] = useState({
     customername: false,
@@ -97,7 +97,6 @@ const Form2 = forwardRef(({ setData }, ref) => {
         break;
       case "mobilenumber":
       case "directdialnumber":
-        console.log(value.length);
         value.length > 0 &&
           (validator.isMobilePhone(value.toString(), ["en-AU"])
             ? hasError(name, false)

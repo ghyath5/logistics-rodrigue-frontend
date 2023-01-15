@@ -11,7 +11,7 @@ const steps = [
   "Billing and Pricing",
 ];
 
-const AddNewCustomer = () => {
+const AddNewCustomer = ({ isEdit }) => {
   const nav = useNavigate();
   const [completed, setCompleted] = React.useState({});
 
@@ -29,7 +29,7 @@ const AddNewCustomer = () => {
               "monjay-theme"
             )} my-3 mx-2`}
           >
-            Add New Customer
+            {isEdit ? "Edit Customer" : "Add New Customer"}
           </h4>
         </div>
       </div>
@@ -37,6 +37,7 @@ const AddNewCustomer = () => {
         steps={steps}
         completed={completed}
         setCompleted={setCompleted}
+        isEdit={isEdit}
       />
     </Layout>
   );

@@ -44,10 +44,3 @@ const CategoryCard = ({ id, name, handleAction, isUpdate }) => {
 };
 
 export default CategoryCard;
-{
-  /* <div className="statsCard d-flex justify-content-center flex-column text-center">
-  {icon && <img src={icon} alt="icon" className="mb-3" />}
-  <h3 className="m-0">{title}</h3>
-  <h2>{value}</h2>
-</div> */
-}

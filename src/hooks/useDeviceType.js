@@ -19,7 +19,7 @@ export default function useDeviceType() {
       : window.innerWidth < 900
       ? setDeviceType("tablet")
       : setDeviceType("laptop");
-  }, [window.innerWidth]);
+  }, []);
 
   return { deviceType };
 }

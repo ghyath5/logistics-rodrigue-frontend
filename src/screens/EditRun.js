@@ -93,8 +93,7 @@ const EditRun = () => {
   };
 
   const handleBlur = (e) => {
-    const { name, value } = e.target;
-    console.log({ name, value });
+    // const { name, value } = e.target;
   };
 
   const allVAlid = () => {
@@ -119,7 +118,7 @@ const EditRun = () => {
           note: data.note,
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           navigate("/runs");
         })
         .catch(console.error)

@@ -207,7 +207,6 @@ export const AddPromotion = ({ isEdit }) => {
           productspromotion: productsToAdd,
         })
         .then((res) => {
-          console.log(res);
           nav("/promotions");
         })
         .catch(console.error)
@@ -263,7 +262,6 @@ export const AddPromotion = ({ isEdit }) => {
   const handleDiscountChange = (newDiscount) => {
     let selectedCat = categoryToAdd;
     selectedCat.discountpercentage = newDiscount;
-    console.log(selectedCat);
     setCategoryToAdd(selectedCat);
     setCatDis(false);
   };

@@ -7,11 +7,11 @@ import axios from "../../axios";
 import InputOutlined from "../layout/InputOutlined";
 import Modal from "../layout/Modal";
 
-const Form4 = forwardRef(({ setData, payments }, ref) => {
+const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
   const [step4Data, setStep4Data] = useState({
-    paymentmethod: payments[0].value,
-    isconsolidatedbiller: true,
-    organisation: "",
+    paymentmethod: isEdit ? data.paymentmethod : payments[0].value,
+    isconsolidatedbiller: isEdit ? data.isconsolidatedbiller : true,
+    organisation: isEdit ? data.organisation : "",
   });
   const [step4Eerrors, setStep4Errors] = useState({
     paymentmethod: false,
@@ -20,10 +20,6 @@ const Form4 = forwardRef(({ setData, payments }, ref) => {
   });
   const [organisations, setOrganisations] = useState([]);
   const [addedOrg, setAddedOrg] = useState("");
-
-  useEffect(() => {
-    console.log({ step4Data });
-  }, [step4Data]);
 
   useEffect(() => {
     fetchOrganisations();

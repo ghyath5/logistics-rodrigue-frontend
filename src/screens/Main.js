@@ -56,7 +56,16 @@ const Main = () => {
           <Route exact path="promotions" element={<Promotions />} />
           <Route exact path="drivers" element={<Drivers />} />
           <Route exact path="staffmembers" element={<StaffMembers />} />
-          <Route exact path="addnewcustomer" element={<AddNewCustomer />} />
+          <Route
+            exact
+            path="addnewcustomer"
+            element={<AddNewCustomer isEdit={false} />}
+          />
+          <Route
+            exact
+            path="editcustomer"
+            element={<AddNewCustomer isEdit={true} />}
+          />
           <Route
             exact
             path="archivedCustomers"

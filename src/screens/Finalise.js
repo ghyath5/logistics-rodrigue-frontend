@@ -5,7 +5,6 @@ import Loader from "../components/layout/Loader";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 import { runsStatuses } from "../data/configs";
-import emptyBox from "../assets/noData.svg";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 
 const Runs = () => {

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
-import BtnOutlined from "../components/layout/BtnOutlined";
 import SearchInput from "../components/layout/SearchInput";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
@@ -98,7 +97,7 @@ export const StaffMembers = () => {
     await axios
       .get("people/staffmembers?page=1&limit=100")
       .then((res) => {
-        let all = [...res.data.data.users, ...res.data.data.drivers];
+        let all = res.data.data.users;
         setAllStaff(all);
         all.forEach((p) => {
           setRows((prev) => [
@@ -106,7 +105,7 @@ export const StaffMembers = () => {
             createData(
               p?._id,
               p?.name,
-              roles[p?.role]?.label ? roles[p.role].label : "Driver",
+              roles[p?.role]?.label,
               p?.phonenumber,
               p?.email,
               p?.lastlogin ? p?.lastlogin : "_",

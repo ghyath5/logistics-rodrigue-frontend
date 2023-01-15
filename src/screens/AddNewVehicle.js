@@ -7,7 +7,6 @@ import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
 import { DatePickerr } from "../components/layout/DatePickers";
-import { vehiclesStatuses } from "../data/configs";
 import moment from "moment/moment";
 
 const AddNewVehicle = ({ isEdit }) => {
@@ -114,7 +113,6 @@ const AddNewVehicle = ({ isEdit }) => {
   };
 
   const handleUpdateVehicle = () => {
-    console.log("update");
     if (allVAlid()) {
       setLoading(true);
       axios

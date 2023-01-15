@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import { Button, StepButton } from "@mui/material";
+import { StepButton } from "@mui/material";
 import useDeviceType from "../../hooks/useDeviceType";
 import Loader from "./Loader";
 import BtnContained from "./BtnContained";
@@ -10,12 +11,12 @@ import Form2 from "../customer/Form2";
 import Form3 from "../customer/Form3";
 import Form4 from "../customer/Form4";
 import axios from "../../axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const StepperForm = ({ steps, completed, setCompleted }) => {
+const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
   const { deviceType } = useDeviceType();
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [allDone, setAllDone] = useState(false);
@@ -27,7 +28,46 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
   const [occurs, setOccurs] = useState([]);
   const [payments, setPayments] = useState([]);
 
-  // useEffect(() => console.log(data), [data]);
+  useEffect(() => {
+    fetchOccursAndPayments();
+  }, []);
+
+  useEffect(() => {
+    allDone && (isEdit ? handleUpdateCustomer() : handleAddCustomer());
+  }, [allDone]);
+
+  useEffect(() => {
+    isEdit && fetchCustomerById(location.state?.id);
+  }, [isEdit, location.state?.id]);
+
+  const fetchCustomerById = async (id) => {
+    setLoading(true);
+    await axios
+      .get(`/customers/${id}`)
+      .then((res) => {
+        setData({
+          businessname: res.data.businessname,
+          abn: res.data.abn,
+          address: res.data.address[0],
+          suburb: res.data.suburb,
+          state: res.data.state,
+          postcode: res.data.postcode,
+          notes: res.data?.notes || "",
+          customername: res.data.customername,
+          email: res.data.email,
+          phonenumber: res.data?.phonenumber || "",
+          mobilenumber: res.data?.mobilenumber || "",
+          directdialnumber: res.data?.directdialnumber || "",
+          deliveryoccur: res.data?.deliveryoccur,
+          deliveryfee: res.data?.deliveryfee,
+          paymentmethod: res.data?.paymentmethod,
+          isconsolidatedbiller: res.data?.organization ? false : true,
+          organisation: res.data?.organization || "",
+        });
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
 
   const totalSteps = () => {
     return steps.length;
@@ -41,9 +81,13 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
     return activeStep === totalSteps() - 1;
   };
 
-  const allStepsCompleted = () => {
+  const allStepsCompleted = useCallback(() => {
     return completedSteps() === totalSteps();
-  };
+  });
+
+  useEffect(() => {
+    allStepsCompleted() && setAllDone(true);
+  }, [allStepsCompleted, data]);
 
   const handleNext = () => {
     const newCompleted = completed;
@@ -118,9 +162,19 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
       .catch(console.error);
   };
 
-  useEffect(() => {
-    fetchOccursAndPayments();
-  }, []);
+  const handleUpdateCustomer = () => {
+    setLoading(true);
+    axios
+      .put(`customers/${location.state?.id}`, data)
+      .then((res) => {
+        setLoading(false);
+        navigate("/customers");
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
 
   const fetchOccursAndPayments = async () => {
     setLoading(true);
@@ -152,14 +206,6 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
       })
       .catch(console.error);
   };
-
-  useEffect(() => {
-    allStepsCompleted() && setAllDone(true);
-  }, [allStepsCompleted, data]);
-
-  useEffect(() => {
-    allDone && handleAddCustomer();
-  }, [allDone]);
 
   return isLoading ? (
     <Loader />
@@ -196,14 +242,26 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
           <div className="formsContainer mx-1 mx-sm-2 mt-sm-4 px-0 px-sm-3 w-100">
             <div className="mb-2 mt-4 mx-3 mx-sm-4">
               {activeStep === 0 ? (
-                <Form1 ref={form1Ref} setData={setData} />
+                <Form1
+                  ref={form1Ref}
+                  setData={setData}
+                  data={data}
+                  isEdit={isEdit}
+                />
               ) : activeStep === 1 ? (
-                <Form2 ref={form2Ref} setData={setData} />
+                <Form2
+                  ref={form2Ref}
+                  setData={setData}
+                  data={data}
+                  isEdit={isEdit}
+                />
               ) : activeStep === 2 ? (
                 <Form3
                   ref={form3Ref}
                   setData={setData}
                   occurs={occurs.reverse()}
+                  data={data}
+                  isEdit={isEdit}
                 />
               ) : (
                 activeStep === 3 && (
@@ -212,6 +270,8 @@ const StepperForm = ({ steps, completed, setCompleted }) => {
                     setData={setData}
                     payments={payments}
                     setLoading={setLoading}
+                    data={data}
+                    isEdit={isEdit}
                   />
                 )
               )}

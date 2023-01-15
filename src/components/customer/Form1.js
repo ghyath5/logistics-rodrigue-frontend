@@ -4,15 +4,15 @@ import InputOutlined from "../layout/InputOutlined";
 import TextAreaOutlined from "../layout/TextAreaOutlined";
 import { states } from "../../data/configs";
 
-const Form1 = forwardRef(({ setData }, ref) => {
+const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
   const [step1Data, setStep1Data] = useState({
-    businessname: "",
-    abn: "",
-    address: "",
-    suburb: "",
-    state: "",
-    postcode: "",
-    notes: "",
+    businessname: isEdit ? data.businessname : "",
+    abn: isEdit ? data.abn : "",
+    address: isEdit ? data.address : "",
+    suburb: isEdit ? data.suburb : "",
+    state: isEdit ? data.state : "",
+    postcode: isEdit ? data.postcode : "",
+    notes: isEdit ? data.notes : "",
   });
   const [step1Eerrors, setStep1Errors] = useState({
     businessname: false,

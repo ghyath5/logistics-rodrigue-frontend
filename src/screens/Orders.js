@@ -92,7 +92,7 @@ const Orders = () => {
     await axios
       .post(`/orders/deliveryoccur`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -126,26 +126,30 @@ const Orders = () => {
       <div className="d-flex justify-content-between mb-3">
         <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
         <div className="d-flex align-items-center gap-3">
-          <DatePickerr
-            inputFormat="YYYY-MM-DD"
-            views={["year", "month", "day"]}
-            lable=""
-            id="orderDate"
-            name="orderDate"
-            value={M1}
-            handleChange={(e) => handleChangeM1(e.target.value)}
-            nol
-          />
-          <DatePickerr
-            inputFormat="YYYY-MM-DD"
-            views={["year", "month", "day"]}
-            lable=""
-            id="orderDate"
-            name="orderDate"
-            value={M2}
-            handleChange={(e) => handleChangeM2(e.target.value)}
-            nol
-          />
+          <div style={{ maxWidth: 150 }}>
+            <DatePickerr
+              inputFormat="YYYY-MM-DD"
+              views={["year", "month", "day"]}
+              lable=""
+              id="orderDate"
+              name="orderDate"
+              value={M1}
+              handleChange={(e) => handleChangeM1(e.target.value)}
+              nol
+            />
+          </div>
+          <div style={{ maxWidth: 150 }}>
+            <DatePickerr
+              inputFormat="YYYY-MM-DD"
+              views={["year", "month", "day"]}
+              lable=""
+              id="orderDate"
+              name="orderDate"
+              value={M2}
+              handleChange={(e) => handleChangeM2(e.target.value)}
+              nol
+            />
+          </div>
           <BtnContained title="EXPORT REPORT" handleClick={exportReport} />
         </div>
       </div>

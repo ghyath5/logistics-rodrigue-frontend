@@ -2,7 +2,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
-import seacrIcon from "../assets/search.svg";
 import StatsCard from "../components/layout/StatsCard";
 import Table from "../components/layout/Table";
 import Layout from "../components/partials/Layout";

@@ -35,6 +35,7 @@ const Login = () => {
       .then((res) => {
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
+        res.data.role === 1 && Cookies.set("zzzz", 1, { expires: 3 });
         navigate("/");
       })
       .catch((err) => {
@@ -95,7 +96,7 @@ const Login = () => {
               classes="w-100"
               handleClick={() => handleLogin()}
             />
-            <h6 className="mt-2">I've forgotten my password</h6>
+            {/* <h6 className="mt-2">I've forgotten my password</h6> */}
           </div>
           {/* <div className="text-center mt-3">
             <BtnOutlined

@@ -2,10 +2,10 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import RadioGroupForm from "../layout/RadioGroupForm";
 import InputOutlined from "../layout/InputOutlined";
 
-const Form3 = forwardRef(({ setData, occurs }, ref) => {
+const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
   const [step3Data, setStep3Data] = useState({
-    deliveryoccur: occurs[0].value,
-    deliveryfee: "",
+    deliveryoccur: isEdit ? data.deliveryoccur : occurs[0].value,
+    deliveryfee: isEdit ? data.deliveryfee : "",
   });
   const [step3Eerrors, setStep3Errors] = useState({
     deliveryoccur: false,

@@ -64,11 +64,13 @@ const Customers = ({ archived }) => {
       label: "Payment Method",
       minWidth: 50,
     },
-    // {
-    //   id: "pendingOreds",
-    //   label: "Pending Orders",
-    //   minWidth: 100,
-    // },
+    {
+      id: "edit",
+      label: "Edit",
+      minWidth: 50,
+      class: ["tableEditBtn"],
+      action: (id) => nav("/editcustomer", { state: { id: id } }),
+    },
     {
       id: "archive",
       label: archived ? "Unarchive" : "Archive",
@@ -86,6 +88,7 @@ const Customers = ({ archived }) => {
     address,
     organization,
     paymetMethod,
+    edit,
     archive
   ) {
     return {
@@ -96,13 +99,11 @@ const Customers = ({ archived }) => {
       address,
       organization,
       paymetMethod,
+      edit,
       archive,
     };
   }
 
-  useEffect(() => {
-    console.log(ORGS);
-  }, [ORGS]);
   useEffect(() => {
     fetchOrganisations();
   }, [archived, archiveTriggered]);
@@ -129,6 +130,7 @@ const Customers = ({ archived }) => {
               p.address[0],
               p.organization ? orgg : "-",
               p.paymentmethod?.name,
+              "Edit",
               archived ? "Unarchive Now" : "Archive Now"
             ),
           ]);
