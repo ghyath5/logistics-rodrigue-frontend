@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from "react";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -14,7 +15,7 @@ const AddNewRoute = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
-    places: "",
+    places: [],
     description: "",
     from: "",
     to: "",
@@ -24,6 +25,7 @@ const AddNewRoute = ({ isEdit }) => {
     from: false,
     to: false,
   });
+  const [placesString, setPlacesString] = useState("");
 
   useEffect(() => {
     isEdit && fetchRouteById(location.state?.id);
@@ -48,8 +50,10 @@ const AddNewRoute = ({ isEdit }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    name === "places" ? setPlacesString(value) : null;
+
     setData((prev) => {
-      return { ...prev, [name]: value };
+      return { ...prev, [name]: name === "places" ? value.split("-") : value };
     });
   };
 
@@ -85,6 +89,7 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleAddNewRoute = () => {
+    console.log(data);
     if (allVAlid()) {
       setLoading(true);
       axios
@@ -200,11 +205,11 @@ const AddNewRoute = ({ isEdit }) => {
             <div className="col-sm-12 col-md-6">
               <InputOutlined
                 id="places"
-                lable="Places"
+                lable="Places (separate by -)"
                 defaultValue="Places"
                 type="text"
                 name="places"
-                value={data?.places}
+                value={placesString}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 // error={errors?.places}
