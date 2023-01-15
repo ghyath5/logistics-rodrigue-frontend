@@ -36,12 +36,17 @@ const AddNewRoute = ({ isEdit }) => {
     await axios
       .get(`/routes/${id}`)
       .then((res) => {
+        let pl = "";
+        res.data.places.forEach((place) => {
+          pl = pl + place + "-";
+        });
+        setPlacesString(pl);
         setData({
-          name: res.data,
-          places: res.data,
-          description: res.data,
-          from: res.data,
-          to: res.data,
+          name: res.data.name,
+          places: pl,
+          description: res.data.description,
+          from: res.data.from,
+          to: res.data.to,
         });
         setLoading(false);
       })
