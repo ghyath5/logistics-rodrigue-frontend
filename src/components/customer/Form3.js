@@ -13,7 +13,7 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
   const [step3Data, setStep3Data] = useState({
     deliveryoccur: isEdit ? data.deliveryoccur : occurs[0].value,
     deliveryfee: isEdit ? data.deliveryfee : "",
-    routeId: isEdit ? data.route : "",
+    routeId: isEdit ? data.routeId : "",
   });
   const [step3Eerrors, setStep3Errors] = useState({
     deliveryoccur: false,

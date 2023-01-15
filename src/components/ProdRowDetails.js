@@ -67,6 +67,7 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
           disabled={doneEditing ? true : false}
           id="prodNewPrice"
           name="prodNewPrice"
+          border={item.special ? "borderViolet" : ""}
           classes="w-50"
           handleChange={(e) => setNewPrice(e.target.value)}
         />

@@ -144,18 +144,27 @@ const AddNewStaffMember = ({ isEdit }) => {
   };
 
   const handleUpdateStaffMember = () => {
+    let body =
+      data?.password.length > 0
+        ? {
+            name: data.name,
+            username: data.username,
+            email: data.email,
+            phonenumber: data.phone,
+            password: data.password,
+            role: data.role,
+          }
+        : {
+            name: data.name,
+            username: data.username,
+            email: data.email,
+            phonenumber: data.phone,
+            role: data.role,
+          };
     if (allVAlid()) {
       setLoading(true);
       customAxios
-        .put(`users/${location.state?.id}`, {
-          name: data.name,
-          username: data.username,
-          email: data.email,
-          phonenumber: data.phone,
-          password: data.password,
-          role: data.role,
-          // theme: "0",
-        })
+        .put(`users/${location.state?.id}`, body)
         .then((res) => {
           setLoading(false);
           navigate("/staffmembers");

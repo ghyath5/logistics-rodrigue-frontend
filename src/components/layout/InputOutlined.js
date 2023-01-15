@@ -15,6 +15,7 @@ const InputOutlined = ({
   error,
   errorMessage,
   classes,
+  border,
   disabled,
 }) => {
   const [visible, setVisible] = useState(false);
@@ -36,11 +37,9 @@ const InputOutlined = ({
           </label>
         )}
         <div
-          className={
-            error
-              ? "position-relative formsInputCont d-flex w-100 errorInputO"
-              : "position-relative formsInputCont d-flex w-100 formsInput"
-          }
+          className={`position-relative formsInputCont d-flex w-100 ${
+            border ? "borderViolet" : error ? "errorInputO" : "formsInput"
+          }`}
         >
           <input
             placeholder={defaultValue}

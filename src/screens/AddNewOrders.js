@@ -182,6 +182,7 @@ const AddNewOrders = ({ isEdit }) => {
               value: prod._id,
               price: prod.price,
               newprice: prod.promotionPrice ? prod.promotionPrice : null,
+              special: prod.promotionPrice ? true : false,
               assignedCode: prod.assignedCode,
               upb: prod.unitesperbox,
             },
@@ -289,6 +290,7 @@ const AddNewOrders = ({ isEdit }) => {
         productId: prod.value,
         oldprice: prod.price,
         newprice: prod.newprice ? prod.newprice : prod.price,
+        special: prod.special,
         name: prod.label,
         assignedCode: prod.assignedCode,
         upb: prod.upb,
@@ -370,15 +372,6 @@ const AddNewOrders = ({ isEdit }) => {
             shouldDisableDate={disableMondays}
           />
           <div className="mt-2">
-            {/* <DDSearch
-              name="products"
-              lable="Products"
-              options={products}
-              isDisabled={!prodConfirmed}
-              isMulti={false}
-              val={selectedProducts}
-              handleChange={handleSelectProduct}
-            /> */}
             <span className="mb-3 formsLable">Products</span>
             <NewSearchDD
               data={products}

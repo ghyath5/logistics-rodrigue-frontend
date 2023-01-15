@@ -21,6 +21,10 @@
   background-color: var(--bg-color) !important;
 }
 
+.borderViolet {
+  border: 1px solid #8219d8 !important;
+}
+
 .gapY {
   row-gap: 10px;
 }

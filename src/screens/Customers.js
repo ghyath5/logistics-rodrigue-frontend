@@ -57,7 +57,6 @@ const Customers = ({ archived }) => {
       id: "organization",
       label: "Organization",
       minWidth: 80,
-      class: "tableEditBtn",
     },
     {
       id: "paymetMethod",

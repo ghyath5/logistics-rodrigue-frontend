@@ -45,6 +45,7 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
+        console.log(res.data);
         setData({
           businessname: res.data.businessname,
           abn: res.data.abn,
@@ -63,7 +64,7 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
           deliveryfee: res.data?.deliveryfee,
           paymentmethod: res.data?.paymentmethod,
           isconsolidatedbiller: res.data?.organization ? false : true,
-          organisation: res.data?.organization || "",
+          organization: res.data?.organization || "",
         });
       })
       .catch(console.error)

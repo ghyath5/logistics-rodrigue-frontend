@@ -92,6 +92,7 @@ const ManageProductCategories = () => {
               key={i}
               id={cat._id}
               name={cat.name}
+              productCount={cat.productCount}
               handleAction={updateCategory}
               isUpdate={true}
             />

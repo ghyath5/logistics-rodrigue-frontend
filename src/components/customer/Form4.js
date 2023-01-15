@@ -11,12 +11,12 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
   const [step4Data, setStep4Data] = useState({
     paymentmethod: isEdit ? data.paymentmethod : payments[0].value,
     isconsolidatedbiller: isEdit ? data.isconsolidatedbiller : true,
-    organisation: isEdit ? data.organisation : "",
+    organization: isEdit ? data.organisation : "",
   });
   const [step4Eerrors, setStep4Errors] = useState({
     paymentmethod: false,
     isconsolidatedbiller: false,
-    organisation: false,
+    organization: false,
   });
   const [organisations, setOrganisations] = useState([]);
   const [addedOrg, setAddedOrg] = useState("");
@@ -119,10 +119,10 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
               options={organisations}
               isDisabled={false}
               isMulti={false}
-              val={step4Data?.organisation}
+              val={step4Data?.organization}
               handleChange={handleChange}
               // handleBlur={handleBlur}
-              error={step4Eerrors?.organisation}
+              error={step4Eerrors?.organization}
               errorMessage="please pick an organisation"
             />
             <div className="mt-3">

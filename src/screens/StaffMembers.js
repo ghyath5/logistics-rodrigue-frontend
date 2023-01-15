@@ -10,6 +10,7 @@ import { roles } from "../data/configs";
 import DeleteModal from "../components/DeleteModal";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import debounce from "lodash.debounce";
+import moment from "moment/moment";
 
 export const StaffMembers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -108,7 +109,7 @@ export const StaffMembers = () => {
               roles[p?.role]?.label,
               p?.phonenumber,
               p?.email,
-              p?.lastlogin ? p?.lastlogin : "_",
+              p?.lastlogin ? moment(p?.lastlogin).calendar() : "_",
               "Edit",
               "Delete"
             ),

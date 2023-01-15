@@ -2,7 +2,7 @@ import React from "react";
 import useDeviceType from "../../hooks/useDeviceType";
 import Model from "./Model";
 
-const CategoryCard = ({ id, name, handleAction, isUpdate }) => {
+const CategoryCard = ({ id, name, productCount, handleAction, isUpdate }) => {
   const { deviceType } = useDeviceType();
 
   return (
@@ -24,7 +24,7 @@ const CategoryCard = ({ id, name, handleAction, isUpdate }) => {
               {name}
             </h4>
             <h5 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
-              10 products
+              {productCount} products
             </h5>
             <div className="mt-2">
               <Model
