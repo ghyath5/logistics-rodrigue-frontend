@@ -9,6 +9,7 @@ import axios from "../axios";
 import { vehiclesStatuses } from "../data/configs";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import DeleteModal from "../components/DeleteModal";
+import SureToDelete from "../components/SureToDelete";
 
 export const Vehicles = () => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,8 @@ export const Vehicles = () => {
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
+  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState("");
 
   useEffect(() => {
     fetchVehicles();
@@ -103,9 +106,13 @@ export const Vehicles = () => {
       label: "Delete",
       minWidth: 100,
       class: ["tableDeleteBtn"],
-      action: (id) => handleDeleteVehicle(id),
+      action: (id) => prepareDelete(id),
     },
   ];
+  const prepareDelete = async (id) => {
+    setItemToDelete(id);
+    setSureToDeleteVisible(true);
+  };
 
   function createData(
     id,
@@ -135,6 +142,14 @@ export const Vehicles = () => {
     <Loader />
   ) : (
     <Layout>
+      {" "}
+      {sureToDeleteVisible && (
+        <SureToDelete
+          setOpen={setSureToDeleteVisible}
+          handleDelete={handleDeleteVehicle}
+          id={itemToDelete}
+        />
+      )}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>

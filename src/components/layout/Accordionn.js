@@ -35,16 +35,17 @@ const Accordionn = ({
     await axios
       .put(`/orders/${item._id}`, { status: statuss })
       .then(() => {
-        let changing = allOrders.filter((p) => p._id === item._id)[0];
+        setStatus(statuss);
+        let oldOrders = allOrders;
+        let ind;
+        oldOrders.forEach((p, i) => (p._id === item._id ? (ind = i) : null));
+
+        let changing = oldOrders[ind];
         changing.status = statuss;
-        setAllOrders((prev) => [
-          changing,
-          ...prev.filter((p) => p._id !== item._id),
-        ]);
+        oldOrders[ind] = changing;
+        setAllOrders(oldOrders);
       })
-      .then(() => {
-        setExpanded(0);
-      })
+      .then(() => setExpanded(""))
       .catch(console.error);
   };
 

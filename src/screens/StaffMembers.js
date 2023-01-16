@@ -11,6 +11,7 @@ import DeleteModal from "../components/DeleteModal";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import debounce from "lodash.debounce";
 import moment from "moment/moment";
+import SureToDelete from "../components/SureToDelete";
 
 export const StaffMembers = () => {
   const [isLoading, setLoading] = useState(true);
@@ -19,6 +20,8 @@ export const StaffMembers = () => {
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [itemToDelete, setItemToDelete] = useState("");
+  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
 
   const columns = [
     {
@@ -62,10 +65,13 @@ export const StaffMembers = () => {
       label: "Delete",
       minWidth: 100,
       class: ["tableDeleteBtn"],
-      action: (id) => handleDeleteMember(id),
+      action: (id) => prepareDelete(id),
     },
   ];
-
+  const prepareDelete = async (id) => {
+    setItemToDelete(id);
+    setSureToDeleteVisible(true);
+  };
   function createData(
     id,
     name,
@@ -173,6 +179,13 @@ export const StaffMembers = () => {
     <Loader />
   ) : (
     <Layout>
+      {sureToDeleteVisible && (
+        <SureToDelete
+          setOpen={setSureToDeleteVisible}
+          handleDelete={handleDeleteMember}
+          id={itemToDelete}
+        />
+      )}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div>
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>

@@ -10,12 +10,14 @@ import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import DeleteModal from "../components/DeleteModal";
+import SureToDelete from "../components/SureToDelete";
 import SearchInput from "../components/layout/SearchInput";
 import debounce from "lodash.debounce";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
+  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [productsTotal, setProductsTotal] = useState(0);
   const [productsActive, setTotalActive] = useState(0);
@@ -23,6 +25,7 @@ const Products = () => {
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [itemToDelete, setItemToDelete] = useState("");
 
   const columns = [
     { id: "code", label: "Code", minWidth: 100 },
@@ -58,7 +61,8 @@ const Products = () => {
       label: "Remove ",
       minWidth: 100,
       class: ["tableDeleteBtn"],
-      action: (id) => handleRemoveProduct(id),
+      action: (id) => prepareDelete(id),
+      // action: (id) => handleRemoveProduct(id),
     },
     {
       id: "edit",
@@ -68,6 +72,11 @@ const Products = () => {
       action: (id) => nav("/editproducts", { state: { id: id } }),
     },
   ];
+
+  const prepareDelete = async (id) => {
+    setItemToDelete(id);
+    setSureToDeleteVisible(true);
+  };
 
   const handleRemoveProduct = async (id) => {
     await axios
@@ -195,6 +204,13 @@ const Products = () => {
     <Loader />
   ) : (
     <Layout>
+      {sureToDeleteVisible && (
+        <SureToDelete
+          setOpen={setSureToDeleteVisible}
+          handleDelete={handleRemoveProduct}
+          id={itemToDelete}
+        />
+      )}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>

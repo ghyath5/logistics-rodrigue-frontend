@@ -5,15 +5,18 @@ import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
 import Layout from "../components/partials/Layout";
 import axios from "../axios";
-// import DeleteModal from "../components/DeleteModal";
+import DeleteModal from "../components/DeleteModal";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
+import SureToDelete from "../components/SureToDelete";
 
 export const Drivers = () => {
   const [isLoading, setLoading] = useState(true);
-  //   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
+  const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
   const [allDrivers, setAllDrivers] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
+  const [itemToDelete, setItemToDelete] = useState("");
+  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
 
   const columns = [
     {
@@ -46,9 +49,13 @@ export const Drivers = () => {
       label: "Delete",
       minWidth: 50,
       class: ["tableDeleteBtn"],
-      action: (id) => handleDeleteDriver(id),
+      action: (id) => prepareDelete(id),
     },
   ];
+  const prepareDelete = async (id) => {
+    setItemToDelete(id);
+    setSureToDeleteVisible(true);
+  };
 
   function createData(id, code, name, phoneNumber, edit, remove) {
     return {
@@ -90,9 +97,9 @@ export const Drivers = () => {
         setRows((prev) => prev.filter((S) => S.id !== id));
       })
       .catch((err) => {
-        // if (err.response.status === 403) {
-        //   setCantDeleteModalVisible(true);
-        // }
+        if (err.response.status === 403) {
+          setCantDeleteModalVisible(true);
+        }
       });
   };
 
@@ -100,7 +107,14 @@ export const Drivers = () => {
     <Loader />
   ) : (
     <Layout>
-      {/* {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />} */}
+      {sureToDeleteVisible && (
+        <SureToDelete
+          setOpen={setSureToDeleteVisible}
+          handleDelete={handleDeleteDriver}
+          id={itemToDelete}
+        />
+      )}
+      {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center">
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
           Drivers

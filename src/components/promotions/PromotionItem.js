@@ -4,11 +4,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SureToDelete from "../SureToDelete";
 
 const PromotionItem = ({ prom, deletePromotion }) => {
   const nav = useNavigate();
   const [dates, setDates] = useState({ from: "", to: "" });
   const [expanded, setExpanded] = useState(null);
+  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
@@ -23,6 +25,13 @@ const PromotionItem = ({ prom, deletePromotion }) => {
 
   return (
     <div className="py-2 mb-2">
+      {sureToDeleteVisible && (
+        <SureToDelete
+          setOpen={setSureToDeleteVisible}
+          handleDelete={deletePromotion}
+          id={prom._id}
+        />
+      )}
       <Accordion
         key={`panel-${prom._id}`}
         expanded={expanded === prom._id}
@@ -45,7 +54,7 @@ const PromotionItem = ({ prom, deletePromotion }) => {
               >
                 <SettingsIcon className="settingIcon" />
               </div>
-              <div onClick={() => deletePromotion(prom._id)}>
+              <div onClick={() => setSureToDeleteVisible(true)}>
                 <DeleteIcon className="deleteIcon" />
               </div>
             </div>
