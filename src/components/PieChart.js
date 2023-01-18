@@ -53,7 +53,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
               ? args.dataset.data[index] > 7
                 ? `${Math.round(args.dataset.data[index])} %`
                 : ""
-              : `${Math.round(args.dataset.data[index])} order`;
+              : `${Math.round(args.dataset.data[index])} $`;
           },
         },
         backgroundColor: [
