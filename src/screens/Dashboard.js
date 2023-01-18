@@ -39,7 +39,7 @@ const Dashboard = () => {
   const fetchPieStatistics = async () => {
     setLoading(true);
     await axios
-      .get("/customers/get-top")
+      .get("/customers/get-top?total=5")
       .then((res) => {
         setDashData([res.data.todayOrders, res.data.todayRuns]);
         setTopCustomers({ data: res.data.data, labels: res.data.labels });
@@ -65,7 +65,7 @@ const Dashboard = () => {
       .get("/products/get-top-by-category?total=5")
       .then((res) => {
         let value = [];
-        res.data.forEach((el) => {
+        res.data.forEach((el, i) => {
           value.push(
             el.data.map((val) => {
               return Math.round(val);

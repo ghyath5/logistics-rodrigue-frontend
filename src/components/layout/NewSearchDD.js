@@ -19,7 +19,7 @@ const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder }) => {
   };
 
   const handlePick = (d) => {
-    handleSelect(d.value);
+    handleSelect(d.value, d.label);
     setVisible(false);
   };
 

@@ -20,6 +20,7 @@ const AddNewOrders = ({ isEdit }) => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
 
+  const [selectedCustomerId, setSelectedCustomerId] = useState({});
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [date, setDate] = useState("");
@@ -46,7 +47,7 @@ const AddNewOrders = ({ isEdit }) => {
   const fetchCustomers = async () => {
     setLoading(true);
     await axios
-      .get(`/customers?page=1&limit=10&isarchived=false`)
+      .get(`/customers?page=1&limit=30&isarchived=false`)
       .then((res) => {
         res.data.customers.forEach((cust) => {
           setCustomers((prev) => [
@@ -54,7 +55,7 @@ const AddNewOrders = ({ isEdit }) => {
             {
               label: cust.businessname,
               value: cust._id,
-              deliveryfee: cust.deliveryfee,
+              deliveryfee: cust?.deliveryfee,
             },
           ]);
         });
@@ -64,7 +65,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   useEffect(() => {
-    selectedCustomer.deliveryfee > 0 &&
+    selectedCustomer?.deliveryfee > 0 &&
       setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
   }, [selectedCustomer]);
 
@@ -79,7 +80,7 @@ const AddNewOrders = ({ isEdit }) => {
             {
               label: cust.businessname,
               value: cust._id,
-              deliveryfee: cust.deliveryfee,
+              deliveryfee: cust?.deliveryfee,
             },
           ]);
         });
@@ -115,16 +116,17 @@ const AddNewOrders = ({ isEdit }) => {
     isEdit && customers.length > 0 && fetchOrderById(location.state?.id);
   }, [isEdit, customers]);
 
+  // useEffect(() => {
+  //   console.log(selectedCustomerId);
+  //   isEdit && fetchCustomerById(selectedCustomerId);
+  // }, [isEdit, selectedCustomerId]);
+
   const fetchOrderById = async (id) => {
     await axios
       .get(`/orders/${id}`)
       .then((res) => {
-        let selectedCust = customers?.filter(
-          (cust) => cust.value === res.data.customer
-        )[0];
-        setSelectedCustomer(selectedCust);
-        setSearchPlaceholder(selectedCust.label);
-        handleSendCustomerId(selectedCust.value);
+        fetchCustomerById(res.data.customer);
+        setSelectedCustomerId(res.data.customer);
         setDate(res.data.date);
 
         setOrderTotal(res.data.totalamount);
@@ -150,6 +152,17 @@ const AddNewOrders = ({ isEdit }) => {
       .catch(console.error);
   };
 
+  const fetchCustomerById = async (id) => {
+    await axios
+      .get(`/customers/${id}`)
+      .then((res) => {
+        setSelectedCustomer(res.data);
+        setSearchPlaceholder(res.data?.businessname);
+        handleSendCustomerId(res.data?._id, res.data?.businessname);
+      })
+      .catch(console.error);
+  };
+
   const handleConfirmProduct = (id, total, quantity) => {
     let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
     prod.newprice = total / quantity;
@@ -163,16 +176,13 @@ const AddNewOrders = ({ isEdit }) => {
     setConfirmed(true);
   };
 
-  const handleSendCustomerId = async (custId) => {
-    let selectedCust = customers.filter((cust) => cust.value === custId)[0];
-    setSelectedCustomer(selectedCust);
-    CUSTOMERID = selectedCust.value;
+  const handleSendCustomerId = async (custId, lbl) => {
     await axios
       .post(
         `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`
       )
       .then((res) => {
-        setSearchPlaceholder(selectedCust.label);
+        setSearchPlaceholder(lbl);
         setNonEditedProducts(res.data.data);
         res.data.data.forEach((prod) => {
           setProducts((prev) => [
@@ -291,7 +301,7 @@ const AddNewOrders = ({ isEdit }) => {
         oldprice: prod.price,
         newprice: prod.newprice ? prod.newprice : prod.price,
         special: prod.special,
-        name: prod.label,
+        name: prod?.label,
         assignedCode: prod.assignedCode,
         upb: prod.upb,
       },
@@ -399,7 +409,7 @@ const AddNewOrders = ({ isEdit }) => {
               <div className="d-flex mb-3 align-items-center">
                 <h6 className="m-0 me-2 formsLable">Delivery Fee:</h6>
                 <div className="textLightBlue">
-                  {selectedCustomer.deliveryfee > 0
+                  {selectedCustomer?.deliveryfee > 0
                     ? "$ " + selectedCustomer.deliveryfee.toFixed(2)
                     : "$ " + (0).toFixed(2)}
                 </div>
