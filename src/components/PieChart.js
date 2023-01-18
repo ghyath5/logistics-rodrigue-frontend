@@ -43,7 +43,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
     labels: names,
     datasets: [
       {
-        label: nopercent ? "order" : "%",
+        label: nopercent ? "$" : "%",
         data: data,
         datalabels: {
           color: "#000",
