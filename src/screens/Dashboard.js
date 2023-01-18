@@ -102,14 +102,14 @@ const Dashboard = () => {
       .then((res) => {
         setLineChartData([
           {
-            // dataSet1: res.data.dataset1,
-            // dataSet2: res.data.dataset2,
-            dataSet1: labels.map(() =>
-              faker.datatype.number({ min: 200, max: 800 })
-            ),
-            dataSet2: labels.map(() =>
-              faker.datatype.number({ min: 200, max: 800 })
-            ),
+            dataSet1: res.data.dataset1,
+            dataSet2: res.data.dataset2,
+            // dataSet1: labels.map(() =>
+            //   faker.datatype.number({ min: 200, max: 800 })
+            // ),
+            // dataSet2: labels.map(() =>
+            //   faker.datatype.number({ min: 200, max: 800 })
+            // ),
             labels: labels,
           },
         ]);

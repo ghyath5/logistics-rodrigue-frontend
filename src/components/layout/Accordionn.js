@@ -20,7 +20,7 @@ const Accordionn = ({
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
   const [statuss, setStatus] = useState(item.status.toString());
-
+  console.log(item);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
   };
@@ -80,7 +80,14 @@ const Accordionn = ({
           id="panel1bh-header"
         >
           <div className="w-100 d-flex justify-content-between align-items-center">
-            <h4 className="text-capitalize">{item.customer.businessname}</h4>
+            <div className="d-flex flex-column">
+              <h4 className="text-capitalize mb-0">
+                {item.customer.businessname}
+              </h4>
+              <span className="text-capitalize">
+                {item?.date?.split("T")[0]}
+              </span>
+            </div>
             <div className="d-flex flex-column justify-content-center">
               <span className="d-flex">
                 <div className="d-flex flex-column">
