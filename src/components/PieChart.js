@@ -81,12 +81,6 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
   return (
     <div className="d-flex mx-auto">
       <div className="d-flex flex-column mt-5">
-        {nopercent && (
-          <span className="text-center" style={{ fontSize: 14 }}>
-            $ = AUD
-          </span>
-        )}
-
         {names.map((name, i) => {
           return (
             <div
@@ -111,8 +105,10 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
         })}
       </div>
       <div className="mx-auto pieMax">
-        <p className="text-center fw-bold">{title}</p>
-
+        <p className="text-center fw-bold mb-0">
+          {title}
+          {nopercent && " ($ = AUD)"}
+        </p>
         <Pie data={dataa} options={options} plugins={[ChartDataLabels]} />
       </div>
     </div>

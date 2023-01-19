@@ -166,6 +166,9 @@ const Dashboard = () => {
             col={6}
           />
         </div>
+        <h3 className={`headerss-${theme} mt-4 mb-2 mt-0`}>
+          Products and sales analysis
+        </h3>
         <div className="row gapY mt-4">
           {topCustomers.data.length > 0 && (
             <div className="mt-3 col-sm-12 col-md-6">
