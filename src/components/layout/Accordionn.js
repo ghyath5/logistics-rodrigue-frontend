@@ -20,7 +20,7 @@ const Accordionn = ({
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
   const [statuss, setStatus] = useState(item.status.toString());
-  console.log(item);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : null);
   };

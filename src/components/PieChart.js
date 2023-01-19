@@ -29,7 +29,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
         position: labelsPosition,
       },
       title: {
-        display: true,
+        display: false,
         text: title,
         color: theme.color,
         font: {
@@ -39,8 +39,17 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
     },
   };
 
+  const backgroundColors = [
+    `rgba(255, 99, 132, ${theme.opa})`,
+    `rgba(54, 162, 235, ${theme.opa})`,
+    `rgba(255, 206, 86, ${theme.opa})`,
+    `rgba(75, 192, 192, ${theme.opa})`,
+    `rgba(255, 159, 64, ${theme.opa})`,
+    `rgba(153, 102, 255, ${theme.opa})`,
+  ];
+
   const dataa = {
-    labels: names,
+    labels: [],
     datasets: [
       {
         label: nopercent ? "$" : "%",
@@ -56,14 +65,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
               : `${Math.round(args.dataset.data[index])} $`;
           },
         },
-        backgroundColor: [
-          `rgba(255, 99, 132, ${theme.opa})`,
-          `rgba(54, 162, 235, ${theme.opa})`,
-          `rgba(255, 206, 86, ${theme.opa})`,
-          `rgba(75, 192, 192, ${theme.opa})`,
-          `rgba(255, 159, 64, ${theme.opa})`,
-          `rgba(153, 102, 255, ${theme.opa})`,
-        ],
+        backgroundColor: backgroundColors,
         borderColor: [
           "rgba(255, 99, 132, 1)",
           "rgba(54, 162, 235, 1)",
@@ -76,7 +78,39 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
       },
     ],
   };
-  return <Pie data={dataa} options={options} plugins={[ChartDataLabels]} />;
+  return (
+    <div className="d-flex mx-auto">
+      <div className="d-flex flex-column mt-5">
+        {names.map((name, i) => {
+          return (
+            <div
+              className="d-flex align-items-start mb-1"
+              style={{ width: 130 }}
+            >
+              <span
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: backgroundColors[i],
+                  borderRadius: 50,
+                  aspectRatio: 1,
+                  marginRight: 5,
+                }}
+              ></span>
+              <span className="m-0" style={{ fontSize: 14 }}>
+                {name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mx-auto pieMax">
+        <p className="text-center fw-bold">{title}</p>
+
+        <Pie data={dataa} options={options} plugins={[ChartDataLabels]} />
+      </div>
+    </div>
+  );
 };
 
 export default PieChart;

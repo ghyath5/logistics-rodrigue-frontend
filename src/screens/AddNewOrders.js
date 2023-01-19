@@ -31,7 +31,6 @@ const AddNewOrders = ({ isEdit }) => {
   const [searchPlaceHolder, setSearchPlaceholder] = useState(
     "Search a customer by name or code"
   );
-  let CUSTOMERID;
 
   useEffect(() => {
     errorr &&
@@ -91,7 +90,7 @@ const AddNewOrders = ({ isEdit }) => {
   const handleSearchProduct = async (q) => {
     await axios
       .post(
-        `/orders/sendcustomeridfororder/${CUSTOMERID}?find=${q}&page=1&limit=100000`
+        `/orders/sendcustomeridfororder/${selectedCustomerId}?find=${q}&page=1&limit=100000`
       )
       .then((res) => {
         setProducts([]);
@@ -177,6 +176,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const handleSendCustomerId = async (custId, lbl) => {
+    setSelectedCustomerId(custId);
     await axios
       .post(
         `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`
@@ -236,7 +236,7 @@ const AddNewOrders = ({ isEdit }) => {
     });
 
     let dataToSend = {
-      customer: selectedCustomer.value,
+      customer: selectedCustomerId,
       products: filteredProducts,
       date: date,
       totalamount: parseFloat(orderTotal),
@@ -271,7 +271,7 @@ const AddNewOrders = ({ isEdit }) => {
     });
 
     let dataToSend = {
-      customer: selectedCustomer.value,
+      customer: selectedCustomerId,
       products: filteredProducts,
       date: date,
       totalamount: parseFloat(orderTotal),

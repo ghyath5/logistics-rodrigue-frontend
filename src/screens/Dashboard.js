@@ -168,7 +168,7 @@ const Dashboard = () => {
         </div>
         <div className="row gapY mt-4">
           {topCustomers.data.length > 0 && (
-            <div className="mx-auto mt-3 col-sm-12 col-md-5">
+            <div className="mt-3 col-sm-12 col-md-6">
               <PieChart
                 // data={[20, 10, 6, 13, 50, 1]}
                 // names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
@@ -182,7 +182,7 @@ const Dashboard = () => {
           {topCategories.map((cat, i) => {
             return (
               cat.data.length > 0 && (
-                <div key={i} className="mx-auto mt-3 col-sm-12 col-md-5">
+                <div key={i} className="mt-3 col-sm-12 col-md-6">
                   <PieChart
                     data={cat.data}
                     names={cat.labels}
