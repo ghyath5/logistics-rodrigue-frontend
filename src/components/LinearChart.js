@@ -71,7 +71,7 @@ const LinearChart = ({ data }) => {
         position: "bottom",
       },
       title: {
-        display: true,
+        display: false,
         text: "Monthly Sales Comparison",
         position: "top",
         color: theme.color,
@@ -124,7 +124,14 @@ const LinearChart = ({ data }) => {
     ],
   };
   // plugins={[ChartDataLabels]}
-  return <Bar options={options} data={datta} />;
+  return (
+    <div className="d-flex flex-column">
+      <p className="text-center fw-bold mb-2">Monthly Sales Comparison</p>
+      <div style={{ minHeight: 350, maxHeight: 470 }}>
+        <Bar options={options} data={datta} />
+      </div>
+    </div>
+  );
 };
 
 export default LinearChart;
