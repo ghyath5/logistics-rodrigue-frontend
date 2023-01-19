@@ -62,7 +62,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
               ? args.dataset.data[index] > 7
                 ? `${Math.round(args.dataset.data[index])} %`
                 : ""
-              : `${Math.round(args.dataset.data[index])} $`;
+              : `$ ${Math.round(args.dataset.data[index])}`;
           },
         },
         backgroundColor: backgroundColors,
@@ -81,6 +81,12 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
   return (
     <div className="d-flex mx-auto">
       <div className="d-flex flex-column mt-5">
+        {nopercent && (
+          <span className="text-center" style={{ fontSize: 14 }}>
+            $ = AUD
+          </span>
+        )}
+
         {names.map((name, i) => {
           return (
             <div

@@ -14,6 +14,7 @@ import zoomPlugin from "chartjs-plugin-zoom";
 import { Bar } from "react-chartjs-2";
 // import faker from "faker";
 import "chartjs-adapter-moment";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
   CategoryScale,
@@ -102,6 +103,13 @@ const LinearChart = ({ data }) => {
       {
         label: "sales of January",
         // data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
+        datalabels: {
+          color: "#000",
+          formatter: (ctx, args) => {
+            const index = args.dataIndex;
+            return `$ ${Math.round(args.dataset.data[index])}`;
+          },
+        },
         data: data.dataSet1,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -115,7 +123,7 @@ const LinearChart = ({ data }) => {
       },
     ],
   };
-  return <Bar options={options} data={datta} />;
+  return <Bar options={options} data={datta} plugins={[ChartDataLabels]} />;
 };
 
 export default LinearChart;
