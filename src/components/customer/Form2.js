@@ -4,14 +4,16 @@ import validator from "validator";
 
 const Form2 = forwardRef(({ setData, isEdit, data }, ref) => {
   const [step2Data, setStep2Data] = useState({
-    customername: isEdit ? data.customername : "",
+    firstname: isEdit ? data.firstname : "",
+    lastname: isEdit ? data.lastname : "",
     email: isEdit ? data.email : "",
     phonenumber: isEdit ? data.phonenumber : "",
     mobilenumber: isEdit ? data.mobilenumber : "",
     directdialnumber: isEdit ? data.directdialnumber : "",
   });
   const [step2Eerrors, setStep2Errors] = useState({
-    customername: false,
+    firstname: false,
+    lastname: false,
     email: false,
     phonenumber: false,
     mobilenumber: false,
@@ -79,7 +81,8 @@ const Form2 = forwardRef(({ setData, isEdit, data }, ref) => {
 
   const validate = (name, value) => {
     switch (name) {
-      case "customername":
+      case "firstname":
+      case "lastname":
         value === "" || value.length < 3
           ? hasError(name, true)
           : hasError(name, false);
@@ -109,16 +112,27 @@ const Form2 = forwardRef(({ setData, isEdit, data }, ref) => {
 
   return (
     <div>
-      <div>
+      <div className="d-md-flex gap-3">
         <InputOutlined
-          lable="Customer Name"
-          defaultValue="Customer Name"
+          lable="First Name"
+          defaultValue="First Name"
           type="text"
-          name="customername"
-          value={step2Data?.customername}
+          name="firstname"
+          value={step2Data?.firstname}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step2Eerrors?.customername}
+          error={step2Eerrors?.firstname}
+          errorMessage="should be at least 3 letters"
+        />
+        <InputOutlined
+          lable="Last Name"
+          defaultValue="Last Name"
+          type="text"
+          name="lastname"
+          value={step2Data?.lastname}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          error={step2Eerrors?.lastname}
           errorMessage="should be at least 3 letters"
         />
       </div>

@@ -54,11 +54,6 @@ const Customers = ({ archived }) => {
       minWidth: 100,
     },
     {
-      id: "organization",
-      label: "Organization",
-      minWidth: 80,
-    },
-    {
       id: "paymetMethod",
       label: "Payment Method",
       minWidth: 50,
@@ -85,7 +80,6 @@ const Customers = ({ archived }) => {
     codeid,
     businessName,
     address,
-    organization,
     paymetMethod,
     edit,
     archive
@@ -96,7 +90,6 @@ const Customers = ({ archived }) => {
       codeid,
       businessName,
       address,
-      organization,
       paymetMethod,
       edit,
       archive,
@@ -104,10 +97,10 @@ const Customers = ({ archived }) => {
   }
 
   useEffect(() => {
-    fetchOrganisations();
+    fetchCustomers();
   }, [archived, archiveTriggered]);
 
-  const fetchCustomers = async (O) => {
+  const fetchCustomers = async () => {
     setLoading(true);
     await axios
       .get(
@@ -117,8 +110,7 @@ const Customers = ({ archived }) => {
         setAllCustomers(res.data);
         setRows([]);
         res.data.customers.forEach((p) => {
-          let orgg = O?.filter((org) => org._id === p?.organization)[0]?.name;
-
+          console.log({ p });
           setRows((prev) => [
             ...prev,
             createData(
@@ -126,8 +118,7 @@ const Customers = ({ archived }) => {
               p.isarchived,
               p.codeid,
               p.businessname,
-              p.address[0],
-              p.organization ? orgg : "-",
+              p.address,
               p.paymentmethod?.name,
               "Edit",
               archived ? "Unarchive Now" : "Archive Now"
@@ -139,16 +130,16 @@ const Customers = ({ archived }) => {
       .finally(() => setLoading(false));
   };
 
-  const fetchOrganisations = async () => {
-    await axios
-      .get("organization")
-      .then((res) => {
-        ORGS = res.data.organizations;
-        setOrganisations(res.data.organizations);
-        fetchCustomers(res.data.organizations);
-      })
-      .catch(console.error);
-  };
+  // const fetchOrganisations = async () => {
+  //   await axios
+  //     .get("organization")
+  //     .then((res) => {
+  //       ORGS = res.data.organizations;
+  //       setOrganisations(res.data.organizations);
+  //       fetchCustomers(res.data.organizations);
+  //     })
+  //     .catch(console.error);
+  // };
 
   const toggleArchiveCustomer = async (id, is) => {
     setLoading(true);

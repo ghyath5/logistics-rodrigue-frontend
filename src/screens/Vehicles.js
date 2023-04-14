@@ -166,41 +166,6 @@ export const Vehicles = () => {
           />
         </div>
       </div>
-      {/* <div className="row m-0 w-100">
-        <StatsCard
-          title="Available"
-          value={allVehciles?.length}
-          classes="bgLightBlue"
-          col={3}
-        />
-        <StatsCard
-          title="On Road"
-          value={allVehciles?.filter((x) => x.status === 1).length}
-          classes="bgGreen"
-          col={3}
-        />
-        <StatsCard
-          title="Out of Service"
-          value={allVehciles?.filter((x) => x.status === 2).length}
-          classes="bgRed"
-          col={3}
-        />
-        <StatsCard
-          title="Registration Due"
-          value={allVehciles?.filter((x) => x.status === 0).length}
-          classes="bgYellow"
-          col={3}
-        />
-      </div> */}
-      {/* <div className="d-flex justify-content-between align-items-center mt-3 mb-4">
-        <div>
-          <h3
-            className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
-          >
-            All Vehicles
-          </h3>
-        </div>
-      </div> */}
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
       ) : (

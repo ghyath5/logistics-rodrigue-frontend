@@ -9,16 +9,28 @@ import InputOutlined from "../layout/InputOutlined";
 import DDSearch from "../layout/DDSearch";
 import axios from "../../axios";
 
+const days = [
+  { label: "Monday", value: "mon" },
+  { label: "Tuesday", value: "tue" },
+  { label: "Wednesday", value: "wed" },
+  { label: "Thursday", value: "thu" },
+  { label: "Friday", value: "fri" },
+  { label: "Saturday", value: "sat" },
+  { label: "Sunday", value: "sun" },
+];
+
 const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
   const [step3Data, setStep3Data] = useState({
     deliveryoccur: isEdit ? data.deliveryoccur : occurs[0].value,
     deliveryfee: isEdit ? data.deliveryfee : "",
     routeId: isEdit ? data.routeId : "",
+    preferredday: isEdit ? data.preferredday : "",
   });
   const [step3Eerrors, setStep3Errors] = useState({
     deliveryoccur: false,
     deliveryfee: false,
     routeId: false,
+    preferredday: false,
   });
   const [routes, setRoutes] = useState([]);
 
@@ -30,7 +42,6 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
     await axios
       .get("routes")
       .then((res) => {
-        console.log(res.data);
         res.data.routes.forEach((rt) => {
           setRoutes((prev) => [...prev, { label: rt.name, value: rt._id }]);
         });
@@ -45,7 +56,6 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log({ name, value });
     setStep3Data((prev) => {
       return { ...prev, [name]: value };
     });
@@ -89,21 +99,35 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
         val={step3Data?.deliveryoccur}
         handleChange={handleChange}
       />
-      <InputOutlined
-        lable="Delivery Fees $"
-        defaultValue="0"
-        type="number"
-        name="deliveryfee"
-        classes="w-50"
-        value={step3Data?.deliveryfee}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        error={step3Eerrors?.deliveryfee}
-        errorMessage="should be bigger than 0"
-      />
+      <div className="d-flex gap-2">
+        <InputOutlined
+          lable="Delivery Fees $"
+          defaultValue="0"
+          type="number"
+          name="deliveryfee"
+          classes=""
+          value={step3Data?.deliveryfee}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          error={step3Eerrors?.deliveryfee}
+          errorMessage="should be bigger than 0"
+        />
+        <DDSearch
+          name="preferredday"
+          lable="Preferred day"
+          options={days}
+          isDisabled={false}
+          isMulti={false}
+          val={step3Data?.preferredday}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          error={step3Eerrors?.preferredday}
+          errorMessage="please select a preferred day"
+        />
+      </div>
       <DDSearch
         name="routeId"
-        lable="Route"
+        lable="Region"
         options={routes}
         isDisabled={false}
         isMulti={false}
@@ -111,7 +135,7 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
         handleChange={handleChange}
         handleBlur={handleBlur}
         error={step3Eerrors?.routeId}
-        errorMessage="please pick a route"
+        errorMessage="please pick a region"
       />
     </div>
   );

@@ -94,7 +94,6 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleAddNewRoute = () => {
-    console.log(data);
     if (allVAlid()) {
       setLoading(true);
       axios
@@ -107,7 +106,7 @@ const AddNewRoute = ({ isEdit }) => {
         })
         .then((res) => {
           setLoading(false);
-          navigate("/routes");
+          navigate("/regions");
         })
         .catch(console.error)
         .finally(() => setLoading(false));
@@ -126,8 +125,7 @@ const AddNewRoute = ({ isEdit }) => {
           to: data.to,
         })
         .then((res) => {
-          setLoading(false);
-          navigate("/routes");
+          navigate("/regions");
         })
         .catch(console.error)
         .finally(() => setLoading(false));
@@ -142,14 +140,14 @@ const AddNewRoute = ({ isEdit }) => {
         <ArrowBackIcon
           className="ArrowBackIcon"
           fontSize="medium"
-          onClick={() => navigate("/routes")}
+          onClick={() => navigate("/regions")}
         />
         <h4
           className={`headerss-${localStorage.getItem(
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          {isEdit ? " Edit Route" : " Add New Route"}
+          {isEdit ? " Edit Region" : " Add New Region"}
         </h4>
       </div>
       <div className="formsContainer">
@@ -159,7 +157,7 @@ const AddNewRoute = ({ isEdit }) => {
               "monjay-theme"
             )} my-4 mx-2`}
           >
-            Route Details
+            Region Details
           </h4>
         </div>
         <hr className="line mx-5"></hr>
@@ -239,7 +237,7 @@ const AddNewRoute = ({ isEdit }) => {
         </div>
         <div className="my-5 text-center">
           <BtnContained
-            title={isEdit ? "EDIT ROUTE" : "CREATE ROUTE"}
+            title={isEdit ? "EDIT Region" : "CREATE Region"}
             handleClick={() =>
               isEdit ? handleUpdateRoute() : handleAddNewRoute()
             }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import { StepButton } from "@mui/material";
@@ -31,7 +31,6 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
   useEffect(() => {
     fetchOccursAndPayments();
   }, []);
-
   useEffect(() => {
     allDone && (isEdit ? handleUpdateCustomer() : handleAddCustomer());
   }, [allDone]);
@@ -45,16 +44,16 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
-        console.log(res.data);
         setData({
           businessname: res.data.businessname,
           abn: res.data.abn,
-          address: res.data.address[0],
-          suburb: res.data.suburb,
-          state: res.data.state,
+          address: res.data.address,
+          region: res.data.region,
+          city: res.data.city,
           postcode: res.data.postcode,
           notes: res.data?.notes || "",
-          customername: res.data.customername,
+          firstname: res.data.firstname,
+          lastname: res.data.lastname,
           email: res.data.email,
           routeId: res.data.routeId,
           phonenumber: res.data?.phonenumber || "",
@@ -62,6 +61,7 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
           directdialnumber: res.data?.directdialnumber || "",
           deliveryoccur: res.data?.deliveryoccur,
           deliveryfee: res.data?.deliveryfee,
+          preferredday: res.data?.preferredday,
           paymentmethod: res.data?.paymentmethod,
           isconsolidatedbiller: res.data?.organization ? false : true,
           organization: res.data?.organization || "",

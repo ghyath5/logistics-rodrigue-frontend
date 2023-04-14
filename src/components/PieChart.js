@@ -84,6 +84,7 @@ const PieChart = ({ data, names, title, labelsPosition, nopercent }) => {
         {names.map((name, i) => {
           return (
             <div
+              key={i}
               className="d-flex align-items-start mb-1"
               style={{ width: 130 }}
             >

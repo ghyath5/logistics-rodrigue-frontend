@@ -22,13 +22,14 @@ const Routess = () => {
     fetchRoutes();
   }, []);
 
-  function createData(id, name, description, from, to, edit, remove) {
+  function createData(id, name, description, from, to, cOrder, edit, remove) {
     return {
       id,
       name,
       description,
       from,
       to,
+      cOrder,
       edit,
       remove,
     };
@@ -50,6 +51,7 @@ const Routess = () => {
               p.description,
               p.from,
               p.to,
+              "Edit customers",
               "Edit",
               "Delete"
             ),
@@ -96,11 +98,18 @@ const Routess = () => {
       minWidth: 150,
     },
     {
+      id: "cOrder",
+      label: "Customers Order",
+      minWidth: 50,
+      class: ["tableEditBtn"],
+      action: (id) => nav("/editCustomersOrder", { state: { id: id } }),
+    },
+    {
       id: "edit",
       label: "Edit",
       minWidth: 50,
       class: ["tableEditBtn"],
-      action: (id) => nav("/editRoute", { state: { id: id } }),
+      action: (id) => nav("/editRegion", { state: { id: id } }),
     },
     {
       id: "remove",
@@ -133,20 +142,20 @@ const Routess = () => {
           <h3
             className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
           >
-            Routes
+            Regions
           </h3>
         </div>
         <div>
           <BtnContained
-            title="Add Route"
-            handleClick={() => nav("/addnewroute")}
+            title="Add Region"
+            handleClick={() => nav("/addnewregion")}
           />
         </div>
       </div>
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
       ) : (
-        <NoDataPlaceHolder current="Routes" />
+        <NoDataPlaceHolder current="Regions" />
       )}
     </Layout>
   );

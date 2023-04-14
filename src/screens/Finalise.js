@@ -29,12 +29,19 @@ const Runs = () => {
       label: "Date",
       minWidth: 100,
     },
-    { id: "route", label: "Route", minWidth: 100 },
+    { id: "region", label: "Region", minWidth: 100 },
     { id: "ordersCount", label: "Orders", minWidth: 50 },
     {
       id: "status",
       label: "Status",
       minWidth: 100,
+    },
+    {
+      id: "runDate",
+      label: "Edit Date",
+      minWidth: 100,
+      class: ["viewRoute"],
+      action: (id) => nav("/editrunDate", { state: { id: id } }),
     },
     {
       id: "viewOrders",
@@ -57,6 +64,7 @@ const Runs = () => {
     ordersCount,
     status,
     date,
+    runDate,
     viewOrders
   ) {
     return {
@@ -67,6 +75,7 @@ const Runs = () => {
       ordersCount,
       status,
       date,
+      runDate,
       viewOrders,
     };
   }
@@ -88,6 +97,7 @@ const Runs = () => {
               f.orders.length,
               runsStatuses[f.status].label,
               new Date(f.date.split("T")[0]).toDateString(),
+              "Edit Date",
               "View / Edit"
             ),
           ]);

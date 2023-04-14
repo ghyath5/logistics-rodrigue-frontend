@@ -1,43 +1,43 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import RadioGroupForm from "../layout/RadioGroupForm";
-import DDSearch from "../layout/DDSearch";
-import axios from "../../axios";
-import InputOutlined from "../layout/InputOutlined";
-import Modal from "../layout/Modal";
+// import DDSearch from "../layout/DDSearch";
+// import axios from "../../axios";
+// import InputOutlined from "../layout/InputOutlined";
+// import Modal from "../layout/Modal";
 
 const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
   const [step4Data, setStep4Data] = useState({
     paymentmethod: isEdit ? data.paymentmethod : payments[0].value,
     isconsolidatedbiller: isEdit ? data.isconsolidatedbiller : true,
-    organization: isEdit ? data.organisation : "",
+    // organization: isEdit ? data.organisation : "",
   });
   const [step4Eerrors, setStep4Errors] = useState({
     paymentmethod: false,
     isconsolidatedbiller: false,
-    organization: false,
+    // organization: false,
   });
-  const [organisations, setOrganisations] = useState([]);
-  const [addedOrg, setAddedOrg] = useState("");
+  // const [organisations, setOrganisations] = useState([]);
+  // const [addedOrg, setAddedOrg] = useState("");
 
-  useEffect(() => {
-    fetchOrganisations();
-  }, []);
+  // useEffect(() => {
+  //   fetchOrganisations();
+  // }, []);
 
-  const fetchOrganisations = async () => {
-    await axios
-      .get("organization")
-      .then((res) => {
-        res.data.organizations.forEach((org) => {
-          setOrganisations((prev) => [
-            ...prev,
-            { label: org.name, value: org._id },
-          ]);
-        });
-      })
-      .catch(console.error);
-  };
+  // const fetchOrganisations = async () => {
+  //   await axios
+  //     .get("organization")
+  //     .then((res) => {
+  //       res.data.organizations.forEach((org) => {
+  //         setOrganisations((prev) => [
+  //           ...prev,
+  //           { label: org.name, value: org._id },
+  //         ]);
+  //       });
+  //     })
+  //     .catch(console.error);
+  // };
 
   useImperativeHandle(ref, () => ({
     allVAlid() {
@@ -60,11 +60,14 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
       ? (valid = false)
       : (valid = true);
     if (valid) {
+      console.log("valid");
       //add only payment if isconsolidatedbiller else add payment and organisation
       setData((prev) => {
         return { ...prev, ...step4Data };
       });
     } else {
+      console.log("not valid");
+
       Object.entries(step4Data).forEach(([key, val]) => {
         val === "" &&
           setStep4Errors((prev) => {
@@ -81,17 +84,17 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
     });
   };
 
-  const handleAddOrganisation = async () => {
-    await axios
-      .post(`organization`, { name: addedOrg })
-      .then((res) => {
-        setOrganisations((prev) => [
-          { label: res.data.name, value: res.data._id },
-          ...prev,
-        ]);
-      })
-      .catch(console.error);
-  };
+  // const handleAddOrganisation = async () => {
+  //   await axios
+  //     .post(`organization`, { name: addedOrg })
+  //     .then((res) => {
+  //       setOrganisations((prev) => [
+  //         { label: res.data.name, value: res.data._id },
+  //         ...prev,
+  //       ]);
+  //     })
+  //     .catch(console.error);
+  // };
 
   return (
     <div className={`headerss-${localStorage.getItem("monjay-theme")}`}>
@@ -110,7 +113,7 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
         labelPlacement="start"
         className="m-0"
       />
-      {!step4Data.isconsolidatedbiller &&
+      {/* {!step4Data.isconsolidatedbiller &&
         (organisations.length > 0 ? (
           <>
             <DDSearch
@@ -157,7 +160,7 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
               handleChange={(e) => setAddedOrg(e.target.value)}
             />
           </Modal>
-        ))}
+        ))} */}
     </div>
   );
 });

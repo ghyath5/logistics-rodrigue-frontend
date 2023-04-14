@@ -82,7 +82,7 @@ const Accordionn = ({
           <div className="w-100 d-flex justify-content-between align-items-center">
             <div className="d-flex flex-column">
               <h4 className="text-capitalize mb-0">
-                {item.customer.businessname}
+                {item?.customer?.businessname}
               </h4>
               <span className="text-capitalize">
                 {item?.date?.split("T")[0]}
@@ -115,7 +115,7 @@ const Accordionn = ({
             <div>
               <p className="m-0 fw-bold">Products:</p>
               <div className="row text-promotion maxw">
-                {item?.products.map((item, i) => {
+                {item?.products.map((itemm, i) => {
                   return (
                     <span
                       key={i}
@@ -123,11 +123,11 @@ const Accordionn = ({
                         i % 2 === 0 ? "textGray2" : "textGray"
                       }`}
                     >
-                      {item.product.name} - ${item.pricePerUnit}
+                      {itemm.product.name} - ${itemm.pricePerUnit}
                     </span>
                   );
                 })}
-                {item.customer.deliveryfee > 0 && (
+                {item?.customer?.deliveryfee > 0 && (
                   <span className="fs-6 textGray">
                     Delivery Fees - ${item.customer.deliveryfee}
                   </span>

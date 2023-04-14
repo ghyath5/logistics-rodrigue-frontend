@@ -9,8 +9,6 @@ import axios from "axios";
 import customAxios from "../axios";
 import { useEffect } from "react";
 import Loader from "../components/layout/Loader";
-import DDSearch from "../components/layout/DDSearch";
-import { roles } from "../data/configs";
 
 const AddNewStaffMember = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(false);
@@ -49,7 +47,7 @@ const AddNewStaffMember = ({ isEdit }) => {
           name: res.data?.name,
           email: res.data?.email,
           phone: res.data?.phonenumber,
-          role: res.data?.role.toString(),
+          role: "0",
           theme: res.data?.theme,
           // password: res.password,
         });
@@ -145,7 +143,7 @@ const AddNewStaffMember = ({ isEdit }) => {
 
   const handleUpdateStaffMember = () => {
     let body =
-      data?.password.length > 0
+      data?.password?.length > 0 && data?.password === data?.confirmPassword
         ? {
             name: data.name,
             username: data.username,
@@ -266,37 +264,21 @@ const AddNewStaffMember = ({ isEdit }) => {
           <div className="row">
             <div className="col-sm-12 col-md-6">
               <div className="mt-2">
-                <DDSearch
-                  name="role"
-                  lable="Select a role"
-                  options={roles}
-                  isDisabled={false}
-                  isMulti={false}
-                  val={data?.role}
+                <InputOutlined
+                  name="password"
+                  id="password"
+                  lable="Password"
+                  defaultValue="password"
+                  type="password"
+                  value={data?.password}
                   handleChange={handleChange}
                   handleBlur={handleBlur}
-                  error={errors?.role}
-                  errorMessage="please pick a role"
+                  error={errors?.password}
+                  errorMessage="weak password"
+                  autoComplete="new-password"
                 />
               </div>
             </div>
-            {/* {!isEdit && ( */}
-            <div className="col-sm-12 col-md-6">
-              <InputOutlined
-                name="password"
-                id="password"
-                lable="Password"
-                defaultValue="password"
-                type="password"
-                value={data?.password}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                error={errors?.password}
-                errorMessage="weak password"
-                autoComplete="new-password"
-              />
-            </div>
-            {/* )} */}
           </div>
         </div>
         <div className="my-5 text-center">

@@ -1,16 +1,14 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import DDSearch from "../layout/DDSearch";
 import InputOutlined from "../layout/InputOutlined";
 import TextAreaOutlined from "../layout/TextAreaOutlined";
-import { states } from "../../data/configs";
 
 const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
   const [step1Data, setStep1Data] = useState({
     businessname: isEdit ? data.businessname : "",
     abn: isEdit ? data.abn : "",
     address: isEdit ? data.address : "",
-    suburb: isEdit ? data.suburb : "",
-    state: isEdit ? data.state : "",
+    city: isEdit ? data.city : "",
+    region: isEdit ? data.region : "",
     postcode: isEdit ? data.postcode : "",
     notes: isEdit ? data.notes : "",
   });
@@ -18,8 +16,8 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
     businessname: false,
     abn: false,
     address: false,
-    suburb: false,
-    state: false,
+    city: false,
+    region: false,
     postcode: false,
     notes: false,
   });
@@ -82,16 +80,14 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
     switch (name) {
       case "businessname":
       case "abn":
-      case "suburb":
+      case "city":
       case "address":
       case "postcode":
         value === "" || value.length < 3
           ? hasError(name, true)
           : hasError(name, false);
         break;
-      case "state":
-        value !== "" ? hasError(name, false) : hasError(name, true);
-        break;
+
       default:
         console.log("");
     }
@@ -134,17 +130,28 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
       />
       <div className="addressColl d-sm-flex flex-wrap gap-2 align-items-center justify-content-between mt-2">
         <InputOutlined
-          lable="Suburb"
-          defaultValue="Suburb"
+          lable="City"
+          defaultValue="City"
           type="text"
-          name="suburb"
-          value={step1Data?.suburb}
+          name="city"
+          value={step1Data?.city}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step1Eerrors?.suburb}
+          error={step1Eerrors?.city}
           errorMessage="should be at least 3 letters"
         />
-        <DDSearch
+        <InputOutlined
+          lable="Region"
+          defaultValue="Region"
+          type="text"
+          name="region"
+          value={step1Data?.region}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+          error={step1Eerrors?.region}
+          errorMessage="should be at least 3 letters"
+        />
+        {/* <DDSearch
           name="state"
           lable="State"
           options={states}
@@ -155,7 +162,7 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
           handleBlur={handleBlur}
           error={step1Eerrors?.state}
           errorMessage="please pick a state"
-        />
+        /> */}
         <InputOutlined
           lable="Postcode"
           defaultValue="Postcode"

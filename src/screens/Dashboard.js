@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LinearChart from "../components/LinearChart";
 import PieChart from "../components/PieChart";
 import axios from "../axios";
-import faker from "faker";
+// import faker from "faker";
 import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment";
 
@@ -195,29 +195,8 @@ const Dashboard = () => {
               )
             );
           })}
-          {/* <div className="mx-auto mt-3 col-sm-12 col-md-5">
-            <PieChart
-              data={[30, 19, 22, 5, 16, 40]}
-              names={["John Doe", "Hart", "Barlowe", "Larry", "Kristian"]}
-              title="Top 5 Products in Dips"
-            />
-          </div>
-          <div className="mx-auto mt-3 col-sm-12 col-md-5">
-            <PieChart
-              data={[20, 10, 6, 13, 50, 1]}
-              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-              title="Top 5 Products in Deserts"
-            />
-          </div>
-          <div className="mx-auto mt-3 col-sm-12 col-md-5">
-            <PieChart
-              data={[20, 10, 6, 13, 50, 1]}
-              names={["Alexander", "Marshall", "Zaiden", "Reuben", "Alberto"]}
-              title="Top 5 Products in Finger Food"
-            />
-          </div> */}
           <div className="lineshartContainer mt-5 mx-auto">
-            <LinearChart data={lineChartData[0]} />
+            <LinearChart data={lineChartData[0]} M1={M1} M2={M2} />
           </div>
           <div className="d-flex justify-content-center align-items-end gap-3">
             <DatePickerr

@@ -454,6 +454,9 @@ textarea {
   border-bottom: 1px solid var(--light-gray) !important;
   color: var(--dark-bleu);
 }
+.draggedItem{
+   color: var(--dark-bleu);
+}
 
 .sideBarList li:first-child {
   border-top: 0.1px solid var(--light-gray);

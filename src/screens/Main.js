@@ -25,6 +25,9 @@ import AddNewRoute from "./AddNewRoute";
 import EditRun from "./EditRun";
 import { Drivers } from "./Drivers";
 import AddNewDriver from "./AddNewDriver";
+import EditCustomersOrder from "./EditCustomersOrder";
+import Pdf from "../components/pdf";
+import EditrunDate from "./EditrunDate";
 
 const Main = () => {
   return (
@@ -33,6 +36,10 @@ const Main = () => {
         <Route path="login" element={<Login />} />
         {/* <Route path="register" element={<Register />} /> */}
         <Route element={<PrivateRoutes />}>
+          <Route path="editCustomersOrder" element={<EditCustomersOrder />} />
+          <Route path="editrunDate" element={<EditrunDate />} />
+          <Route path="pdf" element={<Pdf />} />
+
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
           <Route exact path="runs" element={<Finalise />} />
@@ -42,12 +49,12 @@ const Main = () => {
             path="customers"
             element={<Customers archived={false} />}
           />
-          <Route exact path="routes" element={<Routess />} />
-          <Route exact path="addnewroute" element={<AddNewRoute />} />
+          <Route exact path="regions" element={<Routess />} />
+          <Route exact path="addnewregion" element={<AddNewRoute />} />
 
           <Route
             exact
-            path="editRoute"
+            path="editRegion"
             element={<AddNewRoute isEdit={true} />}
           />
           <Route exact path="customerDetails" element={<CustomerDetails />} />

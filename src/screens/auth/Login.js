@@ -33,9 +33,11 @@ const Login = () => {
         password: data?.password,
       })
       .then((res) => {
-        Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
+         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
         res.data.role === 1 && Cookies.set("zzzz", 1, { expires: 3 });
+      })
+      .then(() => {
         navigate("/");
       })
       .catch((err) => {
