@@ -28,10 +28,15 @@ import AddNewDriver from "./AddNewDriver";
 import EditCustomersOrder from "./EditCustomersOrder";
 import Pdf from "../components/pdf";
 import EditrunDate from "./EditrunDate";
+import Organisations from "./Organisations";
+import { UserContextProvider } from "../context/userContext";
+import EditAccount from "./EditAccount";
+import EditOrganisation from "./EditOrganisation";
+import AddOrganisation from "./AddOrganisation";
 
 const Main = () => {
   return (
-    <>
+    <UserContextProvider>
       <Routes>
         <Route path="login" element={<Login />} />
         {/* <Route path="register" element={<Register />} /> */}
@@ -39,6 +44,10 @@ const Main = () => {
           <Route path="editCustomersOrder" element={<EditCustomersOrder />} />
           <Route path="editrunDate" element={<EditrunDate />} />
           <Route path="pdf" element={<Pdf />} />
+          <Route path="organisations" element={<Organisations />} />
+          <Route path="editAccount" element={<EditAccount />} />
+          <Route path="editOrganisation" element={<EditOrganisation />} />
+          <Route path="AddOrganisation" element={<AddOrganisation />} />
 
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />
@@ -140,14 +149,14 @@ const Main = () => {
           />
           <Route
             exact
-            path="EditStaffMember"
+            path="editStaffMember"
             element={<AddNewStaffMember isEdit={true} />}
           />
           <Route path="*" element={<Navigate to="/" replace />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
       </Routes>
-    </>
+    </UserContextProvider>
   );
 };
 

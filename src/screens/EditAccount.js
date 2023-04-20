@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Layout from "../components/partials/Layout";
 import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
 import validator from "validator";
-import axios from "axios";
 import customAxios from "../axios";
 import { useEffect } from "react";
 import Loader from "../components/layout/Loader";
+import { UserContext } from "../context/userContext";
 
-const AddNewStaffMember = ({ isEdit }) => {
+const EditAccount = () => {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState({
     username: "",
@@ -31,33 +31,23 @@ const AddNewStaffMember = ({ isEdit }) => {
     password: false,
     confirmPassword: false,
   });
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    isEdit && fetchUserById(location.state?.id);
-  }, [isEdit, location.state?.id]);
-
-  const fetchUserById = async (id) => {
-    setLoading(true);
-    await customAxios
-      .get(`/users/${id}`)
-      .then((res) => {
-        setData({
-          username: res.data?.username ? res.data?.username : res.data?.name,
-          name: res.data?.name,
-          email: res.data?.email,
-          phone: res.data?.phonenumber,
-          role: res.data?.role,
-          theme: res.data?.theme,
-          password: "",
-          confirmPassword: "",
-        });
-        setLoading(false);
-      })
-      .catch(console.error);
-  };
+    user &&
+      setData({
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        phone: user.phonenumber,
+        role: user.role,
+        theme: user.theme,
+        password: "",
+        confirmPassword: "",
+      });
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -128,27 +118,6 @@ const AddNewStaffMember = ({ isEdit }) => {
     }
   };
 
-  const handleAddStaffMember = () => {
-    if (allVAlid()) {
-      setLoading(true);
-      axios
-        .post(`${process.env.REACT_APP_BASE_URL}auth/register`, {
-          name: data.name,
-          username: data.username,
-          email: data.email,
-          phonenumber: data.phone,
-          password: data.password,
-          role: data.role,
-          // theme: "0",
-        })
-        .then((res) => {
-          setLoading(false);
-          navigate("/staffmembers");
-        })
-        .catch(console.error);
-    }
-  };
-
   const handleUpdateStaffMember = () => {
     let body =
       data?.password?.length > 0 && data?.password === data?.confirmPassword
@@ -170,12 +139,13 @@ const AddNewStaffMember = ({ isEdit }) => {
     if (allVAlid()) {
       setLoading(true);
       customAxios
-        .put(`users/${location.state?.id}`, body)
+        .put(`users/${user._id}`, body)
         .then(() => {
           setLoading(false);
-          navigate("/staffmembers");
+          navigate("/organisations");
         })
-        .catch(console.error);
+        .catch(console.error)
+        .finally(() => setLoading(false));
     }
   };
 
@@ -187,14 +157,14 @@ const AddNewStaffMember = ({ isEdit }) => {
         <ArrowBackIcon
           className="ArrowBackIcon"
           fontSize="medium"
-          onClick={() => navigate("/staffmembers")}
+          onClick={() => navigate("/organisations")}
         />
         <h4
           className={`headerss-${localStorage.getItem(
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          {isEdit ? "Edit Staff Member" : "Add New Staff Member"}
+          Edit Organisation
         </h4>
       </div>
       <div className="formsContainer">
@@ -204,7 +174,7 @@ const AddNewStaffMember = ({ isEdit }) => {
               "monjay-theme"
             )} my-4 mx-2`}
           >
-            Staff Member Details
+            Account Details
           </h4>
         </div>
         <hr className="line mx-5"></hr>
@@ -308,10 +278,8 @@ const AddNewStaffMember = ({ isEdit }) => {
         </div>
         <div className="my-5 text-center">
           <BtnContained
-            title={isEdit ? "UPDATE" : "CREATE STAFF MEMBER"}
-            handleClick={
-              isEdit ? handleUpdateStaffMember : handleAddStaffMember
-            }
+            title={"UPDATE"}
+            handleClick={handleUpdateStaffMember}
           />
         </div>
       </div>
@@ -319,4 +287,4 @@ const AddNewStaffMember = ({ isEdit }) => {
   );
 };
 
-export default AddNewStaffMember;
+export default EditAccount;

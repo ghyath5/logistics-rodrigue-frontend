@@ -17,7 +17,6 @@ const Customers = ({ archived }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [archiveTriggered, setrchiveTriggered] = useState(false);
   const [allCustomers, setAllCustomers] = useState([]);
-  const [organisations, setOrganisations] = useState([]);
 
   const [rows, setRows] = useState([]);
   const nav = useNavigate();

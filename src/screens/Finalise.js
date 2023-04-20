@@ -83,7 +83,7 @@ const Runs = () => {
   const fetchRuns = async () => {
     setLoading(true);
     await axios
-      .get("runs")
+      .get("/runs")
       .then((res) => {
         setRuns(res.data.runs);
         res.data.runs.forEach((f) => {
@@ -111,9 +111,11 @@ const Runs = () => {
     <Loader />
   ) : (
     <Layout>
-      <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
-        Runs
-      </h3>
+      <div className="d-flex justify-content-between mb-2">
+        <h3 className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}>
+          Runs
+        </h3>
+      </div>
       <div className="finaliseTableContainer">
         {allRuns.length > 0 ? (
           <Table columns={columns} rows={rows} />

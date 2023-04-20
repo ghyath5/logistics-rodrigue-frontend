@@ -56,7 +56,7 @@ export const StaffMembers = () => {
       minWidth: 50,
       class: ["tableEditBtn"],
       action: (id) => {
-        nav("/EditStaffMember", { state: { id: id } });
+        nav("/editStaffMember", { state: { id: id } });
       },
     },
 

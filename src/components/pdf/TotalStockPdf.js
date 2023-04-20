@@ -34,16 +34,12 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
   },
-  footerDate: {
-    fontSize: 12,
-    marginLeft: "auto",
-  },
   title: {
     fontSize: 16,
     marginBottom: 10,
   },
   body: {
-    maxWidth: "100%",
+    width: "100%",
   },
   footer: {
     display: "flex",
@@ -51,7 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 20,
     paddingRight: 20,
-    width: "100%",
   },
   pageNumbers: {
     position: "absolute",
@@ -69,7 +64,7 @@ const MyDocument = () => {
         <View style={styles.header}>
           <View style={styles.column}>
             <Text style={styles.date}>09 March 2023</Text>
-            <Text style={styles.title}>Delivery Schedule</Text>
+            <Text style={styles.title}>Delivery Sheet for joseph Shalala</Text>
           </View>
           <View>
             <Image src={pdfLogo} style={styles.logo} />
@@ -77,6 +72,7 @@ const MyDocument = () => {
         </View>
 
         <View style={styles.body}>
+          <Text style={styles.title}>Total Stock Needed</Text>
           <Table />
         </View>
         <View
@@ -84,7 +80,8 @@ const MyDocument = () => {
           fixed
           render={({ pageNumber, totalPages }) => (
             <View style={styles.footer}>
-              <Text style={styles.footerDate}>
+              <Text style={styles.date}>09 March 2023</Text>
+              <Text style={styles.date}>
                 {pageNumber} / {totalPages}
               </Text>
             </View>
@@ -95,7 +92,7 @@ const MyDocument = () => {
   );
 };
 
-const Pdf = () => {
+const TotalStockPdf = () => {
   return (
     <Layout>
       <div style={{ flexDirection: "column", display: "flex" }}>
@@ -108,4 +105,4 @@ const Pdf = () => {
   );
 };
 
-export default Pdf;
+export default TotalStockPdf;

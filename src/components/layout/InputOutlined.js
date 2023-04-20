@@ -46,7 +46,6 @@ const InputOutlined = ({
             id={id}
             className={"w-100 formsInput"}
             name={name}
-            // errorInput
             type={type === "password" ? (!visible ? "password" : "text") : type}
             value={value}
             onChange={(e) => handleChange(e)}
@@ -54,7 +53,7 @@ const InputOutlined = ({
             autoComplete={autoComplete}
             disabled={disabled && disabled}
           />
-          {name === "password" &&
+          {(name === "password" || name === "confirmPassword") &&
             (!visible ? (
               <img
                 className="passController mb-0 ms-auto me-2 align-self-center"

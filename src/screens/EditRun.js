@@ -9,6 +9,7 @@ import TextAreaOutlined from "../components/layout/TextAreaOutlined";
 import DDSearch from "../components/layout/DDSearch";
 import { runsStatuses } from "../data/configs";
 import Accordionn from "../components/layout/Accordionn";
+import BtnOutlined from "../components/layout/BtnOutlined";
 
 const EditRun = () => {
   const location = useLocation();
@@ -56,6 +57,7 @@ const EditRun = () => {
       })
       .then(fetchVehicles)
       .then(fetchDrivers)
+      .then(fetchPdfData)
       .catch(console.error)
       .finally(() => setLoading(false));
   };
@@ -129,23 +131,52 @@ const EditRun = () => {
     }
   };
 
+  const fetchPdfData = async () => {
+    await axios
+      .get(`/runs/${location.state?.id}/pdf`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  };
+
+  const printDeliveryReport = async () => {
+    console.log("printDeliveryReport");
+  };
+
+  const printInvoice = async () => {
+    console.log("printInvoice");
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
     <Layout>
-      <div className="d-flex align-items-center ">
-        <ArrowBackIcon
-          className="ArrowBackIcon"
-          fontSize="medium"
-          onClick={() => navigate("/runs")}
-        />
-        <h4
-          className={`headerss-${localStorage.getItem(
-            "monjay-theme"
-          )} my-3 mx-2`}
-        >
-          Back to Runs
-        </h4>
+      <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center">
+          <ArrowBackIcon
+            className="ArrowBackIcon"
+            fontSize="medium"
+            onClick={() => navigate("/runs")}
+          />
+          <h4
+            className={`headerss-${localStorage.getItem(
+              "monjay-theme"
+            )} my-3 mx-2`}
+          >
+            Back to Runs
+          </h4>
+        </div>
+        <div className="d-flex flex-wrap gap-2 mainBtn">
+          <BtnOutlined
+            title="PRINT INVOICE"
+            handleClick={() => printInvoice()}
+          />
+          <BtnContained
+            title="PRINT DELIVERY REPORT"
+            handleClick={() => printDeliveryReport()}
+          />
+        </div>
       </div>
       <div className="formsContainer">
         <div className="text-center">

@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
+// import { Checkbox, FormControlLabel } from "@mui/material";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 // import { useEffect } from "react";
 import RadioGroupForm from "../layout/RadioGroupForm";
@@ -10,7 +10,8 @@ import RadioGroupForm from "../layout/RadioGroupForm";
 const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
   const [step4Data, setStep4Data] = useState({
     paymentmethod: isEdit ? data.paymentmethod : payments[0].value,
-    isconsolidatedbiller: isEdit ? data.isconsolidatedbiller : true,
+    isconsolidatedbiller: true,
+    // isconsolidatedbiller: isEdit ? data.isconsolidatedbiller : true,
     // organization: isEdit ? data.organisation : "",
   });
   const [step4Eerrors, setStep4Errors] = useState({
@@ -78,11 +79,11 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
     return valid;
   };
 
-  const handleToggleConsolidate = () => {
-    setStep4Data((prev) => {
-      return { ...prev, isconsolidatedbiller: !prev.isconsolidatedbiller };
-    });
-  };
+  // const handleToggleConsolidate = () => {
+  //   setStep4Data((prev) => {
+  //     return { ...prev, isconsolidatedbiller: !prev.isconsolidatedbiller };
+  //   });
+  // };
 
   // const handleAddOrganisation = async () => {
   //   await axios
@@ -105,14 +106,14 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
         val={step4Data?.paymentmethod}
         handleChange={handleChange}
       />
-      <FormControlLabel
+      {/* <FormControlLabel
         control={
           <Checkbox defaultChecked onChange={() => handleToggleConsolidate()} />
         }
         label="Is Consolidate Biller"
         labelPlacement="start"
         className="m-0"
-      />
+      /> */}
       {/* {!step4Data.isconsolidatedbiller &&
         (organisations.length > 0 ? (
           <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import useDeviceType from "../../hooks/useDeviceType";
+import { UserContext } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,11 @@ import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 const Header = ({ isOpen, setOpen }) => {
   const { deviceType } = useDeviceType();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
+  const handleUpdateAccount = () => {
+    navigate("/editAccount", { state: { user } });
+  };
 
   const handleLogout = () => {
     Cookies.remove("monjayToken");
@@ -76,6 +82,13 @@ const Header = ({ isOpen, setOpen }) => {
                   }}
                 >
                   <div className="d-flex flex-column align-items-start p-2">
+                    <Button
+                      className="w-100  justify-content-start"
+                      color="inherit"
+                      onClick={handleUpdateAccount}
+                    >
+                      ACCOUNT
+                    </Button>
                     <Button
                       className="w-100  justify-content-start"
                       color="inherit"

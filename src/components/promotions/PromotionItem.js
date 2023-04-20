@@ -44,7 +44,7 @@ const PromotionItem = ({ prom, deletePromotion }) => {
         >
           <div className="w-100 d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center gap-2">
-              <h4 className="text-capitalize m-0">{prom.name}</h4>
+              <h4 className="text-capitalize m-0">{prom?.name}</h4>
               <div
                 onClick={() =>
                   nav("/editpromotion", {
@@ -84,10 +84,10 @@ const PromotionItem = ({ prom, deletePromotion }) => {
               prom.productspromotion?.map((prod, ii) => {
                 return (
                   <span key={ii} className="col-12">
-                    {prod.productId.name} -&gt; {prod.newprice}$
+                    {prod.productId?.name} -&gt; {prod.newprice}$
                     <span className="fromDolar">
                       {" "}
-                      (From {prod.productId.price}$)
+                      (From {prod.productId?.price}$)
                     </span>
                   </span>
                 );

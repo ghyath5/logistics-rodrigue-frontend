@@ -20,6 +20,7 @@ const SideBarList = ({ toggleDrawer }) => {
     { text: "Dashboard", goTo: "/" },
     { text: "Orders", goTo: "/orders" },
     { text: "Customers", goTo: "/customers" },
+    { text: "Organisations", goTo: "/organisations" },
     { text: "Products", goTo: "/products" },
     { text: "Promotions", goTo: "/promotions" },
     { text: "Regions", goTo: "/regions" },
@@ -39,7 +40,7 @@ const SideBarList = ({ toggleDrawer }) => {
     <Box role="presentation">
       <List>
         {myList.map((item, index) => {
-          let role = Cookies.get("zzzz").toString();
+          let role = Cookies.get("ismonA").toString();
           return role !== "1" && item.text === "Staff Members" ? null : (
             <ListItem
               key={index}
