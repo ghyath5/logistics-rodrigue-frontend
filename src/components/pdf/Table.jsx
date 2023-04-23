@@ -66,28 +66,28 @@ const TableHeader = () => {
   );
 };
 
-const TableRow = ({ id }) => {
+const TableRow = ({ id, item }) => {
   return (
     <View style={styles.tableRow}>
       <View style={styles.cell}>
-        <Text style={styles.normalText}>Product Name {id}</Text>
+        <Text style={styles.normalText}>{item.name}</Text>
       </View>
       <View style={styles.centerCell}>
-        <Text style={styles.normalText}>12</Text>
+        <Text style={styles.normalText}>{item.quantity}</Text>
       </View>
       <View style={styles.centerCell}>
-        <Text style={styles.normalText}>20</Text>
+        <Text style={styles.normalText}>{item.boxes}</Text>
       </View>
     </View>
   );
 };
 
-const Table = () => {
+const Table = ({ data }) => {
   return (
     <View style={styles.table}>
       <TableHeader />
-      {[...Array(50)].map((_, i) => (
-        <TableRow key={i} id={i} />
+      {data.map((item, i) => (
+        <TableRow key={i} id={i} item={item} />
       ))}
     </View>
   );

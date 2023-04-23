@@ -13,9 +13,6 @@ const useTypedReducer = (actions, initialState, log) => {
   const newActions = {};
   Object.keys(actions).forEach((actionName) => {
     newActions[actionName] = (...payload) => {
-      if (log) {
-        console.log(`USE_TYPED_REDUCER: ${actionName}`, payload);
-      }
       dispatch({ type: actionName, payload });
     };
   });

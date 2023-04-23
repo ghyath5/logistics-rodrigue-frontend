@@ -58,10 +58,10 @@ const Products = () => {
     },
     {
       id: "remove",
-      label: "Remove ",
+      label: "Archive ",
       minWidth: 100,
       class: ["tableDeleteBtn"],
-      action: (id) => prepareDelete(id),
+      action: (id) => handleArchiveProduct(id),
       // action: (id) => handleRemoveProduct(id),
     },
     {
@@ -73,31 +73,31 @@ const Products = () => {
     },
   ];
 
-  const prepareDelete = async (id) => {
-    setItemToDelete(id);
-    setSureToDeleteVisible(true);
-  };
+  // const prepareDelete = async (id) => {
+  //   setItemToDelete(id);
+  //   setSureToDeleteVisible(true);
+  // };
 
-  const handleRemoveProduct = async (id) => {
-    await axios
-      .delete(`/products/${id}`)
-      .then(() => {
-        let deletedProducts = allProducts.filter((p) => p._id === id)[0];
-        deletedProducts.visibility === true
-          ? setTotalActive((prev) => prev - 1)
-          : setProductsHidden((prev) => prev - 1);
+  // const handleRemoveProduct = async (id) => {
+  //   await axios
+  //     .delete(`/products/${id}`)
+  //     .then(() => {
+  //       let deletedProducts = allProducts.filter((p) => p._id === id)[0];
+  //       deletedProducts.visibility === true
+  //         ? setTotalActive((prev) => prev - 1)
+  //         : setProductsHidden((prev) => prev - 1);
 
-        setProductsTotal((prev) => prev - 1);
-        setAllProducts((prev) => prev.filter((p) => p.id !== id));
-        setRows((prev) => prev.filter((p) => p.id !== id));
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          setCantDeleteModalVisible(true);
-        }
-      })
-      .finally(() => setLoading(false));
-  };
+  //       setProductsTotal((prev) => prev - 1);
+  //       setAllProducts((prev) => prev.filter((p) => p.id !== id));
+  //       setRows((prev) => prev.filter((p) => p.id !== id));
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 403) {
+  //         setCantDeleteModalVisible(true);
+  //       }
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
 
   function createData(
     id,
@@ -132,7 +132,7 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     await axios
-      .get("/products?page=1&limit=100")
+      .get("/products?page=1&limit=100&isarchived=false")
       .then((res) => {
         setRows([]);
         setProductsTotal(res.data.productsCount);
@@ -152,7 +152,7 @@ const Products = () => {
               p.unitesperbox,
               p.prioritynumber,
               p.visibility === false ? "Hidden" : "Visible",
-              "Delete",
+              "Archive",
               "Edit"
             ),
           ]);
@@ -200,17 +200,39 @@ const Products = () => {
     debouncedFilter(q);
   };
 
+  const handleArchiveProduct = (id) => {
+    setLoading(true);
+    axios
+      .put(`/products/${id}`, {
+        isarchived: true,
+      })
+      .then(() => {
+        let archivedproducts = allProducts.filter((p) => p._id === id)[0];
+        archivedproducts.visibility === true
+          ? setTotalActive((prev) => prev - 1)
+          : setProductsHidden((prev) => prev - 1);
+
+        setProductsTotal((prev) => prev - 1);
+        setAllProducts((prev) => prev.filter((p) => p.id !== id));
+        setRows((prev) => prev.filter((p) => p.id !== id));
+      })
+      .catch(console.error)
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return loading ? (
     <Loader />
   ) : (
     <Layout>
-      {sureToDeleteVisible && (
+      {/* {sureToDeleteVisible && (
         <SureToDelete
           setOpen={setSureToDeleteVisible}
           handleDelete={handleRemoveProduct}
           id={itemToDelete}
         />
-      )}
+      )} */}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="pageHeader d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>

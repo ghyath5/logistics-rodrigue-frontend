@@ -78,7 +78,7 @@ const CustomerDetails = () => {
     await axios
       .put(`/customers/${id}`, body)
       .then((res) => {
-        console.log("archived");
+        // console.log("archived");
       })
       .catch(console.error)
       .finally(() => setLoading(false));

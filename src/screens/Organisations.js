@@ -32,6 +32,11 @@ const Organisations = () => {
       minWidth: 150,
     },
     {
+      id: "head",
+      label: "Head",
+      minWidth: 150,
+    },
+    {
       id: "totalCustomers",
       label: "Total Customers",
       minWidth: 50,
@@ -49,11 +54,12 @@ const Organisations = () => {
     fetchOrganisations();
   }, []);
 
-  function createData(id, index, name, totalCustomers, edit) {
+  function createData(id, index, name, head, totalCustomers, edit) {
     return {
       id,
       index,
       name,
+      head,
       totalCustomers,
       edit,
     };
@@ -70,7 +76,14 @@ const Organisations = () => {
         res.data.organizations.forEach((p, i) => {
           setRows((prev) => [
             ...prev,
-            createData(p._id, i + 1, p.name, p.customers.length || 0, "edit"),
+            createData(
+              p._id,
+              i + 1,
+              p.name,
+              p.head.businessname,
+              p.customers.length || 0,
+              "edit"
+            ),
           ]);
         });
       })

@@ -8,9 +8,9 @@ import {
   PDFDownloadLink,
   Image,
 } from "@react-pdf/renderer";
-import Layout from "../partials/Layout";
 import pdfLogo from "../../assets/pdfLogo.png";
 import Table from "./Table";
+import ScheduleTable from "./ScheduleTable";
 
 const styles = StyleSheet.create({
   page: {
@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  subTitle: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
   body: {
     maxWidth: "100%",
   },
@@ -62,14 +66,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyDocument = () => {
+const MyDocument = ({ data, stock }) => {
   return (
     <Document size="A4" orientation="landscape">
       <Page size="A4" orientation="landscape" style={styles.page} wrap>
         <View style={styles.header}>
           <View style={styles.column}>
-            <Text style={styles.date}>09 March 2023</Text>
-            <Text style={styles.title}>Delivery Schedule</Text>
+            <Text style={styles.date}>{data.date}</Text>
+            <Text style={styles.title}>
+              {stock ? `Delivery Sheet for ${data.driver}` : "Deliver schedule"}
+            </Text>
+            {stock && <Text style={styles.subTitle}>Total Stock Needed</Text>}
           </View>
           <View>
             <Image src={pdfLogo} style={styles.logo} />
@@ -77,7 +84,11 @@ const MyDocument = () => {
         </View>
 
         <View style={styles.body}>
-          <Table />
+          {stock ? (
+            <Table data={data.products} />
+          ) : (
+            <ScheduleTable data={data.orders} />
+          )}
         </View>
         <View
           style={styles.pageNumbers}
@@ -95,16 +106,14 @@ const MyDocument = () => {
   );
 };
 
-const Pdf = () => {
+const Pdf = ({ children, stock, data }) => {
   return (
-    <Layout>
-      <div style={{ flexDirection: "column", display: "flex" }}>
-        <PDFDownloadLink document={<MyDocument />} fileName="Invoice">
-          {(loading, error) => (loading ? "Loading Document" : "Download")}
-        </PDFDownloadLink>
-        <MyDocument />
-      </div>
-    </Layout>
+    <PDFDownloadLink
+      document={<MyDocument data={data} stock={stock} />}
+      fileName="Invoice"
+    >
+      {() => children}
+    </PDFDownloadLink>
   );
 };
 

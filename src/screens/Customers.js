@@ -148,7 +148,7 @@ const Customers = ({ archived }) => {
     await axios
       .put(`/customers/${id}`, body)
       .then((res) => {
-        console.log("archive");
+        // console.log("archive");
       })
       .catch(console.error)
       .finally(() => {

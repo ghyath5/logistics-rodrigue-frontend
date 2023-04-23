@@ -10,6 +10,8 @@ import DDSearch from "../components/layout/DDSearch";
 import { runsStatuses } from "../data/configs";
 import Accordionn from "../components/layout/Accordionn";
 import BtnOutlined from "../components/layout/BtnOutlined";
+import Pdf from "../components/pdf";
+import moment from "moment/moment";
 
 const EditRun = () => {
   const location = useLocation();
@@ -31,6 +33,9 @@ const EditRun = () => {
   const [orders, setAllOrders] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [drivers, setDrivers] = useState([]);
+  const [bufferPdf, setBufferPdf] = useState(null);
+  const [stockNeededPdfData, setStockNeededPdfData] = useState({});
+  const [deliveryPdfData, setDeliveryPdfData] = useState({});
 
   useEffect(() => {
     fetchRunById(location.state?.id);
@@ -132,20 +137,55 @@ const EditRun = () => {
   };
 
   const fetchPdfData = async () => {
+    setLoading(true);
     await axios
       .get(`/runs/${location.state?.id}/pdf`)
       .then((res) => {
-        console.log(res.data);
+        let run = res.data.run;
+        let products = [];
+        run.orders.map((ord) =>
+          ord.products.map((prod) => {
+            products.push({
+              name: prod.product.name,
+              quantity: prod.quantity,
+              boxes:
+                !prod.product.unitesperbox || prod.product.unitesperbox === 0
+                  ? prod.quantity
+                  : prod.product.unitesperbox,
+            });
+          })
+        );
+        setBufferPdf(res.data.pdfs[0]);
+        setStockNeededPdfData({
+          date: moment(run.date).format("L"),
+          driver: run.driver.name,
+          products: Object.values(
+            products.reduce((acc, { name, quantity, boxes }) => {
+              acc[name] = acc[name] || { name, quantity: 0, boxes: 0 };
+              acc[name].quantity += quantity;
+              acc[name].boxes += boxes;
+              return acc;
+            }, {})
+          ),
+        });
+        setDeliveryPdfData({
+          date: moment(run.date).format("L"),
+          orders: run.orders,
+        });
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setLoading(false));
   };
 
-  const printDeliveryReport = async () => {
-    console.log("printDeliveryReport");
+  const downloadPDF = (data) => {
+    const uint8Array = new Uint8Array(data.data);
+    const blob = new Blob([uint8Array], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
   };
 
   const printInvoice = async () => {
-    console.log("printInvoice");
+    downloadPDF(bufferPdf);
   };
 
   return isLoading ? (
@@ -172,10 +212,18 @@ const EditRun = () => {
             title="PRINT INVOICE"
             handleClick={() => printInvoice()}
           />
-          <BtnContained
-            title="PRINT DELIVERY REPORT"
-            handleClick={() => printDeliveryReport()}
-          />
+          <Pdf stock={true} data={stockNeededPdfData}>
+            <BtnContained
+              title="PRINT STOCK REPORT"
+              handleClick={() => console.log("")}
+            />
+          </Pdf>
+          <Pdf stock={false} data={deliveryPdfData}>
+            <BtnContained
+              title="PRINT DELIVERY REPORT"
+              handleClick={() => console.log("")}
+            />
+          </Pdf>
         </div>
       </div>
       <div className="formsContainer">

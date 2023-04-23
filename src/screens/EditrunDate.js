@@ -18,9 +18,6 @@ const EditrunDate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log({ date });
-  }, [date]);
-  useEffect(() => {
     fetchRunById(location.state?.id);
   }, [location.state?.id]);
 
@@ -39,7 +36,6 @@ const EditrunDate = () => {
   }
 
   const handleChangeDate = async (e) => {
-    console.log(moment(e.target.value).add(0, "days").format("L"));
     setDate(moment(e.target.value).add(0, "days").format("L"));
   };
 

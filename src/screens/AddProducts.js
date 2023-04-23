@@ -8,6 +8,7 @@ import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
 import RadioGroupForm from "../components/layout/RadioGroupForm";
 import axios from "../axios";
+import { taxes } from "../data/configs";
 
 const AddProducts = ({ isEdit }) => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const AddProducts = ({ isEdit }) => {
     price: "",
     unitesperbox: "",
     prioritynumber: "",
+    taxType: "",
     visibility: true,
   });
   const [errors, setErrors] = useState({
@@ -29,6 +31,7 @@ const AddProducts = ({ isEdit }) => {
     categoryId: false,
     price: false,
     unitesperbox: false,
+    taxType: false,
     prioritynumber: false,
   });
 
@@ -48,12 +51,14 @@ const AddProducts = ({ isEdit }) => {
         setData({
           code: res.data.assignedCode,
           name: res.data.name,
-          categoryId: (categories?.filter(
-            (cat) => cat.value === res.data.categoryId._id
-          )[0]).value,
+          categoryId:
+            categories?.filter(
+              (cat) => cat.value === res.data?.categoryId?._id
+            )[0]?.value || "",
           price: res.data.price,
           unitesperbox: res.data.unitesperbox,
           prioritynumber: res.data.prioritynumber,
+          taxType: res.data.taxType,
           visibility: res.data.visibility,
         });
       })
@@ -115,6 +120,7 @@ const AddProducts = ({ isEdit }) => {
           (value.length < 3 ? hasError(name, true) : hasError(name, false));
         break;
       case "categoryId":
+      case "taxType":
       case "price":
       case "prioritynumber":
         value !== "" ? hasError(name, false) : hasError(name, true);
@@ -140,9 +146,6 @@ const AddProducts = ({ isEdit }) => {
           prioritynumber: parseInt(data.prioritynumber),
           visibility: data.visibility,
         })
-        .then((res) => {
-          setLoading(false);
-        })
         .catch(console.error)
         .finally(() => {
           setData({
@@ -155,6 +158,7 @@ const AddProducts = ({ isEdit }) => {
             visibility: true,
           });
           setLoading(false);
+          nav("/products");
         });
     }
   };
@@ -172,9 +176,6 @@ const AddProducts = ({ isEdit }) => {
           prioritynumber: data.prioritynumber,
           visibility: data.visibility,
         })
-        .then((res) => {
-          setLoading(false);
-        })
         .catch(console.error)
         .finally(() => {
           setData({
@@ -187,6 +188,7 @@ const AddProducts = ({ isEdit }) => {
             visibility: true,
           });
           setLoading(false);
+          nav("/products");
         });
     }
   };
@@ -314,16 +316,32 @@ const AddProducts = ({ isEdit }) => {
           <div
             className={`headerss-${localStorage.getItem("monjay-theme")} row`}
           >
-            <RadioGroupForm
-              name="visibility"
-              lable="Visibility in Order List?"
-              options={[
-                { lable: "visible", value: true },
-                { lable: "hidden", value: false },
-              ]}
-              val={data?.visibility}
-              handleChange={handleChange}
-            />
+            <div className="col-sm-12 col-md-6">
+              <DDSearch
+                name="taxType"
+                lable="Tax"
+                options={taxes}
+                isDisabled={false}
+                isMulti={false}
+                val={data?.taxType}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                error={errors?.taxType}
+                errorMessage="you must select tax method"
+              />
+            </div>
+            <div className="col-sm-12 col-md-6">
+              <RadioGroupForm
+                name="visibility"
+                lable="Visibility in Order List?"
+                options={[
+                  { lable: "visible", value: true },
+                  { lable: "hidden", value: false },
+                ]}
+                val={data?.visibility}
+                handleChange={handleChange}
+              />
+            </div>
           </div>
         </div>
         <div className="my-5 text-center">

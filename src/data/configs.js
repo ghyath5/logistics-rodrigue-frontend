@@ -31,3 +31,8 @@ export const runsStatuses = [
   { label: "finished", value: "2" },
   { label: "Canceled", value: "3" },
 ];
+export const taxes = [
+  { value: "OUTPUT", label: "10% GST" },
+  { value: "EXEMPTOUTPUT", label: "GST Free" },
+  { value: "EXEMPTEXPENSES", label: "GST on Expenses" },
+];

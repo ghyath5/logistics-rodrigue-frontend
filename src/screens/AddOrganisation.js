@@ -6,7 +6,6 @@ import Loader from "../components/layout/Loader";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InputOutlined from "../components/layout/InputOutlined";
-import validator from "validator";
 import DDSearch from "../components/layout/DDSearch";
 import { useEffect } from "react";
 
@@ -31,10 +30,10 @@ const AddOrganisation = () => {
   const fetchCustomers = async () => {
     setLoading(true);
     await axios
-      .get(`/customers?page=1&limit=10000&isarchived=false`)
+      .post(`/customers/getnonorgacustomers?page=1&limit=10000`)
       .then((res) => {
         let cuses = [];
-        res.data.customers.map((cus) => {
+        res.data.map((cus) => {
           cuses.push({ label: cus.businessname, value: cus._id });
         });
         setAllCustomers(cuses);
@@ -96,7 +95,6 @@ const AddOrganisation = () => {
       await axios
         .post(`/organization`, body)
         .then((res) => {
-          console.log(res.data);
           navigate("/organisations");
           setLoading(false);
         })
@@ -119,7 +117,7 @@ const AddOrganisation = () => {
             "monjay-theme"
           )} my-3 mx-2`}
         >
-          Edit Organisation
+          Add Organisation
         </h4>
       </div>
       <div className="formsContainer">
@@ -211,7 +209,7 @@ const AddOrganisation = () => {
           )}
         </div>
         <div className="my-5 text-center">
-          <BtnContained title={"UPDATE"} handleClick={handleAddOrganisation} />
+          <BtnContained title={"CREATE"} handleClick={handleAddOrganisation} />
         </div>
       </div>
     </Layout>

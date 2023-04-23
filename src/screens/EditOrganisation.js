@@ -7,6 +7,8 @@ import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InputOutlined from "../components/layout/InputOutlined";
 import validator from "validator";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DDSearch from "../components/layout/DDSearch";
 
 const EditOrganisation = () => {
   const [isLoading, setLoading] = useState(false);
@@ -15,6 +17,8 @@ const EditOrganisation = () => {
   const [errors, setErrors] = useState({
     name: false,
   });
+  const [allCustomers, setAllCustomers] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,6 +26,25 @@ const EditOrganisation = () => {
   useEffect(() => {
     fetchOrgById(location.state?.id);
   }, [location.state?.id]);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const fetchCustomers = async () => {
+    setLoading(true);
+    await axios
+      .post(`/customers/getnonorgacustomers?page=1&limit=10000`)
+      .then((res) => {
+        let cuses = [];
+        res.data.map((cus) => {
+          cuses.push({ label: cus.businessname, value: cus._id });
+        });
+        setAllCustomers(cuses);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
 
   const fetchOrgById = async (id) => {
     setLoading(true);
@@ -36,6 +59,30 @@ const EditOrganisation = () => {
         setLoading(false);
       })
       .catch(console.error);
+  };
+
+  const handleDdChange = (e) => {
+    // clearErrors();
+    setSelectedCustomer(e.target.value);
+    let scus = allCustomers?.filter((cuss) => cuss.value === e.target.value)[0];
+    setData((prev) => {
+      return {
+        ...prev,
+        customers: [
+          ...prev.customers,
+          { businessname: scus.label, _id: e.target.value },
+        ],
+      };
+    });
+  };
+
+  const handleRemoveCustomer = (id) => {
+    if (id === head) {
+      setHead("");
+    }
+    setData((prev) => {
+      return { ...prev, customers: prev.customers.filter((c) => c._id !== id) };
+    });
   };
 
   const handleChange = (e) => {
@@ -112,7 +159,7 @@ const EditOrganisation = () => {
     await axios
       .put(`/organization/${location.state?.id}`, body)
       .then(() => {
-        navigate("/organizations");
+        navigate("/organisations");
         setLoading(false);
       })
       .catch(console.error);
@@ -170,12 +217,30 @@ const EditOrganisation = () => {
                 defaultValue="select a head for this organisation"
                 type="text"
                 name="head"
-                value={head}
+                value={
+                  data.customers?.filter((c) => c._id === head)[0]
+                    ?.businessname || ""
+                }
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 error={head === ""}
                 errorMessage="select one head for this organisation"
                 disabled={true}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12 col-md-6 ">
+              <DDSearch
+                name="selecteAStudent"
+                lable="Select your customers:"
+                options={allCustomers}
+                isDisabled={false}
+                isMulti={false}
+                val={selectedCustomer}
+                handleChange={handleDdChange}
+                error={errors.customers}
+                errorMessage="Select at least 2 customers"
               />
             </div>
           </div>
@@ -185,14 +250,19 @@ const EditOrganisation = () => {
               {data?.customers?.length > 0 ? (
                 data?.customers?.map((cust, i) => {
                   return (
-                    <p
-                      key={i}
-                      className="pointer"
-                      style={{ userSelect: "none" }}
-                      onClick={() => setHead(cust._id)}
-                    >
-                      {i + 1 + "-    " + cust._id}
-                    </p>
+                    <div className="d-flex gap-2 align-items-center mb-2">
+                      <span
+                        key={i}
+                        className="pointer"
+                        style={{ userSelect: "none" }}
+                        onClick={() => setHead(cust._id)}
+                      >
+                        {i + 1 + "-    " + cust.businessname}
+                      </span>
+                      <div onClick={() => handleRemoveCustomer(cust._id)}>
+                        <DeleteIcon className="deleteIcon" />
+                      </div>
+                    </div>
                   );
                 })
               ) : (

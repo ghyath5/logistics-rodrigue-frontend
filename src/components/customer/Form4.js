@@ -61,7 +61,6 @@ const Form4 = forwardRef(({ setData, payments, isEdit, data }, ref) => {
       ? (valid = false)
       : (valid = true);
     if (valid) {
-      console.log("valid");
       //add only payment if isconsolidatedbiller else add payment and organisation
       setData((prev) => {
         return { ...prev, ...step4Data };

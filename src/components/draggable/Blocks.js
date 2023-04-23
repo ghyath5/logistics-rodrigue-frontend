@@ -87,9 +87,6 @@ const QucikPick = ({ rowSize, setRowSize, totalBlocks, blocksData }) => {
     single: true,
     onDragStart,
   });
-  useEffect(() => {
-    console.log({ store });
-  }, [store]);
 
   useEffect(() => {
     window.addEventListener("resize", () => {

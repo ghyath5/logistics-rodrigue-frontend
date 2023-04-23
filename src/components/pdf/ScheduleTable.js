@@ -86,7 +86,7 @@ const TableHeader = () => {
       <View style={{ ...styles.smallCenterCell, width: "40%" }}>
         <Text style={styles.headerText}>Balance</Text>
       </View>
-      <View style={styles.centerCell}>
+      <View style={{ ...styles.smallCenterCell, width: "60%" }}>
         <Text style={styles.headerText}>Items Ordered</Text>
       </View>
       <View style={{ ...styles.smallCenterCell, width: "70%" }}>
@@ -102,30 +102,41 @@ const TableHeader = () => {
   );
 };
 
-const TableRow = ({ id }) => {
+const TableRow = ({ data }) => {
+  let total = 0;
+  data.products?.map((p) => (total += p.quantity));
   return (
     <View style={styles.tableRow}>
       <View style={styles.cell}>
-        <Text style={styles.normalText}>El Dalaa Bakery</Text>
-        <Text style={styles.normalText}>
-          106 Blaxcell Street Granville NSW 2142
-        </Text>
-        <Text style={styles.normalText}>9097 5668</Text>
+        <Text style={styles.normalText}>{data.customer?.businessname}</Text>
+        <Text style={styles.normalText}>{data.customer?.address}</Text>
+        <Text style={styles.normalText}>{data.customer?.abn}</Text>
       </View>
       <View style={styles.centerCell}>
-        <Text style={styles.normalText}>Take key to open store</Text>
+        <Text style={styles.normalText}>{data.customer?.notes || ""}</Text>
       </View>
-      <View style={{ ...styles.smallCenterCell, width: "40%" }}>
+      <View
+        style={{
+          ...styles.smallCenterCell,
+          width: "40%",
+          textAlign: "center",
+          paddingLeft: 0,
+        }}
+      >
         <Text style={styles.normalText}>0.00</Text>
         <Text style={styles.normalText}>overdue</Text>
       </View>
-      <View style={styles.centerCell}>
-        <Text style={styles.normalText}>20</Text>
+      <View style={{ ...styles.smallCenterCell, width: "60%" }}>
+        <Text style={{ ...styles.normalText, textAlign: "center" }}>
+          {total}
+        </Text>
       </View>
       <View style={{ ...styles.smallCenterCell, width: "70%" }}>
-        <Text style={styles.normalText}>$ 79.3</Text>
-        <Text style={styles.normalText}>GST: 3.39</Text>
-        <Text style={styles.normalText}>cash on delivery</Text>
+        <Text style={styles.normalText}>$ {data?.totalamount}</Text>
+        <Text style={styles.normalText}>{data?.taxType || "Tax Free"}</Text>
+        <Text style={styles.normalText}>
+          {data.customer?.paymentmethod?.name}
+        </Text>
       </View>
       <View style={{ ...styles.smallCenterCell, width: "60%" }}>
         <View style={styles.boxInput}></View>
@@ -134,12 +145,12 @@ const TableRow = ({ id }) => {
   );
 };
 
-const ScheduleTable = () => {
+const ScheduleTable = ({ data }) => {
   return (
     <View style={styles.table}>
       <TableHeader />
-      {[...Array(50)].map((_, i) => (
-        <TableRow key={i} id={i} />
+      {data.map((item, i) => (
+        <TableRow key={i} data={item} />
       ))}
     </View>
   );
