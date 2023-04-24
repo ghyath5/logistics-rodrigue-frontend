@@ -24,7 +24,7 @@ const CategoryCard = ({ id, name, productCount, handleAction, isUpdate }) => {
               {name}
             </h4>
             <h5 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
-              {productCount} products
+              {productCount > 0 ? `${productCount} products` : "no products"}
             </h5>
             <div className="mt-2">
               <Model

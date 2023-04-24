@@ -105,42 +105,13 @@ const EditOrganisation = () => {
 
   const validate = (name, value) => {
     switch (name) {
-      case "username":
       case "name":
         value &&
           (value.length < 3 ? hasError(name, true) : hasError(name, false));
         break;
-      case "email":
+      case "customers":
         value &&
-          (validator.isEmail(value)
-            ? hasError(name, false)
-            : hasError(name, true));
-        break;
-      case "phone":
-        value &&
-          (validator.isMobilePhone(value.toString(), ["en-AU"])
-            ? hasError(name, false)
-            : hasError(name, true));
-        break;
-      case "password":
-        value &&
-          (validator.isStrongPassword(value, {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-          })
-            ? hasError(name, false)
-            : hasError(name, true));
-        break;
-      case "confirmPassword":
-        value && value === data.password
-          ? hasError(name, false)
-          : hasError(name, true);
-        break;
-      case "role":
-        value !== "" ? hasError(name, false) : hasError(name, true);
+          (value.length > 1 ? hasError(name, false) : hasError(name, true));
         break;
       default:
         console.log("");

@@ -75,8 +75,8 @@ const Register = () => {
             minLength: 8,
             minLowercase: 1,
             minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
+            // minNumbers: 1,
+            // minSymbols: 1,
           })
             ? hasError(name, false)
             : hasError(name, true));

@@ -49,7 +49,7 @@ const SideBarList = ({ toggleDrawer }) => {
               onClick={() => handleItemSelected(item?.goTo && item.goTo)}
             >
               <ListItemButton className="list-btn position-relative">
-                {index === 4 && (
+                {index === 5 && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

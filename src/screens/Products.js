@@ -10,14 +10,15 @@ import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import DeleteModal from "../components/DeleteModal";
-import SureToDelete from "../components/SureToDelete";
+// import SureToDelete from "../components/SureToDelete";
 import SearchInput from "../components/layout/SearchInput";
 import debounce from "lodash.debounce";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
+  const [archived, setArchived] = useState(false);
   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
-  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
+  // const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [productsTotal, setProductsTotal] = useState(0);
   const [productsActive, setTotalActive] = useState(0);
@@ -25,7 +26,7 @@ const Products = () => {
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [itemToDelete, setItemToDelete] = useState("");
+  // const [itemToDelete, setItemToDelete] = useState("");
 
   const columns = [
     { id: "code", label: "Code", minWidth: 100 },
@@ -58,7 +59,7 @@ const Products = () => {
     },
     {
       id: "remove",
-      label: "Archive ",
+      label: archived ? "unarchive" : "Archive",
       minWidth: 100,
       class: ["tableDeleteBtn"],
       action: (id) => handleArchiveProduct(id),
@@ -127,12 +128,12 @@ const Products = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [archived]);
 
   const fetchProducts = async () => {
     setLoading(true);
     await axios
-      .get("/products?page=1&limit=100&isarchived=false")
+      .get(`/products?page=1&limit=100&isArchived=${archived}`)
       .then((res) => {
         setRows([]);
         setProductsTotal(res.data.productsCount);
@@ -152,7 +153,7 @@ const Products = () => {
               p.unitesperbox,
               p.prioritynumber,
               p.visibility === false ? "Hidden" : "Visible",
-              "Archive",
+              archived ? "Unarchive" : "Archive",
               "Edit"
             ),
           ]);
@@ -204,7 +205,7 @@ const Products = () => {
     setLoading(true);
     axios
       .put(`/products/${id}`, {
-        isarchived: true,
+        isarchived: !archived,
       })
       .then(() => {
         let archivedproducts = allProducts.filter((p) => p._id === id)[0];
@@ -222,9 +223,7 @@ const Products = () => {
       });
   };
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <Layout>
       {/* {sureToDeleteVisible && (
         <SureToDelete
@@ -271,18 +270,21 @@ const Products = () => {
         />
       </div>
       <div className="d-flex justify-content-between align-items-center my-4">
-        <h3 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
-          All Products
-        </h3>
+        <div className="d-flex gap-2">
+          <BtnContained title="Active" handleClick={() => setArchived(false)} />
+          <BtnOutlined title="Archived" handleClick={() => setArchived(true)} />
+        </div>
         <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
       </div>
-      <div>
-        {rows.length > 0 ? (
-          <Table columns={columns} rows={rows} />
-        ) : (
-          <NoDataPlaceHolder current="Products" />
-        )}
-      </div>
+      {loading ? null : (
+        <div>
+          {rows.length > 0 ? (
+            <Table columns={columns} rows={rows} />
+          ) : (
+            <NoDataPlaceHolder current="Products" />
+          )}
+        </div>
+      )}
     </Layout>
   );
 };

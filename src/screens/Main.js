@@ -33,6 +33,7 @@ import { UserContextProvider } from "../context/userContext";
 import EditAccount from "./EditAccount";
 import EditOrganisation from "./EditOrganisation";
 import AddOrganisation from "./AddOrganisation";
+import ManageCalls from "./ManageCalls";
 
 const Main = () => {
   return (
@@ -48,6 +49,7 @@ const Main = () => {
           <Route path="editAccount" element={<EditAccount />} />
           <Route path="editOrganisation" element={<EditOrganisation />} />
           <Route path="AddOrganisation" element={<AddOrganisation />} />
+          <Route path="manageCalls" element={<ManageCalls />} />
 
           <Route path="/" element={<Dashboard />} />
           <Route exact path="products" element={<Products />} />

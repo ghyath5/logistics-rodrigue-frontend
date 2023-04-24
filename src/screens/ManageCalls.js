@@ -4,23 +4,18 @@ import axios from "../axios";
 import Layout from "../components/partials/Layout";
 import Table from "../components/layout/Table";
 import Loader from "../components/layout/Loader";
-import BtnContained from "../components/layout/BtnContained";
-import BtnOutlined from "../components/layout/BtnOutlined";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import DeleteModal from "../components/DeleteModal";
-import SureToDelete from "../components/SureToDelete";
 
-const Routess = () => {
+const ManageCalls = () => {
   const [loading, setLoading] = useState(true);
   const [allRoutes, setAllRoutes] = useState([]);
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
-  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState("");
 
   useEffect(() => {
-    fetchRoutes();
+    fetchCalls();
   }, []);
 
   function createData(id, name, description, from, to, cOrder, edit, remove) {
@@ -36,45 +31,32 @@ const Routess = () => {
     };
   }
 
-  const fetchRoutes = async () => {
+  const fetchCalls = async () => {
     setLoading(true);
     await axios
-      .get(`/routes`)
+      .get(`/customers/calls?routeId=644559458a75880526a2e541`)
       .then((res) => {
-        setAllRoutes(res.data.routes);
-        setRows([]);
-        res.data.routes.forEach((p) => {
-          setRows((prev) => [
-            ...prev,
-            createData(
-              p._id,
-              p.name,
-              p.description,
-              p.from,
-              p.to,
-              "Edit customers",
-              "Edit",
-              "Delete"
-            ),
-          ]);
-        });
+        console.log(res.data);
+        // setAllRoutes(res.data.routes);
+        // setRows([]);
+        // res.data.routes.forEach((p) => {
+        //   setRows((prev) => [
+        //     ...prev,
+        //     createData(
+        //       p._id,
+        //       p.name,
+        //       p.description,
+        //       p.from,
+        //       p.to,
+        //       "Edit customers",
+        //       "Edit",
+        //       "Delete"
+        //     ),
+        //   ]);
+        // });
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
-
-  const handleDeleteRoute = async (id) => {
-    await axios
-      .delete(`/routes/${id}`)
-      .then(() => {
-        setAllRoutes((prev) => prev.filter((S) => S._id !== id));
-        setRows((prev) => prev.filter((S) => S.id !== id));
-      })
-      .catch((err) => {
-        if (err.response.status === 403) {
-          setCantDeleteModalVisible(true);
-        }
-      });
   };
 
   const columns = [
@@ -118,43 +100,21 @@ const Routess = () => {
       minWidth: 100,
       class: ["tableDeleteBtn"],
       // action: (id) => handleDeleteRoute(id),
-      action: (id) => prepareDelete(id),
     },
   ];
-  const prepareDelete = async (id) => {
-    setItemToDelete(id);
-    setSureToDeleteVisible(true);
-  };
 
   return loading ? (
     <Loader />
   ) : (
     <Layout>
-      {sureToDeleteVisible && (
-        <SureToDelete
-          setOpen={setSureToDeleteVisible}
-          handleDelete={handleDeleteRoute}
-          id={itemToDelete}
-        />
-      )}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
           <h3
             className={`headerss-${localStorage.getItem("monjay-theme")} my-2`}
           >
-            Regions
+            Calls
           </h3>
-        </div>
-        <div className="d-flex gap-2 align-items-center">
-          <BtnContained
-            title="Add Region"
-            handleClick={() => nav("/addnewregion")}
-          />
-          <BtnOutlined
-            title="Manage Calls"
-            handleClick={() => nav("/manageCalls")}
-          />
         </div>
       </div>
       {rows.length > 0 ? (
@@ -166,4 +126,4 @@ const Routess = () => {
   );
 };
 
-export default Routess;
+export default ManageCalls;

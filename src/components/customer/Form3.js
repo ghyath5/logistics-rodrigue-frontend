@@ -10,7 +10,7 @@ import DDSearch from "../layout/DDSearch";
 import axios from "../../axios";
 
 const days = [
-  { label: "Monday", value: "mon" },
+  // { label: "Monday", value: "mon" },
   { label: "Tuesday", value: "tue" },
   { label: "Wednesday", value: "wed" },
   { label: "Thursday", value: "thu" },
@@ -48,6 +48,7 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
       })
       .catch(console.error);
   };
+
   useImperativeHandle(ref, () => ({
     allVAlid() {
       return allVAlid();
@@ -73,10 +74,17 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
   };
 
   const allVAlid = () => {
-    let valid;
+    let valid = false;
     let errs = Object.values(step3Eerrors);
 
-    errs.includes(true) ? (valid = false) : (valid = true);
+    if (step3Data.routeId === "") {
+      hasError("routeId", true);
+      valid = false;
+    } else if (errs.includes(true)) {
+      valid = false;
+    } else {
+      valid = true;
+    }
 
     if (valid) {
       step3Data.deliveryfee === ""

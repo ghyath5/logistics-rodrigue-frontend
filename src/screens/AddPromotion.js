@@ -328,7 +328,7 @@ export const AddPromotion = ({ isEdit }) => {
                 lable="from"
                 id="dateFrom"
                 name="from"
-                minDate={moment().clone()}
+                minDate={moment().clone().add(1, "days")}
                 value={from}
                 handleChange={(e) => setFrom(e.target.value)}
                 handleBlur={handleBlur}

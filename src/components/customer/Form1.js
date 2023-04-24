@@ -119,7 +119,7 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
       />
       <InputOutlined
         lable="Delivery Address"
-        defaultValue="Being Typing to search for a location"
+        defaultValue="Delivery Address"
         type="text"
         name="address"
         value={step1Data?.address}
@@ -141,8 +141,8 @@ const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
           errorMessage="should be at least 3 letters"
         />
         <InputOutlined
-          lable="Region"
-          defaultValue="Region"
+          lable="Area"
+          defaultValue="Area"
           type="text"
           name="region"
           value={step1Data?.region}

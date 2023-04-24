@@ -105,7 +105,6 @@ const AddNewRoute = ({ isEdit }) => {
           to: data.to,
         })
         .then((res) => {
-          setLoading(false);
           navigate("/regions");
         })
         .catch(console.error)

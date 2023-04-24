@@ -156,11 +156,11 @@ const Accordionn = ({
               <div className="row text-promotion">
                 <span className="fs-6">
                   {item.customer?.address &&
-                    item.customer?.address[0] +
+                    item.customer?.address +
                       ", " +
-                      item.customer?.suburb +
+                      item.customer?.city +
                       ", " +
-                      item.customer?.state}
+                      item.customer?.region}
                 </span>
               </div>
             </div>

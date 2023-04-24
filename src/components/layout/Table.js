@@ -42,7 +42,9 @@ export default function Table({ columns, rows }) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={
+                    column.id === "price" ? { minWidth: column.minWidth } : null
+                  }
                   className={
                     column.noCell
                       ? `d-none`
@@ -68,6 +70,7 @@ export default function Table({ columns, rows }) {
                         <TableCell
                           key={i}
                           align={column.align}
+                          style={{ whiteSpace: "nowrap" }}
                           className={
                             column.noCell
                               ? "d-none"
