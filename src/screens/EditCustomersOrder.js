@@ -6,6 +6,7 @@ import axios from "../axios";
 import NewDnd from "../components/NewDnd";
 import { useRef } from "react";
 import Loader from "../components/layout/Loader";
+import { useLocation } from "react-router-dom";
 
 const EditCustomersOrder = () => {
   // const [totalBlocks, setTotalBlocks] = useState(0);
@@ -13,16 +14,16 @@ const EditCustomersOrder = () => {
   // const [rowSize, setRowSize] = useState(5);
   const [blocksData, setBlocksData] = useState([]);
   const wrapperRef = useRef();
+  const location = useLocation();
 
   useEffect(() => {
-    fetchCustomers();
-  }, []);
+    fetchCustomers(location.state?.id);
+  }, [location.state?.id]);
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = async (id) => {
     await axios
-      .get("/routes/63c44db373e2ce3fd9b379b2")
+      .get(`/routes/${id}`)
       .then((res) => {
-        // setTotalBlocks(res.data.customers.length);
         setBlocksData(res.data.customers);
       })
       .catch(console.error)
