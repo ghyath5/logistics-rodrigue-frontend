@@ -64,7 +64,7 @@ const StepperForm = ({ steps, completed, setCompleted, isEdit }) => {
           preferredday: res.data?.preferredday,
           paymentmethod: res.data?.paymentmethod,
           isconsolidatedbiller: res.data?.organization ? false : true,
-          organization: res.data?.organization || "",
+          organization: res.data?.organization,
         });
       })
       .catch(console.error)

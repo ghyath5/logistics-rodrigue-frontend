@@ -271,8 +271,29 @@ const Products = () => {
       </div>
       <div className="d-flex justify-content-between align-items-center my-4">
         <div className="d-flex gap-2">
-          <BtnContained title="Active" handleClick={() => setArchived(false)} />
-          <BtnOutlined title="Archived" handleClick={() => setArchived(true)} />
+          {!archived ? (
+            <>
+              <BtnContained
+                title="Active"
+                handleClick={() => setArchived(false)}
+              />
+              <BtnOutlined
+                title="Archived"
+                handleClick={() => setArchived(true)}
+              />
+            </>
+          ) : (
+            <>
+              <BtnOutlined
+                title="Active"
+                handleClick={() => setArchived(false)}
+              />
+              <BtnContained
+                title="Archived"
+                handleClick={() => setArchived(true)}
+              />
+            </>
+          )}
         </div>
         <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
       </div>
@@ -281,7 +302,9 @@ const Products = () => {
           {rows.length > 0 ? (
             <Table columns={columns} rows={rows} />
           ) : (
-            <NoDataPlaceHolder current="Products" />
+            <NoDataPlaceHolder
+              current={!archived ? "Products" : "Archived Products"}
+            />
           )}
         </div>
       )}

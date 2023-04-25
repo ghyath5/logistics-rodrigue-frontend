@@ -17,6 +17,7 @@ const InputOutlined = ({
   classes,
   border,
   disabled,
+  prefix,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -53,6 +54,7 @@ const InputOutlined = ({
             autoComplete={autoComplete}
             disabled={disabled && disabled}
           />
+          {prefix && <span className="inputPrefix">%</span>}
           {(name === "password" || name === "confirmPassword") &&
             (!visible ? (
               <img

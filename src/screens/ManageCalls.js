@@ -261,7 +261,7 @@ const ManageCalls = () => {
           </div>
         </div>
       ) : (
-        <NoDataPlaceHolder current="Regions" />
+        <NoDataPlaceHolder current="Scheduled Calls" />
       )}
     </Layout>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BtnContained from "../layout/BtnContained";
 import InputOutlined from "../layout/InputOutlined";
+import { InputAdornment } from "@mui/material";
 
 const ProductListItem = ({ item, handleChange, handleRemove }) => {
   const [discount, setDiscount] = useState(0);
@@ -29,13 +30,15 @@ const ProductListItem = ({ item, handleChange, handleRemove }) => {
         />
         <InputOutlined
           lable=""
-          defaultValue={item.discountpercentage + "%"}
+          // defaultValue={item.discountpercentage + "%"}
+          value={item.discountpercentage}
           type="number"
           id="catDiscount"
           name="catDiscount"
           disabled={doneEditing && true}
           classes="w-50 "
           handleChange={(e) => setDiscount(e.target.value)}
+          prefix={true}
         />
       </div>
       <div className="d-flex justify-content-end align-items-center gap-3 mt-2">
