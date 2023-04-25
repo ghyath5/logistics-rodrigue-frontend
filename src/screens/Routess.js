@@ -8,7 +8,6 @@ import BtnContained from "../components/layout/BtnContained";
 import BtnOutlined from "../components/layout/BtnOutlined";
 import NoDataPlaceHolder from "../components/layout/NoDataPlaceHolder";
 import DeleteModal from "../components/DeleteModal";
-import SureToDelete from "../components/SureToDelete";
 
 const Routess = () => {
   const [loading, setLoading] = useState(true);
@@ -16,14 +15,12 @@ const Routess = () => {
   const [rows, setRows] = useState([]);
   const nav = useNavigate();
   const [cantDeleteModal, setCantDeleteModalVisible] = useState(false);
-  const [sureToDeleteVisible, setSureToDeleteVisible] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState("");
 
   useEffect(() => {
     fetchRoutes();
   }, []);
 
-  function createData(id, name, description, from, to, cOrder, edit, remove) {
+  function createData(id, name, description, from, to, cOrder, call, edit) {
     return {
       id,
       name,
@@ -31,8 +28,8 @@ const Routess = () => {
       from,
       to,
       cOrder,
+      call,
       edit,
-      remove,
     };
   }
 
@@ -53,8 +50,8 @@ const Routess = () => {
               p.from,
               p.to,
               "Edit customers",
-              "Edit",
-              "Delete"
+              "Call",
+              "Edit"
             ),
           ]);
         });
@@ -106,37 +103,31 @@ const Routess = () => {
       action: (id) => nav("/editCustomersOrder", { state: { id: id } }),
     },
     {
+      id: "call",
+      label: "Call",
+      minWidth: 100,
+      class: ["tableEditBtn"],
+      // action: (id) => handleDeleteRoute(id),
+      // action: (id) => prepareDelete(id),
+      action: (id) => nav("/manageCalls", { state: { id: id } }),
+    },
+    {
       id: "edit",
       label: "Edit",
       minWidth: 50,
       class: ["tableEditBtn"],
       action: (id) => nav("/editRegion", { state: { id: id } }),
     },
-    {
-      id: "remove",
-      label: "Delete",
-      minWidth: 100,
-      class: ["tableDeleteBtn"],
-      // action: (id) => handleDeleteRoute(id),
-      action: (id) => prepareDelete(id),
-    },
   ];
-  const prepareDelete = async (id) => {
-    setItemToDelete(id);
-    setSureToDeleteVisible(true);
-  };
+  // const prepareDelete = async (id) => {
+  //   setItemToDelete(id);
+  //   setSureToDeleteVisible(true);
+  // };
 
   return loading ? (
     <Loader />
   ) : (
     <Layout>
-      {sureToDeleteVisible && (
-        <SureToDelete
-          setOpen={setSureToDeleteVisible}
-          handleDelete={handleDeleteRoute}
-          id={itemToDelete}
-        />
-      )}
       {cantDeleteModal && <DeleteModal setOpen={setCantDeleteModalVisible} />}
       <div className="d-flex justify-content-between align-items-center my-4">
         <div>
