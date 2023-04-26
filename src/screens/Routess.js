@@ -137,16 +137,10 @@ const Routess = () => {
             Regions
           </h3>
         </div>
-        <div className="d-flex gap-2 align-items-center">
-          <BtnContained
-            title="Add Region"
-            handleClick={() => nav("/addnewregion")}
-          />
-          <BtnOutlined
-            title="Manage Calls"
-            handleClick={() => nav("/manageCalls")}
-          />
-        </div>
+        <BtnContained
+          title="Add Region"
+          handleClick={() => nav("/addnewregion")}
+        />
       </div>
       {rows.length > 0 ? (
         <Table columns={columns} rows={rows} />
