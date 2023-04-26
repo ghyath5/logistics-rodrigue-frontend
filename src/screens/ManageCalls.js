@@ -225,7 +225,9 @@ const ManageCalls = () => {
               {selectedCustomer?.name || "customer name"}
             </button>
             <button className="dropbtn w-100 mb-2">
-              {moment(customers[0].sheduledCall.date).format("L")}
+              {moment(customers[0].sheduledCall.date)
+                .add(1, "days")
+                .format("L")}
             </button>
             <div className="mt-2">
               <span className="mb-3 formsLable">Products</span>

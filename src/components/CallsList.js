@@ -49,6 +49,7 @@ const CallsList = ({
                       name: cust.businessname,
                     })
                   }
+                  className="pointer"
                 >
                   {i + 1}- {cust.businessname} -
                 </h4>
