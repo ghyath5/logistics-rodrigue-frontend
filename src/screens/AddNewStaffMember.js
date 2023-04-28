@@ -138,7 +138,7 @@ const AddNewStaffMember = ({ isEdit }) => {
           email: data.email,
           phonenumber: data.phone,
           password: data.password,
-          role: data.role,
+          role: 1,
           // theme: "0",
         })
         .then((res) => {
@@ -158,14 +158,14 @@ const AddNewStaffMember = ({ isEdit }) => {
             email: data.email,
             phonenumber: data.phone,
             password: data.password,
-            role: data.role,
+            role: 1,
           }
         : {
             name: data.name,
             username: data.username,
             email: data.email,
             phonenumber: data.phone,
-            role: data.role,
+            role: 1,
           };
     if (allVAlid()) {
       setLoading(true);
