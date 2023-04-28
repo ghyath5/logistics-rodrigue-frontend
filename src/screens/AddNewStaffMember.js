@@ -104,16 +104,9 @@ const AddNewStaffMember = ({ isEdit }) => {
             : hasError(name, true));
         break;
       case "password":
-        value &&
-          (validator.isStrongPassword(value, {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            // minNumbers: 1,
-            // minSymbols: 1,
-          })
-            ? hasError(name, false)
-            : hasError(name, true));
+        value && value.length >= 8 && /[A-Z]/.test(value) && /[a-z]/.test(value)
+          ? hasError(name, false)
+          : hasError(name, true);
         break;
       case "confirmPassword":
         value && value === data.password

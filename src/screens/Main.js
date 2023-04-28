@@ -34,8 +34,10 @@ import EditAccount from "./EditAccount";
 import EditOrganisation from "./EditOrganisation";
 import AddOrganisation from "./AddOrganisation";
 import ManageCalls from "./ManageCalls";
+import Cookies from "js-cookie";
 
 const Main = () => {
+  let monA = Cookies.get("ismonA");
   return (
     <UserContextProvider>
       <Routes>
@@ -51,7 +53,24 @@ const Main = () => {
           <Route path="AddOrganisation" element={<AddOrganisation />} />
           <Route path="manageCalls" element={<ManageCalls />} />
 
-          <Route path="/" element={<Dashboard />} />
+          {monA === "true" && <Route path="/" element={<Dashboard />} />}
+          {monA === "true" && (
+            <Route exact path="staffmembers" element={<StaffMembers />} />
+          )}
+          {monA === "true" && (
+            <Route
+              exact
+              path="AddNewStaffMember"
+              element={<AddNewStaffMember isEdit={false} />}
+            />
+          )}
+          {monA === "true" && (
+            <Route
+              exact
+              path="editStaffMember"
+              element={<AddNewStaffMember isEdit={true} />}
+            />
+          )}
           <Route exact path="products" element={<Products />} />
           <Route exact path="runs" element={<Finalise />} />
           <Route exact path="editrun" element={<EditRun />} />
@@ -73,7 +92,7 @@ const Main = () => {
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
           <Route exact path="drivers" element={<Drivers />} />
-          <Route exact path="staffmembers" element={<StaffMembers />} />
+
           <Route
             exact
             path="addnewcustomer"
@@ -144,16 +163,7 @@ const Main = () => {
             path="managecategories"
             element={<ManageProductCategories />}
           />
-          <Route
-            exact
-            path="AddNewStaffMember"
-            element={<AddNewStaffMember isEdit={false} />}
-          />
-          <Route
-            exact
-            path="editStaffMember"
-            element={<AddNewStaffMember isEdit={true} />}
-          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Route>

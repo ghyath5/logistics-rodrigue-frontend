@@ -36,12 +36,15 @@ const SideBarList = ({ toggleDrawer }) => {
     navigate(goTo && goTo);
   };
 
+  let onlyUpperAdmin = ["Staff Members", "Dashboard"];
+
   return (
     <Box role="presentation">
       <List>
         {myList.map((item, index) => {
-          let role = Cookies.get("ismonA").toString();
-          return role !== "1" && item.text === "Staff Members" ? null : (
+          let monA = Cookies.get("ismonA");
+          return monA !== "true" &&
+            onlyUpperAdmin.includes(item.text) ? null : (
             <ListItem
               key={index}
               disablePadding

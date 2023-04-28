@@ -25,6 +25,7 @@ const Header = ({ isOpen, setOpen }) => {
 
   const handleLogout = () => {
     Cookies.remove("monjayToken");
+    Cookies.remove("ismonA");
     navigate("/login");
   };
 

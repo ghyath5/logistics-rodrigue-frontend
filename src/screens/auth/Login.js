@@ -39,12 +39,14 @@ const Login = () => {
         setUser(res.data);
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
-        res.data.role === 1
-          ? Cookies.set("ismonA", "1", { expires: 3 })
-          : Cookies.set("ismonA", "0", { expires: 3 });
-      })
-      .then(() => {
-        navigate("/");
+
+        if (res.data._id === "644108ae7f7ac0d0ee375066") {
+          Cookies.set("ismonA", "true", { expires: 3 });
+          navigate("/");
+        } else {
+          Cookies.set("ismonA", "false", { expires: 3 });
+          navigate("/orders");
+        }
       })
       .catch((err) => {
         console.error(err);
