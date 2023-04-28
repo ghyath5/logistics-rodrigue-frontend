@@ -109,7 +109,6 @@ const Customers = ({ archived }) => {
         setAllCustomers(res.data);
         setRows([]);
         res.data.customers.forEach((p) => {
-          console.log({ p });
           setRows((prev) => [
             ...prev,
             createData(

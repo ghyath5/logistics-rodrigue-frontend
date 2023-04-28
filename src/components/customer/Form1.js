@@ -1,196 +1,109 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React from "react";
 import InputOutlined from "../layout/InputOutlined";
 import TextAreaOutlined from "../layout/TextAreaOutlined";
 
-const Form1 = forwardRef(({ setData, isEdit, data }, ref) => {
-  const [step1Data, setStep1Data] = useState({
-    businessname: isEdit ? data.businessname : "",
-    abn: isEdit ? data.abn : "",
-    address: isEdit ? data.address : "",
-    city: isEdit ? data.city : "",
-    region: isEdit ? data.region : "",
-    postcode: isEdit ? data.postcode : "",
-    notes: isEdit ? data.notes : "",
-  });
-  const [step1Eerrors, setStep1Errors] = useState({
-    businessname: false,
-    abn: false,
-    address: false,
-    city: false,
-    region: false,
-    postcode: false,
-    notes: false,
-  });
-
-  useImperativeHandle(ref, () => ({
-    allVAlid() {
-      return allVAlid();
-    },
-  }));
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setStep1Data((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    validate(name, value);
-  };
-
-  const hasError = (name, bool) => {
-    setStep1Errors((prev) => {
-      return { ...prev, [name]: bool };
-    });
-  };
-
-  const allVAlid = () => {
-    let valid;
-    let errs = Object.values(step1Eerrors);
-    errs.includes(true) ? (valid = false) : (valid = true);
-
-    for (const [key, value] of Object.entries(step1Data)) {
-      if (key !== "notes" && value === "") {
-        valid = false;
-      }
-    }
-
-    if (valid) {
-      for (const [key, value] of Object.entries(step1Data)) {
-        value !== "" &&
-          setData((prev) => {
-            return { ...prev, [key]: value };
-          });
-      }
-    } else {
-      Object.entries(step1Data).forEach(([key, val]) => {
-        key !== "notes" &&
-          val === "" &&
-          setStep1Errors((prev) => {
-            return { ...prev, [key]: true };
-          });
-      });
-    }
-    return valid;
-  };
-
-  const validate = (name, value) => {
-    switch (name) {
-      case "businessname":
-      case "abn":
-      case "city":
-      case "address":
-      case "postcode":
-        value === "" || value.length < 3
-          ? hasError(name, true)
-          : hasError(name, false);
-        break;
-
-      default:
-        console.log("");
-    }
-  };
-
+const Form1 = ({ errors, data, handleChange, handleBlur }) => {
   return (
-    <div>
-      <InputOutlined
-        lable="Business Name"
-        defaultValue="Business Name"
-        type="text"
-        name="businessname"
-        value={step1Data?.businessname}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        error={step1Eerrors?.businessname}
-        errorMessage="should be at least 3 letters"
-      />
-      <InputOutlined
-        lable="ABN"
-        defaultValue="ABN"
-        type="text"
-        name="abn"
-        value={step1Data?.abn}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        error={step1Eerrors?.abn}
-        errorMessage="should be at least 3 letters"
-      />
-      <InputOutlined
-        lable="Delivery Address"
-        defaultValue="Delivery Address"
-        type="text"
-        name="address"
-        value={step1Data?.address}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        error={step1Eerrors?.address}
-        errorMessage="should be at least 3 letters"
-      />
-      <div className="addressColl d-sm-flex flex-wrap gap-2 align-items-center justify-content-between mt-2">
+    <div className="mx-1 mx-sm-2 mt-sm-4">
+      <h5 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
+        Business Details
+      </h5>
+      <div className="formsContainer px-0 px-sm-3 py-3 w-100">
         <InputOutlined
-          lable="City"
-          defaultValue="City"
+          lable="Business Name"
+          defaultValue="Business Name"
           type="text"
-          name="city"
-          value={step1Data?.city}
+          name="businessname"
+          value={data?.businessname}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step1Eerrors?.city}
+          error={errors?.businessname}
           errorMessage="should be at least 3 letters"
         />
         <InputOutlined
-          lable="Area"
-          defaultValue="Area"
+          lable="ABN"
+          defaultValue="ABN"
           type="text"
-          name="region"
-          value={step1Data?.region}
+          name="abn"
+          value={data?.abn}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step1Eerrors?.region}
+          error={errors?.abn}
           errorMessage="should be at least 3 letters"
         />
-        {/* <DDSearch
-          name="state"
-          lable="State"
-          options={states}
-          isDisabled={false}
-          isMulti={false}
-          val={step1Data?.state}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step1Eerrors?.state}
-          errorMessage="please pick a state"
-        /> */}
         <InputOutlined
-          lable="Postcode"
-          defaultValue="Postcode"
-          type="number"
-          name="postcode"
-          value={step1Data?.postcode}
+          lable="Delivery Address"
+          defaultValue="Delivery Address"
+          type="text"
+          name="address"
+          value={data?.address}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step1Eerrors?.postcode}
+          error={errors?.address}
           errorMessage="should be at least 3 letters"
         />
-      </div>
-      <div className="mt-2 d-flex flex-column">
-        <TextAreaOutlined
-          id="Customer-Notes"
-          lable="Customer Notes (Max of 250 Characters)*"
-          defaultValue="Notes"
-          type="text"
-          name="notes"
-          value={step1Data?.notes}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          // error={step1Eerrors?.notes}
-          // errorMessage="should be at least 10 letters"
-        />
+        <div className="addressColl d-sm-flex flex-wrap gap-2 align-items-center justify-content-between mt-2">
+          <InputOutlined
+            lable="City"
+            defaultValue="City"
+            type="text"
+            name="city"
+            value={data?.city}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.city}
+            errorMessage="should be at least 3 letters"
+          />
+          <InputOutlined
+            lable="Area"
+            defaultValue="Area"
+            type="text"
+            name="region"
+            value={data?.region}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.region}
+            errorMessage="should be at least 3 letters"
+          />
+          {/* <DDSearch
+      name="state"
+      lable="State"
+      options={states}
+      isDisabled={false}
+      isMulti={false}
+      val={data?.state}
+      handleChange={handleChange}
+      handleBlur={handleBlur}
+      error={errors?.state}
+      errorMessage="please pick a state"
+    /> */}
+          <InputOutlined
+            lable="Postcode"
+            defaultValue="Postcode"
+            type="number"
+            name="postcode"
+            value={data?.postcode}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.postcode}
+            errorMessage="should be at least 3 letters"
+          />
+        </div>
+        <div className="mt-2 d-flex flex-column">
+          <TextAreaOutlined
+            id="Customer-Notes"
+            lable="Customer Notes (Max of 250 Characters)*"
+            defaultValue="Notes"
+            type="text"
+            name="notes"
+            value={data?.notes}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+          />
+        </div>
       </div>
     </div>
   );
-});
+};
 
 export default Form1;

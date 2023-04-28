@@ -143,8 +143,8 @@ const EditRun = () => {
       .then((res) => {
         let run = res.data.run;
         let products = [];
-        run.orders.map((ord) =>
-          ord.products.map((prod) => {
+        run?.orders?.map((ord) =>
+          ord?.products?.map((prod) => {
             products.push({
               name: prod.product.name,
               quantity: prod.quantity,

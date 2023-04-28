@@ -141,13 +141,8 @@ const CustomerDetails = () => {
           <div className="detailsCard px-3 py-4 text-center h-100">
             <div className="initials-circle initials-circle-bg mx-auto">
               <h1>
-                {customer.customername.split(" ").length > 1
-                  ? customer.customername
-                      .split(" ")[0]
-                      .charAt(0)
-                      .toUpperCase() +
-                    customer.customername.split(" ")[1].charAt(0).toUpperCase()
-                  : customer.customername.split(" ")[0].charAt(0).toUpperCase()}
+                {customer.firstname.charAt(0).toUpperCase() +
+                  customer.lastname.charAt(0).toUpperCase()}
               </h1>
             </div>
             <div className="mt-5 mb-4">
@@ -225,9 +220,9 @@ const CustomerDetails = () => {
                   Address
                 </h5>
                 <h6 className={`mb-0 ${themedFont.secondary}`}>
-                  {states[customer.state]?.label +
+                  {customer.city +
                     ", " +
-                    customer.suburb +
+                    customer.region +
                     ", " +
                     customer.address}
                 </h6>

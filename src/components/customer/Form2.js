@@ -1,197 +1,94 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React from "react";
 import InputOutlined from "../layout/InputOutlined";
-import validator from "validator";
 
-const Form2 = forwardRef(({ setData, isEdit, data }, ref) => {
-  const [step2Data, setStep2Data] = useState({
-    firstname: isEdit ? data.firstname : "",
-    lastname: isEdit ? data.lastname : "",
-    email: isEdit ? data.email : "",
-    phonenumber: isEdit ? data.phonenumber : "",
-    mobilenumber: isEdit ? data.mobilenumber : "",
-    directdialnumber: isEdit ? data.directdialnumber : "",
-  });
-  const [step2Eerrors, setStep2Errors] = useState({
-    firstname: false,
-    lastname: false,
-    email: false,
-    phonenumber: false,
-    mobilenumber: false,
-    directdialnumber: false,
-  });
-
-  useImperativeHandle(ref, () => ({
-    allVAlid() {
-      return allVAlid();
-    },
-  }));
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setStep2Data((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    validate(name, value);
-  };
-
-  const hasError = (name, bool) => {
-    setStep2Errors((prev) => {
-      return { ...prev, [name]: bool };
-    });
-  };
-
-  const allVAlid = () => {
-    let valid;
-    let errs = Object.values(step2Eerrors);
-    errs.includes(true) ? (valid = false) : (valid = true);
-
-    for (const [key, value] of Object.entries(step2Data)) {
-      if (
-        key !== "mobilenumber" &&
-        key !== "directdialnumber" &&
-        value === ""
-      ) {
-        valid = false;
-      }
-    }
-
-    if (valid) {
-      for (const [key, value] of Object.entries(step2Data)) {
-        value !== "" &&
-          setData((prev) => {
-            return { ...prev, [key]: value };
-          });
-      }
-    } else {
-      Object.entries(step2Data).forEach(([key, val]) => {
-        key !== "mobilenumber" &&
-          key !== "directdialnumber" &&
-          val === "" &&
-          setStep2Errors((prev) => {
-            return { ...prev, [key]: true };
-          });
-      });
-    }
-    return valid;
-  };
-
-  const validate = (name, value) => {
-    switch (name) {
-      case "firstname":
-      case "lastname":
-        value === "" || value.length < 3
-          ? hasError(name, true)
-          : hasError(name, false);
-        break;
-      case "email":
-        value &&
-          (validator.isEmail(value)
-            ? hasError(name, false)
-            : hasError(name, true));
-        break;
-      case "phonenumber":
-        validator.isMobilePhone(value.toString(), ["en-AU"])
-          ? hasError(name, false)
-          : hasError(name, true);
-        break;
-      case "mobilenumber":
-      case "directdialnumber":
-        value.length > 0 &&
-          (validator.isMobilePhone(value.toString(), ["en-AU"])
-            ? hasError(name, false)
-            : hasError(name, true));
-        break;
-      default:
-        console.log("");
-    }
-  };
-
+const Form2 = ({ errors, data, handleChange, handleBlur }) => {
   return (
-    <div>
-      <div className="d-md-flex gap-3">
-        <InputOutlined
-          lable="First Name"
-          defaultValue="First Name"
-          type="text"
-          name="firstname"
-          value={step2Data?.firstname}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.firstname}
-          errorMessage="should be at least 3 letters"
-        />
-        <InputOutlined
-          lable="Last Name"
-          defaultValue="Last Name"
-          type="text"
-          name="lastname"
-          value={step2Data?.lastname}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.lastname}
-          errorMessage="should be at least 3 letters"
-        />
-      </div>
-      <div>
-        <InputOutlined
-          lable="Email Address"
-          defaultValue="Email Address"
-          type="email"
-          name="email"
-          value={step2Data?.email}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.email}
-          errorMessage="not a valid email"
-        />
-      </div>
-      <div className="d-md-flex gap-3">
-        <InputOutlined
-          classes="w-100"
-          name="phonenumber"
-          id="phonenumber"
-          lable="Phone"
-          defaultValue="phonenumber"
-          type="text"
-          value={step2Data?.phonenumber}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.phonenumber}
-          errorMessage="not a valid phone number"
-        />
-        <InputOutlined
-          classes="w-100"
-          name="mobilenumber"
-          id="mobilenumber"
-          lable="Mobile"
-          defaultValue="mobilenumber"
-          type="text"
-          value={step2Data?.mobilenumber}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.mobilenumber}
-          errorMessage="not a valid Mobile number"
-        />
-        <InputOutlined
-          classes="w-100"
-          name="directdialnumber"
-          id="directdialnumber"
-          lable="Direct Dial Number"
-          defaultValue="directdialnumber"
-          type="text"
-          value={step2Data?.directdialnumber}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step2Eerrors?.directdialnumber}
-          errorMessage="not a valid Direct Dial number"
-        />
+    <div className="mx-1 mx-sm-2 mt-sm-4">
+      <h5 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
+        Account Representitive
+      </h5>
+      <div className="formsContainer px-0 px-sm-3 py-3 w-100">
+        <div className="d-md-flex gap-3">
+          <InputOutlined
+            lable="First Name"
+            defaultValue="First Name"
+            type="text"
+            name="firstname"
+            value={data?.firstname}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.firstname}
+            errorMessage="should be at least 3 letters"
+          />
+          <InputOutlined
+            lable="Last Name"
+            defaultValue="Last Name"
+            type="text"
+            name="lastname"
+            value={data?.lastname}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.lastname}
+            errorMessage="should be at least 3 letters"
+          />
+        </div>
+        <div>
+          <InputOutlined
+            lable="Email Address"
+            defaultValue="Email Address"
+            type="email"
+            name="email"
+            value={data?.email}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.email}
+            errorMessage="not a valid email"
+          />
+        </div>
+        <div className="d-md-flex gap-3">
+          <InputOutlined
+            classes="w-100"
+            name="phonenumber"
+            id="phonenumber"
+            lable="Phone"
+            defaultValue="phonenumber"
+            type="text"
+            value={data?.phonenumber}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.phonenumber}
+            errorMessage="not a valid phone number"
+          />
+          <InputOutlined
+            classes="w-100"
+            name="mobilenumber"
+            id="mobilenumber"
+            lable="Mobile"
+            defaultValue="mobilenumber"
+            type="text"
+            value={data?.mobilenumber}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.mobilenumber}
+            errorMessage="not a valid Mobile number"
+          />
+          <InputOutlined
+            classes="w-100"
+            name="directdialnumber"
+            id="directdialnumber"
+            lable="Direct Dial Number"
+            defaultValue="directdialnumber"
+            type="text"
+            value={data?.directdialnumber}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.directdialnumber}
+            errorMessage="not a valid Direct Dial number"
+          />
+        </div>
       </div>
     </div>
   );
-});
+};
 
 export default Form2;

@@ -84,7 +84,7 @@ export default function Table({ columns, rows }) {
                               ${column.id !== "code" ? "text-capitalize" : ""}
                               ${
                                 column.class &&
-                                (column.id === "status"
+                                (column?.id === "status"
                                   ? value === "Visible"
                                     ? column.class[0]
                                     : column.class[1]

@@ -390,6 +390,10 @@ textarea {
   color: var(--delete-red);
   font-size: 12px;
 }
+.errorText {
+  color: var(--delete-red);
+  font-size: 16px;
+}
 
 /*Dashboard section*/
 

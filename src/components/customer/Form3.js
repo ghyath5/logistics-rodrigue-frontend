@@ -1,37 +1,19 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import RadioGroupForm from "../layout/RadioGroupForm";
 import InputOutlined from "../layout/InputOutlined";
 import DDSearch from "../layout/DDSearch";
 import axios from "../../axios";
 
 const days = [
-  // { label: "Monday", value: "mon" },
-  { label: "Tuesday", value: "tue" },
-  { label: "Wednesday", value: "wed" },
-  { label: "Thursday", value: "thu" },
-  { label: "Friday", value: "fri" },
-  { label: "Saturday", value: "sat" },
-  { label: "Sunday", value: "sun" },
+  { label: "Tuesday", value: "tuesday" },
+  { label: "Wednesday", value: "wednesday" },
+  { label: "Thursday", value: "thursday" },
+  { label: "Friday", value: "friday" },
+  { label: "Saturday", value: "saturday" },
+  { label: "Sunday", value: "sunday" },
 ];
 
-const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
-  const [step3Data, setStep3Data] = useState({
-    deliveryoccur: isEdit ? data.deliveryoccur : occurs[0].value,
-    deliveryfee: isEdit ? data.deliveryfee : "",
-    routeId: isEdit ? data.routeId : "",
-    preferredday: isEdit ? data.preferredday : "",
-  });
-  const [step3Eerrors, setStep3Errors] = useState({
-    deliveryoccur: false,
-    deliveryfee: false,
-    routeId: false,
-    preferredday: false,
-  });
+const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
   const [routes, setRoutes] = useState([]);
 
   useEffect(() => {
@@ -49,104 +31,60 @@ const Form3 = forwardRef(({ setData, occurs, data, isEdit }, ref) => {
       .catch(console.error);
   };
 
-  useImperativeHandle(ref, () => ({
-    allVAlid() {
-      return allVAlid();
-    },
-  }));
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setStep3Data((prev) => {
-      return { ...prev, [name]: value };
-    });
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    value < 0 ? hasError(name, true) : hasError(name, false);
-  };
-
-  const hasError = (name, bool) => {
-    setStep3Errors((prev) => {
-      return { ...prev, [name]: bool };
-    });
-  };
-
-  const allVAlid = () => {
-    let valid = false;
-    let errs = Object.values(step3Eerrors);
-
-    if (step3Data.routeId === "") {
-      hasError("routeId", true);
-      valid = false;
-    } else if (errs.includes(true)) {
-      valid = false;
-    } else {
-      valid = true;
-    }
-
-    if (valid) {
-      step3Data.deliveryfee === ""
-        ? setData((prev) => {
-            return { ...prev, ...step3Data, deliveryfee: "0" };
-          })
-        : setData((prev) => {
-            return { ...prev, ...step3Data };
-          });
-    }
-    return valid;
-  };
-
   return (
-    <div className={`headerss-${localStorage.getItem("monjay-theme")}`}>
-      <RadioGroupForm
-        name="deliveryoccur"
-        lable="How often should deliveries occur?"
-        options={occurs}
-        val={step3Data?.deliveryoccur}
-        handleChange={handleChange}
-      />
-      <div className="d-flex gap-2">
-        <InputOutlined
-          lable="Delivery Fees $"
-          defaultValue="0"
-          type="number"
-          name="deliveryfee"
-          classes=""
-          value={step3Data?.deliveryfee}
+    <div className="mx-1 mx-sm-2 mt-sm-4">
+      <h5 className={`headerss-${localStorage.getItem("monjay-theme")}`}>
+        Deliveries Details
+      </h5>
+      <div className="formsContainer px-0 px-sm-3 py-3 w-100">
+        <RadioGroupForm
+          name="deliveryoccur"
+          lable="How often should deliveries occur?"
+          options={occurs}
+          val={data?.deliveryoccur || occurs[0]?.value}
           handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={step3Eerrors?.deliveryfee}
-          errorMessage="should be bigger than 0"
         />
+        <div className="d-flex gap-2">
+          <InputOutlined
+            lable="Delivery Fees $"
+            defaultValue="0"
+            type="number"
+            name="deliveryfee"
+            classes=""
+            value={data?.deliveryfee}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.deliveryfee}
+            errorMessage="should be bigger than 0"
+          />
+          <DDSearch
+            name="preferredday"
+            lable="Preferred day"
+            options={days}
+            isDisabled={false}
+            isMulti={false}
+            val={data?.preferredday}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.preferredday}
+            errorMessage="please select a preferred day"
+          />
+        </div>
         <DDSearch
-          name="preferredday"
-          lable="Preferred day"
-          options={days}
+          name="routeId"
+          lable="Region"
+          options={routes}
           isDisabled={false}
           isMulti={false}
-          val={step3Data?.preferredday}
+          val={data?.routeId}
           handleChange={handleChange}
           handleBlur={handleBlur}
-          error={step3Eerrors?.preferredday}
-          errorMessage="please select a preferred day"
+          error={errors?.routeId}
+          errorMessage="please pick a region"
         />
       </div>
-      <DDSearch
-        name="routeId"
-        lable="Region"
-        options={routes}
-        isDisabled={false}
-        isMulti={false}
-        val={step3Data?.routeId}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
-        error={step3Eerrors?.routeId}
-        errorMessage="please pick a region"
-      />
     </div>
   );
-});
+};
 
 export default Form3;

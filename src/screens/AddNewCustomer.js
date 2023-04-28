@@ -2,14 +2,7 @@ import React from "react";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-import StepperForm from "../components/layout/StepperForm";
-
-const steps = [
-  "Business Details",
-  "Account Representitive",
-  "Deliveries Details",
-  "Billing and Pricing",
-];
+import FormAll from "../components/customer/FormAll";
 
 const AddNewCustomer = ({ isEdit }) => {
   const nav = useNavigate();
@@ -33,12 +26,7 @@ const AddNewCustomer = ({ isEdit }) => {
           </h4>
         </div>
       </div>
-      <StepperForm
-        steps={steps}
-        completed={completed}
-        setCompleted={setCompleted}
-        isEdit={isEdit}
-      />
+      <FormAll isEdit={isEdit} />
     </Layout>
   );
 };

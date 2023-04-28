@@ -86,7 +86,7 @@ const Table = ({ data }) => {
   return (
     <View style={styles.table}>
       <TableHeader />
-      {data.map((item, i) => (
+      {data?.map((item, i) => (
         <TableRow key={i} id={i} item={item} />
       ))}
     </View>

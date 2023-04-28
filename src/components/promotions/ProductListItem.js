@@ -11,7 +11,7 @@ const ProductListItem = ({ item, handleChange, handleRemove }) => {
     if (discount > 0) {
       setDoneEditing(true);
       handleChange(discount);
-      setDiscount(discount + "%");
+      setDiscount(discount);
     }
   };
 
@@ -31,7 +31,7 @@ const ProductListItem = ({ item, handleChange, handleRemove }) => {
         <InputOutlined
           lable=""
           // defaultValue={item.discountpercentage + "%"}
-          value={item.discountpercentage}
+          value={item?.discountpercentage || discount}
           type="number"
           id="catDiscount"
           name="catDiscount"
