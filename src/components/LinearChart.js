@@ -101,14 +101,14 @@ const LinearChart = ({ data, M1, M2 }) => {
     labels: data.labels,
     datasets: [
       {
-        label: "sales of January",
+        label: "sales of 1st month",
         // data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
         data: data.dataSet1,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "sales of February",
+        label: "sales of 2nd month",
         // data: labels.map(() => faker.datatype.number({ min: 200, max: 1000 })),
         data: data.dataSet2,
         borderColor: "rgb(53, 162, 235)",
