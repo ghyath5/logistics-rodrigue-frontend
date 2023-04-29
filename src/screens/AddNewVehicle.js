@@ -27,6 +27,7 @@ const AddNewVehicle = ({ isEdit }) => {
     color: false,
     expiresIn: false,
   });
+  const [reqError, setReqError] = useState("");
 
   useEffect(() => {
     isEdit && fetchVehicleById(location.state?.id);
@@ -107,7 +108,9 @@ const AddNewVehicle = ({ isEdit }) => {
           setLoading(false);
           navigate("/vehicles");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -123,11 +126,13 @@ const AddNewVehicle = ({ isEdit }) => {
           color: data.color,
           expiresIn: data.expiresIn,
         })
-        .then((res) => {
+        .then(() => {
           setLoading(false);
           navigate("/vehicles");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -239,6 +244,9 @@ const AddNewVehicle = ({ isEdit }) => {
               />
             </div>
           </div>
+        </div>
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
         </div>
         <div className="my-5 text-center">
           <BtnContained

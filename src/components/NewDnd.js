@@ -59,6 +59,7 @@ function NewDnd({ data, wrapperRef }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [state, setState] = useState([]);
+  const [reqError, setReqError] = useState("");
 
   useEffect(() => {
     if (data && data.length > 30) {
@@ -82,7 +83,9 @@ function NewDnd({ data, wrapperRef }) {
       .then(() => {
         navigate("/regions");
       })
-      .catch(console.error);
+      .catch((err) => {
+        err.response.status === 400 && setReqError(err.response?.data?.error);
+      });
   };
 
   const handleSetState = (parts) => {
@@ -170,6 +173,9 @@ function NewDnd({ data, wrapperRef }) {
             </Droppable>
           ))}
         </DragDropContext>
+      </div>
+      <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+        <p className="errorText"> {reqError !== "" && reqError}</p>
       </div>
       <div className="my-3 text-center">
         <BtnContained title={"SAVE REGION"} handleClick={handleUpdateRoute} />

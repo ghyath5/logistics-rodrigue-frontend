@@ -34,6 +34,7 @@ const AddProducts = ({ isEdit }) => {
     taxType: false,
     prioritynumber: false,
   });
+  const [reqError, setReqError] = useState("");
 
   useEffect(() => {
     fetchCategories();
@@ -146,19 +147,12 @@ const AddProducts = ({ isEdit }) => {
           prioritynumber: parseInt(data.prioritynumber),
           visibility: data.visibility,
         })
-        .catch(console.error)
+        .then(() => nav("/products"))
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data);
+        })
         .finally(() => {
-          setData({
-            code: "",
-            name: "",
-            categoryId: "",
-            price: "",
-            unitesperbox: "",
-            prioritynumber: "",
-            visibility: true,
-          });
           setLoading(false);
-          nav("/products");
         });
     }
   };
@@ -176,19 +170,12 @@ const AddProducts = ({ isEdit }) => {
           prioritynumber: data.prioritynumber,
           visibility: data.visibility,
         })
-        .catch(console.error)
+        .then(() => nav("/products"))
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        })
         .finally(() => {
-          setData({
-            code: "",
-            name: "",
-            categoryId: "",
-            price: "",
-            unitesperbox: "",
-            prioritynumber: "",
-            visibility: true,
-          });
           setLoading(false);
-          nav("/products");
         });
     }
   };
@@ -271,15 +258,15 @@ const AddProducts = ({ isEdit }) => {
             <div className="col-sm-12 col-md-6">
               <InputOutlined
                 id="unitesperbox"
-                lable="Unites per box"
-                defaultValue="Unites per box"
+                lable="Units per box"
+                defaultValue="Units per box"
                 type="text"
                 name="unitesperbox"
                 value={data?.unitesperbox}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 error={errors?.unitesperbox}
-                errorMessage="please fill the unites per box"
+                errorMessage="please fill the units per box"
               />
             </div>
           </div>
@@ -343,6 +330,9 @@ const AddProducts = ({ isEdit }) => {
               />
             </div>
           </div>
+        </div>
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
         </div>
         <div className="my-5 text-center">
           <BtnContained

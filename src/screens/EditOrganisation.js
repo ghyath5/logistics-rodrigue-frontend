@@ -6,12 +6,11 @@ import Loader from "../components/layout/Loader";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InputOutlined from "../components/layout/InputOutlined";
-import validator from "validator";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DDSearch from "../components/layout/DDSearch";
 
 const EditOrganisation = () => {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [head, setHead] = useState("");
   const [data, setData] = useState({ name: "", customers: [] });
   const [errors, setErrors] = useState({
@@ -19,6 +18,7 @@ const EditOrganisation = () => {
   });
   const [allCustomers, setAllCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [reqError, setReqError] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -133,7 +133,9 @@ const EditOrganisation = () => {
         navigate("/organisations");
         setLoading(false);
       })
-      .catch(console.error);
+      .catch((err) => {
+        err.response.status === 400 && setReqError(err.response?.data?.message);
+      });
   };
 
   return isLoading ? (
@@ -241,8 +243,11 @@ const EditOrganisation = () => {
               )}
             </div>
           </div>
+        </div>{" "}
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
         </div>
-        <div className="my-5 text-center">
+        <div className="my-2 text-center">
           <BtnContained
             title={"UPDATE"}
             handleClick={handleUpdateOrganisation}

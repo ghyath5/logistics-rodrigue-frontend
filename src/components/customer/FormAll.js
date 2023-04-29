@@ -200,7 +200,7 @@ const FormAll = ({ isEdit }) => {
         setLoading(false);
       })
       .catch((err) => {
-        setReqError(err.response.data.message);
+        err.response.status === 400 && setReqError(err.response.data.message);
       });
   };
 
@@ -215,7 +215,10 @@ const FormAll = ({ isEdit }) => {
       .finally(() => {
         setLoading(false);
       })
-      .catch(console.error);
+      .catch(
+        (err) =>
+          err.response.status === 400 && setReqError(err.response.data.message)
+      );
   };
 
   return isLoading ? (

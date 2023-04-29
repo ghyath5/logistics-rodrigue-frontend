@@ -80,8 +80,8 @@ const Organisations = () => {
               p._id,
               i + 1,
               p.name,
-              p.head.businessname,
-              p.customers.length || 0,
+              p.head?.businessname,
+              p.customers?.length || 0,
               "edit"
             ),
           ]);

@@ -11,6 +11,7 @@ import Loader from "../components/layout/Loader";
 
 const AddNewDriver = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(false);
+  const [reqError, setReqError] = useState("");
   const [data, setData] = useState({
     name: "",
     phone: "",
@@ -95,7 +96,11 @@ const AddNewDriver = ({ isEdit }) => {
           setLoading(false);
           navigate("/drivers");
         })
-        .catch(console.error);
+        .catch(
+          (err) =>
+            err.response.status === 400 &&
+            setReqError(err.response.data.message)
+        );
     }
   };
 
@@ -107,11 +112,15 @@ const AddNewDriver = ({ isEdit }) => {
           name: data.name,
           phone: data.phone,
         })
-        .then((res) => {
+        .then(() => {
           setLoading(false);
           navigate("/drivers");
         })
-        .catch(console.error);
+        .catch(
+          (err) =>
+            err.response.status === 400 &&
+            setReqError(err.response.data.message)
+        );
     }
   };
 
@@ -178,7 +187,10 @@ const AddNewDriver = ({ isEdit }) => {
             </div>
           </div>
         </div>
-        <div className="my-5 text-center">
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
+        </div>
+        <div className="my-2 text-center">
           <BtnContained
             title={isEdit ? "UPDATE DRIVER" : "CREATE DRIVER"}
             handleClick={isEdit ? handleUpdateDriver : handleAddDriver}

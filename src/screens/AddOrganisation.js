@@ -20,6 +20,7 @@ const AddOrganisation = () => {
     customers: false,
   });
   const [allCustomers, setAllCustomers] = useState([]);
+  const [reqError, setReqError] = useState("");
 
   const navigate = useNavigate();
 
@@ -71,6 +72,7 @@ const AddOrganisation = () => {
       return { ...prev, [name]: bool };
     });
   };
+
   const clearErrors = () => {
     setErrors({ name: false, head: false, customers: false });
   };
@@ -94,11 +96,13 @@ const AddOrganisation = () => {
       setLoading(true);
       await axios
         .post(`/organization`, body)
-        .then((res) => {
+        .then(() => {
           navigate("/organisations");
           setLoading(false);
         })
-        .catch(console.error);
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        });
     }
   };
 
@@ -207,6 +211,9 @@ const AddOrganisation = () => {
               </div>
             </div>
           )}
+        </div>
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
         </div>
         <div className="my-5 text-center">
           <BtnContained title={"CREATE"} handleClick={handleAddOrganisation} />

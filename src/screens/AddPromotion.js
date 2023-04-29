@@ -40,6 +40,7 @@ export const AddPromotion = ({ isEdit }) => {
     products: false,
     category: false,
   });
+  const [reqError, setReqError] = useState("");
 
   const handleChangeTarget = (e) => {
     setPromotionTarget(e.target.value);
@@ -209,7 +210,9 @@ export const AddPromotion = ({ isEdit }) => {
         .then((res) => {
           nav("/promotions");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.error);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -226,10 +229,12 @@ export const AddPromotion = ({ isEdit }) => {
           categorypromotion: categoryToAdd,
           productspromotion: productsToAdd,
         })
-        .then((res) => {
+        .then(() => {
           nav("/promotions");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -411,7 +416,10 @@ export const AddPromotion = ({ isEdit }) => {
             ) : null}
           </List>
         </div>
-        <div className="my-4 text-center">
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
+        </div>
+        <div className="my-2 text-center">
           <BtnContained
             title={isEdit ? "UPDATE PROMOTION" : "CREATE PROMOTION"}
             handleClick={() => {

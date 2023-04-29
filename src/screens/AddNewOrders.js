@@ -19,6 +19,7 @@ const AddNewOrders = ({ isEdit }) => {
   const nav = useNavigate();
   const location = useLocation();
   const [products, setProducts] = useState([]);
+  const [reqError, setReqError] = useState("");
 
   const [selectedCustomerId, setSelectedCustomerId] = useState({});
   const [selectedCustomer, setSelectedCustomer] = useState({});
@@ -250,7 +251,9 @@ const AddNewOrders = ({ isEdit }) => {
         .then(() => {
           nav("/orders");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.error);
+        })
         .finally(() => setLoading(false));
     } else {
       setError(true);
@@ -271,6 +274,7 @@ const AddNewOrders = ({ isEdit }) => {
     });
 
     let dataToSend = {
+      _id: 2,
       customer: selectedCustomerId,
       products: filteredProducts,
       date: date,
@@ -284,7 +288,10 @@ const AddNewOrders = ({ isEdit }) => {
         .then(() => {
           nav("/orders");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 &&
+            setReqError(err.response.data?.message);
+        })
         .finally(() => setLoading(false));
     } else {
       setError(true);
@@ -422,7 +429,9 @@ const AddNewOrders = ({ isEdit }) => {
               </div>
             </div>
           </div>
-
+          <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+            <p className="errorText"> {reqError !== "" && reqError}</p>
+          </div>
           <div className="text-center mt-3 mb-4">
             <BtnContained
               title={isEdit ? "UPDATE ORDER" : "SUBMIT ORDER"}

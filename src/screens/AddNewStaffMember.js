@@ -31,6 +31,7 @@ const AddNewStaffMember = ({ isEdit }) => {
     password: false,
     confirmPassword: false,
   });
+  const [reqError, setReqError] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -138,7 +139,9 @@ const AddNewStaffMember = ({ isEdit }) => {
           setLoading(false);
           navigate("/staffmembers");
         })
-        .catch(console.error);
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.error);
+        });
     }
   };
 
@@ -168,7 +171,9 @@ const AddNewStaffMember = ({ isEdit }) => {
           setLoading(false);
           navigate("/staffmembers");
         })
-        .catch(console.error);
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.error);
+        });
     }
   };
 
@@ -299,7 +304,10 @@ const AddNewStaffMember = ({ isEdit }) => {
             </div>
           </div>
         </div>
-        <div className="my-5 text-center">
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
+        </div>
+        <div className="my-2 text-center">
           <BtnContained
             title={isEdit ? "UPDATE" : "CREATE STAFF MEMBER"}
             handleClick={

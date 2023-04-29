@@ -31,6 +31,7 @@ const EditAccount = () => {
     password: false,
     confirmPassword: false,
   });
+  const [reqError, setReqError] = useState("");
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -135,9 +136,10 @@ const EditAccount = () => {
         .put(`users/${user._id}`, body)
         .then(() => {
           setLoading(false);
-          navigate("/organisations");
         })
-        .catch(console.error)
+        .catch((err) => {
+          err.response.status === 400 && setReqError(err.response.data.message);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -268,8 +270,11 @@ const EditAccount = () => {
               </div>
             </div>
           </div>
+        </div>{" "}
+        <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
+          <p className="errorText"> {reqError !== "" && reqError}</p>
         </div>
-        <div className="my-5 text-center">
+        <div className="my-2 text-center">
           <BtnContained
             title={"UPDATE"}
             handleClick={handleUpdateStaffMember}
