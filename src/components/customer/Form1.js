@@ -80,7 +80,7 @@ const Form1 = ({ errors, data, handleChange, handleBlur }) => {
           <InputOutlined
             lable="Postcode"
             defaultValue="Postcode"
-            type="number"
+            type="text"
             name="postcode"
             value={data?.postcode}
             handleChange={handleChange}
