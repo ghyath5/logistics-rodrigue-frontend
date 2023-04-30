@@ -367,7 +367,6 @@ const AddNewOrders = ({ isEdit }) => {
         </div>
 
         <hr className="line"></hr>
-
         <div>
           {!isEdit && (
             <>
