@@ -91,7 +91,7 @@ const Header = ({ isOpen, setOpen }) => {
                       ACCOUNT
                     </Button>
                     <Button
-                      className="w-100  justify-content-start"
+                      className="w-100 justify-content-start"
                       color="inherit"
                       onClick={handleToggleTheme}
                     >
