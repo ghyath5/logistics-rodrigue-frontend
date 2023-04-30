@@ -15,7 +15,7 @@ const days = [
 
 const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
   const [routes, setRoutes] = useState([]);
-
+  console.log("data", data);
   useEffect(() => {
     fetchRoutes();
   }, []);

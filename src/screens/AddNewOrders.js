@@ -162,6 +162,9 @@ const AddNewOrders = ({ isEdit }) => {
       })
       .catch(console.error);
   };
+  useEffect(() => {
+    console.log("selectedCustomer", selectedCustomer);
+  }, [selectedCustomer]);
 
   const handleConfirmProduct = (id, total, quantity) => {
     let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
