@@ -64,6 +64,9 @@ const EditOrganisation = () => {
   const handleDdChange = (e) => {
     // clearErrors();
     setSelectedCustomer(e.target.value);
+    setAllCustomers((prev) =>
+      prev?.filter((cuss) => cuss.value !== e.target.value)
+    );
     let scus = allCustomers?.filter((cuss) => cuss.value === e.target.value)[0];
     setData((prev) => {
       return {
@@ -80,9 +83,19 @@ const EditOrganisation = () => {
     if (id === head) {
       setHead("");
     }
-    setData((prev) => {
-      return { ...prev, customers: prev.customers.filter((c) => c._id !== id) };
-    });
+    let removed = data.customers.filter((c) => c._id === id)[0];
+    setAllCustomers((prev) => [
+      ...prev,
+      { label: removed.businessname, value: removed._id },
+    ]);
+    setTimeout(() => {
+      setData((prev) => {
+        return {
+          ...prev,
+          customers: prev.customers.filter((c) => c._id !== id),
+        };
+      });
+    }, 200);
   };
 
   const handleChange = (e) => {

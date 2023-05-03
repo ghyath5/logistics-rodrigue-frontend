@@ -90,9 +90,7 @@ const EditAccount = () => {
         break;
       case "phone":
         value &&
-          (validator.isMobilePhone(value.toString(), ["en-AU"])
-            ? hasError(name, false)
-            : hasError(name, true));
+          (value.length < 6 ? hasError(name, true) : hasError(name, false));
         break;
       case "password":
         value && value.length >= 8 && /[A-Z]/.test(value) && /[a-z]/.test(value)
@@ -247,7 +245,7 @@ const EditAccount = () => {
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                   error={errors?.password}
-                  errorMessage="weak password"
+                  errorMessage="must be 8 chars long with 1 capital letter"
                   autoComplete="new-password"
                 />
               </div>

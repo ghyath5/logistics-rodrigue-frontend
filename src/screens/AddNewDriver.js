@@ -75,9 +75,7 @@ const AddNewDriver = ({ isEdit }) => {
         break;
       case "phone":
         value &&
-          (validator.isMobilePhone(value.toString(), ["en-AU"])
-            ? hasError(name, false)
-            : hasError(name, true));
+          (value.length < 6 ? hasError(name, true) : hasError(name, false));
         break;
       default:
         console.log("");

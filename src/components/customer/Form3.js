@@ -5,6 +5,7 @@ import DDSearch from "../layout/DDSearch";
 import axios from "../../axios";
 
 const days = [
+  { label: "Monday", value: "monday" },
   { label: "Tuesday", value: "tuesday" },
   { label: "Wednesday", value: "wednesday" },
   { label: "Thursday", value: "thursday" },

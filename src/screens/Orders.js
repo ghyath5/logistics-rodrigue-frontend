@@ -72,8 +72,27 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    let selectedD = new Date();
+    setDateFilter(selectedD);
+    let to = {
+      day: String(selectedD.getDate()).padStart(2, "0"),
+      month: String(selectedD.getMonth() + 1).padStart(2, "0"),
+      year: selectedD.getFullYear(),
+    };
+    getOrdersByDate(`${to.year}-${to.month}-${to.day}`);
+    // fetchOrders();
   }, []);
+
+  // const fetchOrders = async () => {
+  //   setLoading(true);
+  //   await axios
+  //     .get(`/orders?page=1&limit=30&done=all`)
+  //     .then((res) => {
+  //       setAllOrders(res.data.orders);
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => setLoading(false));
+  // };
 
   // const del = async () => {
   //   await axios
@@ -101,27 +120,16 @@ const Orders = () => {
     debouncedFilter(q);
   };
 
-  const fetchOrders = async () => {
-    setLoading(true);
-    await axios
-      .get(`/orders?page=1&limit=30&done=all`)
-      .then((res) => {
-        setAllOrders(res.data.orders);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  };
-
-  const generateFutureOrders = async () => {
-    setLoading(true);
-    await axios
-      .post(`/orders/deliveryoccur`)
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  };
+  // const generateFutureOrders = async () => {
+  //   setLoading(true);
+  //   await axios
+  //     .post(`/orders/deliveryoccur`)
+  //     .then((res) => {
+  //       // console.log(res);
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => setLoading(false));
+  // };
 
   const exportReport = async () => {
     window.open(
@@ -154,10 +162,10 @@ const Orders = () => {
           </div>
         </div>
         <div className="d-flex flex-wrap gap-2 mainBtn">
-          <BtnContained
+          {/* <BtnContained
             title="GENERATE FUTURE ORDERS"
             handleClick={() => generateFutureOrders()}
-          />
+          /> */}
           <BtnOutlined
             title="ADD NEW ORDER"
             handleClick={() => nav("/addneworder")}

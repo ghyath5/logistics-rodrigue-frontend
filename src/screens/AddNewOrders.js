@@ -11,6 +11,9 @@ import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment/moment";
 import ProdRowDetails from "../components/ProdRowDetails";
 import NewSearchDD from "../components/layout/NewSearchDD";
+import { Checkbox, FormControlLabel } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import Pdf from "../components/pdf";
 
 const AddNewOrders = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(true);
@@ -27,11 +30,16 @@ const AddNewOrders = ({ isEdit }) => {
   const [date, setDate] = useState("");
   const [orderTotal, setOrderTotal] = useState(0);
   const [nonEditedProducts, setNonEditedProducts] = useState([]);
+  const [isBackOrder, setBackOrder] = useState(false);
+  const [backOrderSubmitted, setBackOrderSubmitted] = useState(false);
   const [errorr, setError] = useState(false);
   const [errorrMessage, setErrorMessage] = useState("Invalid Data");
   const [searchPlaceHolder, setSearchPlaceholder] = useState(
     "Search a customer by name or code"
   );
+  const [stockNeededPdfData, setStockNeededPdfData] = useState({});
+  const [deliveryPdfData, setDeliveryPdfData] = useState({});
+  const [buff, setBuffer] = useState(null);
 
   useEffect(() => {
     errorr &&
@@ -162,9 +170,6 @@ const AddNewOrders = ({ isEdit }) => {
       })
       .catch(console.error);
   };
-  useEffect(() => {
-    console.log("selectedCustomer", selectedCustomer);
-  }, [selectedCustomer]);
 
   const handleConfirmProduct = (id, total, quantity) => {
     let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
@@ -226,6 +231,48 @@ const AddNewOrders = ({ isEdit }) => {
     return valid;
   };
 
+  const doPdf = (pdfData) => {
+    setBackOrderSubmitted(true);
+
+    let order = pdfData.order;
+    let products = [];
+    order?.products?.map((prod) => {
+      products.push({
+        name: prod.product.name,
+        quantity: prod.quantity,
+        boxes:
+          !prod.product.unitesperbox || prod.product.unitesperbox === 0
+            ? prod.quantity
+            : prod.product.unitesperbox,
+      });
+    });
+
+    setBuffer(pdfData.pdf.data);
+    setStockNeededPdfData({
+      date: moment(order.date).format("L"),
+      driver: order?.driver?.name || "TBA",
+      products: Object.values(
+        products.reduce((acc, { name, quantity, boxes }) => {
+          acc[name] = acc[name] || { name, quantity: 0, boxes: 0 };
+          acc[name].quantity += quantity;
+          acc[name].boxes += boxes;
+          return acc;
+        }, {})
+      ),
+    });
+    setDeliveryPdfData({
+      date: moment(order.date).format("L"),
+      orders: [order],
+    });
+  };
+
+  const downloadPdf = () => {
+    const uint8Array = new Uint8Array(buff);
+    const blob = new Blob([uint8Array], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  };
+
   const handleSubmitOrder = async () => {
     let filteredProducts = [];
     selectedProducts.forEach((p) => {
@@ -245,17 +292,19 @@ const AddNewOrders = ({ isEdit }) => {
       date: date,
       totalamount: parseFloat(orderTotal),
       status: 0,
+      isBackOrder: isBackOrder,
     };
 
     if (allValid()) {
       setLoading(true);
       await axios
         .post(`orders`, dataToSend)
-        .then(() => {
-          nav("/orders");
+        .then((res) => {
+          isBackOrder ? doPdf(res.data) : nav("/orders");
         })
         .catch((err) => {
-          err.response.status === 400 && setReqError(err.response.data.error);
+          console.log(err);
+          err?.response?.status === 400 && setReqError(err.response.data.error);
         })
         .finally(() => setLoading(false));
     } else {
@@ -277,7 +326,6 @@ const AddNewOrders = ({ isEdit }) => {
     });
 
     let dataToSend = {
-      _id: 2,
       customer: selectedCustomerId,
       products: filteredProducts,
       date: date,
@@ -333,12 +381,51 @@ const AddNewOrders = ({ isEdit }) => {
     setConfirmed(true);
   };
 
-  function disableMondays(date) {
-    return date["$d"].toString().split(" ")[0] === "Mon";
-  }
+  // function disableMondays(date) {
+  //   return date["$d"].toString().split(" ")[0] === "Mon";
+  // }
 
   return isLoading ? (
     <Loader />
+  ) : backOrderSubmitted ? (
+    <Layout>
+      <div className="d-flex align-items-center ">
+        <ArrowBackIcon
+          className="ArrowBackIcon"
+          fontSize="medium"
+          onClick={() => nav("/orders")}
+        />
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
+          Back to orders
+        </h4>
+      </div>
+      <div className="formsContainer px-4 d-flex flex-column gap-3">
+        <h4
+          className={`headerss-${localStorage.getItem(
+            "monjay-theme"
+          )} my-3 mx-2`}
+        >
+          Print back order pdfs
+        </h4>
+        <BtnContained title="PRINT INVOICE" handleClick={downloadPdf} />
+        <Pdf stock={true} data={stockNeededPdfData}>
+          <BtnContained
+            title="PRINT STOCK REPORT"
+            handleClick={() => console.log("")}
+          />
+        </Pdf>
+        <Pdf stock={false} data={deliveryPdfData}>
+          <BtnContained
+            title="PRINT DELIVERY REPORT"
+            handleClick={() => console.log("")}
+          />
+        </Pdf>
+      </div>
+    </Layout>
   ) : (
     <Layout>
       <div className="d-flex align-items-center ">
@@ -356,7 +443,7 @@ const AddNewOrders = ({ isEdit }) => {
         </h4>
       </div>
       <div className="formsContainer px-4 ">
-        <div className="text-center mt-5 mb-4">
+        <div className="d-flex justify-content-center position-relative text-center mt-5 mb-4">
           <h5
             className={`headerss-${localStorage.getItem(
               "monjay-theme"
@@ -364,6 +451,53 @@ const AddNewOrders = ({ isEdit }) => {
           >
             Order Details
           </h5>
+          <div
+            className="ms-auto position-absolute"
+            style={{ top: -10, right: 0 }}
+          >
+            <FormControlLabel
+              label="Back order"
+              control={
+                <Checkbox
+                  checked={isBackOrder}
+                  onChange={() => setBackOrder((prev) => !prev)}
+                  color="primary"
+                  icon={
+                    <span
+                      style={{
+                        border: "2px solid  #2196f3",
+                        borderRadius: 2,
+                        width: 26,
+                        height: 26,
+                        display: "inline-block",
+                      }}
+                    />
+                  }
+                  checkedIcon={
+                    <span
+                      style={{
+                        border: "2px solid #2196f3",
+                        borderRadius: 2,
+                        width: 26,
+                        height: 26,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CheckIcon
+                        style={{
+                          fontSize: 18,
+                          color: "#2196f3",
+                          fontWeight: "bold",
+                        }}
+                      />
+                    </span>
+                  }
+                />
+              }
+            />
+          </div>
         </div>
 
         <hr className="line"></hr>
@@ -388,7 +522,7 @@ const AddNewOrders = ({ isEdit }) => {
             minDate={moment(new Date()).format("L")}
             value={date}
             handleChange={(e) => setDate(e.target.value)}
-            shouldDisableDate={disableMondays}
+            // shouldDisableDate={disableMondays}
           />
           <div className="mt-2">
             <span className="mb-3 formsLable">Products</span>

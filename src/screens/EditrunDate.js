@@ -31,9 +31,9 @@ const EditrunDate = () => {
       .finally(() => setLoading(false));
   };
 
-  function disableMondays(date) {
-    return date["$d"].toString().split(" ")[0] === "Mon";
-  }
+  // function disableMondays(date) {
+  //   return date["$d"].toString().split(" ")[0] === "Mon";
+  // }
 
   const handleChangeDate = async (e) => {
     setDate(moment(e.target.value).add(0, "days").format("L"));
@@ -99,7 +99,7 @@ const EditrunDate = () => {
             minDate={moment(new Date()).format("L")}
             value={date}
             handleChange={handleChangeDate}
-            shouldDisableDate={disableMondays}
+            // shouldDisableDate={disableMondays}
           />
         </div>
         <div className="my-5 text-center">

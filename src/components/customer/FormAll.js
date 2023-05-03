@@ -165,13 +165,9 @@ const FormAll = ({ isEdit }) => {
         case "postcode":
         case "abn":
         case "deliveryoccur":
+        case "phonenumber":
         case "email":
           value === "" ? hasError(key, true) : hasError(key, false);
-          break;
-        case "phonenumber":
-          value === "" || value.length < 8
-            ? hasError(key, true)
-            : hasError(key, false);
           break;
       }
     }

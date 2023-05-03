@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 const AddOrganisation = () => {
   const [isLoading, setLoading] = useState(true);
-  const [selectedStudent, setSelectedStudent] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [headName, setHeadName] = useState("");
   const [data, setData] = useState({ name: "", head: "", customers: [] });
   const [errors, setErrors] = useState({
@@ -54,7 +54,10 @@ const AddOrganisation = () => {
 
   const handleDdChange = (e) => {
     clearErrors();
-    setSelectedStudent(e.target.value);
+    setSelectedCustomer(e.target.value);
+    setAllCustomers((prev) =>
+      prev?.filter((cuss) => cuss.value !== e.target.value)
+    );
     let scus = allCustomers?.filter((cuss) => cuss.value === e.target.value)[0];
     setData((prev) => {
       return {
@@ -173,7 +176,7 @@ const AddOrganisation = () => {
                 options={allCustomers}
                 isDisabled={false}
                 isMulti={false}
-                val={selectedStudent}
+                val={selectedCustomer}
                 handleChange={handleDdChange}
                 error={errors.customers}
                 errorMessage="Select at least 2 customers"

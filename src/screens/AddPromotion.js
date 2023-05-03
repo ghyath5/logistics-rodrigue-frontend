@@ -16,6 +16,9 @@ import { targets } from "../data/configs";
 import moment from "moment/moment";
 import ProductListItem from "../components/promotions/ProductListItem";
 import ProdRowDetails from "../components/ProdRowDetails";
+import NewSearchDD from "../components/layout/NewSearchDD";
+import { useCallback } from "react";
+import debounce from "lodash.debounce";
 
 export const AddPromotion = ({ isEdit }) => {
   const nav = useNavigate();
@@ -126,34 +129,34 @@ export const AddPromotion = ({ isEdit }) => {
       .finally(() => setLoading(false));
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "category") {
-      setCatDis(true);
-      let selectedCategory = categories.filter((cat) => cat.value === value)[0];
-      setProductsToAdd([]);
-      setCategoryToAdd({
-        categoryId: value,
-        discountpercentage: 0,
-        name: selectedCategory.label,
-      });
-    } else if (name === "products") {
-      setCategoryToAdd("");
-      if (value !== "") {
-        let newProd = products.filter((prod) => prod.value === value)[0];
-        setProductsToAdd((prev) => [
-          ...prev,
-          {
-            productId: newProd.value,
-            oldprice: newProd.price,
-            newprice: newProd.price,
-            name: newProd.label,
-            assignedCode: newProd.assignedCode,
-            upb: newProd.upb,
-          },
-        ]);
-        setProducts((prev) => [...prev.filter((p) => p.value !== value)]);
-      }
+  const handleChangeCategory = (e) => {
+    const { value } = e.target;
+    setCatDis(true);
+    let selectedCategory = categories.filter((cat) => cat.value === value)[0];
+    setProductsToAdd([]);
+    setCategoryToAdd({
+      categoryId: value,
+      discountpercentage: 0,
+      name: selectedCategory.label,
+    });
+  };
+
+  const handleChangeProduct = (value) => {
+    setCategoryToAdd("");
+    if (value !== "") {
+      let newProd = products.filter((prod) => prod.value === value)[0];
+      setProductsToAdd((prev) => [
+        ...prev,
+        {
+          productId: newProd.value,
+          oldprice: newProd.price,
+          newprice: newProd.price,
+          name: newProd.label,
+          assignedCode: newProd.assignedCode,
+          upb: newProd.upb,
+        },
+      ]);
+      setProducts((prev) => [...prev.filter((p) => p.value !== value)]);
     }
   };
 
@@ -271,6 +274,33 @@ export const AddPromotion = ({ isEdit }) => {
     setCatDis(false);
   };
 
+  const handleSearchProduct = async (q) => {
+    await axios
+      .post(`/products/find?find=${q}`)
+      .then((res) => {
+        setProducts([]);
+        res.data.forEach((prod) => {
+          setProducts((prev) => [
+            ...prev,
+            {
+              label: prod.name,
+              value: prod._id,
+              price: prod.price,
+              newprice: prod.price,
+              assignedCode: prod.assignedCode,
+              upb: prod.unitesperbox,
+            },
+          ]);
+        });
+      })
+      .catch(console.error);
+  };
+
+  const debouncedFilter = useCallback(
+    debounce((q) => handleSearchProduct(q), 400),
+    []
+  );
+
   return loading ? (
     <Loader />
   ) : (
@@ -373,7 +403,7 @@ export const AddPromotion = ({ isEdit }) => {
                 isMulti={false}
                 isDisabled={catdis}
                 val={categoryToAdd}
-                handleChange={handleChange}
+                handleChange={handleChangeCategory}
                 handleBlur={handleBlur}
                 error={errors?.category}
                 errorMessage="please select 1 category"
@@ -381,17 +411,24 @@ export const AddPromotion = ({ isEdit }) => {
             </div>
           ) : (
             <div>
-              <DDSearch
+              {/* <span className="mb-3 formsLable">Add product to promotion</span> */}
+              <NewSearchDD
+                data={products}
+                handleSearch={debouncedFilter}
+                handleSelect={handleChangeProduct}
+                placeHolder={"Products"}
+              />
+              {/* <DDSearch
                 name="products"
                 lable="Add product to promotion"
                 options={products}
                 isMulti={false}
                 val=""
-                handleChange={handleChange}
+                handleChange={handleChangeProduct}
                 handleBlur={handleBlur}
                 error={errors?.products}
                 errorMessage="please select at least 1 product"
-              />
+              /> */}
             </div>
           )}
 

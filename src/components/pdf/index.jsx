@@ -110,7 +110,7 @@ const Pdf = ({ children, stock, data }) => {
   return (
     <PDFDownloadLink
       document={<MyDocument data={data} stock={stock} />}
-      fileName="Invoice"
+      fileName={!stock ? "Deliver schedule" : "Stock report"}
     >
       {() => children}
     </PDFDownloadLink>
