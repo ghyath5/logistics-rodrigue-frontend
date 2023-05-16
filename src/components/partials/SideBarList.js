@@ -11,6 +11,7 @@ const SideBarList = ({ toggleDrawer }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState("");
+  let monA = Cookies.get("ismonA");
 
   useEffect(() => {
     setSelectedItem(window.location.pathname);
@@ -42,7 +43,6 @@ const SideBarList = ({ toggleDrawer }) => {
     <Box role="presentation">
       <List>
         {myList.map((item, index) => {
-          let monA = Cookies.get("ismonA");
           return monA !== "true" &&
             onlyUpperAdmin.includes(item.text) ? null : (
             <ListItem
