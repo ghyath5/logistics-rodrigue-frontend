@@ -40,7 +40,7 @@ const Login = () => {
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
 
-        if (res.data._id === process.env.REACT_APP_UPPER_ADMIN) {
+        if (res.data.isUpperAdmin) {
           Cookies.set("ismonA", "true", { expires: 3 });
           navigate("/");
         } else {
