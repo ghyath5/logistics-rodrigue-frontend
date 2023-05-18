@@ -24,7 +24,7 @@ const AddNewOrders = ({ isEdit }) => {
   const [products, setProducts] = useState([]);
   const [reqError, setReqError] = useState("");
 
-  const [selectedCustomerId, setSelectedCustomerId] = useState({});
+  const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [date, setDate] = useState("");
@@ -51,6 +51,12 @@ const AddNewOrders = ({ isEdit }) => {
   useEffect(() => {
     fetchCustomers();
   }, []);
+  useEffect(() => {
+    console.log({ customers });
+  }, [customers]);
+  useEffect(() => {
+    console.log({ selectedCustomer });
+  }, [selectedCustomer]);
 
   const fetchCustomers = async () => {
     setLoading(true);
@@ -186,6 +192,7 @@ const AddNewOrders = ({ isEdit }) => {
 
   const handleSendCustomerId = async (custId, lbl) => {
     setSelectedCustomerId(custId);
+    setSelectedCustomer(customers.filter((x) => x.value === custId)[0]);
     await axios
       .post(
         `orders/sendcustomeridfororder/${custId}?page=1&limit=30&isarchived=false`

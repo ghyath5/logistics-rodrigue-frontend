@@ -12,7 +12,11 @@ const Form4 = ({ payments, data, handleChange }) => {
           name="paymentmethod"
           lable="Default Payment Method: "
           options={payments}
-          val={data?.paymentmethod || payments[0]?.value}
+          val={
+            data?.paymentmethod !== ""
+              ? data?.paymentmethod
+              : payments[0]?.value
+          }
           handleChange={handleChange}
         />
       </div>

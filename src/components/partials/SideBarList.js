@@ -11,7 +11,11 @@ const SideBarList = ({ toggleDrawer }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState("");
-  let monA = Cookies.get("ismonA");
+  const [monA, setMonA] = useState("");
+
+  useEffect(() => {
+    setMonA(Cookies.get("ismonA"));
+  }, []);
 
   useEffect(() => {
     setSelectedItem(window.location.pathname);

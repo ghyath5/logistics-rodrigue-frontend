@@ -6,7 +6,6 @@ import FormAll from "../components/customer/FormAll";
 
 const AddNewCustomer = ({ isEdit }) => {
   const nav = useNavigate();
-  const [completed, setCompleted] = React.useState({});
 
   return (
     <Layout>

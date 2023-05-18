@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import axios from "../../axios";
 import Loader from "../layout/Loader";
 import BtnContained from "../layout/BtnContained";
-import validator from "validator";
 
 const FormAll = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -151,7 +150,32 @@ const FormAll = ({ isEdit }) => {
     });
   };
 
+  const clearErrors = () => {
+    setErrors({
+      businessname: false,
+      abn: false,
+      address: false,
+      city: false,
+      region: false,
+      postcode: false,
+      notes: false,
+      firstname: false,
+      lastname: false,
+      email: false,
+      phonenumber: false,
+      mobilenumber: false,
+      directdialnumber: false,
+      deliveryoccur: false,
+      deliveryfee: false,
+      routeId: false,
+      preferredday: false,
+      paymentmethod: false,
+      isconsolidatedbiller: false,
+    });
+  };
+
   const validate = () => {
+    clearErrors();
     for (const [key, value] of Object.entries(data)) {
       switch (key) {
         case "firstname":

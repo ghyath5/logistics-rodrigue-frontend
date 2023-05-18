@@ -16,7 +16,6 @@ const days = [
 
 const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
   const [routes, setRoutes] = useState([]);
-  console.log("data", data);
   useEffect(() => {
     fetchRoutes();
   }, []);
@@ -42,7 +41,9 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
           name="deliveryoccur"
           lable="How often should deliveries occur?"
           options={occurs}
-          val={data?.deliveryoccur || occurs[0]?.value}
+          val={
+            data?.deliveryoccur !== "" ? data?.deliveryoccur : occurs[0]?.value
+          }
           handleChange={handleChange}
         />
         <div className="d-flex gap-2">
