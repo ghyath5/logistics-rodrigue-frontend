@@ -141,8 +141,8 @@ const CustomerDetails = () => {
           <div className="detailsCard px-3 py-4 text-center h-100">
             <div className="initials-circle initials-circle-bg mx-auto">
               <h1>
-                {customer.firstname.charAt(0).toUpperCase() +
-                  customer.lastname.charAt(0).toUpperCase()}
+                {customer?.firstname?.charAt(0).toUpperCase() +
+                  customer?.lastname?.charAt(0).toUpperCase()}
               </h1>
             </div>
             <div className="mt-5 mb-4">
@@ -151,7 +151,7 @@ const CustomerDetails = () => {
                   "monjay-theme"
                 )} text-capitalize`}
               >
-                {customer.customername}
+                {customer?.customername}
               </h5>
               <h6 className={themedFont.secondary}>{customer.email}</h6>
               <h6 className={themedFont.primary}>{customer.phonenumber}</h6>

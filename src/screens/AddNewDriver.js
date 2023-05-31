@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Layout from "../components/partials/Layout";
 import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
-import validator from "validator";
 import axios from "../axios";
 import { useEffect } from "react";
 import Loader from "../components/layout/Loader";

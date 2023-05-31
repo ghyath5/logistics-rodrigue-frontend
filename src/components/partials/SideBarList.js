@@ -18,7 +18,7 @@ const SideBarList = ({ toggleDrawer }) => {
   }, []);
 
   useEffect(() => {
-    setSelectedItem(window.location.pathname);
+    setSelectedItem(location.pathname);
   }, [location]);
 
   const myList = [

@@ -35,6 +35,7 @@ import EditOrganisation from "./EditOrganisation";
 import AddOrganisation from "./AddOrganisation";
 import ManageCalls from "./ManageCalls";
 import Cookies from "js-cookie";
+import SomethingWrong from "./SomethingWrong";
 
 const Main = () => {
   let monA = Cookies.get("ismonA");
@@ -163,8 +164,14 @@ const Main = () => {
             path="managecategories"
             element={<ManageProductCategories />}
           />
+          <Route exact path="SomethingWrong" element={<SomethingWrong />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route
+            path="*"
+            element={
+              <Navigate to={monA === "true" ? "/" : "products"} replace />
+            }
+          />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
       </Routes>

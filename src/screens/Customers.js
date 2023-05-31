@@ -171,7 +171,7 @@ const Customers = ({ archived }) => {
               p.isarchived,
               p.codeid,
               p.businessname,
-              p.address[0],
+              p.address,
               p.organization ? orgg : "-",
               p.paymentmethod?.name,
               archived ? "Unarchive Now" : "Archive Now"
