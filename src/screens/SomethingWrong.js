@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorGif from "../assets/error.gif";
 import { useLocation, useNavigate } from "react-router-dom";
 import BtnContained from "../components/layout/BtnContained";
@@ -6,10 +6,12 @@ import BtnContained from "../components/layout/BtnContained";
 const SomethingWrong = () => {
   let navigate = useNavigate();
   let location = useLocation();
+  const [errorCode, setErrorCode] = useState("");
 
-  // useEffect(() => {
-  //   console.log(location);
-  // }, [location]);
+  useEffect(() => {
+    setErrorCode(location?.search?.split("?")[1]);
+  }, [location]);
+
   return (
     <div>
       <div className="mx-auto text-center" style={{ maxWidth: 600 }}>
@@ -24,8 +26,18 @@ const SomethingWrong = () => {
             "monjay-theme"
           )} mb-4 text-uppercase`}
         >
-          {location?.search?.split("?")[1] === "ERR_NETWORK"
+          {errorCode === "ERR_NETWORK"
             ? "Network Error"
+            : errorCode === "403"
+            ? "Access Forbidden"
+            : errorCode === "404"
+            ? "Not Found"
+            : errorCode === "500"
+            ? "server error"
+            : errorCode === "399"
+            ? "Bad Request"
+            : errorCode === "400"
+            ? "Bad Request"
             : "Something Went Wrong"}
         </h3>
         <BtnContained title="Go back" handleClick={() => navigate(-1)} />
