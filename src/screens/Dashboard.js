@@ -11,11 +11,13 @@ import axios from "../axios";
 // import faker from "faker";
 import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment";
+import { useRef } from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const [theme, setTheme] = useState("light");
+
   const [isLoading, setLoading] = useState(true);
   const [warningHidden, setWarningHidden] = useState(true);
   const [vehiclesWarning, setVehiclesWarning] = useState("");
@@ -24,6 +26,7 @@ const Dashboard = () => {
   const [topCategories, setTopCategories] = useState([]);
   const [M1, setM1] = useState(new Date());
   const [M2, setM2] = useState(new Date());
+
   const [topCustomers, setTopCustomers] = useState({ data: [], labels: [] });
   const [lineChartData, setLineChartData] = useState([
     { dataSet1: [], dataSet2: [], labels: [] },

@@ -36,6 +36,7 @@ const Login = () => {
         password: data?.password,
       })
       .then((res) => {
+        console.log(res);
         setUser(res.data);
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
