@@ -51,12 +51,6 @@ const AddNewOrders = ({ isEdit }) => {
   useEffect(() => {
     fetchCustomers();
   }, []);
-  useEffect(() => {
-    console.log({ customers });
-  }, [customers]);
-  useEffect(() => {
-    console.log({ selectedCustomer });
-  }, [selectedCustomer]);
 
   const fetchCustomers = async () => {
     setLoading(true);

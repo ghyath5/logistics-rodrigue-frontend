@@ -35,7 +35,7 @@ const FormAll = ({ isEdit }) => {
     deliveryoccur: "",
     deliveryfee: "",
     routeId: "",
-    preferredday: "",
+    // preferredday: "",
     paymentmethod: "",
     isconsolidatedbiller: true,
   });
@@ -56,7 +56,7 @@ const FormAll = ({ isEdit }) => {
     deliveryoccur: false,
     deliveryfee: false,
     routeId: false,
-    preferredday: false,
+    // preferredday: false,
     paymentmethod: false,
     isconsolidatedbiller: false,
   });
@@ -91,7 +91,7 @@ const FormAll = ({ isEdit }) => {
           directdialnumber: res.data?.directdialnumber,
           deliveryoccur: res.data?.deliveryoccur,
           deliveryfee: res.data?.deliveryfee,
-          preferredday: res.data?.preferredday,
+          // preferredday: res.data?.preferredday,
           paymentmethod: res.data?.paymentmethod,
           isconsolidatedbiller: res.data?.organization ? false : true,
           organization: res.data?.organization,
@@ -168,7 +168,7 @@ const FormAll = ({ isEdit }) => {
       deliveryoccur: false,
       deliveryfee: false,
       routeId: false,
-      preferredday: false,
+      // preferredday: false,
       paymentmethod: false,
       isconsolidatedbiller: false,
     });
@@ -177,6 +177,8 @@ const FormAll = ({ isEdit }) => {
   const validate = () => {
     clearErrors();
     for (const [key, value] of Object.entries(data)) {
+      // case "preferredday":
+
       switch (key) {
         case "firstname":
         case "lastname":
@@ -184,7 +186,6 @@ const FormAll = ({ isEdit }) => {
         case "city":
         case "region":
         case "address":
-        case "preferredday":
         case "routeId":
         case "postcode":
         case "abn":

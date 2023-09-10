@@ -37,7 +37,7 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
         Deliveries Details
       </h5>
       <div className="formsContainer px-0 px-sm-3 py-3 w-100">
-        <RadioGroupForm
+        {/* <RadioGroupForm
           name="deliveryoccur"
           lable="How often should deliveries occur?"
           options={occurs}
@@ -45,7 +45,7 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
             data?.deliveryoccur !== "" ? data?.deliveryoccur : occurs[0]?.value
           }
           handleChange={handleChange}
-        />
+        /> */}
         <div className="d-flex gap-2">
           <InputOutlined
             lable="Delivery Fees $"
@@ -60,6 +60,18 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
             errorMessage="should be bigger than 0"
           />
           <DDSearch
+            name="routeId"
+            lable="Region"
+            options={routes}
+            isDisabled={false}
+            isMulti={false}
+            val={data?.routeId}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            error={errors?.routeId}
+            errorMessage="please pick a region"
+          />
+          {/* <DDSearch
             name="preferredday"
             lable="Preferred day"
             options={days}
@@ -70,20 +82,8 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
             handleBlur={handleBlur}
             error={errors?.preferredday}
             errorMessage="please select a preferred day"
-          />
+          /> */}
         </div>
-        <DDSearch
-          name="routeId"
-          lable="Region"
-          options={routes}
-          isDisabled={false}
-          isMulti={false}
-          val={data?.routeId}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          error={errors?.routeId}
-          errorMessage="please pick a region"
-        />
       </div>
     </div>
   );
