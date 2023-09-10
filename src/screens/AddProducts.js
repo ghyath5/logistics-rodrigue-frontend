@@ -149,7 +149,7 @@ const AddProducts = ({ isEdit }) => {
         })
         .then(() => nav("/products"))
         .catch((err) => {
-          err.response.status === 400 && setReqError(err.response.data);
+          err.response.status === 400 && setReqError(err.response.data.message);
         })
         .finally(() => {
           setLoading(false);
