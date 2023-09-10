@@ -26,12 +26,12 @@ instance.interceptors.response.use(
       window.location = "/login";
       Cookies.remove("monjayToken");
     } else {
-      error?.code === "ERR_NETWORK" &&
-      window.location.pathname !== "/SomethingWrong"
-        ? (window.location = `/SomethingWrong?${error?.code}`)
-        : error?.response?.status !== 400
-        ? (window.location = `/SomethingWrong?${error.response.status}`)
-        : null;
+      // error?.code === "ERR_NETWORK" &&
+      // window.location.pathname !== "/SomethingWrong"
+      //   ? (window.location = `/SomethingWrong?${error?.code}`)
+      //   : error?.response?.status !== 400
+      //   ? (window.location = `/SomethingWrong?${error.response.status}`)
+      //   : null;
       return Promise.reject(error);
     }
   }

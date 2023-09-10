@@ -8,6 +8,24 @@ import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
 import { useEffect } from "react";
+import DDSearch from "../components/layout/DDSearch";
+
+const regionDays = [
+  { label: "Week 1 - Monday", value: "1" },
+  { label: "Week 1 - Tuesday", value: "2" },
+  { label: "Week 1 - Wednesday", value: "3" },
+  { label: "Week 1 - Thursday", value: "4" },
+  { label: "Week 1 - Friday", value: "5" },
+  { label: "Week 1 - Saturday", value: "6" },
+  { label: "Week 1 - Sunday", value: "7" },
+  { label: "Week 2 - Monday", value: "8" },
+  { label: "Week 2 - Tuesday", value: "9" },
+  { label: "Week 2 - Wednesday", value: "10" },
+  { label: "Week 2 - Thursday", value: "11" },
+  { label: "Week 2 - Friday", value: "12" },
+  { label: "Week 2 - Saturday", value: "13" },
+  { label: "Week 2 - Sunday", value: "14" },
+];
 
 const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -27,6 +45,9 @@ const AddNewRoute = ({ isEdit }) => {
   });
   const [placesString, setPlacesString] = useState("");
   const [reqError, setReqError] = useState("");
+  const [scheduledDays, setScheduledDays] = useState([]);
+  const [calledCustomers, setCalledCustomers] = useState([]);
+  const [scheduledDaysError, setScheduledDaysError] = useState(false);
 
   useEffect(() => {
     isEdit && fetchRouteById(location.state?.id);
@@ -49,6 +70,8 @@ const AddNewRoute = ({ isEdit }) => {
           from: res.data.from,
           to: res.data.to,
         });
+        setScheduledDays(res?.data?.scheduledDays[0]?.day || []);
+        setCalledCustomers(res?.data?.scheduledDays[0]?.calledCustomers || []);
         setLoading(false);
       })
       .catch(console.error);
@@ -61,6 +84,13 @@ const AddNewRoute = ({ isEdit }) => {
     setData((prev) => {
       return { ...prev, [name]: name === "places" ? value.split("-") : value };
     });
+  };
+
+  const handleChangeScheduledDays = (e) => {
+    let values = e.target.value.map((item) => parseInt(item));
+    setScheduledDays(values);
+    // setOpen(true);
+    setScheduledDaysError(false);
   };
 
   const handleBlur = (e) => {
@@ -85,10 +115,21 @@ const AddNewRoute = ({ isEdit }) => {
         valid = false;
       }
     }
+
+    if (scheduledDays.length === 0) {
+      valid = false;
+      setScheduledDaysError(true);
+    }
+
     return valid;
   };
 
   const validate = (name, value) => {
+    if (name === "scheduledDays") {
+      value.length === 0
+        ? setScheduledDaysError(true)
+        : setScheduledDaysError(false);
+    }
     if (name === "name" || name === "from" || name === "to") {
       value &&
         (value.length < 3 ? hasError(name, true) : hasError(name, false));
@@ -105,6 +146,9 @@ const AddNewRoute = ({ isEdit }) => {
           description: data.description,
           from: data.from,
           to: data.to,
+          scheduledDays: [
+            { calledCustomers: calledCustomers, day: scheduledDays },
+          ],
         })
         .then(() => {
           navigate("/regions");
@@ -126,12 +170,15 @@ const AddNewRoute = ({ isEdit }) => {
           description: data.description,
           from: data.from,
           to: data.to,
+          scheduledDays: [
+            { calledCustomers: calledCustomers, day: scheduledDays },
+          ],
         })
         .then(() => {
-          navigate("/regions");
+          // navigate("/regions");
         })
         .catch((err) => {
-          err.response.status === 400 && setReqError(err.response.data.error);
+          // err.response.status === 400 && setReqError(err.response.data.error);
         })
         .finally(() => setLoading(false));
     }
@@ -236,6 +283,22 @@ const AddNewRoute = ({ isEdit }) => {
                 handleBlur={handleBlur}
                 // error={errors?.note}
                 // errorMessage="you must select a color"
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12 col-md-6">
+              <DDSearch
+                name="scheduledDays"
+                lable="Scheduled days"
+                options={regionDays}
+                isDisabled={false}
+                isMulti={true}
+                val={scheduledDays}
+                handleChange={handleChangeScheduledDays}
+                handleBlur={handleBlur}
+                error={scheduledDaysError}
+                errorMessage="please select scheduled days"
               />
             </div>
           </div>

@@ -40,6 +40,7 @@ const Routess = () => {
       .then((res) => {
         setAllRoutes(res.data.routes);
         setRows([]);
+        console.log(res.data);
         res.data.routes.forEach((p) => {
           setRows((prev) => [
             ...prev,

@@ -80,21 +80,20 @@ const ManageCalls = () => {
         `/orders/sendcustomeridfororder/${selectedCustomer?.id}?find=${q}&page=1&limit=100000`
       )
       .then((res) => {
-        console.log(res.data);
-        // setProducts([]);
-        // res.data.data.forEach((prod) => {
-        //   setProducts((prev) => [
-        //     ...prev,
-        //     {
-        //       label: prod.name,
-        //       value: prod._id,
-        //       price: prod.price,
-        //       newprice: prod.promotionPrice ? prod.promotionPrice : null,
-        //       assignedCode: prod.assignedCode,
-        //       upb: prod.unitesperbox,
-        //     },
-        //   ]);
-        // });
+        setProducts([]);
+        res.data.data.forEach((prod) => {
+          setProducts((prev) => [
+            ...prev,
+            {
+              label: prod.name,
+              value: prod._id,
+              price: prod.price,
+              newprice: prod.promotionPrice ? prod.promotionPrice : null,
+              assignedCode: prod.assignedCode,
+              upb: prod.unitesperbox,
+            },
+          ]);
+        });
       })
       .catch(console.error);
   };
