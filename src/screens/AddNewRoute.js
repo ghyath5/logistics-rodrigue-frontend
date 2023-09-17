@@ -45,7 +45,7 @@ const AddNewRoute = ({ isEdit }) => {
   });
   const [placesString, setPlacesString] = useState("");
   const [reqError, setReqError] = useState("");
-  const [scheduledDays, setScheduledDays] = useState([]);
+  const [scheduledDays, setScheduledDays] = useState(0);
   const [calledCustomers, setCalledCustomers] = useState([]);
   const [scheduledDaysError, setScheduledDaysError] = useState(false);
 
@@ -70,7 +70,7 @@ const AddNewRoute = ({ isEdit }) => {
           from: res.data.from,
           to: res.data.to,
         });
-        setScheduledDays(res?.data?.scheduledDays[0]?.day || []);
+        setScheduledDays(res?.data?.scheduledDays[0]?.day || 0);
         setCalledCustomers(res?.data?.scheduledDays[0]?.calledCustomers || []);
         setLoading(false);
       })
@@ -87,6 +87,7 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleChangeScheduledDays = (e) => {
+    console.log("e.target.value", e.target.value);
     let values = e.target.value.map((item) => parseInt(item));
     setScheduledDays(values);
     // setOpen(true);
@@ -147,7 +148,7 @@ const AddNewRoute = ({ isEdit }) => {
           from: data.from,
           to: data.to,
           scheduledDays: [
-            { calledCustomers: calledCustomers, day: scheduledDays },
+            { day: scheduledDays, calledCustomers: calledCustomers },
           ],
         })
         .then(() => {
@@ -171,7 +172,7 @@ const AddNewRoute = ({ isEdit }) => {
           from: data.from,
           to: data.to,
           scheduledDays: [
-            { calledCustomers: calledCustomers, day: scheduledDays },
+            { day: scheduledDays, calledCustomers: calledCustomers },
           ],
         })
         .then(() => {
