@@ -51,8 +51,6 @@ const AddNewRoute = ({ isEdit }) => {
   // useEffect(() => {
   //   isEdit && fetchRouteById(location.state?.id);
   // }, [isEdit, location.state?.id]);
-  
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,16 +62,15 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleChangeScheduledDays = (e) => {
-  
     let values = e.target.value.map((item) => parseInt(item));
     let resultArray = values.map((item) => ({ [item]: {} }));
 
-// Sort the array of objects in descending order based on keys
-resultArray.sort((a, b) => Object.keys(b)[0] - Object.keys(a)[0]);
+    // Sort the array of objects in descending order based on keys
+    resultArray.sort((a, b) => Object.keys(b)[0] - Object.keys(a)[0]);
 
-// Add an empty object to the result array
+    // Add an empty object to the result array
 
-console.log(resultArray);
+    console.log(resultArray);
     setScheduledDays(values);
     // setOpen(true);
     setScheduledDaysError(false);
@@ -87,7 +84,7 @@ console.log(resultArray);
   const hasError = (name, bool) => {
     setErrors((prev) => {
       return { ...prev, [name]: bool };
-    })
+    });
   };
 
   const allVAlid = () => {
@@ -121,7 +118,15 @@ console.log(resultArray);
         (value.length < 3 ? hasError(name, true) : hasError(name, false));
     }
   };
-  console.log(regionDays,scheduledDays)
+  console.log(
+    data.name,
+    data.places,
+    data.description,
+    data.from,
+    data.to,
+    scheduledDays,
+    calledCustomers
+  );
   const handleAddNewRoute = () => {
     if (allVAlid()) {
       setLoading(true);
@@ -146,8 +151,12 @@ console.log(resultArray);
     }
   };
 
+  // scheduledDays
+
+  let activeDays = scheduledDays.map((day) => ({ day }));
+
   const handleUpdateRoute = () => {
-    
+  
     if (allVAlid()) {
       setLoading(true);
       axios
@@ -157,18 +166,16 @@ console.log(resultArray);
           description: data.description,
           from: data.from,
           to: data.to,
-          scheduledDays: [
-            {
-              day: scheduledDays, 
-              calledCustomers: [{}] 
-            }
-          ],
+          scheduledDays: activeDays.map((day) => ({
+            day: day.day,
+            calledCustomers: [],
+          })),
         })
         .then(() => {
           // navigate("/regions");
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           // err.response.status === 400 && setReqError(err.response.data.error);
         })
         .finally(() => setLoading(false));
