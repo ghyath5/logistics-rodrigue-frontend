@@ -18,6 +18,7 @@ export const DatePickerr = ({
   inputFormat,
   views,
   nol,
+  maxDate
 }) => {
   const handleTime = (string) => {
     let newTime = new Date(string).toISOString();
@@ -41,6 +42,7 @@ export const DatePickerr = ({
           id="date"
           value={value}
           minDate={minDate && minDate}
+          maxDate={maxDate ?? ''}
           onChange={(d) => {
             handleTime(moment(new Date(d["$d"])).format("L"));
           }}

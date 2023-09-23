@@ -49,11 +49,33 @@ const AddNewRoute = ({ isEdit }) => {
   const [calledCustomers, setCalledCustomers] = useState([]);
   const [scheduledDaysError, setScheduledDaysError] = useState(false);
 
-  // useEffect(() => {
-  //   isEdit && fetchRouteById(location.state?.id);
-  // }, [isEdit, location.state?.id]);
+  useEffect(() => {
+    isEdit && fetchRouteById(location.state?.id);
+  }, [isEdit, location.state?.id]);
 
-
+  const fetchRouteById = async (id) => {
+    setLoading(true);
+    await axios
+      .get(`/routes/${id}`)
+      .then((res) => {
+        let pl = "";
+        res.data.places.forEach((place) => {
+          pl = pl + place + "-";
+        });
+        setPlacesString(pl);
+        setData({
+          name: res.data.name,
+          places: pl,
+          description: res.data.description,
+          from: res.data.from,
+          to: res.data.to,
+        });
+        setScheduledDays(res?.data?.scheduledDays[0]?.day || 0);
+        setCalledCustomers(res?.data?.scheduledDays[0]?.calledCustomers || []);
+        setLoading(false);
+      })
+      .catch(console.error);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +87,7 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleChangeScheduledDays = (e) => {
-  
+    console.log("e.target.value", e.target.value);
     let values = e.target.value.map((item) => parseInt(item));
     setScheduledDays(values);
     // setOpen(true);
@@ -80,7 +102,7 @@ const AddNewRoute = ({ isEdit }) => {
   const hasError = (name, bool) => {
     setErrors((prev) => {
       return { ...prev, [name]: bool };
-    })
+    });
   };
 
   const allVAlid = () => {
@@ -114,7 +136,7 @@ const AddNewRoute = ({ isEdit }) => {
         (value.length < 3 ? hasError(name, true) : hasError(name, false));
     }
   };
-  console.log(regionDays,scheduledDays)
+
   const handleAddNewRoute = () => {
     if (allVAlid()) {
       setLoading(true);
@@ -140,7 +162,6 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleUpdateRoute = () => {
-    
     if (allVAlid()) {
       setLoading(true);
       axios
@@ -151,14 +172,13 @@ const AddNewRoute = ({ isEdit }) => {
           from: data.from,
           to: data.to,
           scheduledDays: [
-            { day: 2, calledCustomers: [{}] },
+            { day: scheduledDays, calledCustomers: calledCustomers },
           ],
         })
         .then(() => {
           // navigate("/regions");
         })
         .catch((err) => {
-          console.log(err)
           // err.response.status === 400 && setReqError(err.response.data.error);
         })
         .finally(() => setLoading(false));

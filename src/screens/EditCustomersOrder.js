@@ -56,7 +56,7 @@ const EditCustomersOrder = () => {
         <NoDataPlaceHolder current="Customers" />
       )}
     </Layout>
-  );
+  ); 
 };
 
 export default EditCustomersOrder;

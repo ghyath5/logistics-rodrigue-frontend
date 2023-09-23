@@ -26,6 +26,8 @@ const Login = () => {
       return { ...prev, [name]: value };
     });
   };
+// day -- nb tb3o w scheduled days
+// calendar not doing any date 
 
   const handleLogin = () => {
     setLoading(true);
@@ -39,6 +41,8 @@ const Login = () => {
         console.log(res);
         setUser(res.data);
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
+
+        console.log(Cookies.get("monjayToken"))
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
 
         if (res.data.isUpperAdmin) {

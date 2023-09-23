@@ -64,8 +64,8 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
             lable="Region"
             options={routes}
             isDisabled={false}
-            isMulti={false}
-            val={data?.routeId}
+            isMulti={true}
+            val={Array.isArray(data?.routeId) ? data.routeId : [data?.routeId]}
             handleChange={handleChange}
             handleBlur={handleBlur}
             error={errors?.routeId}
