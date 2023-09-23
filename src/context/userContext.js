@@ -9,15 +9,12 @@ export const UserContextProvider = ({ children }) => {
   let location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathname);
-
     location.pathname !== "/login" &&
       location.pathname !== "/SomethingWrong" &&
       fetchAccount();
   }, []);
 
   const fetchAccount = async () => {
-    console.log("fetchAccount");
     await axios
       .get("/account")
       .then((res) => {

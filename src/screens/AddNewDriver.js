@@ -77,7 +77,6 @@ const AddNewDriver = ({ isEdit }) => {
           (value.length < 6 ? hasError(name, true) : hasError(name, false));
         break;
       default:
-        console.log("");
     }
   };
 

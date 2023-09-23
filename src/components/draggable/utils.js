@@ -34,14 +34,7 @@ export const animate = (ROW_SIZE, order, oldOrder, x, y, current, active) => {
   // let rowPosition = 0;
   // let currentRowSize = ROW_SIZE;
   return (index) => {
-    // console.log(order, oldOrder);
-    // const width = (oldOrder || order)[index].width;
-
-    // if (currentRowSize < width) {
-    //   rowPosition = 0;
-    //   currentRowSize = ROW_SIZE;
-    // }
-    // console.log(index, width, rowPosition);
+   
 
     if (current === index && active) {
       const z = getPosition({
@@ -51,9 +44,7 @@ export const animate = (ROW_SIZE, order, oldOrder, x, y, current, active) => {
         ),
         // rowPosition
       });
-      // rowPosition++;
-      // currentRowSize -= width;
-      // console.log(z);
+     
       return {
         x: (x || 0) + z.x,
         y: (y || 0) + z.y,

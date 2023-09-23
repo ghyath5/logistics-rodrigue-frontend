@@ -118,15 +118,15 @@ const AddNewRoute = ({ isEdit }) => {
         (value.length < 3 ? hasError(name, true) : hasError(name, false));
     }
   };
-  console.log(
-    data.name,
-    data.places,
-    data.description,
-    data.from,
-    data.to,
-    scheduledDays,
-    calledCustomers
-  );
+  // console.log(
+  //   data.name,
+  //   data.places,
+  //   data.description,
+  //   data.from,
+  //   data.to,
+  //   scheduledDays,
+  //   calledCustomers
+  // );
   const handleAddNewRoute = () => {
     if (allVAlid()) {
       setLoading(true);
