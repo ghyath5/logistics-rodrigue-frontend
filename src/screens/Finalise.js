@@ -125,14 +125,10 @@ const Runs = () => {
       // console.log(`/runs/findRun?${searchParam}&page=1&limit=1`)
       console.log(`/runs/6476fd98b4bce62922cbf481`)
       await axios
-        .get(`/runs/6476fd98b4bce62922cbf481`)
+        .get(`/runs/65073fa4c2070e23ea21ef90`)
         .then((res) => {
+          console.log(res.data)
           setRuns(res.data);
-          // console.log('allRuns',allRuns)
-
-
-
-
           const formattedRuns = allRuns.map((f) => ({
             _id: f._id,
             driverName: f?.driver?.name,
@@ -145,8 +141,8 @@ const Runs = () => {
             viewEditAction: "View / Edit",
           }));
 
-          console.log(formattedRuns)
-          
+          console.log(allRuns)
+          console.log(rows)
           setRows(formattedRuns);
 
           // res.data.forEach((f) => {

@@ -36,6 +36,7 @@ import AddOrganisation from "./AddOrganisation";
 import ManageCalls from "./ManageCalls";
 import Cookies from "js-cookie";
 import SomethingWrong from "./SomethingWrong";
+import Finalize2 from "./Finalize2";
 
 const Main = () => {
   let monA = Cookies.get("ismonA");
@@ -90,6 +91,8 @@ const Main = () => {
           />
           <Route exact path="customerDetails" element={<CustomerDetails />} />
           <Route exact path="orders" element={<Orders />} />
+          <Route exact path="finalize" element={<Finalize2 />} />
+
           <Route exact path="vehicles" element={<Vehicles />} />
           <Route exact path="promotions" element={<Promotions />} />
           <Route exact path="drivers" element={<Drivers />} />
