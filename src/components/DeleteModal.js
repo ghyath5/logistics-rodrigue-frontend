@@ -9,7 +9,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DeleteModal = ({ setOpen }) => {
+const DeleteModal = ({ setOpen,handleClosePopup,title }) => {
   const handleClose = () => {
     setOpen(false);
   };
@@ -19,16 +19,20 @@ const DeleteModal = ({ setOpen }) => {
       open={true}
       TransitionComponent={Transition}
       keepMounted
-      onClose={handleClose}
+      onClose={handleClose }
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogContent className="modalMinWidth">
         <p className="nameModel text-black p-2 mb-0">
-          You can't delete this record, it's id is used somewhere else.
+           
+          {
+            title ? title : " You can't delete this record, it's id is used somewhere else."
+          }
         </p>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Ok</Button>
+        <Button onClick={handleClosePopup ? handleClosePopup:handleClose }
+>Ok</Button>
       </DialogActions>
     </Dialog>
   );

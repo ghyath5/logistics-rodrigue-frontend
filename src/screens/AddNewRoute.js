@@ -7,7 +7,6 @@ import InputOutlined from "../components/layout/InputOutlined";
 import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
-import { useEffect } from "react";
 import DDSearch from "../components/layout/DDSearch";
 
 const regionDays = [
@@ -52,7 +51,7 @@ const AddNewRoute = ({ isEdit }) => {
   // useEffect(() => {
   //   isEdit && fetchRouteById(location.state?.id);
   // }, [isEdit, location.state?.id]);
-
+  
 
 
   const handleChange = (e) => {
@@ -67,6 +66,14 @@ const AddNewRoute = ({ isEdit }) => {
   const handleChangeScheduledDays = (e) => {
   
     let values = e.target.value.map((item) => parseInt(item));
+    let resultArray = values.map((item) => ({ [item]: {} }));
+
+// Sort the array of objects in descending order based on keys
+resultArray.sort((a, b) => Object.keys(b)[0] - Object.keys(a)[0]);
+
+// Add an empty object to the result array
+
+console.log(resultArray);
     setScheduledDays(values);
     // setOpen(true);
     setScheduledDaysError(false);
@@ -151,7 +158,10 @@ const AddNewRoute = ({ isEdit }) => {
           from: data.from,
           to: data.to,
           scheduledDays: [
-            { day: 2, calledCustomers: [{}] },
+            {
+              day: scheduledDays, 
+              calledCustomers: [{}] 
+            }
           ],
         })
         .then(() => {

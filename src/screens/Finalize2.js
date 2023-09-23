@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Finalie2.css'
+import DeleteModal from '../components/DeleteModal';
 function Finalize2() {
   // Sample data for events
   const events = [
@@ -12,23 +13,19 @@ function Finalize2() {
     { day: 7, week: 1, event: 'Event 7' },
     { day: 1, week: 2, event: 'Event 8' },
     { day: 2, week: 2, event: 'Event 9' },
-    // Add more events as needed
   ];
 
-  // State to track clicked cell's event and show/hide the modal
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Handle cell click to display event details in the modal
   const handleCellClick = (day, week) => {
     const event = events.find((e) => e.day === day && e.week === week);
     setSelectedEvent(event);
     setShowModal(true);
   };
 
-  // Generate the calendar table for all weeks and days
   const generateCalendarTable = () => {
-    const numRows = 2; // Number of weeks
+    const numRows = 2; 
     const numDaysPerWeek = 7;
 
     let calendarTable = [];
@@ -74,30 +71,11 @@ function Finalize2() {
       </table>
 
       {/* Modal to display event details */}
-      <div
-        className={`modal fade ${showModal ? 'show' : ''}`}
-        style={{ marginTop:'50px', display: showModal ? 'block' : 'none' }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">
-                Event Details: {`Day ${selectedEvent?.day} Week ${selectedEvent?.week}`}
-              </h5>
-              <button
-                type="button"
-                className="close"
-                onClick={() => setShowModal(false)}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <p>{selectedEvent?.event}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    {
+        showModal && (
+            <DeleteModal handleClosePopup={()=>setShowModal(false)} title={` Event Details: Day ${selectedEvent?.day} Week ${selectedEvent?.week}`}/>
+        )
+    }
     </div>
   );
 }
