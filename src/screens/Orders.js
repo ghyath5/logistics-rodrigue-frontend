@@ -19,34 +19,34 @@ const Orders = () => {
   const [expanded, setExpanded] = useState(null);
   const [fromLink, setFromLink] = useState("");
   const [toLink, setToLink] = useState("");
-  const [M1, setM1] = useState(new Date());
-  const [M2, setM2] = useState(new Date());
+  // const [M1, setM1] = useState(new Date());
+  // const [M2, setM2] = useState(new Date());
   const [dateFilter, setDateFilter] = useState(new Date());
   const [displayedDate, setDisplayedDate] = useState(null);
 
   const nav = useNavigate();
 
-  const handleChangeM1 = (d) => {
-    let selectedD = new Date(d);
-    setM1(selectedD);
-    let from = {
-      day: String(selectedD.getDate()).padStart(2, "0"),
-      month: String(selectedD.getMonth() + 1).padStart(2, "0"),
-      year: selectedD.getFullYear(),
-    };
-    setFromLink(`${from.year}-${from.month}-${from.day}`);
-  };
+  // const handleChangeM1 = (d) => {
+  //   let selectedD = new Date(d);
+  //   setM1(selectedD);
+  //   let from = {
+  //     day: String(selectedD.getDate()).padStart(2, "0"),
+  //     month: String(selectedD.getMonth() + 1).padStart(2, "0"),
+  //     year: selectedD.getFullYear(),
+  //   };
+  //   setFromLink(`${from.year}-${from.month}-${from.day}`);
+  // };
 
-  const handleChangeM2 = (d) => {
-    let selectedD = new Date(d);
-    setM2(selectedD);
-    let to = {
-      day: String(selectedD.getDate()).padStart(2, "0"),
-      month: String(selectedD.getMonth() + 1).padStart(2, "0"),
-      year: selectedD.getFullYear(),
-    };
-    setToLink(`${to.year}-${to.month}-${to.day}`);
-  };
+  // const handleChangeM2 = (d) => {
+  //   let selectedD = new Date(d);
+  //   setM2(selectedD);
+  //   let to = {
+  //     day: String(selectedD.getDate()).padStart(2, "0"),
+  //     month: String(selectedD.getMonth() + 1).padStart(2, "0"),
+  //     year: selectedD.getFullYear(),
+  //   };
+  //   setToLink(`${to.year}-${to.month}-${to.day}`);
+  // };
 
   const handleChangeDateFilter = (d) => {
     let selectedD = new Date(d);
@@ -131,11 +131,11 @@ const Orders = () => {
   //     .finally(() => setLoading(false));
   // };
 
-  const exportReport = async () => {
-    window.open(
-      `https://logistics-rodrigue-backend.onrender.com/api/orders/export?from=${fromLink}&to=${toLink}`
-    );
-  };
+  // const exportReport = async () => {
+  //   window.open(
+  //     `https://logistics-rodrigue-backend.onrender.com/api/orders/export?from=${fromLink}&to=${toLink}`
+  //   );
+  // };
 
   return loading ? (
     <Loader />
@@ -175,7 +175,7 @@ const Orders = () => {
       <div className="d-flex justify-content-between mb-3">
         <SearchInput value={searchQuery} setValue={handleSearchInputChange} />
         <div className="d-flex align-items-center gap-3">
-          <div style={{ maxWidth: 150 }}>
+          {/* <div style={{ maxWidth: 150 }}>
             <DatePickerr
               inputFormat="YYYY-MM-DD"
               views={["year", "month", "day"]}
@@ -186,8 +186,8 @@ const Orders = () => {
               handleChange={(e) => handleChangeM1(e.target.value)}
               nol
             />
-          </div>
-          <div style={{ maxWidth: 150 }}>
+          </div> */}
+          {/* <div style={{ maxWidth: 150 }}>
             <DatePickerr
               inputFormat="YYYY-MM-DD"
               views={["year", "month", "day"]}
@@ -198,8 +198,8 @@ const Orders = () => {
               handleChange={(e) => handleChangeM2(e.target.value)}
               nol
             />
-          </div>
-          <BtnContained title="EXPORT REPORT" handleClick={exportReport} />
+          </div> */}
+          {/* <BtnContained title="EXPORT REPORT" handleClick={exportReport} /> */}
         </div>
       </div>
       <h4 className="ms-1 mb-3 mt-4">
