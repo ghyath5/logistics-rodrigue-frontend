@@ -175,7 +175,7 @@ const AddNewRoute = ({ isEdit }) => {
           })),
         })
         .then(() => {
-          // navigate("/regions");
+          navigate("/regions");
         })
         .catch((err) => {
           console.log(err);
