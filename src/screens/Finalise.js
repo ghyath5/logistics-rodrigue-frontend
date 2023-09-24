@@ -94,80 +94,41 @@ const Runs = () => {
     };
   }
 
-  console.log(allRuns)
-
   const handleFetch = () => {
     console.log('im in');
     if (name !== '') {
       console.log('fetching by name', name);
-      fetchRunsByDateOrName(name); // Call your fetch function with the name parameter
+      fetchRunsByDateOrName(name);
     } else {
-      console.log('fetching by date', date);
-    //  let updatedDate=date.split("T")[0]
- 
-    let updatedDate=date.toISOString().split('T')[0];
-    // updatedDate=updatedDate.split("T")[0]
-  console.log('Formatted Date:', updatedDate);
-      fetchRunsByDateOrName(updatedDate); // Call your fetch function with the date parameter
+      fetchRunsByDateOrName(date.toISOString()); 
     }
   };
   
 
 
-  const fetchRunsByDateOrName = async (value) => {
-    // setLoading(true);
-  
-    // Check if value is not empty
+  const fetchRunsByDateOrName =  (value) => {
     if (value) {
-      // const searchParam = `find=636f760789b01d04a624e72c`;   
+      const searchParam=`find=${value}`
+      console.log(`/runs/findRun?${searchParam}&page=1&limit=1`)
+      
 
-      const searchParam=`find${value}`
-      // console.log(`/runs/findRun?${searchParam}&page=1&limit=1`)
-      console.log(`/runs/6476fd98b4bce62922cbf481`)
-      await axios
-        .get(`/runs/65073fa4c2070e23ea21ef90`)
-        .then((res) => {
-          console.log(res.data)
-          setRuns(res.data);
-          const formattedRuns = allRuns.map((f) => ({
-            _id: f._id,
-            driverName: f?.driver?.name,
-            vehiclePlate: f?.vehicle?.plate,
-            routeName: f.route?.name,
-            ordersLength: f.orders.length,
-            statusLabel: runsStatuses[f.status].label,
-            formattedDate: new Date(f.date).toLocaleDateString(),
-            editAction: "Edit Date",
-            viewEditAction: "View / Edit",
-          }));
 
-          console.log(allRuns)
-          console.log(rows)
-          setRows(formattedRuns);
-
-          // res.data.forEach((f) => {
-          //   setRows((prev) => [
-          //     ...prev,
-          //     createData(
-          //       f._id,
-          //       f?.driver?.name,
-          //       f?.vehicle?.plate,
-          //       f.route?.name,
-          //       f.orders.length,
-          //       runsStatuses[f.status].label,
-          //       new Date(f.date.split("T")[0]).toDateString(),
-          //       "Edit Date",
-          //       "View / Edit"
-          //     ),
-          //   ]);
-          // });
-
-        })
-        .catch(console.error)
-        .finally(() => setLoading(false));
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `/runs/findrun?${searchParam}&page=1&limit=1`,
+        headers: { }
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
     } 
-
-
   };
   
   
@@ -202,6 +163,7 @@ const Runs = () => {
 
 
 
+  
   return loading ? (
     <Loader />
   ) : (
@@ -241,11 +203,11 @@ const Runs = () => {
         onChange={handleNameChange}
       >
         
-        {rows.map((row) => {
-          console.log(row)
+        {rows.map((row,index) => {
+         
           return(
             (
-              <MenuItem key={row._id} value={row.driverName}>
+              <MenuItem key={index} value={row.id}>
                 {row.driver!==undefined ? row.driver : null}
               </MenuItem>
             ))
