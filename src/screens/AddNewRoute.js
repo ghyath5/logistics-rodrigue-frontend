@@ -26,15 +26,19 @@ const AddNewRoute = ({ isEdit }) => {
   // const [calledCustomers, setCalledCustomers] = useState([]);
   const [scheduledDaysError, setScheduledDaysError] = useState(false);
 
-  const fetchRoutes = isEdit ?  useQuery({
+
+    const fetchRoutes = useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
       const response = await axios.get(`/routes/${location.state?.id}`); 
        const data = response.data;
       return data;
     },
-  }):''
+    enabled:isEdit
+  })
 
+
+  
   const [data, setData] = useState({
     name: "",
     places: [],
