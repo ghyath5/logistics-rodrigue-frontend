@@ -1,0 +1,16 @@
+export const regionDays =[
+    { label: "Week 1 - Monday", value: 1 },
+    { label: "Week 1 - Tuesday", value: 2 },
+    { label: "Week 1 - Wednesday", value: 3 },
+    { label: "Week 1 - Thursday", value: 4 },
+    { label: "Week 1 - Friday", value: 5 },
+    { label: "Week 1 - Saturday", value: 6 },
+    { label: "Week 1 - Sunday", value: 7 },
+    { label: "Week 2 - Monday", value: 8 },
+    { label: "Week 2 - Tuesday", value: 9 },
+    { label: "Week 2 - Wednesday", value: 10 },
+    { label: "Week 2 - Thursday", value: 11 },
+    { label: "Week 2 - Friday", value: 12 },
+    { label: "Week 2 - Saturday", value: 13 },
+    { label: "Week 2 - Sunday", value: 14 },
+  ];

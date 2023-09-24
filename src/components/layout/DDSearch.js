@@ -26,6 +26,7 @@ const DDSearch = ({
   handleBlur,
   error,
   errorMessage,
+  oldValue,
 }) => {
   const [selectedItem, setSelectedItem] = useState(val);
 
@@ -57,7 +58,7 @@ const DDSearch = ({
             multiple={isMulti}
             name={name}
             defaultValue={options[0]}
-            value={selectedItem}
+            value={selectedItem ?? oldValue}
             onChange={handleChangee}
             onBlur={handleBlurr}
             input={<FilledInput name={name} />}

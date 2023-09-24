@@ -9,29 +9,22 @@ import axios from "../axios";
 import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
 import { useQuery } from "@tanstack/react-query";
-
-const regionDays = [
-  { label: "Week 1 - Monday", value: "1" },
-  { label: "Week 1 - Tuesday", value: "2" },
-  { label: "Week 1 - Wednesday", value: "3" },
-  { label: "Week 1 - Thursday", value: "4" },
-  { label: "Week 1 - Friday", value: "5" },
-  { label: "Week 1 - Saturday", value: "6" },
-  { label: "Week 1 - Sunday", value: "7" },
-  { label: "Week 2 - Monday", value: "8" },
-  { label: "Week 2 - Tuesday", value: "9" },
-  { label: "Week 2 - Wednesday", value: "10" },
-  { label: "Week 2 - Thursday", value: "11" },
-  { label: "Week 2 - Friday", value: "12" },
-  { label: "Week 2 - Saturday", value: "13" },
-  { label: "Week 2 - Sunday", value: "14" },
-];
+import { regionDays } from "../data/regionDays";
 
 const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setLoading] = useState(false);
-
+  const [scheduledDays, setScheduledDays] = useState([]);
+  const [errors, setErrors] = useState({
+    name: false,
+    from: false,
+    to: false,
+  });
+  const [placesString, setPlacesString] = useState("");
+  const [reqError, setReqError] = useState("");
+  // const [calledCustomers, setCalledCustomers] = useState([]);
+  const [scheduledDaysError, setScheduledDaysError] = useState(false);
   const fetchRoutes = useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
@@ -46,8 +39,8 @@ const AddNewRoute = ({ isEdit }) => {
     description: "",
     from: "",
     to: "",
+    scheduledDays:[]
   });
-  
   useEffect(() => {
     if (isEdit && !fetchRoutes.isLoading && fetchRoutes.data) {
       setData({
@@ -56,24 +49,11 @@ const AddNewRoute = ({ isEdit }) => {
         description: fetchRoutes.data.description ?? "",
         from: fetchRoutes.data.from ?? "",
         to: fetchRoutes.data.to ?? "",
+       scheduledDays:fetchRoutes.data.scheduledDays.map(item => item.day) ?? []
       });
     }
   }, [isEdit, fetchRoutes.isLoading, fetchRoutes.data]);
-  const [errors, setErrors] = useState({
-    name: false,
-    from: false,
-    to: false,
-  });
-  const [placesString, setPlacesString] = useState("");
-  const [reqError, setReqError] = useState("");
-  const [scheduledDays, setScheduledDays] = useState([]);
-  const [calledCustomers, setCalledCustomers] = useState([]);
-  const [scheduledDaysError, setScheduledDaysError] = useState(false);
-
-  // useEffect(() => {
-  //   isEdit && fetchRouteById(location.state?.id);
-  // }, [isEdit, location.state?.id]);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     name === "places" ? setPlacesString(value) : null;
@@ -88,10 +68,8 @@ const AddNewRoute = ({ isEdit }) => {
     let resultArray = values.map((item) => ({ [item]: {} }));
     resultArray.sort((a, b) => Object.keys(b)[0] - Object.keys(a)[0]);
     setScheduledDays(values);
-    // setOpen(true);
     setScheduledDaysError(false);
   };
-
   const handleBlur = (e) => {
     const { name, value } = e.target;
     validate(name, value);
@@ -119,7 +97,6 @@ const AddNewRoute = ({ isEdit }) => {
       valid = false;
       setScheduledDaysError(true);
     }
-
     return valid;
   };
 
@@ -134,15 +111,6 @@ const AddNewRoute = ({ isEdit }) => {
         (value.length < 3 ? hasError(name, true) : hasError(name, false));
     }
   };
-  // console.log(
-  //   data.name,
-  //   data.places,
-  //   data.description,
-  //   data.from,
-  //   data.to,
-  //   scheduledDays,
-  //   calledCustomers
-  // );
   const handleAddNewRoute = () => {
     if (allVAlid()) {
       setLoading(true);
@@ -167,9 +135,6 @@ const AddNewRoute = ({ isEdit }) => {
         .finally(() => setLoading(false));
     }
   };
-
-  // scheduledDays
-
   let activeDays = scheduledDays.map((day) => ({ day }));
   const handleUpdateRoute = () => {
   
@@ -192,7 +157,6 @@ const AddNewRoute = ({ isEdit }) => {
         })
         .catch((err) => {
           console.log(err);
-          // err.response.status === 400 && setReqError(err.response.data.error);
         })
         .finally(() => setLoading(false));
     }
@@ -308,7 +272,7 @@ const AddNewRoute = ({ isEdit }) => {
                 options={regionDays}
                 isDisabled={false}
                 isMulti={true}
-                val={scheduledDays}
+                oldValue={ data.scheduledDays }
                 handleChange={handleChangeScheduledDays}
                 handleBlur={handleBlur}
                 error={scheduledDaysError}
