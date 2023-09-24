@@ -141,9 +141,10 @@ const AddNewRoute = ({ isEdit }) => {
           description: data.description,
           from: data.from,
           to: data.to,
-          scheduledDays: [
-            { day: scheduledDays, calledCustomers: calledCustomers },
-          ],
+          scheduledDays: activeDays.map((day) => ({
+            day: day.day,
+            calledCustomers: [],
+          })),
         })
         .then(() => {
           navigate("/regions");
