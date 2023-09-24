@@ -10,10 +10,10 @@ import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
 import { useQuery } from "@tanstack/react-query";
 import { regionDays } from "../data/regionDays";
-
 const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [isLoading, setLoading] = useState(false);
   const [scheduledDays, setScheduledDays] = useState([]);
   const [errors, setErrors] = useState({
@@ -25,14 +25,16 @@ const AddNewRoute = ({ isEdit }) => {
   const [reqError, setReqError] = useState("");
   // const [calledCustomers, setCalledCustomers] = useState([]);
   const [scheduledDaysError, setScheduledDaysError] = useState(false);
-  const fetchRoutes = useQuery({
+
+  const fetchRoutes = isEdit ?  useQuery({
     queryKey: ["routes"],
     queryFn: async () => {
-      const response = await axios.get(`/routes/${location.state?.id}`);
-      const data = response.data;
+      const response = await axios.get(`/routes/${location.state?.id}`); 
+       const data = response.data;
       return data;
     },
-  })
+  }):''
+
   const [data, setData] = useState({
     name: "",
     places: [],
@@ -41,6 +43,7 @@ const AddNewRoute = ({ isEdit }) => {
     to: "",
     scheduledDays:[]
   });
+
   useEffect(() => {
     if (isEdit && !fetchRoutes.isLoading && fetchRoutes.data) {
       setData({
@@ -135,6 +138,7 @@ const AddNewRoute = ({ isEdit }) => {
         .finally(() => setLoading(false));
     }
   };
+
   let activeDays = scheduledDays.map((day) => ({ day }));
   const handleUpdateRoute = () => {
   
@@ -188,6 +192,8 @@ const AddNewRoute = ({ isEdit }) => {
             )} my-4 mx-2`}
           >
             Region Details
+            {/* bro l region hiye l route 3eref ente ? msemmyina ghalat.. 3al backend esma route, ma 3an ellak bade zabbet l attributes... */}
+{/* ma ente shoof l route l bel inspect.. */}
           </h4>
         </div>
         <hr className="line mx-5"></hr>

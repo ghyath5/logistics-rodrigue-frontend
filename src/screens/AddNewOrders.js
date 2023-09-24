@@ -143,13 +143,13 @@ const AddNewOrders = ({ isEdit }) => {
         setOrderTotal(res.data.totalamount);
 
         let prods = res.data.products;
-        console.log('products', products)
-        prods.forEach((prod) => {
-          console.log(prod)
+         prods.forEach((prod) => {
+           console.log(prod)
           setSelectedProducts((prev) => [
             ...prev,
             {
               _id: prod._id,
+              //  
               oldprice: prod.product.price,
               newprice: prod.product.newprice
                 ? prod.product.newprice
@@ -159,7 +159,7 @@ const AddNewOrders = ({ isEdit }) => {
               upb: prod.product.unitesperbox,
               quantity: prod.quantity,
             },
-          ]);
+          ]); 
         });
       })
       .catch(console.error);
