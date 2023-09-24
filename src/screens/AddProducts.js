@@ -129,8 +129,7 @@ const AddProducts = ({ isEdit }) => {
       case "unitesperbox":
         value > 0 ? hasError(name, false) : hasError(name, true);
         break;
-      default:
-        console.log("");
+     
     }
   };
 

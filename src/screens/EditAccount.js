@@ -105,8 +105,7 @@ const EditAccount = () => {
       case "role":
         value !== "" ? hasError(name, false) : hasError(name, true);
         break;
-      default:
-        console.log("");
+    
     }
   };
 

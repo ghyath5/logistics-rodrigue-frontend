@@ -78,8 +78,6 @@ const Register = () => {
             ? hasError(name, false)
             : hasError(name, true));
         break;
-      default:
-        console.log("");
     }
   };
 

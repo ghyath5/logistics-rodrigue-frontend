@@ -126,8 +126,7 @@ const EditOrganisation = () => {
         value &&
           (value.length > 1 ? hasError(name, false) : hasError(name, true));
         break;
-      default:
-        console.log("");
+    
     }
   };
 

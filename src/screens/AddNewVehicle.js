@@ -87,8 +87,7 @@ const AddNewVehicle = ({ isEdit }) => {
       case "expiresIn":
         value !== "" ? hasError(name, false) : hasError(name, true);
         break;
-      default:
-        console.log("");
+     
     }
   };
 

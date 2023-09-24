@@ -128,8 +128,10 @@ const AddNewOrders = ({ isEdit }) => {
   //   console.log(selectedCustomerId);
   //   isEdit && fetchCustomerById(selectedCustomerId);
   // }, [isEdit, selectedCustomerId]);
-
+  console.log(location.state?.id)
   const fetchOrderById = async (id) => {
+
+    console.log(id)
     await axios
       .get(`/orders/${id}`)
       .then((res) => {
@@ -145,7 +147,7 @@ const AddNewOrders = ({ isEdit }) => {
           setSelectedProducts((prev) => [
             ...prev,
             {
-              productId: prod.product._id,
+              _id: prod._id,
               oldprice: prod.product.price,
               newprice: prod.product.newprice
                 ? prod.product.newprice
@@ -173,13 +175,13 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const handleConfirmProduct = (id, total, quantity) => {
-    let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
+    let prod = selectedProducts.filter((pro) => pro._id === id)[0];
     prod.newprice = total / quantity;
     prod.quantity = quantity;
 
     setOrderTotal((prev) => (parseFloat(prev) + parseFloat(total)).toFixed(2));
     setSelectedProducts((prev) => [
-      ...prev.filter((pro) => pro.productId !== id),
+      ...prev.filter((pro) => pro._id !== id),
       prod,
     ]);
     setConfirmed(true);
@@ -281,7 +283,7 @@ const AddNewOrders = ({ isEdit }) => {
       filteredProducts = [
         ...filteredProducts,
         {
-          product: p.productId,
+          product: p._id,
           pricePerUnit: p.newprice,
           quantity: p.quantity,
         },
@@ -320,7 +322,7 @@ const AddNewOrders = ({ isEdit }) => {
       filteredProducts = [
         ...filteredProducts,
         {
-          product: nonEditedProducts.filter((pr) => pr._id === p.productId)[0],
+          product: nonEditedProducts.filter((pr) => pr._id === p._id)[0],
           pricePerUnit: p.newprice,
           quantity: p.quantity,
         },
@@ -357,7 +359,7 @@ const AddNewOrders = ({ isEdit }) => {
     setSelectedProducts((prev) => [
       ...prev,
       {
-        productId: prod.value,
+        _id: prod.value,
         oldprice: prod.price,
         newprice: prod.newprice ? prod.newprice : prod.price,
         special: prod.special,
@@ -369,7 +371,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const handleRemoveProduct = (id) => {
-    let prod = selectedProducts.filter((pro) => pro.productId === id)[0];
+    let prod = selectedProducts.filter((pro) => pro._id === id)[0];
 
     orderTotal > 0 &&
       setOrderTotal((prev) =>
@@ -378,7 +380,7 @@ const AddNewOrders = ({ isEdit }) => {
         )
       );
     setSelectedProducts((prev) => [
-      ...prev.filter((pro) => pro.productId !== id),
+      ...prev.filter((pro) => pro._id !== id),
     ]);
     setConfirmed(true);
   };

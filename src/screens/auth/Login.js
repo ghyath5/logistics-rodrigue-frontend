@@ -38,13 +38,9 @@ const Login = () => {
         password: data?.password,
       })
       .then((res) => {
-        console.log(res);
         setUser(res.data);
         Cookies.set("monjayToken", res.data.accessToken, { expires: 3 });
-
-        console.log(Cookies.get("monjayToken"))
         Cookies.set("monjayUser", res.data.name, { expires: 3 });
-
         if (res.data.isUpperAdmin) {
           Cookies.set("ismonA", "true", { expires: 3 });
           navigate("/");

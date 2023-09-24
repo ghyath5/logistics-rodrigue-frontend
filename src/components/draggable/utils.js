@@ -62,7 +62,6 @@ export const animate = (ROW_SIZE, order, oldOrder, x, y, current, active) => {
       ),
       // rowPosition
     });
-    // console.log(z2);
     // rowPosition++;
     // currentRowSize -= width;
     return {

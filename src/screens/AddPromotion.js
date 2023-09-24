@@ -193,8 +193,7 @@ export const AddPromotion = ({ isEdit }) => {
       case "products":
         value !== "" ? hasError(name, false) : hasError(name, true);
         break;
-      default:
-        console.log("");
+     
     }
   };
 

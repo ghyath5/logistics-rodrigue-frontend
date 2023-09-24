@@ -87,7 +87,6 @@ const AddNewRoute = ({ isEdit }) => {
   };
 
   const handleChangeScheduledDays = (e) => {
-    // console.log("e.target.value", e.target.value);
     let values = e.target.value.map((item) => parseInt(item));
     setScheduledDays(values);
     // setOpen(true);
