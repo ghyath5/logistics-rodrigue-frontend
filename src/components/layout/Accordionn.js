@@ -123,7 +123,7 @@ const Accordionn = ({
                         i % 2 === 0 ? "textGray2" : "textGray"
                       }`}
                     >
-                      {itemm.product.name} - ${itemm.pricePerUnit}
+                     ${itemm.pricePerUnit}
                     </span>
                   );
                 })}
