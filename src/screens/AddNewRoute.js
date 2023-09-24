@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/partials/Layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -41,12 +41,24 @@ const AddNewRoute = ({ isEdit }) => {
     },
   })
   const [data, setData] = useState({
-    name:  fetchRoutes.isLoading ? '': fetchRoutes.data.name ,
-    places: fetchRoutes.isLoading ? []: fetchRoutes.data.places ,
-    description: fetchRoutes.isLoading ? '': fetchRoutes.data.description ,
-    from: fetchRoutes.isLoading ? '': fetchRoutes.data.from ,
-    to:fetchRoutes.isLoading ? '': fetchRoutes.data.to 
+    name: "",
+    places: [],
+    description: "",
+    from: "",
+    to: "",
   });
+  
+  useEffect(() => {
+    if (isEdit && !fetchRoutes.isLoading && fetchRoutes.data) {
+      setData({
+        name: fetchRoutes.data.name ?? "",
+        places: fetchRoutes.data.places ?? [],
+        description: fetchRoutes.data.description ?? "",
+        from: fetchRoutes.data.from ?? "",
+        to: fetchRoutes.data.to ?? "",
+      });
+    }
+  }, [isEdit, fetchRoutes.isLoading, fetchRoutes.data]);
   const [errors, setErrors] = useState({
     name: false,
     from: false,
@@ -186,7 +198,7 @@ const AddNewRoute = ({ isEdit }) => {
     }
   };
 
-  return isLoading ? (
+  return isLoading? (
     <Loader />
   ) : (
     <Layout>
