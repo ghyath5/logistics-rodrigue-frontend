@@ -8,6 +8,7 @@ import BtnContained from "../components/layout/BtnContained";
 import axios from "../axios";
 import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
+import { useQuery } from "@tanstack/react-query";
 
 const regionDays = [
   { label: "Week 1 - Monday", value: "1" },
@@ -30,12 +31,21 @@ const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setLoading] = useState(false);
+
+  const fetchRoutes = useQuery({
+    queryKey: ["routes"],
+    queryFn: async () => {
+      const response = await axios.get(`/routes/${location.state?.id}`);
+      const data = response.data;
+      return data;
+    },
+  })
   const [data, setData] = useState({
-    name: "",
-    places: [],
-    description: "",
-    from: "",
-    to: "",
+    name:  fetchRoutes.isLoading ? '': fetchRoutes.data.name ,
+    places: fetchRoutes.isLoading ? []: fetchRoutes.data.places ,
+    description: fetchRoutes.isLoading ? '': fetchRoutes.data.description ,
+    from: fetchRoutes.isLoading ? '': fetchRoutes.data.from ,
+    to:fetchRoutes.isLoading ? '': fetchRoutes.data.to 
   });
   const [errors, setErrors] = useState({
     name: false,
@@ -64,13 +74,7 @@ const AddNewRoute = ({ isEdit }) => {
   const handleChangeScheduledDays = (e) => {
     let values = e.target.value.map((item) => parseInt(item));
     let resultArray = values.map((item) => ({ [item]: {} }));
-
-    // Sort the array of objects in descending order based on keys
     resultArray.sort((a, b) => Object.keys(b)[0] - Object.keys(a)[0]);
-
-    // Add an empty object to the result array
-
-    console.log(resultArray);
     setScheduledDays(values);
     // setOpen(true);
     setScheduledDaysError(false);
@@ -154,7 +158,6 @@ const AddNewRoute = ({ isEdit }) => {
   // scheduledDays
 
   let activeDays = scheduledDays.map((day) => ({ day }));
-
   const handleUpdateRoute = () => {
   
     if (allVAlid()) {

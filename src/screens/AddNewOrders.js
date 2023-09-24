@@ -141,6 +141,7 @@ const AddNewOrders = ({ isEdit }) => {
 
         let prods = res.data.products;
         prods.forEach((prod) => {
+          console.log(prod)
           setSelectedProducts((prev) => [
             ...prev,
             {
