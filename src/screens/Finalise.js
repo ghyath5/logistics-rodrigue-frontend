@@ -13,6 +13,7 @@ import BtnOutlined from "../components/layout/BtnOutlined";
 import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment";
 import { FormControl } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 const Runs = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -95,12 +96,10 @@ const Runs = () => {
   }
 
   const handleFetch = () => {
-    console.log('im in');
     if (name !== '') {
-      console.log('fetching by name', name);
       fetchRunsByDateOrName(name);
     } else {
-      fetchRunsByDateOrName(date.toISOString()); 
+      fetchRunsByDateOrName(date); 
     }
   };
   
@@ -109,10 +108,7 @@ const Runs = () => {
   const fetchRunsByDateOrName =  (value) => {
     if (value) {
       const searchParam=`find=${value}`
-      console.log(`/runs/findRun?${searchParam}&page=1&limit=1`)
-      
-
-
+      // const searchParam=`find=644163ca346f50453d26aef4`
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -122,12 +118,32 @@ const Runs = () => {
       
       axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        response.data.length>0 ?
+        response.data.forEach((f) => {
+          setRows([])
+          setRows(() => [
+          
+            createData(
+              f._id,
+              f?.driver?.name,
+              f?.vehicle?.plate,
+              f.route?.name,
+              f.orders.length,
+              runsStatuses[f.status].label,
+              new Date(f.date.split("T")[0]).toDateString(),
+              "Edit Date",
+              "View / Edit"
+            ),
+          ])
+
+        }):(
+          setRows([])
+        )
+
       })
       .catch((error) => {
         console.log(error);
       });
-      
     } 
   };
   
@@ -153,7 +169,6 @@ const Runs = () => {
               "View / Edit"
             ),
           ])
-          console.log(rows)
 
         });
       })
@@ -161,8 +176,14 @@ const Runs = () => {
       .finally(() => setLoading(false));
   };
 
-
-
+  const fetchDrivers = useQuery({
+    queryKey: ["drivers"],
+    queryFn: async () => {
+      const response = await axios.get("/drivers");
+      const data = await response.data.drivers;
+      return data;
+    },
+  })
   
   return loading ? (
     <Loader />
@@ -203,12 +224,11 @@ const Runs = () => {
         onChange={handleNameChange}
       >
         
-        {rows.map((row,index) => {
-         
+        {fetchDrivers.data.map((row,index) => {
           return(
             (
-              <MenuItem key={index} value={row.id}>
-                {row.driver!==undefined ? row.driver : null}
+              <MenuItem key={index} value={row._id}>
+                {row.name!==undefined ? row.name : null}
               </MenuItem>
             ))
             })}
