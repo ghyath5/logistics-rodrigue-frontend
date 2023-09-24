@@ -111,7 +111,7 @@ const Accordionn = ({
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="d-flex gap-5 mt-3">
+          <div className="d-flex gap-5 mt-3 flex-column flex-md-row" >
             <div>
               <p className="m-0 fw-bold">Products:</p>
               <div className="row text-promotion maxw">

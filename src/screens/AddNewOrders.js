@@ -134,6 +134,7 @@ const AddNewOrders = ({ isEdit }) => {
     console.log(id)
     await axios
       .get(`/orders/${id}`)
+      // 
       .then((res) => {
         fetchCustomerById(res.data.customer);
         setSelectedCustomerId(res.data.customer);
@@ -142,6 +143,7 @@ const AddNewOrders = ({ isEdit }) => {
         setOrderTotal(res.data.totalamount);
 
         let prods = res.data.products;
+        console.log('products', products)
         prods.forEach((prod) => {
           console.log(prod)
           setSelectedProducts((prev) => [
