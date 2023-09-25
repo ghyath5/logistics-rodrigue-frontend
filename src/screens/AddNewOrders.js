@@ -142,7 +142,6 @@ const AddNewOrders = ({ isEdit }) => {
   const fetchOrderById = async (id) => {
     await axios
       .get(`/orders/${id}`)
-      //
       .then((res) => {
         fetchCustomerById(res.data.customer);
         console.log(res.data.customer)
@@ -184,9 +183,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const handleConfirmProduct = (id, total, quantity) => {
-    console.log(selectedProducts)
     let prod = selectedProducts.filter((pro) => pro._id === id)[0];
-    console.log(prod)
     prod.newprice = total / quantity;
     prod.quantity = quantity;
 
@@ -246,8 +243,6 @@ const AddNewOrders = ({ isEdit }) => {
     }
     return valid;
   };
-
-  // Order validation failed: totalamount: Cast to Number failed for value "NaN" (type number) at path "totalamount"
 
   const handleSubmitOrder = async () => {
     let filteredProducts = [];
@@ -358,10 +353,6 @@ const AddNewOrders = ({ isEdit }) => {
     setSelectedProducts((prev) => [...prev.filter((pro) => pro._id !== id)]);
     setConfirmed(true);
   };
-
-
-
-  console.log(orderTotal)
 
   return isLoading ? (
     <Loader />

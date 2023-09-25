@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import debounce from "lodash.debounce";
+import useRefOnClickOutside from "../../hooks/UseRefOnClickOutside";
 
-const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder,isOrderPage,regionName }) => {
+const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder, isOrderPage, regionName }) => {
   const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -26,8 +27,15 @@ const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder,isOrderPage
   const toggleDropDown = () => {
     setVisible(!visible);
   };
+
+  const dropdownRef = useRef(null); 
+
+  useRefOnClickOutside(dropdownRef, () => {
+    setVisible(false);
+  });
+
   return (
-    <div className="dropdown w-100">
+    <div className="dropdown w-100" ref={dropdownRef}>
       <button onClick={toggleDropDown} className="dropbtn w-100">
         {placeHolder}
       </button>
@@ -44,7 +52,7 @@ const NewSearchDD = ({ data, handleSearch, handleSelect, placeHolder,isOrderPage
           {data.map((d, i) => {
             return (
               <a onClick={() => handlePick(d)} key={i}>
-                {d.label} {isOrderPage &&  `- region ${d.routeId} `  } 
+                {d.label} {isOrderPage && `- region ${d.routeId} `}
               </a>
             );
           })}
