@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import BtnContained from "../layout/BtnContained";
 import InputOutlined from "../layout/InputOutlined";
-import { InputAdornment } from "@mui/material";
 
 const ProductListItem = ({ item, handleChange, handleRemove }) => {
   const [discount, setDiscount] = useState(0);
