@@ -196,8 +196,6 @@ const AddNewRoute = ({ isEdit }) => {
             )} my-4 mx-2`}
           >
             Region Details
-            {/* bro l region hiye l route 3eref ente ? msemmyina ghalat.. 3al backend esma route, ma 3an ellak bade zabbet l attributes... */}
-{/* ma ente shoof l route l bel inspect.. */}
           </h4>
         </div>
         <hr className="line mx-5"></hr>

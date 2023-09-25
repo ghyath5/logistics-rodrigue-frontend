@@ -14,7 +14,7 @@ import NewSearchDD from "../components/layout/NewSearchDD";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import Pdf from "../components/pdf";
-
+import { toastInit } from "../utils/toastInit";
 const AddNewOrders = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(true);
   const [prodConfirmed, setConfirmed] = useState(true);
@@ -41,6 +41,12 @@ const AddNewOrders = ({ isEdit }) => {
   const [deliveryPdfData, setDeliveryPdfData] = useState({});
   const [buff, setBuffer] = useState(null);
 
+
+  const toastConfig = {
+    position: 'top-right',
+    autoClose: 3000,
+  };
+  
   useEffect(() => {
     errorr &&
       setTimeout(() => {
@@ -57,13 +63,18 @@ const AddNewOrders = ({ isEdit }) => {
     await axios
       .get(`/customers?page=1&limit=30&isarchived=false`)
       .then((res) => {
+
         res.data.customers.forEach((cust) => {
-          setCustomers((prev) => [
+        console.log(cust?.routeId)
+          setCustomers((prev) =>
+          [
+            
             ...prev,
             {
               label: cust.businessname,
               value: cust._id,
               deliveryfee: cust?.deliveryfee,
+               routeId: cust?.routeId?.name ?? []
             },
           ]);
         });
@@ -128,10 +139,8 @@ const AddNewOrders = ({ isEdit }) => {
   //   console.log(selectedCustomerId);
   //   isEdit && fetchCustomerById(selectedCustomerId);
   // }, [isEdit, selectedCustomerId]);
-  console.log(location.state?.id)
   const fetchOrderById = async (id) => {
 
-    console.log(id)
     await axios
       .get(`/orders/${id}`)
       // 
@@ -144,7 +153,6 @@ const AddNewOrders = ({ isEdit }) => {
 
         let prods = res.data.products;
          prods.forEach((prod) => {
-           console.log(prod)
           setSelectedProducts((prev) => [
             ...prev,
             {
@@ -309,8 +317,11 @@ const AddNewOrders = ({ isEdit }) => {
           isBackOrder ? doPdf(res.data) : nav("/orders");
         })
         .catch((err) => {
-          console.log(err);
-          err?.response?.status === 400 && setReqError(err.response.data.error);
+          // console.log(err.response.data.message);
+          err?.response?.status === 400 && setReqError(err.response.data.message);
+          toastInit(err.response.data.message, toastConfig);
+
+          console.log(reqError)
         })
         .finally(() => setLoading(false));
     } else {
@@ -390,6 +401,9 @@ const AddNewOrders = ({ isEdit }) => {
   // function disableMondays(date) {
   //   return date["$d"].toString().split(" ")[0] === "Mon";
   // }
+
+
+  console.log(customers)
 
   return isLoading ? (
     <Loader />
@@ -512,7 +526,9 @@ const AddNewOrders = ({ isEdit }) => {
             <>
               <span className="mb-3 formsLable">Customer</span>
               <NewSearchDD
-                data={customers}
+                data={customers }
+                isOrderPage
+                regionName={'test'}
                 handleSearch={handleSearchCustomers}
                 handleSelect={handleSendCustomerId}
                 placeHolder={searchPlaceHolder}
@@ -579,6 +595,8 @@ const AddNewOrders = ({ isEdit }) => {
               title={isEdit ? "UPDATE ORDER" : "SUBMIT ORDER"}
               handleClick={() => {
                 isEdit ? handleUpdateOrder() : handleSubmitOrder();
+                // toastInit('test 123', toastConfig);
+
               }}
             />
             {errorr && <p className="text-danger">{errorrMessage}</p>}

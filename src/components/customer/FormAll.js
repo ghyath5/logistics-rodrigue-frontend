@@ -97,8 +97,10 @@ const FormAll = ({ isEdit }) => {
           organization: res.data?.organization,
         });
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.log(err)
+      })
+            .finally(() => setLoading(false));
   };
 
   const fetchOccursAndPayments = async () => {
@@ -117,7 +119,7 @@ const FormAll = ({ isEdit }) => {
       .finally(() => setLoading(false))
       .catch(console.error);
   };
-
+  console.log(reqError)
   const fetchPayments = async () => {
     await axios
       .get(`/paymentmethod`)
@@ -221,6 +223,7 @@ const FormAll = ({ isEdit }) => {
         setLoading(false);
       })
       .catch((err) => {
+        console.log(response.data.message)
         err.response.status === 400 && setReqError(err.response.data.message);
       });
   };
@@ -238,7 +241,10 @@ const FormAll = ({ isEdit }) => {
       })
       .catch(
         (err) =>
-          err.response.status === 400 && setReqError(err.response.data.message)
+        {
+          err.response.status === 400 && setReqError(err.response.data)
+          console.log(reqError)
+        }          
       );
   };
 
