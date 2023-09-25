@@ -11,7 +11,6 @@ import { DatePickerr } from "../components/layout/DatePickers";
 import moment from "moment/moment";
 import ProdRowDetails from "../components/ProdRowDetails";
 import NewSearchDD from "../components/layout/NewSearchDD";
-import Pdf from "../components/pdf";
 import { toastInit } from "../utils/toastInit";
 import BackOrderCheckbox from "../components/BackOrderCheckbox";
 import {doPdf} from '../utils/doPdf'
@@ -21,8 +20,16 @@ const AddNewOrders = ({ isEdit }) => {
   const [isLoading, setLoading] = useState(true);
   const [prodConfirmed, setConfirmed] = useState(true);
   const [customers, setCustomers] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [reqError, setReqError] = useState("");
+  const [products, setProducts] = useState([
+    {
+      label: '',
+      value: '',
+      price: 0,
+      newprice: null,
+      assignedCode: '',
+      upb: 0,
+    },
+  ]);  const [reqError, setReqError] = useState("");
   const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -80,6 +87,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   useEffect(() => {
+    console.log(selectedCustomer.deliveryfee)
     selectedCustomer?.deliveryfee > 0 &&
       setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
   }, [selectedCustomer]);
@@ -137,6 +145,7 @@ const AddNewOrders = ({ isEdit }) => {
       //
       .then((res) => {
         fetchCustomerById(res.data.customer);
+        console.log(res.data.customer)
         setSelectedCustomerId(res.data.customer);
         setDate(res.data.date);
 
@@ -175,7 +184,9 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const handleConfirmProduct = (id, total, quantity) => {
+    console.log(selectedProducts)
     let prod = selectedProducts.filter((pro) => pro._id === id)[0];
+    console.log(prod)
     prod.newprice = total / quantity;
     prod.quantity = quantity;
 
@@ -198,6 +209,7 @@ const AddNewOrders = ({ isEdit }) => {
         setSearchPlaceholder(lbl);
         setNonEditedProducts(res.data.data);
         res.data.data.forEach((prod) => {
+          
           setProducts((prev) => [
             ...prev,
             {
@@ -216,15 +228,27 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   const allValid = () => {
-    if (!selectedCustomer.length)
-      return setErrorMessage("Please select a customer");
-    if (!date || date === "") return setErrorMessage("Please enter a date");
-    if (!selectedProducts.length)
-      return setErrorMessage("Please add some products");
-    if (orderTotal < 0)
-      return setErrorMessage("Order total shouldn't be negative");
-    return true;
+    let valid = false;
+    if (selectedCustomer.length === 0) {
+      setErrorMessage("Please select a customer");
+      valid = false;
+    } else if (!date || date === "") {
+      setErrorMessage("Please enter a date");
+      valid = false;
+    } else if (selectedProducts.length === 0) {
+      setErrorMessage("Please add some products");
+      valid = false;
+    } else if (orderTotal < 0) {
+      setErrorMessage("order total shouldn't be negative");
+      valid = false;
+    } else {
+      valid = true;
+    }
+    return valid;
   };
+
+  // Order validation failed: totalamount: Cast to Number failed for value "NaN" (type number) at path "totalamount"
+
   const handleSubmitOrder = async () => {
     let filteredProducts = [];
     selectedProducts.forEach((p) => {
@@ -237,7 +261,7 @@ const AddNewOrders = ({ isEdit }) => {
         },
       ];
     });
-
+    console.log(orderTotal)
     let dataToSend = {
       customer: selectedCustomerId,
       products: filteredProducts,
@@ -335,6 +359,9 @@ const AddNewOrders = ({ isEdit }) => {
     setConfirmed(true);
   };
 
+
+
+  console.log(orderTotal)
 
   return isLoading ? (
     <Loader />

@@ -3,7 +3,7 @@ import BtnContained from "./layout/BtnContained";
 import InputOutlined from "./layout/InputOutlined";
 
 const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
-  const [newPrice, setNewPrice] = useState(item.newprice);
+  const [newPrice, setNewPrice] = useState(item.newprice ?? 1 );
   const [quantity, setQuantity] = useState(item.quantity || 1);
   const [total, setTotal] = useState(0);
   const [doneEditing, setDoneEditing] = useState(
@@ -15,23 +15,25 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
   }, [item]);
 
   useEffect(() => {
+    console.log(newPrice)
     setTotal(quantity * newPrice);
+    console.log(total)
   }, [quantity, newPrice]);
 
   const submitProduct = () => {
     if (type && type === "order") {
       setDoneEditing(true);
-      handleChange(item.productId, total, quantity);
+      handleChange(item._id, total, quantity);
     } else {
       if (newPrice < item.oldprice) {
         setDoneEditing(true);
-        handleChange(item.productId, newPrice);
+        handleChange(item._id, newPrice);
       }
     }
   };
 
   const removeProd = () => {
-    handleRemove(item.productId);
+    handleRemove(item._id);
     setDoneEditing(false);
     // setNewPrice(item.oldprice);
   };
