@@ -13,7 +13,7 @@ import ProdRowDetails from "../components/ProdRowDetails";
 import NewSearchDD from "../components/layout/NewSearchDD";
 import { toastInit } from "../utils/toastInit";
 import BackOrderCheckbox from "../components/BackOrderCheckbox";
-import {doPdf} from '../utils/doPdf'
+import { doPdf } from "../utils/doPdf";
 import BackOrderSubmitted from "../components/BackOrderSubmitted";
 
 const AddNewOrders = ({ isEdit }) => {
@@ -22,14 +22,15 @@ const AddNewOrders = ({ isEdit }) => {
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([
     {
-      label: '',
-      value: '',
+      label: "",
+      value: "",
       price: 0,
       newprice: null,
-      assignedCode: '',
+      assignedCode: "",
       upb: 0,
     },
-  ]);  const [reqError, setReqError] = useState("");
+  ]);
+  const [reqError, setReqError] = useState("");
   const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState({});
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -43,7 +44,7 @@ const AddNewOrders = ({ isEdit }) => {
   const [searchPlaceHolder, setSearchPlaceholder] = useState(
     "Search a customer by name or code"
   );
- 
+
   const toastConfig = {
     position: "top-right",
     autoClose: 3000,
@@ -51,8 +52,6 @@ const AddNewOrders = ({ isEdit }) => {
 
   const nav = useNavigate();
   const location = useLocation();
-
- 
 
   useEffect(() => {
     errorr &&
@@ -87,7 +86,7 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   useEffect(() => {
-    console.log(selectedCustomer.deliveryfee)
+    console.log(selectedCustomer.deliveryfee);
     selectedCustomer?.deliveryfee > 0 &&
       setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
   }, [selectedCustomer]);
@@ -144,7 +143,7 @@ const AddNewOrders = ({ isEdit }) => {
       .get(`/orders/${id}`)
       .then((res) => {
         fetchCustomerById(res.data.customer);
-        console.log(res.data.customer)
+        console.log(res.data.customer);
         setSelectedCustomerId(res.data.customer);
         setDate(res.data.date);
 
@@ -152,18 +151,20 @@ const AddNewOrders = ({ isEdit }) => {
 
         let prods = res.data.products;
         prods.forEach((prod) => {
+          console.log(prod.product);
+          console.log(selectedProducts);
           setSelectedProducts((prev) => [
             ...prev,
             {
               _id: prod._id,
-              oldprice: prod.product.price,
-              newprice: prod.product.newprice
-                ? prod.product.newprice
-                : prod.product.price,
-              name: prod.product.name,
-              assignedCode: prod.product.assignedCode,
-              upb: prod.product.unitesperbox,
-              quantity: prod.quantity,
+              oldprice: prod.product?.price,
+              newprice: prod.product?.newprice
+                ? prod.product?.newprice
+                : prod.product?.price,
+              name: prod.product?.name,
+              assignedCode: prod.product?.assignedCode,
+              upb: prod.product?.unitesperbox,
+              quantity: prod?.quantity,
             },
           ]);
         });
@@ -188,10 +189,14 @@ const AddNewOrders = ({ isEdit }) => {
     prod.quantity = quantity;
 
     setOrderTotal((prev) => (parseFloat(prev) + parseFloat(total)).toFixed(2));
+    console.log(selectedProducts);
+
     setSelectedProducts((prev) => [
       ...prev.filter((pro) => pro._id !== id),
       prod,
     ]);
+    console.log(selectedProducts);
+
     setConfirmed(true);
   };
 
@@ -206,7 +211,6 @@ const AddNewOrders = ({ isEdit }) => {
         setSearchPlaceholder(lbl);
         setNonEditedProducts(res.data.data);
         res.data.data.forEach((prod) => {
-          
           setProducts((prev) => [
             ...prev,
             {
@@ -256,7 +260,7 @@ const AddNewOrders = ({ isEdit }) => {
         },
       ];
     });
-    console.log(orderTotal)
+    console.log(orderTotal);
     let dataToSend = {
       customer: selectedCustomerId,
       products: filteredProducts,
@@ -327,6 +331,8 @@ const AddNewOrders = ({ isEdit }) => {
   const handleSelectProduct = (e) => {
     setConfirmed(false);
     let prod = products.filter((pro) => pro.value === e)[0];
+    console.log(selectedProducts);
+
     setSelectedProducts((prev) => [
       ...prev,
       {
@@ -344,6 +350,7 @@ const AddNewOrders = ({ isEdit }) => {
   const handleRemoveProduct = (id) => {
     let prod = selectedProducts.filter((pro) => pro._id === id)[0];
 
+    console.log(orderTotal);
     orderTotal > 0 &&
       setOrderTotal((prev) =>
         (parseFloat(prev) - parseFloat(prod.newprice) * prod.quantity).toFixed(
@@ -354,10 +361,12 @@ const AddNewOrders = ({ isEdit }) => {
     setConfirmed(true);
   };
 
+  console.log(orderTotal);
+
   return isLoading ? (
     <Loader />
   ) : backOrderSubmitted ? (
-  <BackOrderSubmitted/>
+    <BackOrderSubmitted />
   ) : (
     <Layout>
       <div className="d-flex align-items-center ">
@@ -455,7 +464,7 @@ const AddNewOrders = ({ isEdit }) => {
               <div className="d-flex align-items-center">
                 <h6 className="m-0 me-2 formsLable">Total Cost:</h6>
                 <div className="textLightBlue">
-                  $ {parseFloat(orderTotal).toFixed(2)}
+                  ${isNaN(orderTotal) ? 0 : parseFloat(orderTotal).toFixed(2)}
                 </div>
               </div>
             </div>
