@@ -128,7 +128,6 @@ const Customers = ({ archived }) => {
       .finally(() => setLoading(false));
   };
 
-  console.log(allCustomers)
   // const fetchOrganisations = async () => {
   //   await axios
   //     .get("organization")

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import RadioGroupForm from "../layout/RadioGroupForm";
 import InputOutlined from "../layout/InputOutlined";
 import DDSearch from "../layout/DDSearch";
 import axios from "../../axios";
 
-const days = [
-  { label: "Monday", value: "monday" },
-  { label: "Tuesday", value: "tuesday" },
-  { label: "Wednesday", value: "wednesday" },
-  { label: "Thursday", value: "thursday" },
-  { label: "Friday", value: "friday" },
-  { label: "Saturday", value: "saturday" },
-  { label: "Sunday", value: "sunday" },
-];
+// const days = [
+//   { label: "Monday", value: "monday" },
+//   { label: "Tuesday", value: "tuesday" },
+//   { label: "Wednesday", value: "wednesday" },
+//   { label: "Thursday", value: "thursday" },
+//   { label: "Friday", value: "friday" },
+//   { label: "Saturday", value: "saturday" },
+//   { label: "Sunday", value: "sunday" },
+// ];
 
 const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
   const [routes, setRoutes] = useState([]);

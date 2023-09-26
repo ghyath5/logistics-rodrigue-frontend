@@ -125,7 +125,7 @@ const EditRun = () => {
           note: data.note,
         })
         .then((res) => {
-          // console.log(res.data);
+        
           navigate("/runs");
         })
         .catch(console.error)

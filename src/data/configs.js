@@ -20,10 +20,9 @@ export const targets = [
   { lable: "Product targeted", value: "product" },
 ];
 export const orderStatues = [
-  { label: "Pending", value: "0", class: "textYellow" },
-  { label: "Confirmed", value: "1", class: "textGreen" },
-  { label: "Delivered", value: "2", class: "textBlue" },
-  { label: "Canceled", value: "3", class: "textRed" },
+  { label: "Done", value: "0", class: "textGreen" },
+  { label: "Cancelled", value: "1", class: "textRed" },
+  { label: "Deleted", value: "2", class: "textYellow" },
 ];
 export const runsStatuses = [
   { label: "Pending", value: "0" },

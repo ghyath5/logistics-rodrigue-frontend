@@ -125,7 +125,7 @@ const Orders = () => {
   //   await axios
   //     .post(`/orders/deliveryoccur`)
   //     .then((res) => {
-  //       // console.log(res);
+  //        console.log(res);
   //     })
   //     .catch(console.error)
   //     .finally(() => setLoading(false));

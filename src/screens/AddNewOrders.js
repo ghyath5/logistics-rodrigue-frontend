@@ -86,7 +86,6 @@ const AddNewOrders = ({ isEdit }) => {
   };
 
   useEffect(() => {
-    console.log(selectedCustomer.deliveryfee);
     selectedCustomer?.deliveryfee > 0 &&
       setOrderTotal((prev) => prev + parseInt(selectedCustomer.deliveryfee));
   }, [selectedCustomer]);
@@ -143,7 +142,6 @@ const AddNewOrders = ({ isEdit }) => {
       .get(`/orders/${id}`)
       .then((res) => {
         fetchCustomerById(res.data.customer);
-        console.log(res.data.customer);
         setSelectedCustomerId(res.data.customer);
         setDate(res.data.date);
 
@@ -151,8 +149,6 @@ const AddNewOrders = ({ isEdit }) => {
 
         let prods = res.data.products;
         prods.forEach((prod) => {
-          console.log(prod.product);
-          console.log(selectedProducts);
           setSelectedProducts((prev) => [
             ...prev,
             {
@@ -189,13 +185,10 @@ const AddNewOrders = ({ isEdit }) => {
     prod.quantity = quantity;
 
     setOrderTotal((prev) => (parseFloat(prev) + parseFloat(total)).toFixed(2));
-    console.log(selectedProducts);
-
     setSelectedProducts((prev) => [
       ...prev.filter((pro) => pro._id !== id),
       prod,
     ]);
-    console.log(selectedProducts);
 
     setConfirmed(true);
   };
@@ -260,7 +253,6 @@ const AddNewOrders = ({ isEdit }) => {
         },
       ];
     });
-    console.log(orderTotal);
     let dataToSend = {
       customer: selectedCustomerId,
       products: filteredProducts,
@@ -278,12 +270,9 @@ const AddNewOrders = ({ isEdit }) => {
           isBackOrder ? doPdf(res.data) : nav("/orders");
         })
         .catch((err) => {
-          // console.log(err.response.data.message);
           err?.response?.status === 400 &&
             setReqError(err.response.data.message);
           toastInit(err.response.data.message, toastConfig);
-
-          console.log(reqError);
         })
         .finally(() => setLoading(false));
     } else {
@@ -349,8 +338,6 @@ const AddNewOrders = ({ isEdit }) => {
 
   const handleRemoveProduct = (id) => {
     let prod = selectedProducts.filter((pro) => pro._id === id)[0];
-
-    console.log(orderTotal);
     orderTotal > 0 &&
       setOrderTotal((prev) =>
         (parseFloat(prev) - parseFloat(prod.newprice) * prod.quantity).toFixed(
@@ -360,9 +347,6 @@ const AddNewOrders = ({ isEdit }) => {
     setSelectedProducts((prev) => [...prev.filter((pro) => pro._id !== id)]);
     setConfirmed(true);
   };
-
-  console.log(orderTotal);
-
   return isLoading ? (
     <Loader />
   ) : backOrderSubmitted ? (
