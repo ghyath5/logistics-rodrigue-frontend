@@ -70,16 +70,16 @@ const getListStyle = (isDraggingOver, parts) => ({
 
 const getOrderStyle = () => ({
   position: 'absolute',
-  top: '2px', // Replace the semicolon with a comma
-  right: '9px', // Replace the semicolon with a comma
-  padding: '11px', // Replace the semicolon with a comma
-  background: 'lightblue', // Replace the semicolon with a comma
-  borderRadius: '50%', // Replace the semicolon with a comma
-  height: '15px', // Replace the semicolon with a comma
-  width: '15px', // Replace the semicolon with a comma
-  display: 'flex', // Replace the semicolon with a comma
-  alignItems: 'center', // Replace the semicolon with a comma
-  justifyContent: 'center', // Replace the semicolon with a comma
+  top: '2px', 
+  right: '9px', 
+  padding: '11px', 
+  background: 'lightblue', 
+  borderRadius: '50%', 
+  height: '15px', 
+  width: '15px', 
+  display: 'flex', 
+  alignItems: 'center', 
+  justifyContent: 'center', 
 });
 
 
