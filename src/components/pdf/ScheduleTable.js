@@ -146,9 +146,10 @@ const TableRow = ({ data }) => {
 };
 
 const ScheduleTable = ({ data }) => {
+  console.log(data)
   return (
     <View style={styles.table}>
-      <TableHeader />
+      {/* <TableHeader /> */}
       {data.map((item, i) => (
         <TableRow key={i} data={item} />
       ))}

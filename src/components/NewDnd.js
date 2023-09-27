@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
-  
   result.splice(endIndex, 0, removed);
 
   return result;
@@ -30,58 +29,31 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  position:'relative',
+  // "linear-gradient(135deg, #f6d365 0%, #fda085 100%)"
+  // "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+  // "linear-gradient(135deg, #5ee7df 0%, #b490ca 100%)"
+  // "linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)"
   userSelect: "none",
   padding: grid * 2,
-  height:'20rem',
-  width:'15rem',
-  display:'flex',
-  alignItems:'center',
-  justifyContent:'center',
   margin: `0 0 ${grid}px 0`,
-  borderRadius:'20px',
+
+  // change background colour if dragging
   background: isDragging
-    ? " linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)"
-    : "linear-gradient(135deg, #f5f5f5 0%, #ccc 100%)",
+    ? "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    : "linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)",
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver, parts) => ({
-  padding: "grid",
-  width: `calc(1000px / ${parts})`,
-  margin: "auto",
-  display: "flex",
-  flexWrap: "wrap",
-  height:'400px',
-  gap: "20px",
-  borderRadius:'10px',
-  justifyContent: "center",
-  alignItems: "center",
   background: isDraggingOver
-    ? "linear-gradient(135deg, #f5f5f5 0%, #ccc 100%) "
-    : "  linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)",
-
-
-    boxShadow:'0px 4px 6px rgba(0, 0, 0, 0.1)'
-   
+    ? "linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)"
+    : "white",
+  padding: grid,
+  width: 1000 / parts,
+  margin: "auto",
 });
-
-const getOrderStyle = () => ({
-  position: 'absolute',
-  top: '2px', 
-  right: '9px', 
-  padding: '11px', 
-  background: 'lightblue', 
-  borderRadius: '50%', 
-  height: '15px', 
-  width: '15px', 
-  display: 'flex', 
-  alignItems: 'center', 
-  justifyContent: 'center', 
-});
-
 
 function NewDnd({ data, wrapperRef }) {
   const navigate = useNavigate();
@@ -152,58 +124,55 @@ function NewDnd({ data, wrapperRef }) {
 
   return (
     <div ref={wrapperRef}>
-      <div>
-      <DragDropContext onDragEnd={onDragEnd}>
-  {state.map((el, ind) => (
-    <Droppable key={ind} droppableId={`${ind}`}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver, state.length)}
-          {...provided.droppableProps}
-        >
-          {el.map((item, index) => (
-            <Draggable
-              key={item._id}
-              draggableId={item._id}
-              index={index}
-            >
+      <div style={{ display: "flex" }}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {state.map((el, ind) => (
+            <Droppable key={ind} droppableId={`${ind}`}>
               {(provided, snapshot) => (
-                <div 
+                <div
                   ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={getItemStyle(
-                    snapshot.isDragging,
-                    provided.draggableProps.style
-                  )}
+                  style={getListStyle(snapshot.isDraggingOver, state.length)}
+                  {...provided.droppableProps}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      textTransform: "capitalize",
-                    
-                    }}
-                    className="draggedItem fw-bold"
-                  >
-<p style={getOrderStyle()}>{index + 1}</p>
-                    <div className="text-center">
-                      <p>Name : {item.firstname + " " + item.lastname}</p>
-                      <p>Business Name : {item.businessname}</p>
-                    </div>
-                  </div>
+                  {el.map((item, index) => (
+                    <Draggable
+                      key={item._id}
+                      draggableId={item._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                          )}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                              textTransform: "capitalize",
+                            }}
+                            className=" draggedItem fw-bold"
+                          >
+                            <div className="text-center">
+                              <p>{item.firstname + " " + item.lastname}</p>
+                              <p>{item.businessname}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
                 </div>
               )}
-            </Draggable>
+            </Droppable>
           ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  ))}
-</DragDropContext>
-
+        </DragDropContext>
       </div>
       <div className="mt-3 mb-1 w-100 d-flex justify-content-center">
         <p className="errorText"> {reqError !== "" && reqError}</p>

@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 const Runs = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [allRuns, setRuns] = useState([]);
+  const [runs, setRuns] = useState([]);
 
   const [name, setName] =useState('');
   const [date,setDate]=useState(new Date())
@@ -129,7 +129,7 @@ const Runs = () => {
               f?.vehicle?.plate,
               f.route?.name,
               f.orders.length,
-              runsStatuses[f.status].label,
+              runsStatuses[f.status]?.label,
               new Date(f.date.split("T")[0]).toDateString(),
               "Edit Date",
               "View / Edit"
@@ -153,8 +153,13 @@ const Runs = () => {
     await axios
       .get("/runs")
       .then((res) => {
+        // console.log(res.data)
         setRuns(res.data.runs);
+        // console.log(res.data.runs[0])
         res.data.runs.forEach((f) => {
+          console.log(f.orders[0].status)
+          const orderStatusLabels = f.orders.map((order) => runsStatuses[order.status].label);
+
           setRows((prev) => [
             ...prev,
             createData(
@@ -163,7 +168,7 @@ const Runs = () => {
               f?.vehicle?.plate,
               f.route?.name,
               f.orders.length,
-              runsStatuses[f.status].label,
+              orderStatusLabels,
               new Date(f.date.split("T")[0]).toDateString(),
               "Edit Date",
               "View / Edit"
@@ -240,7 +245,7 @@ const Runs = () => {
         <BtnOutlined classes={'mt-3'} disabled={false} title={"fetch"} handleClick={handleFetch}/>
       </form>
 
-        {allRuns.length > 0 ? (
+        {runs.length > 0 ? (
           <Table columns={columns} rows={rows} />
         ) : (
           <NoDataPlaceHolder current="Runs" />

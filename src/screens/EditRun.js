@@ -10,8 +10,9 @@ import DDSearch from "../components/layout/DDSearch";
 import { runsStatuses } from "../data/configs";
 import Accordionn from "../components/layout/Accordionn";
 import BtnOutlined from "../components/layout/BtnOutlined";
-import Pdf from "../components/pdf";
+// import Pdf from "../components/pdf";
 import moment from "moment/moment";
+import Pdf from "../components/pdf";
 
 const EditRun = () => {
   const location = useLocation();
@@ -46,16 +47,19 @@ const EditRun = () => {
     await axios
       .get(`/runs/${id}`)
       .then((res) => {
+        console.log(res.data)
+        const orderStatusLabels = res.data.orders.map((order) => runsStatuses[order.status].label);
+        console.log(orderStatusLabels.toString())
         setData({
           driver: res.data.driver._id,
           vehicle: res.data.vehicle._id,
-          status: runsStatuses[res.data.status].value,
+          status:orderStatusLabels ,
           note: res.data.note ? res.data.note : "Note",
         });
         setOldData({
           driver: res.data.driver._id,
           vehicle: res.data.vehicle._id,
-          status: runsStatuses[res.data.status].value,
+          status:orderStatusLabels ,
           note: res.data.note ? res.data.note : "Note",
         });
         setAllOrders(res.data.orders ? res.data.orders : []);
@@ -155,7 +159,9 @@ const EditRun = () => {
             });
           })
         );
+
         setBufferPdf(res.data.pdfs[0]);
+        console.log("s",stockNeededPdfData)
         setStockNeededPdfData({
           date: moment(run.date).format("L"),
           driver: run.driver.name,
@@ -168,6 +174,8 @@ const EditRun = () => {
             }, {})
           ),
         });
+        console.log("s",stockNeededPdfData)
+
         setDeliveryPdfData({
           date: moment(run.date).format("L"),
           orders: run.orders,
@@ -187,6 +195,7 @@ const EditRun = () => {
   const printInvoice = async () => {
     downloadPDF(bufferPdf);
   };
+  console.log(bufferPdf)
 
   return isLoading ? (
     <Loader />

@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
 });
 
 const MyDocument = ({ data, stock }) => {
+  console.log("d",data)
   return (
     <Document size="A4" orientation="landscape">
       <Page size="A4" orientation="landscape" style={styles.page} wrap>
@@ -108,12 +109,13 @@ const MyDocument = ({ data, stock }) => {
 
 const Pdf = ({ children, stock, data }) => {
   return (
-    <PDFDownloadLink
-      document={<MyDocument data={data} stock={stock} />}
-      fileName={!stock ? "Deliver schedule" : "Stock report"}
-    >
-      {() => children}
-    </PDFDownloadLink>
+    // <PDFDownloadLink
+    //   document={<MyDocument data={data} stock={stock} />}
+    //   fileName={!stock ? "Deliver schedule" : "Stock report"}
+    // >
+    //   {() => children}
+    // </PDFDownloadLink>
+    <></>
   );
 };
 
