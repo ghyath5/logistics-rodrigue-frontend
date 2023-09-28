@@ -10,7 +10,6 @@ import DDSearch from "../components/layout/DDSearch";
 import { runsStatuses } from "../data/configs";
 import Accordionn from "../components/layout/Accordionn";
 import BtnOutlined from "../components/layout/BtnOutlined";
-// import Pdf from "../components/pdf";
 import moment from "moment/moment";
 import Pdf from "../components/pdf";
 
@@ -18,12 +17,12 @@ const EditRun = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
-  const [oldData, setOldData] = useState({
-    driver: "",
-    vehicle: "",
-    status: "",
-    note: "",
-  });
+  // const [oldData, setOldData] = useState({
+  //   driver: "",
+  //   vehicle: "",
+  //   status: "",
+  //   note: "",
+  // });
   const [data, setData] = useState({
     driver: "",
     vehicle: "",
@@ -47,21 +46,20 @@ const EditRun = () => {
     await axios
       .get(`/runs/${id}`)
       .then((res) => {
-        console.log(res.data)
         const orderStatusLabels = res.data.orders.map((order) => runsStatuses[order.status].label);
-        console.log(orderStatusLabels.toString())
+        // console.log(orderStatusLabels.toString())
         setData({
           driver: res.data.driver._id,
           vehicle: res.data.vehicle._id,
           status:orderStatusLabels ,
           note: res.data.note ? res.data.note : "Note",
         });
-        setOldData({
-          driver: res.data.driver._id,
-          vehicle: res.data.vehicle._id,
-          status:orderStatusLabels ,
-          note: res.data.note ? res.data.note : "Note",
-        });
+        // setOldData({
+        //   driver: res.data.driver._id,
+        //   vehicle: res.data.vehicle._id,
+        //   status:orderStatusLabels ,
+        //   note: res.data.note ? res.data.note : "Note",
+        // });
         setAllOrders(res.data.orders ? res.data.orders : []);
       })
       .then(fetchVehicles)
@@ -146,6 +144,7 @@ const EditRun = () => {
       .get(`/runs/${location.state?.id}/pdf`)
       .then((res) => {
         let run = res.data.run;
+        console.log("res",res.data.pdfs);
         let products = [];
         run?.orders?.map((ord) =>
           ord?.products?.map((prod) => {
@@ -159,6 +158,7 @@ const EditRun = () => {
             });
           })
         );
+
 
         setBufferPdf(res.data.pdfs[0]);
         console.log("s",stockNeededPdfData)
