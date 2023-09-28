@@ -19,6 +19,9 @@ const Form3 = ({ errors, occurs, data, handleChange, handleBlur }) => {
     fetchRoutes();
   }, []);
 
+
+  console.log(data)
+
   const fetchRoutes = async () => {
     await axios
       .get("routes")

@@ -23,7 +23,7 @@ const FormAll = ({ isEdit }) => {
     abn: "",
     address: "",
     city: "",
-    region: "",
+    region: [],
     postcode: "",
     notes: "",
     firstname: "",
@@ -74,6 +74,7 @@ const FormAll = ({ isEdit }) => {
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
+        console.log(res.data);
         setData({
           businessname: res.data.businessname,
           abn: res.data.abn,
@@ -98,9 +99,9 @@ const FormAll = ({ isEdit }) => {
         });
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
-            .finally(() => setLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const fetchOccursAndPayments = async () => {
@@ -119,7 +120,6 @@ const FormAll = ({ isEdit }) => {
       .finally(() => setLoading(false))
       .catch(console.error);
   };
-  console.log(reqError)
   const fetchPayments = async () => {
     await axios
       .get(`/paymentmethod`)
@@ -199,34 +199,41 @@ const FormAll = ({ isEdit }) => {
       }
     }
     let errs = Object.values(errors);
+    console.log(errs);
 
-    if (errs.includes(true)) {
-      setReqError("Please fill in all required fields");
-    } else {
-      let d = {};
-      for (const [key, value] of Object.entries(data)) {
-        value !== "" && (d[key] = value);
-      }
-      isEdit ? handleUpdateCustomer(d) : handleAddCustomer(d);
+    let d = {};
+    for (const [key, value] of Object.entries(data)) {
+      value !== "" && (d[key] = value);
     }
+    console.log(d)
+    isEdit ? handleUpdateCustomer(d) : handleAddCustomer(d);
   };
 
   const handleAddCustomer = (d) => {
     setLoading(true);
-    axios
-      .post(`customers`, d)
-      .then(() => {
-        setLoading(false);
-        navigate("/customers");
-      })
-      .finally(() => {
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(response.data.message)
-        err.response.status === 400 && setReqError(err.response.data.message);
-      });
+    console.log(d)
+    // axios
+    //   .post(`customers`, d)
+    //   .then(() => {
+    //     setLoading(false);
+    //     console.log(err.response.data);
+    //     alert("hi");
+    //     navigate("/customers");
+    //   })
+    //   .finally(() => {
+    //     alert("hi");
+
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     alert("bye");
+
+    //     console.log(err);
+    //     err.response.status === 400 && setReqError(err.response.data.message);
+    //   });
   };
+
+  console.log(data)
 
   const handleUpdateCustomer = () => {
     setLoading(true);
@@ -239,13 +246,10 @@ const FormAll = ({ isEdit }) => {
       .finally(() => {
         setLoading(false);
       })
-      .catch(
-        (err) =>
-        {
-          err.response.status === 400 && setReqError(err.response.data)
-          console.log(reqError)
-        }          
-      );
+      .catch((err) => {
+        err.response.status === 400 && setReqError(err.response.data);
+        console.log(reqError);
+      });
   };
 
   return isLoading ? (

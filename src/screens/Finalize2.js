@@ -4,7 +4,6 @@ import axios from "../axios";
 import "./Finalie2.css";
 import { useFormik } from "formik";
 import Loader from "../components/layout/Loader";
-import { useNavigate } from "react-router";
 import EditModal from "../components/EditModal";
 
 function Finalize2() {
@@ -66,17 +65,16 @@ function Finalize2() {
         const routes = fetchRoutes.data.filter((route) =>
           route.scheduledDays.some((sDay) => sDay.day === actualDay)
         );
-        // console.log(route)
         weekRow.push(
           <td
             key={`week${week}-day${day}`}
             onClick={() => handleCellClick(actualDay, week)}
-            style={{ width: "500px !important", height: "200px" }}
+          
+            className="calendar__td"
           >
             {routes.map((route) => {
-              console.log(route);
               return (
-                <div key={route._id}>
+                <div key={route._id} >
                   <span> {route.name}</span>
                 </div>
               );
@@ -109,9 +107,9 @@ function Finalize2() {
     >
       <div
         className="container "
-        style={{ width: "40rem", display: "flex", justifyContent: "center" }}
+        style={{ display: "flex", justifyContent: "center" }}
       >
-        <table className="table table-bordered mt-10  ">
+        <table className="table table-sm table-bordered mt-10 calendar">
           <thead>
             <tr>{tableHeaders}</tr>
           </thead>
@@ -133,7 +131,7 @@ function Finalize2() {
               className="mat_list card scrollable"
               style={{ listStyleType: "none", padding: 0 }}
             >
-              <span style={{textAlign:'center'}}>Available Routes</span>
+              <span style={{textAlign:'center',margin:'10px 0px'}}>Available Routes</span>
               {fetchRoutes.data.map((route) => (
                 <li
                   key={route._id}
