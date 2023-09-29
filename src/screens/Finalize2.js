@@ -5,8 +5,11 @@ import "./Finalie2.css";
 import { useFormik } from "formik";
 import Loader from "../components/layout/Loader";
 import EditModal from "../components/EditModal";
+// import { regionDays } from "../data/regionDays";
+import { useNavigate } from "react-router-dom";
 
 function Finalize2() {
+  const navigate=useNavigate()
   const [showEditModal, setShowEditModal] = useState(false);
   const fetchRoutes = useQuery({
     queryKey: ["posts"],
@@ -95,30 +98,36 @@ function Finalize2() {
 
 
   const handleUpdateRoute = (route) => {
-    console.log(route)
-    let scheduledDays=route.scheduledDays.map(item => item.day)
-    let activeDays = scheduledDays.map((day) => ({ day }));
+    // console.log(route)
+    // let scheduledDays=route.scheduledDays.map(item => item.day)
+    // let activeDays = scheduledDays.map((day) => ({ day }));
+    // setShowEditModal(true)
+    navigate("/editRegion", { state: { id: route._id } })
 
-      axios
-        .put(`/routes/${route._id}`, {
-          name: route.name,
-          places: route.places,
-          description: route.description,
-          from: route.from,
-          to: route.to,
-          scheduledDays: activeDays.map((day) => ({
-            day: 10,
-            calledCustomers: [],
-          })),
-        })
-        .then(() => {
-          // navigate("/regions");
-          alert("hi")
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        // .finally(() => setLoading(false));
+
+      // axios
+      //   .put(`/routes/${route._id}`, {
+      //     name: route.name,
+      //     places: route.places,
+      //     description: route.description,
+      //     from: route.from,
+      //     to: route.to,
+      //     scheduledDays: activeDays.map((day) => ({
+      //       day: 10,
+      //       calledCustomers: [],
+      //     })),
+      //   })
+      //   .then(() => {
+      //     // navigate("/regions");
+      //     alert("hi")
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   })
+      //   // .finally(() => setLoading(false));
+
+
+
     
   };
 
@@ -188,7 +197,13 @@ function Finalize2() {
                       textTransform:'capitalize'
                     }}
                   >
-                    {route.name} <b>- day {route.scheduledDays[0].day}</b>
+{route.name} <b>- day {
+  route.scheduledDays.length > 1 ? (
+    [...new Set(route.scheduledDays.map((day) => day.day))].join(', ')
+  ) : (
+    route.scheduledDays[0].day
+  )}
+</b>
                   </a>
                   <button
                     onClick={()=>handleUpdateRoute(route)}
@@ -209,7 +224,7 @@ function Finalize2() {
           </div>
         )}
       </div>
-      {showEditModal && <EditModal handleClosePopup={()=>setShowEditModal(false)} />}
+      {showEditModal && <EditModal  />}
     </div>
     </>
   );
