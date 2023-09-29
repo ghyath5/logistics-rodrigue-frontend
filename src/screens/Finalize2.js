@@ -74,8 +74,8 @@ function Finalize2() {
           >
             {routes.map((route) => {
               return (
-                <div key={route._id} >
-                  <span> {route.name}</span>
+                <div className="route__map__container" key={route._id} >
+                  <span className="calendar__td__val"> -{route.name}</span>
                 </div>
               );
             })}
@@ -93,10 +93,41 @@ function Finalize2() {
     return calendarTable;
   };
 
+
+  const handleUpdateRoute = (route) => {
+    console.log(route)
+    let scheduledDays=route.scheduledDays.map(item => item.day)
+    let activeDays = scheduledDays.map((day) => ({ day }));
+
+      axios
+        .put(`/routes/${route._id}`, {
+          name: route.name,
+          places: route.places,
+          description: route.description,
+          from: route.from,
+          to: route.to,
+          scheduledDays: activeDays.map((day) => ({
+            day: 10,
+            calledCustomers: [],
+          })),
+        })
+        .then(() => {
+          // navigate("/regions");
+          alert("hi")
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        // .finally(() => setLoading(false));
+    
+  };
+
   const tableHeaders = Array.from({ length: 7 }, (_, index) => (
     <th key={`Day${index + 1}`}>Day {index + 1}</th>
   ));
   return (
+    <>
+  
     <div
       style={{
         display: "flex",
@@ -105,6 +136,7 @@ function Finalize2() {
         marginLeft: "10rem",
       }}
     >
+     
       <div
         className="container "
         style={{ display: "flex", justifyContent: "center" }}
@@ -159,7 +191,7 @@ function Finalize2() {
                     {route.name} <b>- day {route.scheduledDays[0].day}</b>
                   </a>
                   <button
-                    onClick={() => setShowEditModal(true)}
+                    onClick={()=>handleUpdateRoute(route)}
                     style={{
                       backgroundColor: "#007bff",
                       color: "#fff",
@@ -179,6 +211,7 @@ function Finalize2() {
       </div>
       {showEditModal && <EditModal handleClosePopup={()=>setShowEditModal(false)} />}
     </div>
+    </>
   );
 }
 

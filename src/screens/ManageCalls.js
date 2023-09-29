@@ -192,7 +192,7 @@ const ManageCalls = () => {
         <ArrowBackIcon
           className="ArrowBackIcon"
           fontSize="medium"
-          onClick={() => nav("/regions")}
+          onClick={() => nav(-1)}
         />
         <h3
           className={`headerss-${localStorage.getItem(
