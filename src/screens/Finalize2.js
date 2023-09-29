@@ -206,7 +206,8 @@ function Finalize2() {
 </b>
                   </a>
                   <button
-                    onClick={()=>handleUpdateRoute(route)}
+                    // onClick={()=>handleUpdateRoute(route)}
+                    onClick={()=>setShowEditModal(true)}
                     style={{
                       backgroundColor: "#007bff",
                       color: "#fff",
