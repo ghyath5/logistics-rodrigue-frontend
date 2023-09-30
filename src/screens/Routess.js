@@ -123,7 +123,6 @@ const Routess = () => {
   //   setItemToDelete(id);
   //   setSureToDeleteVisible(true);
   // };
-  console.log(columns)
 
   return loading ? (
     <Loader />

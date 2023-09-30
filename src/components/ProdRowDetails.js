@@ -15,9 +15,9 @@ const ProdRowDetails = ({ item, handleChange, handleRemove, type, isEdit }) => {
   }, [item]);
 
   useEffect(() => {
-    console.log(newPrice)
+    // console.log(newPrice)
     setTotal(quantity * newPrice);
-    console.log(total)
+    // console.log(total)
   }, [quantity, newPrice]);
 
   const submitProduct = () => {

@@ -10,10 +10,11 @@ import Loader from "../components/layout/Loader";
 import DDSearch from "../components/layout/DDSearch";
 import { useQuery } from "@tanstack/react-query";
 import { regionDays } from "../data/regionDays";
+import EditModal from "../components/EditModal";
 const AddNewRoute = ({ isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const[showEditModal,setShowEditModal]=useState(false)
   const [isLoading, setLoading] = useState(false);
   const [scheduledDays, setScheduledDays] = useState([]);
   const [errors, setErrors] = useState({
@@ -100,8 +101,9 @@ const AddNewRoute = ({ isEdit }) => {
       }
     }
 
-    if (scheduledDays.length === 0) {
+    if (scheduledDays.length === 0 && data.scheduledDays.length ===0) {
       valid = false;
+      alert('empty')
       setScheduledDaysError(true);
     }
     return valid;
@@ -296,11 +298,14 @@ const AddNewRoute = ({ isEdit }) => {
           <BtnContained
             title={isEdit ? "EDIT Region" : "CREATE Region"}
             handleClick={() =>
-              isEdit ? handleUpdateRoute() : handleAddNewRoute()
+              isEdit ? setShowEditModal(true) : handleAddNewRoute()
+              // isEdit ? handleUpdateRoute() : handleAddNewRoute()
             }
           />
         </div>
       </div>
+      {showEditModal && <EditModal handleClick={handleUpdateRoute} handleCancel={()=>setShowEditModal(false)}  />}
+
     </Layout>
   );
 };

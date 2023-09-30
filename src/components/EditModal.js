@@ -1,6 +1,6 @@
 import React from "react";
 
-const EditModal = ({cancelEdit,handleClick}) => {
+const EditModal = ({handleCancel,handleClick}) => {
   const modalStyles = {
     position: "fixed",
     top: "50%",
@@ -30,7 +30,7 @@ const EditModal = ({cancelEdit,handleClick}) => {
       <p>Editing will remove all scheduled calls.</p>
       <div>
         <button style={buttonStyles} onClick={handleClick}> Proceed</button>
-        <button style={buttonStyles} onClick={cancelEdit}>Cancel</button>
+        <button style={buttonStyles} onClick={handleCancel}>Cancel</button>
       </div>
     </div>
   );

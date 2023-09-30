@@ -320,7 +320,6 @@ const AddNewOrders = ({ isEdit }) => {
   const handleSelectProduct = (e) => {
     setConfirmed(false);
     let prod = products.filter((pro) => pro.value === e)[0];
-    console.log(selectedProducts);
 
     setSelectedProducts((prev) => [
       ...prev,

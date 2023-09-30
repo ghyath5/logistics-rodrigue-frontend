@@ -98,7 +98,6 @@ function Finalize2() {
 
 
   const handleUpdateRoute = (route) => {
-    // console.log(route)
     // let scheduledDays=route.scheduledDays.map(item => item.day)
     // let activeDays = scheduledDays.map((day) => ({ day }));
     // setShowEditModal(true)
@@ -119,7 +118,6 @@ function Finalize2() {
       //   })
       //   .then(() => {
       //     // navigate("/regions");
-      //     alert("hi")
       //   })
       //   .catch((err) => {
       //     console.log(err);
@@ -206,8 +204,7 @@ function Finalize2() {
 </b>
                   </a>
                   <button
-                    // onClick={()=>handleUpdateRoute(route)}
-                    onClick={()=>setShowEditModal(true)}
+                    onClick={()=>handleUpdateRoute(route)}
                     style={{
                       backgroundColor: "#007bff",
                       color: "#fff",
@@ -225,7 +222,6 @@ function Finalize2() {
           </div>
         )}
       </div>
-      {showEditModal && <EditModal  />}
     </div>
     </>
   );

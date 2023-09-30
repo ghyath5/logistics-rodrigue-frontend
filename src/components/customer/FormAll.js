@@ -74,7 +74,7 @@ const FormAll = ({ isEdit }) => {
     await axios
       .get(`/customers/${id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setData({
           businessname: res.data.businessname,
           abn: res.data.abn,
@@ -211,7 +211,6 @@ const FormAll = ({ isEdit }) => {
 
   const handleAddCustomer = (d) => {
     setLoading(true);
-    console.log(d)
     // axios
     //   .post(`customers`, d)
     //   .then(() => {
@@ -232,9 +231,6 @@ const FormAll = ({ isEdit }) => {
     //     err.response.status === 400 && setReqError(err.response.data.message);
     //   });
   };
-
-  console.log(data)
-
   const handleUpdateCustomer = () => {
     setLoading(true);
     axios
