@@ -215,8 +215,6 @@ const FormAll = ({ isEdit }) => {
       .post(`customers`, d)
       .then(() => {
         setLoading(false);
-        console.log(err.response.data);
-        alert("hi");
         navigate("/customers");
       })
       .finally(() => {
