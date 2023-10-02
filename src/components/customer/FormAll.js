@@ -211,25 +211,21 @@ const FormAll = ({ isEdit }) => {
 
   const handleAddCustomer = (d) => {
     setLoading(true);
-    // axios
-    //   .post(`customers`, d)
-    //   .then(() => {
-    //     setLoading(false);
-    //     console.log(err.response.data);
-    //     alert("hi");
-    //     navigate("/customers");
-    //   })
-    //   .finally(() => {
-    //     alert("hi");
-
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     alert("bye");
-
-    //     console.log(err);
-    //     err.response.status === 400 && setReqError(err.response.data.message);
-    //   });
+    axios
+      .post(`customers`, d)
+      .then(() => {
+        setLoading(false);
+        console.log(err.response.data);
+        alert("hi");
+        navigate("/customers");
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        err.response.status === 400 && setReqError(err.response.data.message);
+      });
   };
   const handleUpdateCustomer = () => {
     setLoading(true);
